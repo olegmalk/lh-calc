@@ -417,10 +417,18 @@ export const calc_AZ_ComplexCalc6 = (ctx: FormulaContext): number => {
 // Summary columns BA-BI
 export const calc_BA_MaterialTotal = (ctx: FormulaContext): number => {
   let sum = 0;
-  const columns = ['AL', 'AM', 'AN', 'AP', 'AQ', 'AR', 'AS'];
+  const columns = [
+    'AL_LengthCalculation',
+    'AM_LengthCalculation2', 
+    'AN_LengthCalculation3',
+    'AP_LengthCalculation5',
+    'AQ_LengthCalculation6',
+    'AR_PlateConfigCalc1',
+    'AS_PlateConfigCalc2'
+  ];
   
   for (const col of columns) {
-    sum += ctx.intermediateValues.get(`${col}_Calculation`) || 0;
+    sum += ctx.intermediateValues.get(col) || 0;
   }
   
   return sum;
@@ -443,10 +451,14 @@ export const calc_BC_MaterialTotal2 = (ctx: FormulaContext): number => {
 
 export const calc_BD_AdditionalMaterials = (ctx: FormulaContext): number => {
   let sum = 0;
-  const columns = ['AT', 'AU', 'AV'];
+  const columns = [
+    'AT_PlateConfigCalc3',
+    'AU_PlateConfigCalc4',
+    'AV_TotalLength'
+  ];
   
   for (const col of columns) {
-    sum += ctx.intermediateValues.get(`${col}_Calculation`) || 0;
+    sum += ctx.intermediateValues.get(col) || 0;
   }
   
   return sum;

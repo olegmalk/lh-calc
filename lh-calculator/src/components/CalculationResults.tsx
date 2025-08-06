@@ -47,7 +47,7 @@ export const CalculationResults: React.FC = () => {
   if (isCalculating) {
     return (
       <Card shadow="sm" padding="lg" radius="md">
-        <Stack gap="md">
+        <Stack gap="md" data-testid="skeleton-loader">
           <Skeleton height={30} />
           <Skeleton height={200} />
           <Skeleton height={100} />
