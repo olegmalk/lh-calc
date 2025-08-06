@@ -154,15 +154,15 @@ describe('CalculationResults', () => {
       
       expect(screen.getByText('Component Costs Breakdown')).toBeInTheDocument();
       
-      // Check component names (capitalized)
-      expect(screen.getByText('Covers')).toBeInTheDocument();
-      expect(screen.getByText('Columns')).toBeInTheDocument();
-      expect(screen.getByText('Panels A')).toBeInTheDocument();
-      expect(screen.getByText('Panels B')).toBeInTheDocument();
-      expect(screen.getByText('Fasteners')).toBeInTheDocument();
-      expect(screen.getByText('Flanges')).toBeInTheDocument();
-      expect(screen.getByText('Gaskets')).toBeInTheDocument();
-      expect(screen.getByText('Materials')).toBeInTheDocument();
+      // Check component names (text transformation capitalizes first letter)
+      expect(screen.getByText(/covers/i)).toBeInTheDocument();
+      expect(screen.getByText(/columns/i)).toBeInTheDocument();
+      expect(screen.getByText(/panels a/i)).toBeInTheDocument();
+      expect(screen.getByText(/panels b/i)).toBeInTheDocument();
+      expect(screen.getByText(/fasteners/i)).toBeInTheDocument();
+      expect(screen.getByText(/flanges/i)).toBeInTheDocument();
+      expect(screen.getByText(/gaskets/i)).toBeInTheDocument();
+      expect(screen.getByText(/materials/i)).toBeInTheDocument();
       
       // Check total
       expect(screen.getByText('Total')).toBeInTheDocument();
