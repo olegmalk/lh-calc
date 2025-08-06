@@ -13,15 +13,13 @@ import {
   Badge,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { useTranslation } from 'react-i18next';
 import { useInputStore } from '../stores/inputStore';
 import { useCalculationStore } from '../stores/calculationStore';
 import { useMaterialStore } from '../stores/materialStore';
-import { NAMED_RANGES, EQUIPMENT_SPECS } from '../lib/calculation-engine/constants';
-import { HeatExchangerInput } from '../lib/calculation-engine/types';
+import { NAMED_RANGES } from '../lib/calculation-engine/constants';
+import type { HeatExchangerInput } from '../lib/calculation-engine/types';
 
 export const TechnicalInputForm: React.FC = () => {
-  const { t } = useTranslation();
   const { inputs, updateMultiple, isDirty } = useInputStore();
   const { calculate, isCalculating } = useCalculationStore();
   const { availableMaterials } = useMaterialStore();
@@ -80,8 +78,8 @@ export const TechnicalInputForm: React.FC = () => {
   return (
     <Card shadow="sm" padding="lg" radius="md">
       <form onSubmit={form.onSubmit(handleSubmit)}>
-        <Stack spacing="md">
-          <Group position="apart">
+        <Stack gap="md">
+          <Group justify="space-between">
             <Title order={3}>Technical Specifications (Технолог)</Title>
             {isDirty && <Badge color="yellow">Unsaved changes</Badge>}
           </Group>
@@ -89,7 +87,7 @@ export const TechnicalInputForm: React.FC = () => {
           <Divider label="Equipment Configuration" />
           
           <Grid>
-            <Grid.Col xs={12} sm={6} md={4}>
+            <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
               <Select
                 label="Equipment Type (Типоразмер)"
                 placeholder="Select type"
@@ -99,7 +97,7 @@ export const TechnicalInputForm: React.FC = () => {
               />
             </Grid.Col>
             
-            <Grid.Col xs={12} sm={6} md={4}>
+            <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
               <TextInput
                 label="Model Code"
                 placeholder="К4-750"
@@ -108,7 +106,7 @@ export const TechnicalInputForm: React.FC = () => {
               />
             </Grid.Col>
             
-            <Grid.Col xs={12} sm={6} md={4}>
+            <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
               <Select
                 label="Plate Configuration"
                 placeholder="1/6"
@@ -118,7 +116,7 @@ export const TechnicalInputForm: React.FC = () => {
               />
             </Grid.Col>
             
-            <Grid.Col xs={12} sm={6} md={4}>
+            <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
               <NumberInput
                 label="Plate Count (Количество пластин)"
                 placeholder="400"
@@ -134,33 +132,33 @@ export const TechnicalInputForm: React.FC = () => {
           <Divider label="Operating Parameters" />
           
           <Grid>
-            <Grid.Col xs={12} sm={6} md={3}>
+            <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
               <NumberInput
                 label="Pressure A (bar)"
                 placeholder="100"
                 min={0}
                 max={400}
-                precision={1}
+                decimalScale={1}
                 step={10}
                 {...form.getInputProps('pressureA')}
                 required
               />
             </Grid.Col>
             
-            <Grid.Col xs={12} sm={6} md={3}>
+            <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
               <NumberInput
                 label="Pressure B (bar)"
                 placeholder="100"
                 min={0}
                 max={400}
-                precision={1}
+                decimalScale={1}
                 step={10}
                 {...form.getInputProps('pressureB')}
                 required
               />
             </Grid.Col>
             
-            <Grid.Col xs={12} sm={6} md={3}>
+            <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
               <NumberInput
                 label="Temperature A (°C)"
                 placeholder="80"
@@ -172,7 +170,7 @@ export const TechnicalInputForm: React.FC = () => {
               />
             </Grid.Col>
             
-            <Grid.Col xs={12} sm={6} md={3}>
+            <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
               <NumberInput
                 label="Temperature B (°C)"
                 placeholder="60"
@@ -188,7 +186,7 @@ export const TechnicalInputForm: React.FC = () => {
           <Divider label="Materials" />
           
           <Grid>
-            <Grid.Col xs={12} sm={6} md={4}>
+            <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
               <Select
                 label="Plate Material (Материал пластин)"
                 placeholder="Select material"
@@ -198,7 +196,7 @@ export const TechnicalInputForm: React.FC = () => {
               />
             </Grid.Col>
             
-            <Grid.Col xs={12} sm={6} md={4}>
+            <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
               <Select
                 label="Body Material (Материал корпуса)"
                 placeholder="Select material"
@@ -208,7 +206,7 @@ export const TechnicalInputForm: React.FC = () => {
               />
             </Grid.Col>
             
-            <Grid.Col xs={12} sm={6} md={4}>
+            <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
               <Select
                 label="Surface Type (Тип поверхности)"
                 placeholder="Select type"
@@ -222,7 +220,7 @@ export const TechnicalInputForm: React.FC = () => {
           <Divider label="Additional Parameters" />
           
           <Grid>
-            <Grid.Col xs={12} sm={6} md={4}>
+            <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
               <NumberInput
                 label="Components A"
                 placeholder="5"
@@ -233,7 +231,7 @@ export const TechnicalInputForm: React.FC = () => {
               />
             </Grid.Col>
             
-            <Grid.Col xs={12} sm={6} md={4}>
+            <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
               <NumberInput
                 label="Components B"
                 placeholder="1"
@@ -244,13 +242,13 @@ export const TechnicalInputForm: React.FC = () => {
               />
             </Grid.Col>
             
-            <Grid.Col xs={12} sm={6} md={4}>
+            <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
               <NumberInput
                 label="Plate Thickness (mm)"
                 placeholder="3"
                 min={0.4}
                 max={10}
-                precision={1}
+                decimalScale={1}
                 step={0.1}
                 {...form.getInputProps('plateThickness')}
                 required
@@ -258,7 +256,7 @@ export const TechnicalInputForm: React.FC = () => {
             </Grid.Col>
           </Grid>
           
-          <Group position="right" mt="md">
+          <Group justify="flex-end" mt="md">
             <Button 
               variant="light" 
               onClick={handleReset}

@@ -195,7 +195,7 @@ export const calc_BB_CostComponents = (ctx: FormulaContext): number => {
 };
 
 // Pressure test calculations (from технолог sheet)
-export const calc_PressureTest = (pressure: number, ctx: FormulaContext): number => {
+export const calc_PressureTest = (pressure: number, _ctx: FormulaContext): number => {
   // AI73/AJ73: =CEILING.PRECISE(1.25*pressure*$AA$60/interpolated,0.01)
   const interpolatedSize = VLOOKUP(pressure, PRESSURE_SIZE_MATRIX, true) as number;
   const AA60 = 1800; // Base factor from Excel

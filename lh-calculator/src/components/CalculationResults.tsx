@@ -16,7 +16,6 @@ import {
 } from '@mantine/core';
 import { IconAlertCircle, IconDownload, IconFileSpreadsheet } from '@tabler/icons-react';
 import { useCalculationStore } from '../stores/calculationStore';
-import { useTranslation } from 'react-i18next';
 
 const formatCurrency = (value: number): string => {
   return new Intl.NumberFormat('ru-RU', {
@@ -35,7 +34,6 @@ const formatNumber = (value: number, decimals = 2): string => {
 };
 
 export const CalculationResults: React.FC = () => {
-  const { t } = useTranslation();
   const { result, isCalculating, error, lastCalculatedAt, exportToExcel, exportToPDF } = useCalculationStore();
   
   if (error) {
@@ -49,7 +47,7 @@ export const CalculationResults: React.FC = () => {
   if (isCalculating) {
     return (
       <Card shadow="sm" padding="lg" radius="md">
-        <Stack spacing="md">
+        <Stack gap="md">
           <Skeleton height={30} />
           <Skeleton height={200} />
           <Skeleton height={100} />
@@ -61,7 +59,7 @@ export const CalculationResults: React.FC = () => {
   if (!result) {
     return (
       <Card shadow="sm" padding="lg" radius="md">
-        <Text color="dimmed" align="center" py="xl">
+        <Text c="dimmed" ta="center" py="xl">
           Enter technical specifications and click Calculate to see results
         </Text>
       </Card>
@@ -69,12 +67,12 @@ export const CalculationResults: React.FC = () => {
   }
   
   return (
-    <Stack spacing="md">
+    <Stack gap="md">
       {/* Summary Card */}
       <Card shadow="sm" padding="lg" radius="md">
-        <Group position="apart" mb="md">
+        <Group justify="space-between" mb="md">
           <Title order={3}>Calculation Results (Результат)</Title>
-          <Group spacing="xs">
+          <Group gap="xs">
             <Badge color="green">Calculated</Badge>
             {lastCalculatedAt && (
               <Text size="xs" color="dimmed">
@@ -85,37 +83,37 @@ export const CalculationResults: React.FC = () => {
         </Group>
         
         <Grid>
-          <Grid.Col xs={12} sm={6} md={3}>
+          <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
             <Paper p="md" withBorder>
               <Text size="xs" color="dimmed" mb="xs">Total Cost</Text>
-              <Text size="xl" weight={700} color="blue">
+              <Text size="xl" fw={700} c="blue">
                 {formatCurrency(result.totalCost)}
               </Text>
             </Paper>
           </Grid.Col>
           
-          <Grid.Col xs={12} sm={6} md={3}>
+          <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
             <Paper p="md" withBorder>
               <Text size="xs" color="dimmed" mb="xs">Pressure Test A</Text>
-              <Text size="xl" weight={700}>
+              <Text size="xl" fw={700}>
                 {formatNumber(result.pressureTestA)} bar
               </Text>
             </Paper>
           </Grid.Col>
           
-          <Grid.Col xs={12} sm={6} md={3}>
+          <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
             <Paper p="md" withBorder>
               <Text size="xs" color="dimmed" mb="xs">Pressure Test B</Text>
-              <Text size="xl" weight={700}>
+              <Text size="xl" fw={700}>
                 {formatNumber(result.pressureTestB)} bar
               </Text>
             </Paper>
           </Grid.Col>
           
-          <Grid.Col xs={12} sm={6} md={3}>
+          <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
             <Paper p="md" withBorder>
               <Text size="xs" color="dimmed" mb="xs">Components</Text>
-              <Text size="xl" weight={700}>
+              <Text size="xl" fw={700}>
                 {Object.keys(result.componentCosts).length - 1}
               </Text>
             </Paper>
@@ -127,18 +125,18 @@ export const CalculationResults: React.FC = () => {
       <Card shadow="sm" padding="lg" radius="md">
         <Title order={4} mb="md">Component Costs Breakdown</Title>
         
-        <Stack spacing="sm">
+        <Stack gap="sm">
           {Object.entries(result.componentCosts).map(([key, value]) => {
             if (key === 'total') return null;
             const percentage = (value / result.componentCosts.total) * 100;
             
             return (
               <div key={key}>
-                <Group position="apart" mb={4}>
-                  <Text size="sm" transform="capitalize">
+                <Group justify="space-between" mb={4}>
+                  <Text size="sm" tt="capitalize">
                     {key.replace(/([A-Z])/g, ' $1').trim()}
                   </Text>
-                  <Text size="sm" weight={500}>
+                  <Text size="sm" fw={500}>
                     {formatCurrency(value)}
                   </Text>
                 </Group>
@@ -154,9 +152,9 @@ export const CalculationResults: React.FC = () => {
         
         <Divider my="md" />
         
-        <Group position="apart">
-          <Text weight={600}>Total</Text>
-          <Text weight={700} size="lg" color="blue">
+        <Group justify="space-between">
+          <Text fw={600}>Total</Text>
+          <Text fw={700} size="lg" c="blue">
             {formatCurrency(result.componentCosts.total)}
           </Text>
         </Group>
@@ -168,12 +166,12 @@ export const CalculationResults: React.FC = () => {
         
         <Grid>
           {Array.from(result.materialRequirements.entries()).map(([key, value]) => (
-            <Grid.Col xs={12} sm={6} key={key}>
+            <Grid.Col span={{ base: 12, sm: 6 }} key={key}>
               <Paper p="sm" withBorder>
-                <Text size="xs" color="dimmed" transform="capitalize">
+                <Text size="xs" c="dimmed" tt="capitalize">
                   {key.replace(/([A-Z])/g, ' $1').trim()}
                 </Text>
-                <Text weight={500}>
+                <Text fw={500}>
                   {formatNumber(value, key.includes('Mass') ? 2 : 4)} 
                   {key.includes('Mass') ? ' kg' : ' m³'}
                 </Text>
@@ -185,18 +183,18 @@ export const CalculationResults: React.FC = () => {
       
       {/* Export Actions */}
       <Card shadow="sm" padding="lg" radius="md">
-        <Group position="apart">
+        <Group justify="space-between">
           <Title order={4}>Export Options</Title>
           <Group>
             <Button 
-              leftIcon={<IconFileSpreadsheet size={16} />}
+              leftSection={<IconFileSpreadsheet size={16} />}
               variant="light"
               onClick={exportToExcel}
             >
               Export to Excel
             </Button>
             <Button 
-              leftIcon={<IconDownload size={16} />}
+              leftSection={<IconDownload size={16} />}
               variant="light"
               onClick={exportToPDF}
             >

@@ -3,20 +3,17 @@
  * Implements the 53 core calculations for any equipment type
  */
 
-import { 
+import type { 
   HeatExchangerInput, 
   CalculationResult, 
   FormulaContext,
-  MaterialProperties,
   ComponentCosts 
 } from './types';
 import { 
-  MATERIAL_DENSITIES, 
   EQUIPMENT_SPECS,
-  NAMED_RANGES,
-  FLANGE_SPECS 
+  NAMED_RANGES
 } from './constants';
-import { executeCalculations, calc_PressureTest, CEILING_PRECISE } from './formula-library';
+import { executeAllCalculations, calc_PressureTest } from './formula-library-complete';
 
 export class CalculationEngineV2 {
   private context: FormulaContext;
@@ -113,7 +110,7 @@ export class CalculationEngineV2 {
     const pressureTestB = calc_PressureTest(inputs.pressureB, this.context);
     
     // Phase 2: Execute all 53 calculations (снабжение sheet)
-    const calculations = executeCalculations(this.context);
+    const calculations = executeAllCalculations(this.context);
     
     // Phase 3: Calculate component costs
     const componentCosts = this.calculateComponentCosts(calculations);
@@ -177,8 +174,8 @@ export class CalculationEngineV2 {
   }
   
   private calculateFlangeCost(): number {
-    // Calculate based on equipment type and pressure rating
-    const { equipmentType, pressureA, pressureB } = this.context.inputs;
+    // Calculate based on pressure rating
+    const { pressureA, pressureB } = this.context.inputs;
     const maxPressure = Math.max(pressureA, pressureB);
     
     // Find appropriate flange spec

@@ -1,5 +1,5 @@
 import { Group, Title, ActionIcon, Select, useMantineColorScheme } from '@mantine/core';
-import { IconSun, IconMoon, IconLanguage } from '@tabler/icons-react';
+import { IconSun, IconMoon } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 
 export function AppHeader() {
