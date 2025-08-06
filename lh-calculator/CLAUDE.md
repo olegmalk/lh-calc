@@ -218,6 +218,36 @@ Before any feature implementation:
 This is an INDUSTRIAL MANUFACTURING cost calculator for HEAT EXCHANGERS.
 Not insurance. Not healthcare. HEAT EXCHANGERS.
 
+## 👥 PROJECT CONTACTS
+
+### Primary Contact
+- **Name**: Alex
+- **Email**: a1538800@gmail.com
+- **Role**: Primary Project Contact
+
+### CC Recipients
+- **Oleg Malkov**: olegmalkov2023@gmail.com (CC on all communications)
+
+### Communication Rules
+- ✅ Always CC olegmalkov2023@gmail.com on ALL emails
+- ✅ Store all communications in `/communications/` folder
+- ✅ Use format: `YYYY-MM-DD_subject.md`
+- ✅ Log all email sends in this document
+
+### Email Configuration
+- **Sender**: olegmalkov2023@gmail.com
+- **App Password**: ✅ Configured and working
+- **Status**: Gmail SMTP operational
+- **Script**: `send_project_email.py`
+
+### Email History
+- **2025-08-06 14:48**: Sprint 1 Clarification - ✅ SENT SUCCESSFULLY
+  - To: Alex (a1538800@gmail.com)
+  - CC: Oleg Malkov (olegmalkov2023@gmail.com)
+  - Subject: Обновление Sprint 1: Обнаружена реальная структура 962 формул в Excel
+  - Content: `/communications/2025-08-06_sprint_1_clarification.md`
+  - Explained 962 formulas structure (13 equipment types × 53 calculations)
+
 ## 📊 EXCEL FORMULA EXTRACTION
 
 ### Extraction Tools Created
