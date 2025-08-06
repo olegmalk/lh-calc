@@ -265,3 +265,27 @@ The project now has BMAD (Breakthrough Method for Agile AI-Driven Development) i
 - **Project Commands**: `.claude/commands/` (project-specific)
 - **BMAD Core**: `~/.claude/bmad-core/` (global installation)
 - **Excel Requirements**: `/home/vmuser/dev/lh_calc/Себестоимость ТЕПЛОБЛОК шаблон для снабжения версия 7 ДЛЯ БИТРИКС (1) (1).xlsx`
+
+## 📧 EMAIL CAPABILITIES
+
+### Configuration
+- **Gmail**: olegmalkov2023@gmail.com
+- **App Password**: Configured in `.env` file
+- **Script**: `send_email.py`
+
+### Usage
+```bash
+# Send email using .env configuration
+python3 send_email.py
+
+# Send to specific recipient
+python3 send_email.py "" recipient@email.com
+
+# Override app password
+python3 send_email.py "new-app-password"
+```
+
+### Security
+- App Password stored in `.env` (gitignored)
+- Never commit credentials
+- Revoke at: https://myaccount.google.com/apppasswords
