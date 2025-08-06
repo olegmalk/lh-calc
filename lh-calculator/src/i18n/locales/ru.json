@@ -1,0 +1,68 @@
+{
+  "app": {
+    "title": "Калькулятор LH",
+    "subtitle": "Расчет себестоимости теплообменников"
+  },
+  "navigation": {
+    "dashboard": "Панель управления",
+    "technicalParts": "Технические части",
+    "components": "Комплектующие",
+    "flanges": "Фланцы",
+    "materials": "Другие материалы",
+    "calculations": "Расчеты",
+    "reports": "Отчеты",
+    "settings": "Настройки",
+    "referenceData": "Справочные данные"
+  },
+  "common": {
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "create": "Создать",
+    "search": "Поиск",
+    "filter": "Фильтр",
+    "export": "Экспорт",
+    "import": "Импорт",
+    "loading": "Загрузка...",
+    "noData": "Нет данных",
+    "confirmDelete": "Вы уверены, что хотите удалить этот элемент?",
+    "success": "Успешно",
+    "error": "Ошибка",
+    "warning": "Предупреждение",
+    "info": "Информация"
+  },
+  "technicalPart": {
+    "title": "Технические части",
+    "number": "Номер у технолога",
+    "position": "№ Позиции согласно ТЗ",
+    "deliveryType": "Тип поставки",
+    "model": "Модель оборудования",
+    "plateCount": "Количество пластин",
+    "pressure": "Давление",
+    "temperature": "Температура",
+    "material": "Материал",
+    "sideA": "Сторона А",
+    "sideB": "Сторона Б"
+  },
+  "calculation": {
+    "title": "Расчет себестоимости",
+    "calculate": "Рассчитать",
+    "recalculate": "Пересчитать",
+    "totalCost": "Итоговая стоимость",
+    "costBreakdown": "Структура стоимости",
+    "summary": "Сводный результат",
+    "details": "Детали",
+    "exportPDF": "Экспорт в PDF",
+    "exportExcel": "Экспорт в Excel"
+  },
+  "dashboard": {
+    "welcome": "Калькулятор себестоимости теплообменников",
+    "recentCalculations": "Последние расчеты",
+    "quickActions": "Быстрые действия",
+    "statistics": "Статистика",
+    "totalProjects": "Всего проектов",
+    "activeCalculations": "Активные расчеты",
+    "completedToday": "Завершено сегодня"
+  }
+}
