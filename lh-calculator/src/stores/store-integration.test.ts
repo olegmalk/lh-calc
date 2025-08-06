@@ -1,10 +1,8 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { renderHook, act, waitFor } from '@testing-library/react';
-import React from 'react';
+import { describe, it, expect, beforeEach } from 'vitest';
+import { renderHook, act } from '@testing-library/react';
 import { useInputStore } from './inputStore';
 import { useCalculationStore } from './calculationStore';
 import { useMaterialStore } from './materialStore';
-import { CalculationEngineV2 } from '../lib/calculation-engine/engine-v2';
 import type { HeatExchangerInput } from '../lib/calculation-engine/types';
 
 describe('Store Integration Tests', () => {
@@ -216,12 +214,9 @@ describe('Store Integration Tests', () => {
       };
       
       // Start calculation
-      let isCalculatingDuringCall = false;
-      
       await act(async () => {
         const promise = result.current.calculate(validInput);
-        // Check synchronously if possible
-        isCalculatingDuringCall = result.current.isCalculating;
+        // Note: isCalculating flag changes too quickly to reliably test
         await promise;
       });
       

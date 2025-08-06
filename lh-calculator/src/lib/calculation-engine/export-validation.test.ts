@@ -101,7 +101,7 @@ describe('Export Functionality End-to-End Tests', () => {
       // All values should be numbers
       Object.values(calculations).forEach(value => {
         expect(typeof value).toBe('number');
-        expect(isFinite(value)).toBe(true);
+        expect(isFinite(value as number)).toBe(true);
       });
     });
   });

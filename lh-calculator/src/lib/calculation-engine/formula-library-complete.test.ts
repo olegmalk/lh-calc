@@ -11,19 +11,6 @@ import {
   calc_K_ColumnHeightBase,
   calc_L_ComponentVolume,
   calc_M_DimensionPlus10,
-  calc_N_ColumnHeightRepeat,
-  calc_O_SecondaryVolume,
-  calc_P_WidthCalculation,
-  calc_Q_HeightCalculation,
-  calc_R_AreaCalculation,
-  calc_S_AdditionalDimension,
-  calc_T_DimensionPlusOffset,
-  calc_W_OffsetCalculation,
-  calc_X_WidthWithOffset,
-  calc_Y_HeightWithOffset,
-  calc_Z_SimpleOffset,
-  calc_AA_Perimeter,
-  calc_AB_PerimeterVolume,
   calc_PressureTest,
   executeAllCalculations,
 } from './formula-library-complete';
@@ -333,7 +320,7 @@ describe('Integration Tests', () => {
     expect(results.get('K_ColumnHeightBase')).toBeGreaterThan(2400);
     
     // Verify all calculations produce numeric results
-    results.forEach((value, key) => {
+    results.forEach((value) => {
       expect(typeof value).toBe('number');
       expect(isNaN(value)).toBe(false);
       expect(isFinite(value)).toBe(true);
