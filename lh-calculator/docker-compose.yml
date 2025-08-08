@@ -1,0 +1,96 @@
+version: '3.8'
+
+services:
+  lh-calculator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    image: lh-calculator:latest
+    container_name: lh-calculator-prod
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./logs:/var/log/nginx
+    networks:
+      - lh-calculator-network
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/health-check.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.lh-calculator.rule=Host(`lh-calculator.production.com`)"
+      - "traefik.http.routers.lh-calculator.tls=true"
+      - "traefik.http.routers.lh-calculator.tls.certresolver=letsencrypt"
+      - "traefik.http.services.lh-calculator.loadbalancer.server.port=80"
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
+  # Optional: Reverse proxy with SSL
+  traefik:
+    image: traefik:v3.0
+    container_name: lh-calculator-traefik
+    restart: unless-stopped
+    ports:
+      - "443:443"
+      - "8080:8080"
+    command:
+      - "--api.dashboard=true"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.letsencrypt.acme.email=admin@lh-calculator.production.com"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/acme.json"
+      - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./acme.json:/acme.json"
+    networks:
+      - lh-calculator-network
+    depends_on:
+      - lh-calculator
+
+  # Monitoring
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: lh-calculator-prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    networks:
+      - lh-calculator-network
+
+volumes:
+  prometheus_data:
+
+networks:
+  lh-calculator-network:
+    driver: bridge

@@ -1,16 +1,19 @@
 # Field to Calculation Mapping - How Each Input is Used
 
 ## Critical Question: Do we understand how each field affects calculations?
+
 **Answer: PARTIALLY** - We understand main formulas but missing component details
 
 ## 1. FINAL CALCULATION OUTPUTS
 
 ### Primary Output: Total Cost (U32)
+
 ```
 U32 = SUM(F26:X26) = 1,609,136.64 rubles
 ```
 
 ### Cost Categories (J30-J36)
+
 ```
 J30: = F26 (Covers)
 J31: = G26+H26+I26+J26 (Corpus total)
@@ -26,6 +29,7 @@ J36: = W26 (Packaging/logistics) = 58,100
 ### ✅ UNDERSTOOD - Main Mass Calculation
 
 **Formula G93 (Main Plate Mass)**: 1820.5952 kg
+
 ```javascript
 Uses:
 - технолог!G27 (equipmentType) → VLOOKUP to get dimensions
@@ -39,6 +43,7 @@ G93 = (732+15) × (715+15) × 3 × 0.00788 ÷ 1000 × 400 = 1820.5952
 ### ✅ UNDERSTOOD - M21 Total Mass Formula
 
 **Formula M21**: 15,104,002.406
+
 ```javascript
 Uses:
 - технолог!T27 (plateLength = 5)
@@ -53,6 +58,7 @@ M21 = (5+1)×0.001×400 + 2×7552000 + 2×3×0.001 = 15,104,002.406
 ### ✅ UNDERSTOOD - Test Pressure Calculations
 
 **Formulas N27/O27**: 31.46 bar
+
 ```javascript
 Uses:
 - технолог!J27/K27 (designPressure = 22)
@@ -66,6 +72,7 @@ N27 = CEILING(1.25 × 22 × 183 ÷ 160, 0.01) = 31.46
 ### ⚠️ PARTIALLY UNDERSTOOD - Component Masses (G94-G104)
 
 We know the output values but NOT the complete formulas:
+
 ```
 G94: 29.625648 kg - Uses VLOOKUP columns H,I,J (MISSING)
 G95: 27.346752 kg - Uses VLOOKUP columns K,L,M (MISSING)
@@ -79,6 +86,7 @@ G103: 91.9960056 kg - Uses VLOOKUP columns Z,AA,AB (MISSING)
 ### ❌ NOT UNDERSTOOD - Cost Calculations (F26-X26)
 
 **Missing formulas for**:
+
 ```
 F26: = снабжение!K14 (?)
 G26: = снабжение!G35 + снабжение!M35 (?)
@@ -97,6 +105,7 @@ P26: = Conditional on equipmentType (?)
 ### ❌ NOT UNDERSTOOD - Supply Field Usage
 
 **Fields with UNKNOWN usage**:
+
 - F2 (orderNumber) - Where used?
 - D9 (bodyMaterial) - Confirmation only or calculation?
 - F39 (coefficient) - Multiplies what?
@@ -130,27 +139,32 @@ MASS CALCULATIONS
 ## 4. CRITICAL UNKNOWNS
 
 ### 🔴 HIGH PRIORITY - Block calculations
+
 1. **Cost formulas** (F26-X26) - How costs aggregate
 2. **Component formulas** (G94-G104) - VLOOKUP columns H-AK
 3. **Supply field usage** - Which fields affect which calculations
 
 ### 🟡 MEDIUM PRIORITY - Affect accuracy
+
 4. **Conditional logic** - Equipment type conditions
 5. **Multiplier usage** - F39, quantity fields
 6. **Price aggregation** - How component prices combine
 
 ### 🟢 LOW PRIORITY - UI only
+
 7. **Label fields** - Don't affect calculations
 8. **Descriptive fields** - Information only
 
 ## 5. WHAT WE NEED TO DISCOVER
 
 ### From Excel Analysis
+
 1. Complete formulas for F26-X26 (cost calculations)
 2. VLOOKUP columns H-AK (component dimensions)
 3. How supply prices (D43-D46) aggregate to final cost
 
 ### From Testing
+
 1. Change each field and observe output changes
 2. Map dependencies through testing
 3. Reverse-engineer formulas
@@ -158,16 +172,19 @@ MASS CALCULATIONS
 ## 6. IMPLEMENTATION RISK ASSESSMENT
 
 ### ✅ Can Implement Now (High Confidence)
+
 - Main plate mass (G93)
 - M21 total formula
 - Test pressure calculations
 - Basic structure
 
 ### ⚠️ Can Approximate (Medium Confidence)
+
 - Component masses (have values, missing exact formulas)
 - Some cost categories (have totals)
 
 ### ❌ Cannot Implement (Need More Info)
+
 - Detailed cost calculations
 - Supply field integration
 - Component cost formulas
@@ -176,32 +193,37 @@ MASS CALCULATIONS
 ## 7. RECOMMENDED APPROACH
 
 ### Option 1: Reverse Engineering
+
 1. Test each field individually
 2. Observe output changes
 3. Derive formulas empirically
-**Time: 2-3 weeks**
+   **Time: 2-3 weeks**
 
 ### Option 2: Get Complete Excel Formulas
+
 1. Request formula documentation
 2. Or access to Excel with formula view
 3. Extract all formulas programmatically
-**Time: 1-2 days with access**
+   **Time: 1-2 days with access**
 
 ### Option 3: Implement Known + Stub Unknown
+
 1. Implement what we understand (mass calculations)
 2. Stub cost calculations with hardcoded values
 3. Refine as we learn more
-**Time: 1 week for partial implementation**
+   **Time: 1 week for partial implementation**
 
 ## CONCLUSION
 
 **Understanding Level: 40%**
+
 - ✅ Main mass calculations understood
 - ⚠️ Component calculations partially understood
 - ❌ Cost calculations NOT understood
 - ❌ Many field usages UNKNOWN
 
 **Recommendation**: We need either:
+
 1. Complete Excel formula access, OR
 2. Systematic testing to reverse-engineer, OR
 3. Documentation from Excel creator

@@ -1,6 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MantineProvider } from '@mantine/core';
+import { I18nextProvider } from 'react-i18next';
+import i18n from '../i18n/config';
 import { CalculationResults } from './CalculationResults';
 import { useCalculationStore } from '../stores/calculationStore';
 import type { CalculationResult } from '../lib/calculation-engine/types';
@@ -10,9 +12,11 @@ vi.mock('../stores/calculationStore');
 
 const renderWithProviders = (component: React.ReactElement) => {
   return render(
-    <MantineProvider>
-      {component}
-    </MantineProvider>
+    <I18nextProvider i18n={i18n}>
+      <MantineProvider>
+        {component}
+      </MantineProvider>
+    </I18nextProvider>
   );
 };
 

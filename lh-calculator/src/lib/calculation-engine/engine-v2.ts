@@ -21,6 +21,7 @@ import {
   EQUIPMENT_SPECS,
   NAMED_RANGES
 } from './constants';
+import { getMaterialDensity, EQUIPMENT_TABLE } from './vlookup-tables';
 import { 
   executeAllCalculations, 
   calc_AI73_TestPressureHot, 
@@ -34,6 +35,7 @@ import {
   validateConfiguration,
   calculateTotalCostWithBreakdown
 } from './formula-library-complete';
+import { calculateCoreCosts } from './cost-calculations';
 
 export class CalculationEngineV2 {
   private context: FormulaContext;
@@ -156,6 +158,9 @@ export class CalculationEngineV2 {
       equipmentLogic
     );
     
+    // Story 5: Core Cost Calculations (N26, P26, O26, H26, F26, J32)
+    const coreCosts = calculateCoreCosts(this.context);
+    
     // Phase 4: Final aggregations (результат sheet) - LH-F014/F015
     const finalCostAggregation = calculateTotalCostWithBreakdown(this.context);
     const finalCostBreakdown = finalCostAggregation.costBreakdown;
@@ -193,6 +198,9 @@ export class CalculationEngineV2 {
       costBreakdown,
       exportData,
       validation, // Add validation results to output
+      
+      // Story 5: Core cost calculations
+      coreCosts,
       
       // Phase 4: Final aggregations (результат sheet)
       finalCostBreakdown,
@@ -312,25 +320,6 @@ export class CalculationEngineV2 {
     return componentCosts.total + additionalCosts;
   }
 
-  private calculateEnhancedTotalCost(
-    _componentCosts: ComponentCosts,
-    _calculations: Map<string, number>,
-    materialCosts: EnhancedMaterialCosts,
-    laborCosts: EnhancedLaborCosts,
-    logisticsCosts: LogisticsCosts,
-    equipmentLogic: EquipmentLogic
-  ): number {
-    // Sum all enhanced costs
-    return (
-      materialCosts.totalMaterialCost +
-      laborCosts.totalLaborCost +
-      logisticsCosts.totalLogisticsCost +
-      equipmentLogic.additionalCosts +
-      this.calculateFastenerCost() +
-      this.calculateFlangeCost() +
-      this.calculateGasketCost()
-    );
-  }
   
   private generateCostBreakdown(
     componentCosts: ComponentCosts, 
@@ -363,52 +352,73 @@ export class CalculationEngineV2 {
   private extractMaterials(_calculations: Map<string, number>): Map<string, number> {
     const materials = new Map<string, number>();
     
-    // Calculate proper volumes based on equipment dimensions
-    const plateCount = this.context.inputs.plateCount;
-    const plateThickness = this.context.inputs.plateThickness / 1000; // mm to m
-    
-    // Plate volume calculation
-    // Try exact match first, then fallback to base type
-    let specs = EQUIPMENT_SPECS[this.context.inputs.equipmentType as keyof typeof EQUIPMENT_SPECS];
-    if (!specs && this.context.inputs.equipmentType.includes('-')) {
-      // Try base type without suffix (K4-750-M -> K4-750)
-      const baseType = this.context.inputs.equipmentType.split('-').slice(0, 2).join('-');
-      specs = EQUIPMENT_SPECS[baseType as keyof typeof EQUIPMENT_SPECS];
+    // Get equipment from VLOOKUP table
+    const equipment = EQUIPMENT_TABLE[this.context.inputs.equipmentType];
+    if (!equipment) {
+      throw new Error(`Equipment type ${this.context.inputs.equipmentType} not found`);
     }
-    if (!specs) {
-      // Fallback to K4-750 if nothing matches
-      specs = EQUIPMENT_SPECS['K4-750'];
-    }
-    // Use actual plate dimensions from specs
-    const plateArea = (specs.width * specs.height) / 1000000; // mm² to m²
-    const plateVolume = plateArea * plateThickness * plateCount;
-    materials.set('plateVolume', plateVolume);
     
-    // Body/housing volume calculation (simplified)
-    // Based on housing dimensions and wall thickness
+    // Get dimensions from VLOOKUP (Excel columns E, F)
+    const plateLength = equipment.length;    
+    const plateWidth = equipment.width;      
+    
+    // Get plate thickness from input U27 (NOT from VLOOKUP)
+    const plateThickness = this.context.inputs.plateThickness; // mm
+    
+    // Get equipment count from input I27
+    const equipmentCount = this.context.inputs.plateCount;
+    
+    // Add 15mm padding as per Excel formula
+    const adjustedLength = plateLength + 15; 
+    const adjustedWidth = plateWidth + 15;   
+    
+    // Get material density (G93)
+    const plateDensity = getMaterialDensity(this.context.inputs.materialPlate); // kg/mm³
+    
+    // Calculate plate mass using exact Excel formula: 
+    // =(E+15)*(F+15)*plateThickness*G93/1000*equipmentCount
+    const plateMass = adjustedLength * adjustedWidth * plateThickness * plateDensity / 1000 * equipmentCount;
+    
+    // Calculate volume for display (m³)
+    const plateVolume = (adjustedLength * adjustedWidth * plateThickness * equipmentCount) / 1000000000;
+    
+    // Calculate housing/body volume and mass for backward compatibility
     const wallThickness = 0.01; // 10mm wall thickness
     const depth = 500; // Assume 500mm depth for housing
-    const housingVolume = specs ? 
-      ((specs.width * specs.height * depth) / 1000000000) * wallThickness * 4 : // 4 walls
-      0.5;
-    materials.set('bodyVolume', housingVolume);
+    const housingVolume = ((adjustedLength * adjustedWidth * depth) / 1000000000) * wallThickness * 4;
     
-    // Total material volume
-    materials.set('totalMaterial', plateVolume + housingVolume);
-    
-    // Convert to mass using proper densities
-    const plateMaterial = this.context.materials.get(this.context.inputs.materialPlate);
     const bodyMaterial = this.context.materials.get(this.context.inputs.materialBody);
+    const bodyMass = bodyMaterial ? housingVolume * bodyMaterial.density * 1000000 : 0;
     
-    // Densities are scaled by 10^-6 in materials, need to multiply back
-    if (plateMaterial) {
-      const plateMass = plateVolume * plateMaterial.density * 1000000; // Convert from scaled to kg/m³
-      materials.set('plateMass', plateMass);
-    }
-    if (bodyMaterial) {
-      const bodyMass = housingVolume * bodyMaterial.density * 1000000; // Convert from scaled to kg/m³
-      materials.set('bodyMass', bodyMass);
-    }
+    // Set values in the original format for full backward compatibility
+    materials.set('plateMass', plateMass);
+    materials.set('plateVolume', plateVolume); 
+    materials.set('totalMaterial', plateVolume);
+    materials.set('bodyVolume', housingVolume);
+    materials.set('bodyMass', bodyMass);
+    
+    // Component mass calculations using VLOOKUP data (Story 4)
+    const components = [
+      { name: 'Гребенка 4шт', mass: equipment.componentL * equipmentCount },
+      { name: 'Полоса гребенки 4шт', mass: equipment.componentO * equipmentCount },
+      { name: 'Лист концевой 2шт', mass: equipment.componentR * equipmentCount },
+      { name: 'Зеркало А 4шт', mass: equipment.componentAB * equipmentCount },
+      { name: 'Зеркало Б 4шт', mass: equipment.componentAE * equipmentCount },
+      { name: 'Лист плакирующий А 2шт', mass: equipment.componentAH * equipmentCount },
+      { name: 'Лист плакирующий Б 2шт', mass: equipment.componentAK * equipmentCount }
+    ];
+
+    // Add each component to materials map - just the mass values as expected by tests
+    components.forEach(component => {
+      materials.set(component.name, component.mass);
+    });
+
+    // Calculate total component mass for validation
+    const totalComponentMass = components.reduce((sum, c) => sum + c.mass, 0);
+    materials.set('totalComponentMass', totalComponentMass);
+    
+    // Add enhanced Plate Package data - just the mass value
+    materials.set('Plate Package', plateMass);
     
     return materials;
   }

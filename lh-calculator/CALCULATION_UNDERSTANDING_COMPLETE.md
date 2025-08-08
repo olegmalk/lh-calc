@@ -7,11 +7,13 @@
 ## 1. TOTAL COST BREAKDOWN (результат Sheet)
 
 **Final Total (U32)**: 1,609,136.64 rubles
+
 ```
 U32 = SUM(F26:X26)
 ```
 
 ### Core Cost Category (J32): 1,356,336.64 rubles
+
 ```
 J32 = N26 + O26 + P26
     = 1,274,416.64 + 0 + 81,920
@@ -21,6 +23,7 @@ J32 = N26 + O26 + P26
 ## 2. KEY COST FORMULAS DECODED
 
 ### ✅ N26: Plate Package Cost = 1,274,416.64
+
 ```javascript
 Formula: F78 * D8 + U27 * J78 * D13
 
@@ -38,6 +41,7 @@ N26 = 1820.5952 * 700 + 1 * 1165.15 * 0
 ```
 
 ### ✅ O26: Additional Components Cost = 0
+
 ```javascript
 Formula: D8 * E78 * D14 * D14 + D78 * I78 * D13
 
@@ -53,6 +57,7 @@ Currently 0 because D13 and D14 are null
 ```
 
 ### ✅ P26: Equipment-Specific Cost = 81,920
+
 ```javascript
 Formula: Conditional based on equipment type
 IF К4-750 THEN Q78 ELSE R78
@@ -71,12 +76,14 @@ Q78 = 26*1750 + 8*3300 + 60*87 + 8*600
 ```
 
 ### ✅ X26: Internal Logistics = 120,000
+
 ```javascript
 Formula: P13 (direct reference)
 X26 = 120,000 rubles
 ```
 
 ### ✅ Other Cost Components
+
 ```javascript
 E26 = Material selection (700 for AISI 316L)
 F26 = K14 = K13 * D12 (labor calculation) = 0
@@ -101,12 +108,14 @@ W26 = J53 + J58 + O53 + O58 = 58,100
 ### Critical Fields That Affect Cost
 
 **From технолог:**
+
 - G27 (equipmentType) → Determines VLOOKUP row
 - P27 (plateMaterial) → Determines density and price selection
 - I27 (equipmentCount) → Multiplies mass calculations
 - U27 (plateThickness) → Used in N26 cost formula
 
 **From снабжение:**
+
 - D8 (plate price) → Main multiplier for plate cost
 - D43, D44 (component costs) → Used in P26 calculation
 - G43, G44 (additional costs) → Used in P26 calculation
@@ -114,7 +123,9 @@ W26 = J53 + J58 + O53 + O58 = 58,100
 - D13, D14 → Currently null but would affect O26
 
 ### VLOOKUP Dependencies
+
 The VLOOKUP table provides equipment-specific values:
+
 - J78 (column 55): 1165.15 for К4-750
 - I78 (column 52): 171.95 for К4-750
 - M78-P78 (columns 39-42): 26, 8, 60, 8 for К4-750
@@ -148,6 +159,7 @@ FINAL TOTAL
 ## 5. WHAT WE CAN NOW IMPLEMENT
 
 ### ✅ Fully Understood (Can implement exactly)
+
 1. Main plate mass calculation (G93)
 2. Component mass totals (E78 from E101)
 3. N26 plate cost calculation
@@ -155,11 +167,13 @@ FINAL TOTAL
 5. Total cost aggregation (U32)
 
 ### ⚠️ Partially Understood (Need minor clarification)
+
 1. O26 formula (need D13, D14 values)
 2. Labor calculations (need D12 value)
 3. Assembly costs (G35, M35 formulas)
 
 ### ❌ Still Unknown (But not critical)
+
 1. Individual component mass formulas (G94-G104)
 2. Some zero-value cost components
 3. Detailed VLOOKUP columns beyond what we use
@@ -169,12 +183,14 @@ FINAL TOTAL
 **Overall Understanding: 85%** ✅
 
 We can now implement:
+
 - Complete mass calculations
 - Main cost calculations
 - Equipment-specific pricing
 - Total cost aggregation
 
 Missing pieces are mostly:
+
 - Zero-valued components in test data
 - Some VLOOKUP columns we don't use
 - Fields that don't affect the test case
@@ -192,8 +208,10 @@ Missing pieces are mostly:
 **We have sufficient understanding to implement a working calculator!**
 
 The main calculation chain is clear:
+
 - Inputs → Mass calculations → Cost calculations → Total
 
 With the discovered formulas, we can achieve the test case:
+
 - Input: К4-750, AISI 316L, 400 units
 - Output: 1,609,136.64 rubles ✅

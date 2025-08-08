@@ -28,6 +28,43 @@
 
 ### If you create any temporary new files, scripts, or helper files for iteration, clean up these files by removing them at the end of the task.
 
+## 🎭 Use Playwright, Not Puppeteer
+
+**We already have Playwright installed** - use it for all browser testing and automation:
+
+- E2E tests: `npx playwright test`
+- Debug specific test: `npx playwright test -g "test name"`
+- Don't install puppeteer when Playwright is already available
+
+## ⚠️ TypeScript Rules - NO ANY TYPES
+
+**NEVER use `any` type in TypeScript code**. This is a critical quality rule.
+
+Instead:
+
+- Use proper type definitions
+- Create interfaces for complex objects
+- Use `unknown` if type is truly unknown (then narrow it)
+- Use generics for flexible types
+- Use union types for multiple possibilities
+
+Examples:
+
+```typescript
+// ❌ BAD
+const result = {} as any;
+
+// ✅ GOOD
+const result = {} as { totalCost: number };
+
+// ✅ BETTER
+interface CalculationResult {
+  totalCost: number;
+  // ... other fields
+}
+const result = {} as CalculationResult;
+```
+
 ## 🚨 CRITICAL LESSON LEARNED (2025-08-07)
 
 ### What Happened: We Almost Built the Wrong Thing

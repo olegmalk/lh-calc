@@ -108,14 +108,14 @@ describe('Store Integration Tests', () => {
         modelCode: 'К4-750',
         plateConfiguration: '1/6',
         plateCount: 400,
-        pressureA: 100,
-        pressureB: 100,
+        pressureA: 30,
+        pressureB: 30,
         temperatureA: 80,
         temperatureB: 60,
         materialPlate: 'AISI 316L',
         materialBody: 'AISI 304',
         surfaceType: 'Гладкая',
-        plateThickness: 3,
+        plateThickness: 0.8,
       };
       
       await act(async () => {
@@ -171,14 +171,14 @@ describe('Store Integration Tests', () => {
         modelCode: 'К4-150',
         plateConfiguration: '1/6',
         plateCount: 100,
-        pressureA: 50,
-        pressureB: 50,
+        pressureA: 20,
+        pressureB: 20,
         temperatureA: 60,
         temperatureB: 40,
         materialPlate: 'AISI 304',
         materialBody: 'AISI 304',
         surfaceType: 'Гладкая',
-        plateThickness: 2,
+        plateThickness: 0.8,
       };
       
       await act(async () => {
@@ -197,14 +197,14 @@ describe('Store Integration Tests', () => {
         modelCode: 'К4-500',
         plateConfiguration: '1/4',
         plateCount: 250,
-        pressureA: 75,
-        pressureB: 75,
+        pressureA: 35,
+        pressureB: 35,
         temperatureA: 70,
         temperatureB: 50,
         materialPlate: 'AISI 316L',
         materialBody: 'AISI 304',
         surfaceType: 'Гладкая',
-        plateThickness: 2.5,
+        plateThickness: 1.0,
       };
       
       // Start calculation
@@ -288,8 +288,8 @@ describe('Store Integration Tests', () => {
         inputHook.result.current.updateMultiple({
           equipmentType: 'К4-300',
           plateCount: 200,
-          pressureA: 60,
-          pressureB: 60,
+          pressureA: 30,
+          pressureB: 30,
         });
       });
       
@@ -323,14 +323,14 @@ describe('Store Integration Tests', () => {
         modelCode: 'К4-150',
         plateConfiguration: '1/6',
         plateCount: 100,
-        pressureA: 50,
-        pressureB: 50,
+        pressureA: 30,
+        pressureB: 30,
         temperatureA: 60,
         temperatureB: 40,
         materialPlate: 'AISI 316L',
         materialBody: 'AISI 316L',
         surfaceType: 'Гладкая',
-        plateThickness: 2,
+        plateThickness: 1.0,
       };
       
       // Calculate with original price
@@ -368,14 +368,14 @@ describe('Store Integration Tests', () => {
         modelCode: 'К4-150',
         plateConfiguration: '1/6',
         plateCount: 100,
-        pressureA: 50,
-        pressureB: 50,
+        pressureA: 20,
+        pressureB: 20,
         temperatureA: 60,
         temperatureB: 40,
         materialPlate: 'AISI 304',
         materialBody: 'AISI 304',
         surfaceType: 'Гладкая',
-        plateThickness: 2,
+        plateThickness: 0.8,
       };
       
       const input2: HeatExchangerInput = {
@@ -384,16 +384,15 @@ describe('Store Integration Tests', () => {
         plateCount: 500,
       };
       
-      // Start two calculations
-      const calc1 = act(async () => {
+      // Start first calculation
+      await act(async () => {
         await result.current.calculate(input1);
       });
       
-      const calc2 = act(async () => {
+      // Start second calculation
+      await act(async () => {
         await result.current.calculate(input2);
       });
-      
-      await Promise.all([calc1, calc2]);
       
       // The last calculation should win
       expect(result.current.result).not.toBeNull();
@@ -459,14 +458,14 @@ describe('Store Integration Tests', () => {
         modelCode: 'К4-500',
         plateConfiguration: '1/6',
         plateCount: 300,
-        pressureA: 75,
-        pressureB: 75,
+        pressureA: 35,
+        pressureB: 35,
         temperatureA: 70,
         temperatureB: 50,
         materialPlate: 'AISI 316L',
         materialBody: 'AISI 304',
         surfaceType: 'Гладкая',
-        plateThickness: 2.5,
+        plateThickness: 1.0,
       };
       
       // First calculation

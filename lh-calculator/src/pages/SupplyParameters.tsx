@@ -14,6 +14,9 @@ const DEFAULT_SUPPLY_DATA: SupplyInputData = {
   panelMaterialPricePerKg: 650,
   laborRatePerHour: 2500,
   cuttingCostPerMeter: 150,
+  laborRate: 2500, // D12 - стоимость работы ₽/час  
+  laborCoefficient: 1.2, // D13 - коэффициент труда
+  materialCoefficient: 1.05, // D14 - коэффициент материала
   
   // Logistics (Supply)
   internalLogisticsCost: 120000,

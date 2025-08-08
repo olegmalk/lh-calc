@@ -14,6 +14,7 @@ describe('Business Logic Demonstration', () => {
       
       const baseConfig: HeatExchangerInput = {
         equipmentType: 'К4-750',
+        modelCode: 'К4-750',
         plateCount: 100, // Small to avoid validation errors
         plateConfiguration: '1/6',
         plateThickness: 0.6,
@@ -67,6 +68,7 @@ describe('Business Logic Demonstration', () => {
       
       const baseConfig: HeatExchangerInput = {
         equipmentType: 'К4-750',
+        modelCode: 'К4-750',
         plateCount: 50, // Will be varied
         plateConfiguration: '1/6',
         plateThickness: 0.6,
@@ -126,6 +128,7 @@ describe('Business Logic Demonstration', () => {
       
       const baseConfig: HeatExchangerInput = {
         equipmentType: 'К4-150', // Small equipment
+        modelCode: 'К4-150',
         plateCount: 50,
         plateConfiguration: '1/6',
         plateThickness: 0.4, // Minimum thickness for light weight
@@ -164,6 +167,7 @@ describe('Business Logic Demonstration', () => {
       const heavyConfig = {
         ...baseConfig,
         equipmentType: 'К4-1200' as HeatExchangerInput['equipmentType'],
+        modelCode: 'К4-1200',
         plateCount: 800, // Within К4-1200 limits
         plateThickness: 1.0 // Maximum thickness
       };
@@ -186,6 +190,7 @@ describe('Business Logic Demonstration', () => {
       
       const baseConfig: HeatExchangerInput = {
         equipmentType: 'К4-750',
+        modelCode: 'К4-750',
         plateCount: 400,
         plateConfiguration: '1/6',
         plateThickness: 0.6,
@@ -247,6 +252,7 @@ describe('Business Logic Demonstration', () => {
       
       const testConfig: HeatExchangerInput = {
         equipmentType: 'К4-750',
+        modelCode: 'К4-750',
         plateCount: 400,
         plateConfiguration: '1/6',
         plateThickness: 0.6,

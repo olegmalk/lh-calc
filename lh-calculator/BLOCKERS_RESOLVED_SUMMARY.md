@@ -3,12 +3,14 @@
 ## 🎉 Major Breakthrough: E19 Blocker RESOLVED!
 
 ### E19 Discovery
+
 - **Value Found**: E19 = **7,552,000.00**
 - **Location**: ОБРАБОТКА section (yellow cell)
 - **Type**: Appears to be a processing cost coefficient
 - **Impact**: Can now calculate M21 formula completely
 
 ### M21 Calculation Now Possible
+
 ```javascript
 // Formula: =(технолог!T27+технолог!U27)*0.001*технолог!I27+2*E19+2*технолог!V27*0.001
 M21 = (5 + 1) * 0.001 * 400 + 2 * 7552000 + 2 * 3 * 0.001
@@ -19,6 +21,7 @@ M21 = 15,104,002.406
 ## ✅ Validation Data Complete
 
 ### Mass Calculations - 100% Match
+
 ```
 Main Plate Mass (К4-750): 1820.5952 kg ✅
 Component Masses:
@@ -33,6 +36,7 @@ Total Components:         118.6841472 kg ✅
 ```
 
 ### Cost Structure - Complete
+
 ```
 Total Cost: 1,609,136.64 rubles
 - Core (J32): 1,356,336.64 rubles
@@ -43,12 +47,14 @@ Total Cost: 1,609,136.64 rubles
 ## 🔴 Remaining Blockers (Minor)
 
 ### 1. VLOOKUP Columns H-AK
+
 - **Status**: Partially missing
 - **Have**: Columns B-G (equipment dimensions)
 - **Need**: Columns H-AK (component specifications)
 - **Workaround**: Can use default values for testing
 
 ### 2. Dropdown Options
+
 - **Status**: Not fully documented
 - **Have**: Main options from constants.ts
 - **Need**: Complete list for yellow cells
@@ -77,6 +83,7 @@ With E19 resolved, we can now:
 ## Implementation Priority
 
 ### Phase 1 (Immediate) - 4 hours
+
 ```javascript
 // Add to inputStore.ts
 plateLength: 5,              // T27
@@ -85,11 +92,13 @@ processingCoefficient: 7552000, // E19 (discovered!)
 ```
 
 ### Phase 2 (Next) - 8 hours
+
 - Implement complete mass calculation with 15mm padding
 - Add all 7 component calculations
 - Implement M21 formula with E19
 
 ### Phase 3 (Following) - 8 hours
+
 - Add remaining VLOOKUP columns (use defaults where missing)
 - Implement test pressure calculations (CEILING.PRECISE)
 - Complete cost aggregations
@@ -97,23 +106,23 @@ processingCoefficient: 7552000, // E19 (discovered!)
 ## Test Validation Ready
 
 ```javascript
-describe('Excel Exact Match Tests', () => {
-  it('should calculate К4-750 mass exactly', () => {
+describe("Excel Exact Match Tests", () => {
+  it("should calculate К4-750 mass exactly", () => {
     const result = calculatePlateMass({
-      equipmentType: 'К4-750',
-      material: 'AISI 316L',
-      count: 400
+      equipmentType: "К4-750",
+      material: "AISI 316L",
+      count: 400,
     });
     expect(result).toBe(1820.5952);
   });
-  
-  it('should calculate M21 with E19', () => {
+
+  it("should calculate M21 with E19", () => {
     const result = calculateM21({
       plateLength: 5,
       plateThickness: 1,
       equipmentCount: 400,
       E19: 7552000,
-      mountingPanels: 3
+      mountingPanels: 3,
     });
     expect(result).toBe(15104002.406);
   });
@@ -123,6 +132,7 @@ describe('Excel Exact Match Tests', () => {
 ## Summary
 
 **🎉 READY TO IMPLEMENT!**
+
 - E19 blocker resolved (7,552,000.00)
 - M21 calculable (15,104,002.406)
 - All mass calculations validated

@@ -16,6 +16,12 @@ import {
 // ===== Excel Formula Utilities =====
 
 export const CEILING_PRECISE = (value: number, precision: number): number => {
+  if (precision === 0) return 0;
+  // For 0.01 precision (the critical case), use special handling
+  if (precision === 0.01) {
+    return Math.ceil(value * 100) / 100;
+  }
+  // For other precisions, use the standard approach
   return Math.ceil(value / precision) * precision;
 };
 
@@ -62,55 +68,27 @@ export const VLOOKUP = <T>(
 
 /**
  * Calculate test pressure for hot side (AI73)
- * Formula: CEILING.PRECISE(1.25 * designPressure * 183 / allowableStress, 0.01)
- * @param designPressure Hot side pressure (J27)
- * @param allowableStress Hot side allowable stress (AG61)
+ * Excel Formula: =CEILING.PRECISE(J27*1.43, 0.01)
+ * @param ctx FormulaContext containing inputs
  */
 export const calc_AI73_TestPressureHot = (ctx: FormulaContext): number => {
-  const designPressure = ctx.inputs.pressureA; // J27
-  const materialStressFactor = 183; // AA60 - Material stress factor for 09Г2С at 20°C
+  const pressureA = ctx.inputs.pressureA; // J27 - Hot side pressure
   
-  // CRITICAL FIX: Use correct allowable stress values to match Excel
-  // For 09Г2С at 100°C, Excel uses approximately 150 MPa
-  const temperature = ctx.inputs.temperatureA; // Hot side temperature
-  const material = ctx.inputs.materialPlate;
-  
-  // Excel-accurate stress values for test case validation
-  let allowableStress: number;
-  if (material === '09Г2С' && temperature === 100) {
-    allowableStress = 150; // Exact Excel value for this test case
-  } else {
-    allowableStress = lookupAllowableStress(temperature, material);
-  }
-  
-  // Excel formula: =CEILING.PRECISE(1.25*22*183/150, 0.01) = 31.46
-  const value = (1.25 * designPressure * materialStressFactor) / allowableStress;
+  // Simple Excel formula: =CEILING.PRECISE(J27*1.43, 0.01)
+  const value = pressureA * 1.43;
   return CEILING_PRECISE(value, 0.01);
 };
 
 /**
  * Calculate test pressure for cold side (AJ73)
- * Formula: CEILING.PRECISE(1.25 * designPressure * 183 / allowableStress, 0.01)
- * @param designPressure Cold side pressure (K27)
- * @param allowableStress Cold side allowable stress (AK61)
+ * Excel Formula: =CEILING.PRECISE(K27*1.43, 0.01)
+ * @param ctx FormulaContext containing inputs
  */
 export const calc_AJ73_TestPressureCold = (ctx: FormulaContext): number => {
-  const designPressure = ctx.inputs.pressureB; // K27
-  const materialStressFactor = 183; // AA60 - Material stress factor for 09Г2С at 20°C
+  const pressureB = ctx.inputs.pressureB; // K27 - Cold side pressure
   
-  // CRITICAL FIX: Use correct allowable stress values to match Excel
-  const temperature = ctx.inputs.temperatureB; // Cold side temperature
-  const material = ctx.inputs.materialPlate;
-  
-  // Excel-accurate stress values for test case validation
-  let allowableStress: number;
-  if (material === '09Г2С' && temperature === 60) {
-    allowableStress = 150; // Exact Excel value for this test case
-  } else {
-    allowableStress = lookupAllowableStress(temperature, material);
-  }
-  
-  const value = (1.25 * designPressure * materialStressFactor) / allowableStress;
+  // Simple Excel formula: =CEILING.PRECISE(K27*1.43, 0.01)
+  const value = pressureB * 1.43;
   return CEILING_PRECISE(value, 0.01);
 };
 

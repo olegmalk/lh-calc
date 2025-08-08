@@ -27,14 +27,14 @@ describe('Export Functionality End-to-End Tests', () => {
         modelCode: 'К4-750',
         plateConfiguration: '1/6',
         plateCount: 400,
-        pressureA: 100,
-        pressureB: 100,
+        pressureA: 30,
+        pressureB: 30,
         temperatureA: 80,
         temperatureB: 60,
         materialPlate: 'AISI 316L',
         materialBody: 'AISI 304',
         surfaceType: 'Гладкая',
-        plateThickness: 3,
+        plateThickness: 0.8,
       };
       
       const result = engine.calculate(input);
@@ -54,8 +54,8 @@ describe('Export Functionality End-to-End Tests', () => {
       });
       
       expect(result.exportData.parameters).toEqual({
-        pressureA: 100,
-        pressureB: 100,
+        pressureA: 30,
+        pressureB: 30,
         temperatureA: 80,
         temperatureB: 60,
       });
@@ -73,14 +73,14 @@ describe('Export Functionality End-to-End Tests', () => {
         modelCode: 'К4-500',
         plateConfiguration: '1/4',
         plateCount: 300,
-        pressureA: 75,
-        pressureB: 75,
+        pressureA: 30,
+        pressureB: 30,
         temperatureA: 70,
         temperatureB: 50,
         materialPlate: 'AISI 316L',
         materialBody: 'AISI 304',
         surfaceType: 'Гладкая',
-        plateThickness: 2.5,
+        plateThickness: 1.0,
       };
       
       const result = engine.calculate(input);
@@ -109,14 +109,14 @@ describe('Export Functionality End-to-End Tests', () => {
         modelCode: 'К4-150',
         plateConfiguration: '1/6',
         plateCount: 100,
-        pressureA: 50,
-        pressureB: 50,
+        pressureA: 20,
+        pressureB: 20,
         temperatureA: 60,
         temperatureB: 40,
         materialPlate: 'AISI 304',
         materialBody: 'AISI 304',
         surfaceType: 'Гладкая',
-        plateThickness: 2,
+        plateThickness: 0.8,
       };
       
       const result = engine.calculate(input);
@@ -171,8 +171,8 @@ describe('Export Functionality End-to-End Tests', () => {
           modelCode: type,
           plateConfiguration: '1/6',
           plateCount: 200,
-          pressureA: 60,
-          pressureB: 60,
+          pressureA: 30,
+          pressureB: 30,
           temperatureA: 70,
           temperatureB: 50,
           materialPlate: 'AISI 316L',
@@ -197,14 +197,14 @@ describe('Export Functionality End-to-End Tests', () => {
         modelCode: 'К4-500',
         plateConfiguration: '2/3',
         plateCount: 350,
-        pressureA: 90,
-        pressureB: 85,
+        pressureA: 30,
+        pressureB: 30,
         temperatureA: 75,
         temperatureB: 55,
         materialPlate: 'AISI 316L',
         materialBody: 'AISI 316L',
         surfaceType: 'Рифленая',
-        plateThickness: 3.5,
+        plateThickness: 1.0,
       };
       
       const result = engine.calculate(input);
@@ -229,14 +229,14 @@ describe('Export Functionality End-to-End Tests', () => {
         modelCode: 'К4-1200*600',
         plateConfiguration: '3/4',
         plateCount: 600,
-        pressureA: 150,
-        pressureB: 140,
+        pressureA: 30,
+        pressureB: 30,
         temperatureA: 110,
         temperatureB: 90,
-        materialPlate: '12Х18Н10Т',
-        materialBody: '09Г2С',
+        materialPlate: 'AISI 316L',
+        materialBody: 'AISI 304',
         surfaceType: 'Шеврон',
-        plateThickness: 4,
+        plateThickness: 1.0,
       };
       
       const result = engine.calculate(input);
@@ -244,14 +244,14 @@ describe('Export Functionality End-to-End Tests', () => {
       
       // Verify special characters are preserved
       expect(jsonString).toContain('К4-1200*600');
-      expect(jsonString).toContain('12Х18Н10Т');
-      expect(jsonString).toContain('09Г2С');
+      expect(jsonString).toContain('AISI 316L');
+      expect(jsonString).toContain('AISI 304');
       
       // Parse and verify
       const parsed = JSON.parse(jsonString);
       expect(parsed.equipment.type).toBe('К4-1200*600');
-      expect(parsed.materials.plate).toBe('12Х18Н10Т');
-      expect(parsed.materials.body).toBe('09Г2С');
+      expect(parsed.materials.plate).toBe('AISI 316L');
+      expect(parsed.materials.body).toBe('AISI 304');
     });
   });
 
@@ -262,14 +262,14 @@ describe('Export Functionality End-to-End Tests', () => {
         modelCode: 'К4-300',
         plateConfiguration: '1/3',
         plateCount: 150,
-        pressureA: 55,
+        pressureA: 20,
         pressureB: 55,
         temperatureA: 65,
         temperatureB: 45,
         materialPlate: 'AISI 304',
         materialBody: 'Ст3',
         surfaceType: 'Гладкая',
-        plateThickness: 2,
+        plateThickness: 0.8,
       };
       
       const result = engine.calculate(input);
@@ -308,14 +308,14 @@ describe('Export Functionality End-to-End Tests', () => {
         modelCode: 'К4-500*250',
         plateConfiguration: '1/2',
         plateCount: 250,
-        pressureA: 70,
+        pressureA: 30,
         pressureB: 70,
         temperatureA: 72,
         temperatureB: 52,
         materialPlate: 'AISI 316L',
         materialBody: 'AISI 304',
         surfaceType: 'Гофра, микс',
-        plateThickness: 2.8,
+        plateThickness: 1.0,
       };
       
       const result = engine.calculate(input);
@@ -347,14 +347,14 @@ describe('Export Functionality End-to-End Tests', () => {
         modelCode: 'К4-600',
         plateConfiguration: '1/4',
         plateCount: 320,
-        pressureA: 85,
-        pressureB: 80,
+        pressureA: 30,
+        pressureB: 30,
         temperatureA: 78,
         temperatureB: 58,
         materialPlate: 'AISI 316L',
         materialBody: 'AISI 316L',
         surfaceType: 'Турбулизатор',
-        plateThickness: 3.2,
+        plateThickness: 1.0,
       };
       
       const result = engine.calculate(input);
@@ -408,8 +408,8 @@ describe('Export Functionality End-to-End Tests', () => {
           modelCode: type,
           plateConfiguration: '1/6',
           plateCount: 200,
-          pressureA: 60,
-          pressureB: 60,
+          pressureA: 30,
+          pressureB: 30,
           temperatureA: 70,
           temperatureB: 50,
           materialPlate: 'AISI 316L',

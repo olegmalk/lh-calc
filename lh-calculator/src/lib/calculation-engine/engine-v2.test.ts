@@ -80,9 +80,20 @@ describe('CalculationEngineV2', () => {
       expect(result.materialRequirements).toBeDefined();
       expect(result.materialRequirements.size).toBeGreaterThan(0);
       
-      result.materialRequirements.forEach((value) => {
-        expect(value).toBeGreaterThanOrEqual(0);
-        expect(isFinite(value)).toBe(true);
+      result.materialRequirements.forEach((value, key) => {
+        if (key === 'Plate Package' || 
+            key.includes('шт') || // Component names with quantities
+            key.includes('Лист') || // Sheet components
+            key.includes('Зеркало')) { // Mirror components  
+          // Enhanced objects with mass, density, volume
+          expect(typeof value).toBe('object');
+          expect(value).toHaveProperty('mass');
+        } else {
+          // Legacy numeric values and totals
+          expect(typeof value).toBe('number');
+          expect(value).toBeGreaterThanOrEqual(0);
+          expect(isFinite(value)).toBe(true);
+        }
       });
     });
 

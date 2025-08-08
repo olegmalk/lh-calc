@@ -59,7 +59,7 @@ export const VLOOKUP = <T>(
 
 // Column G110: Components count (технолог!U27)
 export const calc_G_ComponentsCount = (ctx: FormulaContext): number => {
-  return ctx.inputs.componentsB;
+  return ctx.inputs.componentsB || 1;
 };
 
 // Column H110: Cover area calculation
@@ -73,7 +73,7 @@ export const calc_H_CoverArea = (ctx: FormulaContext): number => {
   const density = ctx.materials.get(ctx.inputs.materialPlate)?.density || MATERIAL_DENSITIES.STAINLESS_STEEL;
   const plateCount = ctx.inputs.plateCount;
   
-  return (width * height * ctx.inputs.componentsB * density / 1000000) * plateCount;
+  return (width * height * (ctx.inputs.componentsB || 1) * density / 1000000) * plateCount;
 };
 
 // Column J110: Dimension addition (I110+20)
@@ -84,7 +84,7 @@ export const calc_J_DimensionPlus20 = (ctx: FormulaContext): number => {
 
 // Column K110: Column height base ($H$99+10)
 export const calc_K_ColumnHeightBase = (ctx: FormulaContext): number => {
-  const H99 = (ctx.inputs.componentsA + ctx.inputs.componentsB) * ctx.inputs.plateCount;
+  const H99 = ((ctx.inputs.componentsA || 1) + (ctx.inputs.componentsB || 1)) * ctx.inputs.plateCount;
   return H99 + 10;
 };
 
@@ -160,7 +160,7 @@ export const calc_R_AreaCalculation = (ctx: FormulaContext): number => {
 // =(технолог!$I$27/2*((5+6)*2+технолог!$T$27-0.5)+J110*2)/1000
 export const calc_AL_LengthCalculation = (ctx: FormulaContext): number => {
   const plateCount = ctx.inputs.plateCount;
-  const componentsA = ctx.inputs.componentsA;
+  const componentsA = ctx.inputs.componentsA || 1;
   const J110 = ctx.intermediateValues.get('J_DimensionPlus20') || calc_J_DimensionPlus20(ctx);
   
   return (plateCount / 2 * ((5 + 6) * 2 + componentsA - 0.5) + J110 * 2) / 1000;

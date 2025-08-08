@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Card,
   Grid,
@@ -17,6 +17,8 @@ import {
 import { IconAlertCircle, IconDownload, IconFileSpreadsheet } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { useCalculationStore } from '../stores/calculationStore';
+import { Bitrix24Export } from './Bitrix24Export';
+import { useInputStore } from '../stores/inputStore';
 
 const formatCurrency = (value: number): string => {
   return new Intl.NumberFormat('ru-RU', {
@@ -37,6 +39,8 @@ const formatNumber = (value: number, decimals = 2): string => {
 export const CalculationResults: React.FC = () => {
   const { t } = useTranslation();
   const { result, isCalculating, error, lastCalculatedAt, exportToExcel, exportToPDF } = useCalculationStore();
+  const { inputs } = useInputStore();
+  const [bitrixDealId, setBitrixDealId] = useState<number | null>(null);
   
   if (error) {
     return (
@@ -393,8 +397,26 @@ export const CalculationResults: React.FC = () => {
             >
               {t('results.exportToPDF')}
             </Button>
+            <Bitrix24Export
+              result={result}
+              projectName={inputs.projectName || t('common.defaultProject')}
+              onExportComplete={(dealId) => setBitrixDealId(dealId)}
+            />
           </Group>
         </Group>
+        
+        {/* Show Bitrix24 Deal Link if exported */}
+        {bitrixDealId && (
+          <Alert
+            color="green"
+            title={t('bitrix24.export.dealCreatedTitle')}
+            mt="md"
+          >
+            <Text size="sm">
+              {t('bitrix24.export.dealCreatedMessage', { id: bitrixDealId })}
+            </Text>
+          </Alert>
+        )}
       </Card>
     </Stack>
   );

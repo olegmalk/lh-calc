@@ -11,6 +11,7 @@ i18n
   .init({
     debug: false,
     fallbackLng: 'en',
+    lng: 'en', // Force English as default
     interpolation: {
       escapeValue: false,
     },
@@ -25,6 +26,9 @@ i18n
     detection: {
       order: ['localStorage', 'navigator'],
       caches: ['localStorage'],
+    },
+    react: {
+      useSuspense: false, // Disable suspense to avoid loading issues
     },
   });
 

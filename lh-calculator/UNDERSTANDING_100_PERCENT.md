@@ -9,12 +9,14 @@ Through deep analysis with specialized subagents, we now have COMPLETE understan
 ### ✅ Mass Calculations (100% Understood)
 
 **Main Plate Mass (G93)**: 1820.5952 kg
+
 ```javascript
 Formula: (VLOOKUP(col E) + 15) × (VLOOKUP(col F) + 15) × VLOOKUP(col G) × density / 1000 × count
 Actual: (732 + 15) × (715 + 15) × 3 × 0.00788 / 1000 × 400 = 1820.5952
 ```
 
 **Component Masses (E93-E100)**: 118.6841472 kg total
+
 ```javascript
 E93: VLOOKUP(К4-750, col L) = 29.625648 kg (Гребенка 4шт)
 E94: VLOOKUP(К4-750, col O) = 27.346752 kg (Полоса гребенки 4шт)
@@ -28,6 +30,7 @@ E100: VLOOKUP(К4-750, col AK) = 91.9960056 kg (Лист плакирующий 
 ### ✅ Cost Calculations (100% Understood)
 
 **N26 - Plate Package Cost**: 1,274,416.64 rubles
+
 ```javascript
 Formula: F78 × D8 + U27 × J78 × D13
 = 1820.5952 × 700 + 1 × 1165.15 × 0
@@ -35,6 +38,7 @@ Formula: F78 × D8 + U27 × J78 × D13
 ```
 
 **O26 - Component Cost**: 0 (due to missing D13, D14)
+
 ```javascript
 Formula: D8 × E78 × D14² + D78 × I78 × D13
 = 700 × 118.684 × 0² + 3 × 171.95 × 0
@@ -42,6 +46,7 @@ Formula: D8 × E78 × D14² + D78 × I78 × D13
 ```
 
 **P26 - Equipment-Specific Cost**: 81,920 rubles
+
 ```javascript
 Formula: Q78 = M78×D44 + N78×D43 + O78×G44 + P78×G43
 = 26×1750 + 8×3300 + 60×87 + 8×600
@@ -50,6 +55,7 @@ Formula: Q78 = M78×D44 + N78×D43 + O78×G44 + P78×G43
 ```
 
 **H26 - Assembly Cost**: 0 (due to missing D13, D14)
+
 ```javascript
 Formula: E8 × G78 × D14² + V27 × H78 × D13
 = 700 × 0 × 0² + 3 × 1 × 0
@@ -57,6 +63,7 @@ Formula: E8 × G78 × D14² + V27 × H78 × D13
 ```
 
 **F26 - Labor Cost**: 0 (due to missing D12)
+
 ```javascript
 Formula: K14 = K13 × D12
 = 1 × [missing D12]
@@ -66,6 +73,7 @@ Formula: K14 = K13 × D12
 ## 2. COMPLETE VLOOKUP TABLE STRUCTURE
 
 ### Equipment Dimensions (B110:BI122)
+
 ```
 К4-750 Complete Row Data:
 - Basic: Length=732, Width=715, Thickness=3
@@ -74,6 +82,7 @@ Formula: K14 = K13 × D12
 ```
 
 ### Material Densities (AS47:AT53)
+
 ```
 AISI 316L: 0.00788
 SMO 254: 0.00808
@@ -88,15 +97,16 @@ AISI 316Ti: 0.00786
 
 ### Critical Missing Input Fields
 
-| Field | Purpose | Impact When Missing | Default Value Needed |
-|-------|---------|-------------------|-------------------|
-| D12 | Labor rate ₽/hour | F26 = 0 | 2500 |
-| D13 | Labor coefficient | O26, H26, N26 partial | 1 |
-| D14 | Material coefficient | O26, H26 = 0 | 1 or 2 |
-| D38 | Assembly factor | L26 = 0 | 1000 |
-| G22, M22 | Component factors | I26, J26 = 0 | Values needed |
+| Field    | Purpose              | Impact When Missing   | Default Value Needed |
+| -------- | -------------------- | --------------------- | -------------------- |
+| D12      | Labor rate ₽/hour    | F26 = 0               | 2500                 |
+| D13      | Labor coefficient    | O26, H26, N26 partial | 1                    |
+| D14      | Material coefficient | O26, H26 = 0          | 1 or 2               |
+| D38      | Assembly factor      | L26 = 0               | 1000                 |
+| G22, M22 | Component factors    | I26, J26 = 0          | Values needed        |
 
 ### Zero-Valued Components Explained
+
 - **F26 = 0**: Missing D12 (labor rate)
 - **G26 = 0**: Missing D34, F34, J34, L34
 - **H26 = 0**: Missing D13, D14
@@ -144,6 +154,7 @@ FINAL TOTAL
 ## 5. IMPLEMENTATION READINESS
 
 ### What We Can Implement NOW (100% confidence)
+
 ✅ All mass calculations
 ✅ Main cost formulas
 ✅ VLOOKUP table with all columns
@@ -151,6 +162,7 @@ FINAL TOTAL
 ✅ Total aggregation logic
 
 ### What Needs Input Values
+
 ⚠️ D12, D13, D14 fields need to be added
 ⚠️ Some supply fields for complete costs
 ⚠️ Labor and assembly parameters
@@ -158,11 +170,13 @@ FINAL TOTAL
 ## 6. ACCURACY ASSESSMENT
 
 With current data:
+
 - **Mass calculations**: 100% accurate ✅
 - **Cost calculations**: 85% accurate (missing labor/assembly)
 - **Can match test case**: YES (1,609,136.64 rubles)
 
 With all fields added:
+
 - **Expected accuracy**: 100%
 - **All calculations**: Fully functional
 
@@ -171,6 +185,7 @@ With all fields added:
 **Understanding Level: 100%** ✅
 
 We now understand:
+
 - Every formula and calculation
 - Why each zero value occurs
 - Complete VLOOKUP structure
@@ -178,6 +193,7 @@ We now understand:
 - Entire calculation flow
 
 **Ready for Implementation**: YES
+
 - Can implement complete calculator
 - Know exactly which fields to add
 - Understand all default values needed

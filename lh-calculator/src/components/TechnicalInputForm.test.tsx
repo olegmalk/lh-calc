@@ -22,6 +22,7 @@ const renderWithProviders = (component: React.ReactElement) => {
 
 describe('TechnicalInputForm', () => {
   const mockUpdateMultiple = vi.fn();
+  const mockUpdateInput = vi.fn();
   const mockCalculate = vi.fn();
   const mockReset = vi.fn();
 
@@ -66,6 +67,7 @@ describe('TechnicalInputForm', () => {
     // Reset the store's getState
     useInputStore.getState = vi.fn().mockReturnValue({
       reset: mockReset,
+      updateInput: mockUpdateInput,
     });
   });
 
