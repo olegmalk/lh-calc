@@ -1,0 +1,498 @@
+{
+  "complete_headers": {
+    "B": "Пластины",
+    "C": "Длина",
+    "D": "Ширина",
+    "E": "Длина заготовки",
+    "F": "Ширина заготовки",
+    "G": "Высота",
+    "H": "масса заготовок",
+    "I": "Колонны",
+    "J": "Гребенка",
+    "K": null,
+    "L": null,
+    "M": "Полоса гребенки",
+    "N": null,
+    "O": null,
+    "P": "Лист концевой",
+    "Q": null,
+    "R": null,
+    "S": "Зеркало лист без прибавки на резку",
+    "T": "Зеркало лист",
+    "U": null,
+    "V": null,
+    "W": "Зеркало 1шт без прибавки на резку",
+    "X": null,
+    "Y": null,
+    "Z": "Зеркало А 2шт",
+    "AA": null,
+    "AB": null,
+    "AC": "Зеркало Б 2шт",
+    "AD": null,
+    "AE": null,
+    "AF": "Лист плакирующий А",
+    "AG": null,
+    "AH": null,
+    "AI": "Лист плакирующий Б",
+    "AJ": null,
+    "AK": null,
+    "AL": "Длина Гребенки",
+    "AM": "Длина полосы гребенки",
+    "AN": "Длина лист концевой",
+    "AO": "Зеркало лист",
+    "AP": "Зеркало А",
+    "AQ": "Зеркало Б",
+    "AR": "Дефлектор А",
+    "AS": "Дефлектор Б",
+    "AT": "Ласточка A",
+    "AU": "Ласточка Б",
+    "AV": "Пластина",
+    "AW": "Лист плакирующий А",
+    "AX": "Лист Плакирующий Б",
+    "AY": "отверстия листа плак А",
+    "AZ": "отверстия листа плак Б",
+    "BA": "Сумма 3мм Теплоблок (пакет)",
+    "BB": "Сумма 3мм Теплоблок (плакировка)",
+    "BC": "Сумма 3мм реинж",
+    "BD": "Сумма 1мм",
+    "BE": "Рапорка горизонтальная А",
+    "BF": "Распорка горизонтальная Б",
+    "BG": "Длина горизонтальной А",
+    "BH": "Длина горизонтальной Б",
+    "BI": "Гайка DIN933"
+  },
+  "k4_750_data": {
+    "B": {
+      "value": "К4-750",
+      "header": "Пластины"
+    },
+    "C": {
+      "value": 732,
+      "header": "Длина"
+    },
+    "D": {
+      "value": 715,
+      "header": "Ширина"
+    },
+    "E": {
+      "value": 745,
+      "header": "Длина заготовки"
+    },
+    "F": {
+      "value": 745,
+      "header": "Ширина заготовки"
+    },
+    "G": {
+      "value": 1,
+      "header": "Высота"
+    },
+    "H": {
+      "value": 1820.5952,
+      "header": "масса заготовок"
+    },
+    "I": {
+      "value": 110,
+      "header": "Колонны"
+    },
+    "J": {
+      "value": 130,
+      "header": "Гребенка"
+    },
+    "K": {
+      "value": 2410,
+      "header": null
+    },
+    "L": {
+      "value": 29.625648,
+      "header": null
+    },
+    "M": {
+      "value": 120,
+      "header": "Полоса гребенки"
+    },
+    "N": {
+      "value": 2410,
+      "header": null
+    },
+    "O": {
+      "value": 27.346752000000002,
+      "header": null
+    },
+    "P": {
+      "value": 962,
+      "header": "Лист концевой"
+    },
+    "Q": {
+      "value": 960,
+      "header": null
+    },
+    "R": {
+      "value": 43.6640256,
+      "header": null
+    },
+    "S": {
+      "value": 25,
+      "header": "Зеркало лист без прибавки на резку"
+    },
+    "T": {
+      "value": 35,
+      "header": "Зеркало лист"
+    },
+    "U": {
+      "value": -92,
+      "header": null
+    },
+    "V": {
+      "value": "#REF!",
+      "header": null
+    },
+    "W": {
+      "value": 74,
+      "header": "Зеркало 1шт без прибавки на резку"
+    },
+    "X": {
+      "value": 782,
+      "header": null
+    },
+    "Y": {
+      "value": 765,
+      "header": null
+    },
+    "Z": {
+      "value": 30,
+      "header": "Зеркало А 2шт"
+    },
+    "AA": {
+      "value": 6364,
+      "header": null
+    },
+    "AB": {
+      "value": 9.0266976,
+      "header": null
+    },
+    "AC": {
+      "value": 30,
+      "header": "Зеркало Б 2шт"
+    },
+    "AD": {
+      "value": 6360,
+      "header": null
+    },
+    "AE": {
+      "value": 9.021023999999999,
+      "header": null
+    },
+    "AF": {
+      "value": 2463,
+      "header": "Лист плакирующий А"
+    },
+    "AG": {
+      "value": 792,
+      "header": null
+    },
+    "AH": {
+      "value": 92.22890688,
+      "header": null
+    },
+    "AI": {
+      "value": 2463,
+      "header": "Лист плакирующий Б"
+    },
+    "AJ": {
+      "value": 790,
+      "header": null
+    },
+    "AK": {
+      "value": 91.9960056,
+      "header": null
+    },
+    "AL": {
+      "value": 31.88,
+      "header": "Длина Гребенки"
+    },
+    "AM": {
+      "value": 20.24,
+      "header": "Длина полосы гребенки"
+    },
+    "AN": {
+      "value": 7.688,
+      "header": "Длина лист концевой"
+    },
+    "AO": {
+      "value": 0.96,
+      "header": "Зеркало лист"
+    },
+    "AP": {
+      "value": 51.712,
+      "header": "Зеркало А"
+    },
+    "AQ": {
+      "value": 51.68,
+      "header": "Зеркало Б"
+    },
+    "AR": {
+      "value": 0,
+      "header": "Дефлектор А"
+    },
+    "AS": {
+      "value": 8.75,
+      "header": "Дефлектор Б"
+    },
+    "AT": {
+      "value": 0,
+      "header": "Ласточка A"
+    },
+    "AU": {
+      "value": 7.55,
+      "header": "Ласточка Б"
+    },
+    "AV": {
+      "value": 1157.6,
+      "header": "Пластина"
+    },
+    "AW": {
+      "value": 14.322,
+      "header": "Лист плакирующий А"
+    },
+    "AX": {
+      "value": 14.3132,
+      "header": "Лист Плакирующий Б"
+    },
+    "AY": {
+      "value": 1.302,
+      "header": "отверстия листа плак А"
+    },
+    "AZ": {
+      "value": 1.3012000000000001,
+      "header": "отверстия листа плак Б"
+    },
+    "BA": {
+      "value": 171.95000000000002,
+      "header": "Сумма 3мм Теплоблок (пакет)"
+    },
+    "BB": {
+      "value": 31.2384,
+      "header": "Сумма 3мм Теплоблок (плакировка)"
+    },
+    "BC": {
+      "value": 171.95000000000002,
+      "header": "Сумма 3мм реинж"
+    },
+    "BD": {
+      "value": 1165.1499999999999,
+      "header": "Сумма 1мм"
+    },
+    "BE": {
+      "value": 14,
+      "header": "Рапорка горизонтальная А"
+    },
+    "BF": {
+      "value": 8,
+      "header": "Распорка горизонтальная Б"
+    },
+    "BG": {
+      "value": 732,
+      "header": "Длина горизонтальной А"
+    },
+    "BH": {
+      "value": 730,
+      "header": "Длина горизонтальной Б"
+    },
+    "BI": {
+      "value": 44,
+      "header": "Гайка DIN933"
+    }
+  },
+  "column_mapping": {
+    "B": {
+      "purpose": "Equipment Type",
+      "description": "Heat exchanger model identifier"
+    },
+    "C-F": {
+      "purpose": "Basic Dimensions",
+      "description": "Length, width, and processing dimensions"
+    },
+    "G": {
+      "purpose": "Height",
+      "description": "Equipment height parameter"
+    },
+    "H": {
+      "purpose": "Blank Mass",
+      "description": "Mass of raw blanks for production"
+    },
+    "I-O": {
+      "purpose": "Component Dimensions",
+      "description": "Column and rib dimensions with masses"
+    },
+    "P-AK": {
+      "purpose": "Component Masses",
+      "description": "Mass calculations for various components"
+    },
+    "AL-BI": {
+      "purpose": "Final Calculations",
+      "description": "Final dimensions and assembly parameters"
+    }
+  },
+  "critical_components": {
+    "H": "масса заготовок (Blank mass)",
+    "I": "Колонны (Columns)",
+    "J": "Гребенка (Ribs)",
+    "L": "Mass calculation for ribs",
+    "M": "Полоса гребенки (Rib strips)",
+    "O": "Mass calculation for rib strips",
+    "P": "Лист концевой (End sheets)",
+    "R": "Mass calculation for end sheets",
+    "BA": "Сумма 3мм Теплоблок (пакет) - Total 3mm heat block package",
+    "BB": "Сумма 3мм Теплоблок (плакировка) - Total 3mm cladding",
+    "BD": "Сумма 1мм - Total 1mm components"
+  },
+  "mass_related_columns": [
+    {
+      "column": "I",
+      "value": 110,
+      "header": "Колонны"
+    },
+    {
+      "column": "J",
+      "value": 130,
+      "header": "Гребенка"
+    },
+    {
+      "column": "M",
+      "value": 120,
+      "header": "Полоса гребенки"
+    },
+    {
+      "column": "P",
+      "value": 962,
+      "header": "Лист концевой"
+    },
+    {
+      "column": "Q",
+      "value": 960,
+      "header": null
+    },
+    {
+      "column": "X",
+      "value": 782,
+      "header": null
+    },
+    {
+      "column": "Y",
+      "value": 765,
+      "header": null
+    },
+    {
+      "column": "AG",
+      "value": 792,
+      "header": null
+    },
+    {
+      "column": "AJ",
+      "value": 790,
+      "header": null
+    }
+  ],
+  "dimension_related_columns": [
+    {
+      "column": "H",
+      "value": 1820.5952,
+      "header": "масса заготовок"
+    },
+    {
+      "column": "K",
+      "value": 2410,
+      "header": null
+    },
+    {
+      "column": "L",
+      "value": 29.625648,
+      "header": null
+    },
+    {
+      "column": "N",
+      "value": 2410,
+      "header": null
+    },
+    {
+      "column": "O",
+      "value": 27.346752000000002,
+      "header": null
+    },
+    {
+      "column": "R",
+      "value": 43.6640256,
+      "header": null
+    },
+    {
+      "column": "S",
+      "value": 25,
+      "header": "Зеркало лист без прибавки на резку"
+    },
+    {
+      "column": "T",
+      "value": 35,
+      "header": "Зеркало лист"
+    },
+    {
+      "column": "U",
+      "value": -92,
+      "header": null
+    },
+    {
+      "column": "W",
+      "value": 74,
+      "header": "Зеркало 1шт без прибавки на резку"
+    },
+    {
+      "column": "Z",
+      "value": 30,
+      "header": "Зеркало А 2шт"
+    },
+    {
+      "column": "AA",
+      "value": 6364,
+      "header": null
+    },
+    {
+      "column": "AB",
+      "value": 9.0266976,
+      "header": null
+    },
+    {
+      "column": "AC",
+      "value": 30,
+      "header": "Зеркало Б 2шт"
+    },
+    {
+      "column": "AD",
+      "value": 6360,
+      "header": null
+    },
+    {
+      "column": "AE",
+      "value": 9.021023999999999,
+      "header": null
+    },
+    {
+      "column": "AF",
+      "value": 2463,
+      "header": "Лист плакирующий А"
+    },
+    {
+      "column": "AH",
+      "value": 92.22890688,
+      "header": null
+    },
+    {
+      "column": "AI",
+      "value": 2463,
+      "header": "Лист плакирующий Б"
+    },
+    {
+      "column": "AK",
+      "value": 91.9960056,
+      "header": null
+    }
+  ]
+}

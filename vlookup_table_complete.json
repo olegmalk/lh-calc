@@ -1,0 +1,3756 @@
+{
+  "range": "B110:BI122",
+  "dimensions": {
+    "rows": 13,
+    "columns": 60,
+    "total_cells": 780
+  },
+  "headers": [
+    {
+      "column": "B",
+      "index": 0,
+      "header": "К4-150"
+    },
+    {
+      "column": "C",
+      "index": 1,
+      "header": 143
+    },
+    {
+      "column": "D",
+      "index": 2,
+      "header": 128
+    },
+    {
+      "column": "E",
+      "index": 3,
+      "header": 162
+    },
+    {
+      "column": "F",
+      "index": 4,
+      "header": 147
+    },
+    {
+      "column": "G",
+      "index": 5,
+      "header": 1
+    },
+    {
+      "column": "H",
+      "index": 6,
+      "header": 90.380448
+    },
+    {
+      "column": "I",
+      "index": 7,
+      "header": 40
+    },
+    {
+      "column": "J",
+      "index": 8,
+      "header": 60
+    },
+    {
+      "column": "K",
+      "index": 9,
+      "header": 2410
+    },
+    {
+      "column": "L",
+      "index": 10,
+      "header": 13.673376000000001
+    },
+    {
+      "column": "M",
+      "index": 11,
+      "header": 50
+    },
+    {
+      "column": "N",
+      "index": 12,
+      "header": 2410
+    },
+    {
+      "column": "O",
+      "index": 13,
+      "header": 11.39448
+    },
+    {
+      "column": "P",
+      "index": 14,
+      "header": 233
+    },
+    {
+      "column": "Q",
+      "index": 15,
+      "header": 233
+    },
+    {
+      "column": "R",
+      "index": 16,
+      "header": 2.5667839199999998
+    },
+    {
+      "column": "S",
+      "index": 17,
+      "header": 11
+    },
+    {
+      "column": "T",
+      "index": 18,
+      "header": 16
+    },
+    {
+      "column": "U",
+      "index": 19,
+      "header": -92
+    },
+    {
+      "column": "V",
+      "index": 20,
+      "header": "#REF!"
+    },
+    {
+      "column": "W",
+      "index": 21,
+      "header": 60
+    },
+    {
+      "column": "X",
+      "index": 22,
+      "header": 165
+    },
+    {
+      "column": "Y",
+      "index": 23,
+      "header": 150
+    },
+    {
+      "column": "Z",
+      "index": 24,
+      "header": 16
+    },
+    {
+      "column": "AA",
+      "index": 25,
+      "header": 5130
+    },
+    {
+      "column": "AB",
+      "index": 26,
+      "header": 3.8807424
+    },
+    {
+      "column": "AC",
+      "index": 27,
+      "header": 16
+    },
+    {
+      "column": "AD",
+      "index": 28,
+      "header": 5130
+    },
+    {
+      "column": "AE",
+      "index": 29,
+      "header": 3.8807424
+    },
+    {
+      "column": "AF",
+      "index": 30,
+      "header": 2435
+    },
+    {
+      "column": "AG",
+      "index": 31,
+      "header": 175
+    },
+    {
+      "column": "AH",
+      "index": 32,
+      "header": 20.14719
+    },
+    {
+      "column": "AI",
+      "index": 33,
+      "header": 2435
+    },
+    {
+      "column": "AJ",
+      "index": 34,
+      "header": 175
+    },
+    {
+      "column": "AK",
+      "index": 35,
+      "header": 20.14719
+    },
+    {
+      "column": "AL",
+      "index": 36,
+      "header": 31.32
+    },
+    {
+      "column": "AM",
+      "index": 37,
+      "header": 19.68
+    },
+    {
+      "column": "AN",
+      "index": 38,
+      "header": 1.864
+    },
+    {
+      "column": "AO",
+      "index": 39,
+      "header": 0.432
+    },
+    {
+      "column": "AP",
+      "index": 40,
+      "header": 41.392
+    },
+    {
+      "column": "AQ",
+      "index": 41,
+      "header": 41.392
+    },
+    {
+      "column": "AR",
+      "index": 42,
+      "header": 0
+    },
+    {
+      "column": "AS",
+      "index": 43,
+      "header": 2.18
+    },
+    {
+      "column": "AT",
+      "index": 44,
+      "header": 0
+    },
+    {
+      "column": "AU",
+      "index": 45,
+      "header": 1.6800000000000002
+    },
+    {
+      "column": "AV",
+      "index": 46,
+      "header": 216.8
+    },
+    {
+      "column": "AW",
+      "index": 47,
+      "header": 11.484
+    },
+    {
+      "column": "AX",
+      "index": 48,
+      "header": 11.484
+    },
+    {
+      "column": "AY",
+      "index": 49,
+      "header": 1.044
+    },
+    {
+      "column": "AZ",
+      "index": 50,
+      "header": 1.044
+    },
+    {
+      "column": "BA",
+      "index": 51,
+      "header": 137.828
+    },
+    {
+      "column": "BB",
+      "index": 52,
+      "header": 25.056
+    },
+    {
+      "column": "BC",
+      "index": 53,
+      "header": 137.828
+    },
+    {
+      "column": "BD",
+      "index": 54,
+      "header": 218.48000000000002
+    },
+    {
+      "column": "BE",
+      "index": 55,
+      "header": 14
+    },
+    {
+      "column": "BF",
+      "index": 56,
+      "header": 8
+    },
+    {
+      "column": "BG",
+      "index": 57,
+      "header": 143
+    },
+    {
+      "column": "BH",
+      "index": 58,
+      "header": 143
+    },
+    {
+      "column": "BI",
+      "index": 59,
+      "header": 44
+    }
+  ],
+  "table_data": [
+    {
+      "row_number": 110,
+      "equipment_type": "К4-150",
+      "values": [
+        {
+          "column": "B",
+          "value": "К4-150"
+        },
+        {
+          "column": "C",
+          "value": 143
+        },
+        {
+          "column": "D",
+          "value": 128
+        },
+        {
+          "column": "E",
+          "value": 162
+        },
+        {
+          "column": "F",
+          "value": 147
+        },
+        {
+          "column": "G",
+          "value": 1
+        },
+        {
+          "column": "H",
+          "value": 90.380448
+        },
+        {
+          "column": "I",
+          "value": 40
+        },
+        {
+          "column": "J",
+          "value": 60
+        },
+        {
+          "column": "K",
+          "value": 2410
+        },
+        {
+          "column": "L",
+          "value": 13.673376000000001
+        },
+        {
+          "column": "M",
+          "value": 50
+        },
+        {
+          "column": "N",
+          "value": 2410
+        },
+        {
+          "column": "O",
+          "value": 11.39448
+        },
+        {
+          "column": "P",
+          "value": 233
+        },
+        {
+          "column": "Q",
+          "value": 233
+        },
+        {
+          "column": "R",
+          "value": 2.5667839199999998
+        },
+        {
+          "column": "S",
+          "value": 11
+        },
+        {
+          "column": "T",
+          "value": 16
+        },
+        {
+          "column": "U",
+          "value": -92
+        },
+        {
+          "column": "V",
+          "value": "#REF!"
+        },
+        {
+          "column": "W",
+          "value": 60
+        },
+        {
+          "column": "X",
+          "value": 165
+        },
+        {
+          "column": "Y",
+          "value": 150
+        },
+        {
+          "column": "Z",
+          "value": 16
+        },
+        {
+          "column": "AA",
+          "value": 5130
+        },
+        {
+          "column": "AB",
+          "value": 3.8807424
+        },
+        {
+          "column": "AC",
+          "value": 16
+        },
+        {
+          "column": "AD",
+          "value": 5130
+        },
+        {
+          "column": "AE",
+          "value": 3.8807424
+        },
+        {
+          "column": "AF",
+          "value": 2435
+        },
+        {
+          "column": "AG",
+          "value": 175
+        },
+        {
+          "column": "AH",
+          "value": 20.14719
+        },
+        {
+          "column": "AI",
+          "value": 2435
+        },
+        {
+          "column": "AJ",
+          "value": 175
+        },
+        {
+          "column": "AK",
+          "value": 20.14719
+        },
+        {
+          "column": "AL",
+          "value": 31.32
+        },
+        {
+          "column": "AM",
+          "value": 19.68
+        },
+        {
+          "column": "AN",
+          "value": 1.864
+        },
+        {
+          "column": "AO",
+          "value": 0.432
+        },
+        {
+          "column": "AP",
+          "value": 41.392
+        },
+        {
+          "column": "AQ",
+          "value": 41.392
+        },
+        {
+          "column": "AR",
+          "value": 0
+        },
+        {
+          "column": "AS",
+          "value": 2.18
+        },
+        {
+          "column": "AT",
+          "value": 0
+        },
+        {
+          "column": "AU",
+          "value": 1.6800000000000002
+        },
+        {
+          "column": "AV",
+          "value": 216.8
+        },
+        {
+          "column": "AW",
+          "value": 11.484
+        },
+        {
+          "column": "AX",
+          "value": 11.484
+        },
+        {
+          "column": "AY",
+          "value": 1.044
+        },
+        {
+          "column": "AZ",
+          "value": 1.044
+        },
+        {
+          "column": "BA",
+          "value": 137.828
+        },
+        {
+          "column": "BB",
+          "value": 25.056
+        },
+        {
+          "column": "BC",
+          "value": 137.828
+        },
+        {
+          "column": "BD",
+          "value": 218.48000000000002
+        },
+        {
+          "column": "BE",
+          "value": 14
+        },
+        {
+          "column": "BF",
+          "value": 8
+        },
+        {
+          "column": "BG",
+          "value": 143
+        },
+        {
+          "column": "BH",
+          "value": 143
+        },
+        {
+          "column": "BI",
+          "value": 44
+        }
+      ]
+    },
+    {
+      "row_number": 111,
+      "equipment_type": "К4-200",
+      "values": [
+        {
+          "column": "B",
+          "value": "К4-200"
+        },
+        {
+          "column": "C",
+          "value": 227
+        },
+        {
+          "column": "D",
+          "value": 212
+        },
+        {
+          "column": "E",
+          "value": 245
+        },
+        {
+          "column": "F",
+          "value": 235
+        },
+        {
+          "column": "G",
+          "value": 1
+        },
+        {
+          "column": "H",
+          "value": 204.88000000000005
+        },
+        {
+          "column": "I",
+          "value": 40
+        },
+        {
+          "column": "J",
+          "value": 60
+        },
+        {
+          "column": "K",
+          "value": 2410
+        },
+        {
+          "column": "L",
+          "value": 13.673376000000001
+        },
+        {
+          "column": "M",
+          "value": 50
+        },
+        {
+          "column": "N",
+          "value": 2410
+        },
+        {
+          "column": "O",
+          "value": 11.39448
+        },
+        {
+          "column": "P",
+          "value": 317
+        },
+        {
+          "column": "Q",
+          "value": 317
+        },
+        {
+          "column": "R",
+          "value": 4.75111992
+        },
+        {
+          "column": "S",
+          "value": 11
+        },
+        {
+          "column": "T",
+          "value": 21
+        },
+        {
+          "column": "U",
+          "value": -92
+        },
+        {
+          "column": "V",
+          "value": "#REF!"
+        },
+        {
+          "column": "W",
+          "value": 60
+        },
+        {
+          "column": "X",
+          "value": 249
+        },
+        {
+          "column": "Y",
+          "value": 234
+        },
+        {
+          "column": "Z",
+          "value": 16
+        },
+        {
+          "column": "AA",
+          "value": 5298
+        },
+        {
+          "column": "AB",
+          "value": 4.00783104
+        },
+        {
+          "column": "AC",
+          "value": 16
+        },
+        {
+          "column": "AD",
+          "value": 5298
+        },
+        {
+          "column": "AE",
+          "value": 4.00783104
+        },
+        {
+          "column": "AF",
+          "value": 2435
+        },
+        {
+          "column": "AG",
+          "value": 259
+        },
+        {
+          "column": "AH",
+          "value": 29.8178412
+        },
+        {
+          "column": "AI",
+          "value": 2435
+        },
+        {
+          "column": "AJ",
+          "value": 259
+        },
+        {
+          "column": "AK",
+          "value": 29.8178412
+        },
+        {
+          "column": "AL",
+          "value": 31.32
+        },
+        {
+          "column": "AM",
+          "value": 19.68
+        },
+        {
+          "column": "AN",
+          "value": 2.536
+        },
+        {
+          "column": "AO",
+          "value": 0.512
+        },
+        {
+          "column": "AP",
+          "value": 42.736
+        },
+        {
+          "column": "AQ",
+          "value": 42.736
+        },
+        {
+          "column": "AR",
+          "value": 0
+        },
+        {
+          "column": "AS",
+          "value": 3.02
+        },
+        {
+          "column": "AT",
+          "value": 0
+        },
+        {
+          "column": "AU",
+          "value": 2.52
+        },
+        {
+          "column": "AV",
+          "value": 351.2
+        },
+        {
+          "column": "AW",
+          "value": 11.8536
+        },
+        {
+          "column": "AX",
+          "value": 11.8536
+        },
+        {
+          "column": "AY",
+          "value": 1.0776000000000001
+        },
+        {
+          "column": "AZ",
+          "value": 1.0776000000000001
+        },
+        {
+          "column": "BA",
+          "value": 142.028
+        },
+        {
+          "column": "BB",
+          "value": 25.8624
+        },
+        {
+          "column": "BC",
+          "value": 142.028
+        },
+        {
+          "column": "BD",
+          "value": 353.71999999999997
+        },
+        {
+          "column": "BE",
+          "value": 14
+        },
+        {
+          "column": "BF",
+          "value": 8
+        },
+        {
+          "column": "BG",
+          "value": 227
+        },
+        {
+          "column": "BH",
+          "value": 227
+        },
+        {
+          "column": "BI",
+          "value": 44
+        }
+      ]
+    },
+    {
+      "row_number": 112,
+      "equipment_type": "К4-300",
+      "values": [
+        {
+          "column": "B",
+          "value": "К4-300"
+        },
+        {
+          "column": "C",
+          "value": 302
+        },
+        {
+          "column": "D",
+          "value": 287
+        },
+        {
+          "column": "E",
+          "value": 320
+        },
+        {
+          "column": "F",
+          "value": 300
+        },
+        {
+          "column": "G",
+          "value": 1
+        },
+        {
+          "column": "H",
+          "value": 332.61480000000006
+        },
+        {
+          "column": "I",
+          "value": 50
+        },
+        {
+          "column": "J",
+          "value": 70
+        },
+        {
+          "column": "K",
+          "value": 2410
+        },
+        {
+          "column": "L",
+          "value": 15.952271999999999
+        },
+        {
+          "column": "M",
+          "value": 60
+        },
+        {
+          "column": "N",
+          "value": 2410
+        },
+        {
+          "column": "O",
+          "value": 13.673376000000001
+        },
+        {
+          "column": "P",
+          "value": 412
+        },
+        {
+          "column": "Q",
+          "value": 412
+        },
+        {
+          "column": "R",
+          "value": 8.02549632
+        },
+        {
+          "column": "S",
+          "value": 11
+        },
+        {
+          "column": "T",
+          "value": 21
+        },
+        {
+          "column": "U",
+          "value": -92
+        },
+        {
+          "column": "V",
+          "value": "#REF!"
+        },
+        {
+          "column": "W",
+          "value": 60
+        },
+        {
+          "column": "X",
+          "value": 324
+        },
+        {
+          "column": "Y",
+          "value": 309
+        },
+        {
+          "column": "Z",
+          "value": 16
+        },
+        {
+          "column": "AA",
+          "value": 5448
+        },
+        {
+          "column": "AB",
+          "value": 4.12130304
+        },
+        {
+          "column": "AC",
+          "value": 16
+        },
+        {
+          "column": "AD",
+          "value": 5448
+        },
+        {
+          "column": "AE",
+          "value": 4.12130304
+        },
+        {
+          "column": "AF",
+          "value": 2435
+        },
+        {
+          "column": "AG",
+          "value": 334
+        },
+        {
+          "column": "AH",
+          "value": 38.452351199999995
+        },
+        {
+          "column": "AI",
+          "value": 2435
+        },
+        {
+          "column": "AJ",
+          "value": 334
+        },
+        {
+          "column": "AK",
+          "value": 38.452351199999995
+        },
+        {
+          "column": "AL",
+          "value": 31.4
+        },
+        {
+          "column": "AM",
+          "value": 19.76
+        },
+        {
+          "column": "AN",
+          "value": 3.296
+        },
+        {
+          "column": "AO",
+          "value": 0.512
+        },
+        {
+          "column": "AP",
+          "value": 43.936
+        },
+        {
+          "column": "AQ",
+          "value": 43.936
+        },
+        {
+          "column": "AR",
+          "value": 0
+        },
+        {
+          "column": "AS",
+          "value": 3.87
+        },
+        {
+          "column": "AT",
+          "value": 0
+        },
+        {
+          "column": "AU",
+          "value": 3.27
+        },
+        {
+          "column": "AV",
+          "value": 471.2
+        },
+        {
+          "column": "AW",
+          "value": 12.1836
+        },
+        {
+          "column": "AX",
+          "value": 12.1836
+        },
+        {
+          "column": "AY",
+          "value": 1.1076000000000001
+        },
+        {
+          "column": "AZ",
+          "value": 1.1076000000000001
+        },
+        {
+          "column": "BA",
+          "value": 146.198
+        },
+        {
+          "column": "BB",
+          "value": 26.582400000000003
+        },
+        {
+          "column": "BC",
+          "value": 146.198
+        },
+        {
+          "column": "BD",
+          "value": 474.46999999999997
+        },
+        {
+          "column": "BE",
+          "value": 14
+        },
+        {
+          "column": "BF",
+          "value": 8
+        },
+        {
+          "column": "BG",
+          "value": 302
+        },
+        {
+          "column": "BH",
+          "value": 302
+        },
+        {
+          "column": "BI",
+          "value": 44
+        }
+      ]
+    },
+    {
+      "row_number": 113,
+      "equipment_type": "К4-400",
+      "values": [
+        {
+          "column": "B",
+          "value": "К4-400"
+        },
+        {
+          "column": "C",
+          "value": 373
+        },
+        {
+          "column": "D",
+          "value": 360
+        },
+        {
+          "column": "E",
+          "value": 395
+        },
+        {
+          "column": "F",
+          "value": 380
+        },
+        {
+          "column": "G",
+          "value": 1
+        },
+        {
+          "column": "H",
+          "value": 510.46639999999996
+        },
+        {
+          "column": "I",
+          "value": 60
+        },
+        {
+          "column": "J",
+          "value": 80
+        },
+        {
+          "column": "K",
+          "value": 2410
+        },
+        {
+          "column": "L",
+          "value": 18.231167999999997
+        },
+        {
+          "column": "M",
+          "value": 70
+        },
+        {
+          "column": "N",
+          "value": 2410
+        },
+        {
+          "column": "O",
+          "value": 15.952271999999999
+        },
+        {
+          "column": "P",
+          "value": 503
+        },
+        {
+          "column": "Q",
+          "value": 505
+        },
+        {
+          "column": "R",
+          "value": 12.0098292
+        },
+        {
+          "column": "S",
+          "value": 14
+        },
+        {
+          "column": "T",
+          "value": 24
+        },
+        {
+          "column": "U",
+          "value": -92
+        },
+        {
+          "column": "V",
+          "value": "#REF!"
+        },
+        {
+          "column": "W",
+          "value": 63
+        },
+        {
+          "column": "X",
+          "value": 401
+        },
+        {
+          "column": "Y",
+          "value": 388
+        },
+        {
+          "column": "Z",
+          "value": 19
+        },
+        {
+          "column": "AA",
+          "value": 5602
+        },
+        {
+          "column": "AB",
+          "value": 5.03238864
+        },
+        {
+          "column": "AC",
+          "value": 19
+        },
+        {
+          "column": "AD",
+          "value": 5606
+        },
+        {
+          "column": "AE",
+          "value": 5.03598192
+        },
+        {
+          "column": "AF",
+          "value": 2441
+        },
+        {
+          "column": "AG",
+          "value": 411
+        },
+        {
+          "column": "AH",
+          "value": 47.43370728
+        },
+        {
+          "column": "AI",
+          "value": 2441
+        },
+        {
+          "column": "AJ",
+          "value": 413
+        },
+        {
+          "column": "AK",
+          "value": 47.66452824
+        },
+        {
+          "column": "AL",
+          "value": 31.48
+        },
+        {
+          "column": "AM",
+          "value": 19.84
+        },
+        {
+          "column": "AN",
+          "value": 4.032
+        },
+        {
+          "column": "AO",
+          "value": 0.608
+        },
+        {
+          "column": "AP",
+          "value": 45.264
+        },
+        {
+          "column": "AQ",
+          "value": 45.296
+        },
+        {
+          "column": "AR",
+          "value": 0
+        },
+        {
+          "column": "AS",
+          "value": 4.699999999999999
+        },
+        {
+          "column": "AT",
+          "value": 0
+        },
+        {
+          "column": "AU",
+          "value": 4
+        },
+        {
+          "column": "AV",
+          "value": 586.4
+        },
+        {
+          "column": "AW",
+          "value": 12.5488
+        },
+        {
+          "column": "AX",
+          "value": 12.5576
+        },
+        {
+          "column": "AY",
+          "value": 1.1408
+        },
+        {
+          "column": "AZ",
+          "value": 1.1416
+        },
+        {
+          "column": "BA",
+          "value": 150.612
+        },
+        {
+          "column": "BB",
+          "value": 27.3888
+        },
+        {
+          "column": "BC",
+          "value": 150.612
+        },
+        {
+          "column": "BD",
+          "value": 590.4
+        },
+        {
+          "column": "BE",
+          "value": 14
+        },
+        {
+          "column": "BF",
+          "value": 8
+        },
+        {
+          "column": "BG",
+          "value": 373
+        },
+        {
+          "column": "BH",
+          "value": 375
+        },
+        {
+          "column": "BI",
+          "value": 44
+        }
+      ]
+    },
+    {
+      "row_number": 114,
+      "equipment_type": "К4-500",
+      "values": [
+        {
+          "column": "B",
+          "value": "К4-500"
+        },
+        {
+          "column": "C",
+          "value": 476
+        },
+        {
+          "column": "D",
+          "value": 455
+        },
+        {
+          "column": "E",
+          "value": 495
+        },
+        {
+          "column": "F",
+          "value": 495
+        },
+        {
+          "column": "G",
+          "value": 1
+        },
+        {
+          "column": "H",
+          "value": 819.8351999999998
+        },
+        {
+          "column": "I",
+          "value": 70
+        },
+        {
+          "column": "J",
+          "value": 90
+        },
+        {
+          "column": "K",
+          "value": 2410
+        },
+        {
+          "column": "L",
+          "value": 20.510064
+        },
+        {
+          "column": "M",
+          "value": 80
+        },
+        {
+          "column": "N",
+          "value": 2410
+        },
+        {
+          "column": "O",
+          "value": 18.231167999999997
+        },
+        {
+          "column": "P",
+          "value": 626
+        },
+        {
+          "column": "Q",
+          "value": 620
+        },
+        {
+          "column": "R",
+          "value": 18.3503136
+        },
+        {
+          "column": "S",
+          "value": 16
+        },
+        {
+          "column": "T",
+          "value": 26
+        },
+        {
+          "column": "U",
+          "value": -92
+        },
+        {
+          "column": "V",
+          "value": "#REF!"
+        },
+        {
+          "column": "W",
+          "value": 65
+        },
+        {
+          "column": "X",
+          "value": 508
+        },
+        {
+          "column": "Y",
+          "value": 487
+        },
+        {
+          "column": "Z",
+          "value": 21
+        },
+        {
+          "column": "AA",
+          "value": 5816
+        },
+        {
+          "column": "AB",
+          "value": 5.77459008
+        },
+        {
+          "column": "AC",
+          "value": 21
+        },
+        {
+          "column": "AD",
+          "value": 5804
+        },
+        {
+          "column": "AE",
+          "value": 5.76267552
+        },
+        {
+          "column": "AF",
+          "value": 2445
+        },
+        {
+          "column": "AG",
+          "value": 518
+        },
+        {
+          "column": "AH",
+          "value": 59.880592799999995
+        },
+        {
+          "column": "AI",
+          "value": 2445
+        },
+        {
+          "column": "AJ",
+          "value": 512
+        },
+        {
+          "column": "AK",
+          "value": 59.1869952
+        },
+        {
+          "column": "AL",
+          "value": 31.56
+        },
+        {
+          "column": "AM",
+          "value": 19.92
+        },
+        {
+          "column": "AN",
+          "value": 4.984
+        },
+        {
+          "column": "AO",
+          "value": 0.672
+        },
+        {
+          "column": "AP",
+          "value": 47.04
+        },
+        {
+          "column": "AQ",
+          "value": 46.944
+        },
+        {
+          "column": "AR",
+          "value": 0
+        },
+        {
+          "column": "AS",
+          "value": 5.75
+        },
+        {
+          "column": "AT",
+          "value": 0
+        },
+        {
+          "column": "AU",
+          "value": 4.95
+        },
+        {
+          "column": "AV",
+          "value": 744.8
+        },
+        {
+          "column": "AW",
+          "value": 13.0372
+        },
+        {
+          "column": "AX",
+          "value": 13.0108
+        },
+        {
+          "column": "AY",
+          "value": 1.1852
+        },
+        {
+          "column": "AZ",
+          "value": 1.1827999999999999
+        },
+        {
+          "column": "BA",
+          "value": 156.198
+        },
+        {
+          "column": "BB",
+          "value": 28.416000000000004
+        },
+        {
+          "column": "BC",
+          "value": 156.198
+        },
+        {
+          "column": "BD",
+          "value": 749.75
+        },
+        {
+          "column": "BE",
+          "value": 14
+        },
+        {
+          "column": "BF",
+          "value": 8
+        },
+        {
+          "column": "BG",
+          "value": 476
+        },
+        {
+          "column": "BH",
+          "value": 470
+        },
+        {
+          "column": "BI",
+          "value": 44
+        }
+      ]
+    },
+    {
+      "row_number": 115,
+      "equipment_type": "К4-500*250",
+      "values": [
+        {
+          "column": "B",
+          "value": "К4-500*250"
+        },
+        {
+          "column": "C",
+          "value": 476
+        },
+        {
+          "column": "D",
+          "value": 240
+        },
+        {
+          "column": "E",
+          "value": 495
+        },
+        {
+          "column": "F",
+          "value": 246
+        },
+        {
+          "column": "G",
+          "value": 1
+        },
+        {
+          "column": "H",
+          "value": 419.56271999999996
+        },
+        {
+          "column": "I",
+          "value": 70
+        },
+        {
+          "column": "J",
+          "value": 90
+        },
+        {
+          "column": "K",
+          "value": 2410
+        },
+        {
+          "column": "L",
+          "value": 20.510064
+        },
+        {
+          "column": "M",
+          "value": 80
+        },
+        {
+          "column": "N",
+          "value": 2410
+        },
+        {
+          "column": "O",
+          "value": 18.231167999999997
+        },
+        {
+          "column": "P",
+          "value": 626
+        },
+        {
+          "column": "Q",
+          "value": 405
+        },
+        {
+          "column": "R",
+          "value": 11.9868984
+        },
+        {
+          "column": "S",
+          "value": 16
+        },
+        {
+          "column": "T",
+          "value": 26
+        },
+        {
+          "column": "U",
+          "value": -92
+        },
+        {
+          "column": "V",
+          "value": "#REF!"
+        },
+        {
+          "column": "W",
+          "value": 65
+        },
+        {
+          "column": "X",
+          "value": 508
+        },
+        {
+          "column": "Y",
+          "value": 272
+        },
+        {
+          "column": "Z",
+          "value": 21
+        },
+        {
+          "column": "AA",
+          "value": 5816
+        },
+        {
+          "column": "AB",
+          "value": 5.77459008
+        },
+        {
+          "column": "AC",
+          "value": 21
+        },
+        {
+          "column": "AD",
+          "value": 5374
+        },
+        {
+          "column": "AE",
+          "value": 5.33573712
+        },
+        {
+          "column": "AF",
+          "value": 2445
+        },
+        {
+          "column": "AG",
+          "value": 518
+        },
+        {
+          "column": "AH",
+          "value": 59.880592799999995
+        },
+        {
+          "column": "AI",
+          "value": 2445
+        },
+        {
+          "column": "AJ",
+          "value": 297
+        },
+        {
+          "column": "AK",
+          "value": 34.3330812
+        },
+        {
+          "column": "AL",
+          "value": 31.56
+        },
+        {
+          "column": "AM",
+          "value": 19.92
+        },
+        {
+          "column": "AN",
+          "value": 4.124
+        },
+        {
+          "column": "AO",
+          "value": 0.672
+        },
+        {
+          "column": "AP",
+          "value": 47.04
+        },
+        {
+          "column": "AQ",
+          "value": 43.504
+        },
+        {
+          "column": "AR",
+          "value": 0
+        },
+        {
+          "column": "AS",
+          "value": 3.5999999999999996
+        },
+        {
+          "column": "AT",
+          "value": 0
+        },
+        {
+          "column": "AU",
+          "value": 2.8000000000000003
+        },
+        {
+          "column": "AV",
+          "value": 572.8
+        },
+        {
+          "column": "AW",
+          "value": 13.0372
+        },
+        {
+          "column": "AX",
+          "value": 12.0648
+        },
+        {
+          "column": "AY",
+          "value": 1.1852
+        },
+        {
+          "column": "AZ",
+          "value": 1.0968
+        },
+        {
+          "column": "BA",
+          "value": 149.748
+        },
+        {
+          "column": "BB",
+          "value": 27.384
+        },
+        {
+          "column": "BC",
+          "value": 149.748
+        },
+        {
+          "column": "BD",
+          "value": 575.5999999999999
+        },
+        {
+          "column": "BE",
+          "value": 14
+        },
+        {
+          "column": "BF",
+          "value": 8
+        },
+        {
+          "column": "BG",
+          "value": 476
+        },
+        {
+          "column": "BH",
+          "value": 255
+        },
+        {
+          "column": "BI",
+          "value": 44
+        }
+      ]
+    },
+    {
+      "row_number": 116,
+      "equipment_type": "К4-600",
+      "values": [
+        {
+          "column": "B",
+          "value": "К4-600"
+        },
+        {
+          "column": "C",
+          "value": 595
+        },
+        {
+          "column": "D",
+          "value": 595
+        },
+        {
+          "column": "E",
+          "value": 615
+        },
+        {
+          "column": "F",
+          "value": 615
+        },
+        {
+          "column": "G",
+          "value": 1
+        },
+        {
+          "column": "H",
+          "value": 1251.0288
+        },
+        {
+          "column": "I",
+          "value": 70
+        },
+        {
+          "column": "J",
+          "value": 90
+        },
+        {
+          "column": "K",
+          "value": 2410
+        },
+        {
+          "column": "L",
+          "value": 20.510064
+        },
+        {
+          "column": "M",
+          "value": 80
+        },
+        {
+          "column": "N",
+          "value": 2410
+        },
+        {
+          "column": "O",
+          "value": 18.231167999999997
+        },
+        {
+          "column": "P",
+          "value": 745
+        },
+        {
+          "column": "Q",
+          "value": 760
+        },
+        {
+          "column": "R",
+          "value": 26.769935999999998
+        },
+        {
+          "column": "S",
+          "value": 16
+        },
+        {
+          "column": "T",
+          "value": 26
+        },
+        {
+          "column": "U",
+          "value": -92
+        },
+        {
+          "column": "V",
+          "value": "#REF!"
+        },
+        {
+          "column": "W",
+          "value": 65
+        },
+        {
+          "column": "X",
+          "value": 627
+        },
+        {
+          "column": "Y",
+          "value": 627
+        },
+        {
+          "column": "Z",
+          "value": 21
+        },
+        {
+          "column": "AA",
+          "value": 6054
+        },
+        {
+          "column": "AB",
+          "value": 6.01089552
+        },
+        {
+          "column": "AC",
+          "value": 21
+        },
+        {
+          "column": "AD",
+          "value": 6084
+        },
+        {
+          "column": "AE",
+          "value": 6.04068192
+        },
+        {
+          "column": "AF",
+          "value": 2445
+        },
+        {
+          "column": "AG",
+          "value": 637
+        },
+        {
+          "column": "AH",
+          "value": 73.6369452
+        },
+        {
+          "column": "AI",
+          "value": 2445
+        },
+        {
+          "column": "AJ",
+          "value": 652
+        },
+        {
+          "column": "AK",
+          "value": 75.3709392
+        },
+        {
+          "column": "AL",
+          "value": 31.56
+        },
+        {
+          "column": "AM",
+          "value": 19.92
+        },
+        {
+          "column": "AN",
+          "value": 6.02
+        },
+        {
+          "column": "AO",
+          "value": 0.672
+        },
+        {
+          "column": "AP",
+          "value": 48.944
+        },
+        {
+          "column": "AQ",
+          "value": 49.184
+        },
+        {
+          "column": "AR",
+          "value": 0
+        },
+        {
+          "column": "AS",
+          "value": 7.1499999999999995
+        },
+        {
+          "column": "AT",
+          "value": 0
+        },
+        {
+          "column": "AU",
+          "value": 6.35
+        },
+        {
+          "column": "AV",
+          "value": 952
+        },
+        {
+          "column": "AW",
+          "value": 13.560799999999999
+        },
+        {
+          "column": "AX",
+          "value": 13.6268
+        },
+        {
+          "column": "AY",
+          "value": 1.2328
+        },
+        {
+          "column": "AZ",
+          "value": 1.2388
+        },
+        {
+          "column": "BA",
+          "value": 162.778
+        },
+        {
+          "column": "BB",
+          "value": 29.6592
+        },
+        {
+          "column": "BC",
+          "value": 162.778
+        },
+        {
+          "column": "BD",
+          "value": 958.35
+        },
+        {
+          "column": "BE",
+          "value": 14
+        },
+        {
+          "column": "BF",
+          "value": 8
+        },
+        {
+          "column": "BG",
+          "value": 595
+        },
+        {
+          "column": "BH",
+          "value": 610
+        },
+        {
+          "column": "BI",
+          "value": 44
+        }
+      ]
+    },
+    {
+      "row_number": 117,
+      "equipment_type": "К4-600*300",
+      "values": [
+        {
+          "column": "B",
+          "value": "К4-600*300"
+        },
+        {
+          "column": "C",
+          "value": 595
+        },
+        {
+          "column": "D",
+          "value": 295
+        },
+        {
+          "column": "E",
+          "value": 615
+        },
+        {
+          "column": "F",
+          "value": 303
+        },
+        {
+          "column": "G",
+          "value": 1
+        },
+        {
+          "column": "H",
+          "value": 631.47168
+        },
+        {
+          "column": "I",
+          "value": 70
+        },
+        {
+          "column": "J",
+          "value": 90
+        },
+        {
+          "column": "K",
+          "value": 2410
+        },
+        {
+          "column": "L",
+          "value": 20.510064
+        },
+        {
+          "column": "M",
+          "value": 80
+        },
+        {
+          "column": "N",
+          "value": 2410
+        },
+        {
+          "column": "O",
+          "value": 18.231167999999997
+        },
+        {
+          "column": "P",
+          "value": 745
+        },
+        {
+          "column": "Q",
+          "value": 460
+        },
+        {
+          "column": "R",
+          "value": 16.202856
+        },
+        {
+          "column": "S",
+          "value": 16
+        },
+        {
+          "column": "T",
+          "value": 26
+        },
+        {
+          "column": "U",
+          "value": -92
+        },
+        {
+          "column": "V",
+          "value": "#REF!"
+        },
+        {
+          "column": "W",
+          "value": 65
+        },
+        {
+          "column": "X",
+          "value": 627
+        },
+        {
+          "column": "Y",
+          "value": 327
+        },
+        {
+          "column": "Z",
+          "value": 21
+        },
+        {
+          "column": "AA",
+          "value": 6054
+        },
+        {
+          "column": "AB",
+          "value": 6.01089552
+        },
+        {
+          "column": "AC",
+          "value": 21
+        },
+        {
+          "column": "AD",
+          "value": 5484
+        },
+        {
+          "column": "AE",
+          "value": 5.44495392
+        },
+        {
+          "column": "AF",
+          "value": 2445
+        },
+        {
+          "column": "AG",
+          "value": 637
+        },
+        {
+          "column": "AH",
+          "value": 73.6369452
+        },
+        {
+          "column": "AI",
+          "value": 2445
+        },
+        {
+          "column": "AJ",
+          "value": 352
+        },
+        {
+          "column": "AK",
+          "value": 40.6910592
+        },
+        {
+          "column": "AL",
+          "value": 31.56
+        },
+        {
+          "column": "AM",
+          "value": 19.92
+        },
+        {
+          "column": "AN",
+          "value": 4.82
+        },
+        {
+          "column": "AO",
+          "value": 0.672
+        },
+        {
+          "column": "AP",
+          "value": 48.944
+        },
+        {
+          "column": "AQ",
+          "value": 44.384
+        },
+        {
+          "column": "AR",
+          "value": 0
+        },
+        {
+          "column": "AS",
+          "value": 4.1499999999999995
+        },
+        {
+          "column": "AT",
+          "value": 0
+        },
+        {
+          "column": "AU",
+          "value": 3.35
+        },
+        {
+          "column": "AV",
+          "value": 712
+        },
+        {
+          "column": "AW",
+          "value": 13.560799999999999
+        },
+        {
+          "column": "AX",
+          "value": 12.3068
+        },
+        {
+          "column": "AY",
+          "value": 1.2328
+        },
+        {
+          "column": "AZ",
+          "value": 1.1188
+        },
+        {
+          "column": "BA",
+          "value": 153.778
+        },
+        {
+          "column": "BB",
+          "value": 28.2192
+        },
+        {
+          "column": "BC",
+          "value": 153.778
+        },
+        {
+          "column": "BD",
+          "value": 715.35
+        },
+        {
+          "column": "BE",
+          "value": 14
+        },
+        {
+          "column": "BF",
+          "value": 8
+        },
+        {
+          "column": "BG",
+          "value": 595
+        },
+        {
+          "column": "BH",
+          "value": 310
+        },
+        {
+          "column": "BI",
+          "value": 44
+        }
+      ]
+    },
+    {
+      "row_number": 118,
+      "equipment_type": "К4-750",
+      "values": [
+        {
+          "column": "B",
+          "value": "К4-750"
+        },
+        {
+          "column": "C",
+          "value": 732
+        },
+        {
+          "column": "D",
+          "value": 715
+        },
+        {
+          "column": "E",
+          "value": 745
+        },
+        {
+          "column": "F",
+          "value": 745
+        },
+        {
+          "column": "G",
+          "value": 1
+        },
+        {
+          "column": "H",
+          "value": 1820.5952
+        },
+        {
+          "column": "I",
+          "value": 110
+        },
+        {
+          "column": "J",
+          "value": 130
+        },
+        {
+          "column": "K",
+          "value": 2410
+        },
+        {
+          "column": "L",
+          "value": 29.625648
+        },
+        {
+          "column": "M",
+          "value": 120
+        },
+        {
+          "column": "N",
+          "value": 2410
+        },
+        {
+          "column": "O",
+          "value": 27.346752000000002
+        },
+        {
+          "column": "P",
+          "value": 962
+        },
+        {
+          "column": "Q",
+          "value": 960
+        },
+        {
+          "column": "R",
+          "value": 43.6640256
+        },
+        {
+          "column": "S",
+          "value": 25
+        },
+        {
+          "column": "T",
+          "value": 35
+        },
+        {
+          "column": "U",
+          "value": -92
+        },
+        {
+          "column": "V",
+          "value": "#REF!"
+        },
+        {
+          "column": "W",
+          "value": 74
+        },
+        {
+          "column": "X",
+          "value": 782
+        },
+        {
+          "column": "Y",
+          "value": 765
+        },
+        {
+          "column": "Z",
+          "value": 30
+        },
+        {
+          "column": "AA",
+          "value": 6364
+        },
+        {
+          "column": "AB",
+          "value": 9.0266976
+        },
+        {
+          "column": "AC",
+          "value": 30
+        },
+        {
+          "column": "AD",
+          "value": 6360
+        },
+        {
+          "column": "AE",
+          "value": 9.021023999999999
+        },
+        {
+          "column": "AF",
+          "value": 2463
+        },
+        {
+          "column": "AG",
+          "value": 792
+        },
+        {
+          "column": "AH",
+          "value": 92.22890688
+        },
+        {
+          "column": "AI",
+          "value": 2463
+        },
+        {
+          "column": "AJ",
+          "value": 790
+        },
+        {
+          "column": "AK",
+          "value": 91.9960056
+        },
+        {
+          "column": "AL",
+          "value": 31.88
+        },
+        {
+          "column": "AM",
+          "value": 20.24
+        },
+        {
+          "column": "AN",
+          "value": 7.688
+        },
+        {
+          "column": "AO",
+          "value": 0.96
+        },
+        {
+          "column": "AP",
+          "value": 51.712
+        },
+        {
+          "column": "AQ",
+          "value": 51.68
+        },
+        {
+          "column": "AR",
+          "value": 0
+        },
+        {
+          "column": "AS",
+          "value": 8.75
+        },
+        {
+          "column": "AT",
+          "value": 0
+        },
+        {
+          "column": "AU",
+          "value": 7.55
+        },
+        {
+          "column": "AV",
+          "value": 1157.6
+        },
+        {
+          "column": "AW",
+          "value": 14.322
+        },
+        {
+          "column": "AX",
+          "value": 14.3132
+        },
+        {
+          "column": "AY",
+          "value": 1.302
+        },
+        {
+          "column": "AZ",
+          "value": 1.3012000000000001
+        },
+        {
+          "column": "BA",
+          "value": 171.95000000000002
+        },
+        {
+          "column": "BB",
+          "value": 31.2384
+        },
+        {
+          "column": "BC",
+          "value": 171.95000000000002
+        },
+        {
+          "column": "BD",
+          "value": 1165.1499999999999
+        },
+        {
+          "column": "BE",
+          "value": 14
+        },
+        {
+          "column": "BF",
+          "value": 8
+        },
+        {
+          "column": "BG",
+          "value": 732
+        },
+        {
+          "column": "BH",
+          "value": 730
+        },
+        {
+          "column": "BI",
+          "value": 44
+        }
+      ]
+    },
+    {
+      "row_number": 119,
+      "equipment_type": "К4-1000*500",
+      "values": [
+        {
+          "column": "B",
+          "value": "К4-1000*500"
+        },
+        {
+          "column": "C",
+          "value": 980
+        },
+        {
+          "column": "D",
+          "value": 480
+        },
+        {
+          "column": "E",
+          "value": 1000
+        },
+        {
+          "column": "F",
+          "value": 500
+        },
+        {
+          "column": "G",
+          "value": 1
+        },
+        {
+          "column": "H",
+          "value": 1647.6292
+        },
+        {
+          "column": "I",
+          "value": 70
+        },
+        {
+          "column": "J",
+          "value": 90
+        },
+        {
+          "column": "K",
+          "value": 2410
+        },
+        {
+          "column": "L",
+          "value": 20.510064
+        },
+        {
+          "column": "M",
+          "value": 80
+        },
+        {
+          "column": "N",
+          "value": 2410
+        },
+        {
+          "column": "O",
+          "value": 18.231167999999997
+        },
+        {
+          "column": "P",
+          "value": 1130
+        },
+        {
+          "column": "Q",
+          "value": 645
+        },
+        {
+          "column": "R",
+          "value": 34.460028
+        },
+        {
+          "column": "S",
+          "value": 16
+        },
+        {
+          "column": "T",
+          "value": 26
+        },
+        {
+          "column": "U",
+          "value": -92
+        },
+        {
+          "column": "V",
+          "value": "#REF!"
+        },
+        {
+          "column": "W",
+          "value": 65
+        },
+        {
+          "column": "X",
+          "value": 1012
+        },
+        {
+          "column": "Y",
+          "value": 512
+        },
+        {
+          "column": "Z",
+          "value": 21
+        },
+        {
+          "column": "AA",
+          "value": 6824
+        },
+        {
+          "column": "AB",
+          "value": 6.7754131200000005
+        },
+        {
+          "column": "AC",
+          "value": 21
+        },
+        {
+          "column": "AD",
+          "value": 5854
+        },
+        {
+          "column": "AE",
+          "value": 5.81231952
+        },
+        {
+          "column": "AF",
+          "value": 2445
+        },
+        {
+          "column": "AG",
+          "value": 1022
+        },
+        {
+          "column": "AH",
+          "value": 118.14279119999999
+        },
+        {
+          "column": "AI",
+          "value": 2445
+        },
+        {
+          "column": "AJ",
+          "value": 537
+        },
+        {
+          "column": "AK",
+          "value": 62.076985199999996
+        },
+        {
+          "column": "AL",
+          "value": 31.56
+        },
+        {
+          "column": "AM",
+          "value": 19.92
+        },
+        {
+          "column": "AN",
+          "value": 7.1
+        },
+        {
+          "column": "AO",
+          "value": 0.672
+        },
+        {
+          "column": "AP",
+          "value": 55.104
+        },
+        {
+          "column": "AQ",
+          "value": 47.344
+        },
+        {
+          "column": "AR",
+          "value": 0
+        },
+        {
+          "column": "AS",
+          "value": 6
+        },
+        {
+          "column": "AT",
+          "value": 0
+        },
+        {
+          "column": "AU",
+          "value": 5.2
+        },
+        {
+          "column": "AV",
+          "value": 1168
+        },
+        {
+          "column": "AW",
+          "value": 15.254800000000001
+        },
+        {
+          "column": "AX",
+          "value": 13.120800000000001
+        },
+        {
+          "column": "AY",
+          "value": 1.3868000000000003
+        },
+        {
+          "column": "AZ",
+          "value": 1.1927999999999999
+        },
+        {
+          "column": "BA",
+          "value": 167.028
+        },
+        {
+          "column": "BB",
+          "value": 30.9552
+        },
+        {
+          "column": "BC",
+          "value": 167.028
+        },
+        {
+          "column": "BD",
+          "value": 1173.2
+        },
+        {
+          "column": "BE",
+          "value": 14
+        },
+        {
+          "column": "BF",
+          "value": 8
+        },
+        {
+          "column": "BG",
+          "value": 980
+        },
+        {
+          "column": "BH",
+          "value": 495
+        },
+        {
+          "column": "BI",
+          "value": 44
+        }
+      ]
+    },
+    {
+      "row_number": 120,
+      "equipment_type": "К4-1000",
+      "values": [
+        {
+          "column": "B",
+          "value": "К4-1000"
+        },
+        {
+          "column": "C",
+          "value": 980
+        },
+        {
+          "column": "D",
+          "value": 965
+        },
+        {
+          "column": "E",
+          "value": 1000
+        },
+        {
+          "column": "F",
+          "value": 1000
+        },
+        {
+          "column": "G",
+          "value": 1
+        },
+        {
+          "column": "H",
+          "value": 3247.2692
+        },
+        {
+          "column": "I",
+          "value": 130
+        },
+        {
+          "column": "J",
+          "value": 150
+        },
+        {
+          "column": "K",
+          "value": 2410
+        },
+        {
+          "column": "L",
+          "value": 34.183440000000004
+        },
+        {
+          "column": "M",
+          "value": 140
+        },
+        {
+          "column": "N",
+          "value": 2410
+        },
+        {
+          "column": "O",
+          "value": 31.904543999999998
+        },
+        {
+          "column": "P",
+          "value": 1250
+        },
+        {
+          "column": "Q",
+          "value": 1250
+        },
+        {
+          "column": "R",
+          "value": 73.875
+        },
+        {
+          "column": "S",
+          "value": 30
+        },
+        {
+          "column": "T",
+          "value": 40
+        },
+        {
+          "column": "U",
+          "value": null
+        },
+        {
+          "column": "V",
+          "value": null
+        },
+        {
+          "column": "W",
+          "value": 79
+        },
+        {
+          "column": "X",
+          "value": 1040
+        },
+        {
+          "column": "Y",
+          "value": 1025
+        },
+        {
+          "column": "Z",
+          "value": 35
+        },
+        {
+          "column": "AA",
+          "value": 6880
+        },
+        {
+          "column": "AB",
+          "value": 11.385024
+        },
+        {
+          "column": "AC",
+          "value": 35
+        },
+        {
+          "column": "AD",
+          "value": 6880
+        },
+        {
+          "column": "AE",
+          "value": 11.385024
+        },
+        {
+          "column": "AF",
+          "value": 2473
+        },
+        {
+          "column": "AG",
+          "value": 1050
+        },
+        {
+          "column": "AH",
+          "value": 122.769612
+        },
+        {
+          "column": "AI",
+          "value": 2473
+        },
+        {
+          "column": "AJ",
+          "value": 1050
+        },
+        {
+          "column": "AK",
+          "value": 122.769612
+        },
+        {
+          "column": "AL",
+          "value": 32.04
+        },
+        {
+          "column": "AM",
+          "value": 20.4
+        },
+        {
+          "column": "AN",
+          "value": 10
+        },
+        {
+          "column": "AO",
+          "value": 1.12
+        },
+        {
+          "column": "AP",
+          "value": 56
+        },
+        {
+          "column": "AQ",
+          "value": 56
+        },
+        {
+          "column": "AR",
+          "value": 0
+        },
+        {
+          "column": "AS",
+          "value": 11.45
+        },
+        {
+          "column": "AT",
+          "value": 0
+        },
+        {
+          "column": "AU",
+          "value": 10.049999999999999
+        },
+        {
+          "column": "AV",
+          "value": 1556
+        },
+        {
+          "column": "AW",
+          "value": 15.5012
+        },
+        {
+          "column": "AX",
+          "value": 15.5012
+        },
+        {
+          "column": "AY",
+          "value": 1.4092000000000002
+        },
+        {
+          "column": "AZ",
+          "value": 1.4092000000000002
+        },
+        {
+          "column": "BA",
+          "value": 185.89
+        },
+        {
+          "column": "BB",
+          "value": 33.8208
+        },
+        {
+          "column": "BC",
+          "value": 185.89
+        },
+        {
+          "column": "BD",
+          "value": 1566.05
+        },
+        {
+          "column": "BE",
+          "value": 14
+        },
+        {
+          "column": "BF",
+          "value": 8
+        },
+        {
+          "column": "BG",
+          "value": 980
+        },
+        {
+          "column": "BH",
+          "value": 980
+        },
+        {
+          "column": "BI",
+          "value": 44
+        }
+      ]
+    },
+    {
+      "row_number": 121,
+      "equipment_type": "К4-1200",
+      "values": [
+        {
+          "column": "B",
+          "value": "К4-1200"
+        },
+        {
+          "column": "C",
+          "value": 1180
+        },
+        {
+          "column": "D",
+          "value": 1160
+        },
+        {
+          "column": "E",
+          "value": 1250
+        },
+        {
+          "column": "F",
+          "value": 1200
+        },
+        {
+          "column": "G",
+          "value": 1
+        },
+        {
+          "column": "H",
+          "value": 4844.5452
+        },
+        {
+          "column": "I",
+          "value": 180
+        },
+        {
+          "column": "J",
+          "value": 200
+        },
+        {
+          "column": "K",
+          "value": 2410
+        },
+        {
+          "column": "L",
+          "value": 45.57792
+        },
+        {
+          "column": "M",
+          "value": 190
+        },
+        {
+          "column": "N",
+          "value": 2410
+        },
+        {
+          "column": "O",
+          "value": 43.299023999999996
+        },
+        {
+          "column": "P",
+          "value": 1550
+        },
+        {
+          "column": "Q",
+          "value": 1545
+        },
+        {
+          "column": "R",
+          "value": 113.22378
+        },
+        {
+          "column": "S",
+          "value": 35
+        },
+        {
+          "column": "T",
+          "value": 45
+        },
+        {
+          "column": "U",
+          "value": -92
+        },
+        {
+          "column": "V",
+          "value": "#REF!"
+        },
+        {
+          "column": "W",
+          "value": 84
+        },
+        {
+          "column": "X",
+          "value": 1250
+        },
+        {
+          "column": "Y",
+          "value": 1230
+        },
+        {
+          "column": "Z",
+          "value": 40
+        },
+        {
+          "column": "AA",
+          "value": 7300
+        },
+        {
+          "column": "AB",
+          "value": 13.80576
+        },
+        {
+          "column": "AC",
+          "value": 40
+        },
+        {
+          "column": "AD",
+          "value": 7290
+        },
+        {
+          "column": "AE",
+          "value": 13.786847999999999
+        },
+        {
+          "column": "AF",
+          "value": 2483
+        },
+        {
+          "column": "AG",
+          "value": 1260
+        },
+        {
+          "column": "AH",
+          "value": 147.9192624
+        },
+        {
+          "column": "AI",
+          "value": 2483
+        },
+        {
+          "column": "AJ",
+          "value": 1255
+        },
+        {
+          "column": "AK",
+          "value": 147.3322812
+        },
+        {
+          "column": "AL",
+          "value": 32.44
+        },
+        {
+          "column": "AM",
+          "value": 20.8
+        },
+        {
+          "column": "AN",
+          "value": 12.38
+        },
+        {
+          "column": "AO",
+          "value": 1.28
+        },
+        {
+          "column": "AP",
+          "value": 59.52
+        },
+        {
+          "column": "AQ",
+          "value": 59.44
+        },
+        {
+          "column": "AR",
+          "value": 0
+        },
+        {
+          "column": "AS",
+          "value": 13.899999999999999
+        },
+        {
+          "column": "AT",
+          "value": 0
+        },
+        {
+          "column": "AU",
+          "value": 12
+        },
+        {
+          "column": "AV",
+          "value": 1872
+        },
+        {
+          "column": "AW",
+          "value": 16.4692
+        },
+        {
+          "column": "AX",
+          "value": 16.4472
+        },
+        {
+          "column": "AY",
+          "value": 1.4972
+        },
+        {
+          "column": "AZ",
+          "value": 1.4951999999999999
+        },
+        {
+          "column": "BA",
+          "value": 198.48
+        },
+        {
+          "column": "BB",
+          "value": 35.90879999999999
+        },
+        {
+          "column": "BC",
+          "value": 198.48
+        },
+        {
+          "column": "BD",
+          "value": 1884
+        },
+        {
+          "column": "BE",
+          "value": 14
+        },
+        {
+          "column": "BF",
+          "value": 8
+        },
+        {
+          "column": "BG",
+          "value": 1180
+        },
+        {
+          "column": "BH",
+          "value": 1175
+        },
+        {
+          "column": "BI",
+          "value": 44
+        }
+      ]
+    },
+    {
+      "row_number": 122,
+      "equipment_type": "К4-1200*600",
+      "values": [
+        {
+          "column": "B",
+          "value": "К4-1200*600"
+        },
+        {
+          "column": "C",
+          "value": 1180
+        },
+        {
+          "column": "D",
+          "value": 595
+        },
+        {
+          "column": "E",
+          "value": 1250
+        },
+        {
+          "column": "F",
+          "value": 620
+        },
+        {
+          "column": "G",
+          "value": 1
+        },
+        {
+          "column": "H",
+          "value": 2531.9228
+        },
+        {
+          "column": "I",
+          "value": 180
+        },
+        {
+          "column": "J",
+          "value": 200
+        },
+        {
+          "column": "K",
+          "value": 2410
+        },
+        {
+          "column": "L",
+          "value": 45.57792
+        },
+        {
+          "column": "M",
+          "value": 190
+        },
+        {
+          "column": "N",
+          "value": 2410
+        },
+        {
+          "column": "O",
+          "value": 43.299023999999996
+        },
+        {
+          "column": "P",
+          "value": 1550
+        },
+        {
+          "column": "Q",
+          "value": 980
+        },
+        {
+          "column": "R",
+          "value": 71.81831999999999
+        },
+        {
+          "column": "S",
+          "value": 35
+        },
+        {
+          "column": "T",
+          "value": 45
+        },
+        {
+          "column": "U",
+          "value": -92
+        },
+        {
+          "column": "V",
+          "value": "#REF!"
+        },
+        {
+          "column": "W",
+          "value": 84
+        },
+        {
+          "column": "X",
+          "value": 1250
+        },
+        {
+          "column": "Y",
+          "value": 665
+        },
+        {
+          "column": "Z",
+          "value": 40
+        },
+        {
+          "column": "AA",
+          "value": 7300
+        },
+        {
+          "column": "AB",
+          "value": 13.80576
+        },
+        {
+          "column": "AC",
+          "value": 40
+        },
+        {
+          "column": "AD",
+          "value": 6160
+        },
+        {
+          "column": "AE",
+          "value": 11.649792
+        },
+        {
+          "column": "AF",
+          "value": 2483
+        },
+        {
+          "column": "AG",
+          "value": 1260
+        },
+        {
+          "column": "AH",
+          "value": 147.9192624
+        },
+        {
+          "column": "AI",
+          "value": 2483
+        },
+        {
+          "column": "AJ",
+          "value": 690
+        },
+        {
+          "column": "AK",
+          "value": 81.0034056
+        },
+        {
+          "column": "AL",
+          "value": 32.44
+        },
+        {
+          "column": "AM",
+          "value": 20.8
+        },
+        {
+          "column": "AN",
+          "value": 10.12
+        },
+        {
+          "column": "AO",
+          "value": null
+        },
+        {
+          "column": "AP",
+          "value": 59.52
+        },
+        {
+          "column": "AQ",
+          "value": 50.4
+        },
+        {
+          "column": "AR",
+          "value": 0
+        },
+        {
+          "column": "AS",
+          "value": 8.25
+        },
+        {
+          "column": "AT",
+          "value": 0
+        },
+        {
+          "column": "AU",
+          "value": 6.35
+        },
+        {
+          "column": "AV",
+          "value": 1420
+        },
+        {
+          "column": "AW",
+          "value": 16.4692
+        },
+        {
+          "column": "AX",
+          "value": 13.9612
+        },
+        {
+          "column": "AY",
+          "value": 1.4972
+        },
+        {
+          "column": "AZ",
+          "value": 1.2691999999999999
+        },
+        {
+          "column": "BA",
+          "value": 181.53
+        },
+        {
+          "column": "BB",
+          "value": 33.196799999999996
+        },
+        {
+          "column": "BC",
+          "value": 181.53
+        },
+        {
+          "column": "BD",
+          "value": 1426.35
+        },
+        {
+          "column": "BE",
+          "value": 14
+        },
+        {
+          "column": "BF",
+          "value": 8
+        },
+        {
+          "column": "BG",
+          "value": 1180
+        },
+        {
+          "column": "BH",
+          "value": 610
+        },
+        {
+          "column": "BI",
+          "value": 44
+        }
+      ]
+    }
+  ],
+  "k4_750_row": {
+    "row_number": 118,
+    "equipment_type": "К4-750",
+    "values": [
+      {
+        "column": "B",
+        "value": "К4-750"
+      },
+      {
+        "column": "C",
+        "value": 732
+      },
+      {
+        "column": "D",
+        "value": 715
+      },
+      {
+        "column": "E",
+        "value": 745
+      },
+      {
+        "column": "F",
+        "value": 745
+      },
+      {
+        "column": "G",
+        "value": 1
+      },
+      {
+        "column": "H",
+        "value": 1820.5952
+      },
+      {
+        "column": "I",
+        "value": 110
+      },
+      {
+        "column": "J",
+        "value": 130
+      },
+      {
+        "column": "K",
+        "value": 2410
+      },
+      {
+        "column": "L",
+        "value": 29.625648
+      },
+      {
+        "column": "M",
+        "value": 120
+      },
+      {
+        "column": "N",
+        "value": 2410
+      },
+      {
+        "column": "O",
+        "value": 27.346752000000002
+      },
+      {
+        "column": "P",
+        "value": 962
+      },
+      {
+        "column": "Q",
+        "value": 960
+      },
+      {
+        "column": "R",
+        "value": 43.6640256
+      },
+      {
+        "column": "S",
+        "value": 25
+      },
+      {
+        "column": "T",
+        "value": 35
+      },
+      {
+        "column": "U",
+        "value": -92
+      },
+      {
+        "column": "V",
+        "value": "#REF!"
+      },
+      {
+        "column": "W",
+        "value": 74
+      },
+      {
+        "column": "X",
+        "value": 782
+      },
+      {
+        "column": "Y",
+        "value": 765
+      },
+      {
+        "column": "Z",
+        "value": 30
+      },
+      {
+        "column": "AA",
+        "value": 6364
+      },
+      {
+        "column": "AB",
+        "value": 9.0266976
+      },
+      {
+        "column": "AC",
+        "value": 30
+      },
+      {
+        "column": "AD",
+        "value": 6360
+      },
+      {
+        "column": "AE",
+        "value": 9.021023999999999
+      },
+      {
+        "column": "AF",
+        "value": 2463
+      },
+      {
+        "column": "AG",
+        "value": 792
+      },
+      {
+        "column": "AH",
+        "value": 92.22890688
+      },
+      {
+        "column": "AI",
+        "value": 2463
+      },
+      {
+        "column": "AJ",
+        "value": 790
+      },
+      {
+        "column": "AK",
+        "value": 91.9960056
+      },
+      {
+        "column": "AL",
+        "value": 31.88
+      },
+      {
+        "column": "AM",
+        "value": 20.24
+      },
+      {
+        "column": "AN",
+        "value": 7.688
+      },
+      {
+        "column": "AO",
+        "value": 0.96
+      },
+      {
+        "column": "AP",
+        "value": 51.712
+      },
+      {
+        "column": "AQ",
+        "value": 51.68
+      },
+      {
+        "column": "AR",
+        "value": 0
+      },
+      {
+        "column": "AS",
+        "value": 8.75
+      },
+      {
+        "column": "AT",
+        "value": 0
+      },
+      {
+        "column": "AU",
+        "value": 7.55
+      },
+      {
+        "column": "AV",
+        "value": 1157.6
+      },
+      {
+        "column": "AW",
+        "value": 14.322
+      },
+      {
+        "column": "AX",
+        "value": 14.3132
+      },
+      {
+        "column": "AY",
+        "value": 1.302
+      },
+      {
+        "column": "AZ",
+        "value": 1.3012000000000001
+      },
+      {
+        "column": "BA",
+        "value": 171.95000000000002
+      },
+      {
+        "column": "BB",
+        "value": 31.2384
+      },
+      {
+        "column": "BC",
+        "value": 171.95000000000002
+      },
+      {
+        "column": "BD",
+        "value": 1165.1499999999999
+      },
+      {
+        "column": "BE",
+        "value": 14
+      },
+      {
+        "column": "BF",
+        "value": 8
+      },
+      {
+        "column": "BG",
+        "value": 732
+      },
+      {
+        "column": "BH",
+        "value": 730
+      },
+      {
+        "column": "BI",
+        "value": 44
+      }
+    ]
+  }
+}

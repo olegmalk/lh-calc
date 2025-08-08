@@ -1,0 +1,434 @@
+{
+  "vlookup_references": {
+    "H78": {
+      "formula": "=VLOOKUP(технолог!G27,B110:BB122,53,0)",
+      "row": 78,
+      "column": "H",
+      "referenced_column": "BB",
+      "column_index": 53
+    },
+    "I78": {
+      "formula": "=VLOOKUP(технолог!G27,B110:BA122,52,0)",
+      "row": 78,
+      "column": "I",
+      "referenced_column": "BA",
+      "column_index": 52
+    },
+    "J78": {
+      "formula": "=VLOOKUP(технолог!G27,B110:BD122,55,0)",
+      "row": 78,
+      "column": "J",
+      "referenced_column": "BD",
+      "column_index": 55
+    },
+    "K78": {
+      "formula": "=VLOOKUP(технолог!G27,B110:BC122,54,0)",
+      "row": 78,
+      "column": "K",
+      "referenced_column": "BC",
+      "column_index": 54
+    },
+    "L78": {
+      "formula": "=VLOOKUP(технолог!G27,B110:BD122,55,0)",
+      "row": 78,
+      "column": "L",
+      "referenced_column": "BD",
+      "column_index": 55
+    },
+    "O78": {
+      "formula": "=IF(VLOOKUP(D104,B110:BI122,60,0)<0,0,VLOOKUP(D104,B110:BI122,60,0))+BG147*2",
+      "row": 78,
+      "column": "O",
+      "referenced_column": "BI",
+      "column_index": 60
+    },
+    "E93": {
+      "formula": "=VLOOKUP(D104,B110:L122,11,0)",
+      "row": 93,
+      "column": "E",
+      "referenced_column": "L",
+      "column_index": 11
+    },
+    "E94": {
+      "formula": "=VLOOKUP(D104,B110:O122,14,0)",
+      "row": 94,
+      "column": "E",
+      "referenced_column": "O",
+      "column_index": 14
+    },
+    "E95": {
+      "formula": "=VLOOKUP(D104,B110:R122,17,0)",
+      "row": 95,
+      "column": "E",
+      "referenced_column": "R",
+      "column_index": 17
+    },
+    "E97": {
+      "formula": "=VLOOKUP(D104,B110:AB122,27,0)",
+      "row": 97,
+      "column": "E",
+      "referenced_column": "AB",
+      "column_index": 27
+    },
+    "E98": {
+      "formula": "=VLOOKUP(D104,B110:AE122,30,0)",
+      "row": 98,
+      "column": "E",
+      "referenced_column": "AE",
+      "column_index": 30
+    },
+    "E99": {
+      "formula": "=VLOOKUP(D104,B110:AH122,33,0)",
+      "row": 99,
+      "column": "E",
+      "referenced_column": "AH",
+      "column_index": 33
+    },
+    "E100": {
+      "formula": "=VLOOKUP(D104,B110:AK122,36,0)",
+      "row": 100,
+      "column": "E",
+      "referenced_column": "AK",
+      "column_index": 36
+    },
+    "E104": {
+      "formula": "=VLOOKUP(D104,B110:H122,7,0)",
+      "row": 104,
+      "column": "E",
+      "referenced_column": "H",
+      "column_index": 7
+    },
+    "BA147": {
+      "formula": "=IF(VLOOKUP(D104,B110:BE122,56,0)<0,0,VLOOKUP(D104,B110:BE122,56,0))",
+      "row": 147,
+      "column": "BA",
+      "referenced_column": "BE",
+      "column_index": 56
+    },
+    "BC147": {
+      "formula": "=VLOOKUP(D104,B110:BG122,58,0)",
+      "row": 147,
+      "column": "BC",
+      "referenced_column": "BG",
+      "column_index": 58
+    },
+    "BD147": {
+      "formula": "=IF(VLOOKUP(D104,B110:BF122,56,0)<0,0,VLOOKUP(D104,B110:BF122,57,0))",
+      "row": 147,
+      "column": "BD",
+      "referenced_column": "BE",
+      "column_index": 56
+    },
+    "BE147": {
+      "formula": "=VLOOKUP(D104,B110:BH122,59,0)",
+      "row": 147,
+      "column": "BE",
+      "referenced_column": "BH",
+      "column_index": 59
+    }
+  },
+  "column_usage": {
+    "BB": [
+      {
+        "cell": "H78",
+        "formula": "=VLOOKUP(технолог!G27,B110:BB122,53,0)"
+      }
+    ],
+    "BA": [
+      {
+        "cell": "I78",
+        "formula": "=VLOOKUP(технолог!G27,B110:BA122,52,0)"
+      }
+    ],
+    "BD": [
+      {
+        "cell": "J78",
+        "formula": "=VLOOKUP(технолог!G27,B110:BD122,55,0)"
+      },
+      {
+        "cell": "L78",
+        "formula": "=VLOOKUP(технолог!G27,B110:BD122,55,0)"
+      }
+    ],
+    "BC": [
+      {
+        "cell": "K78",
+        "formula": "=VLOOKUP(технолог!G27,B110:BC122,54,0)"
+      }
+    ],
+    "BI": [
+      {
+        "cell": "O78",
+        "formula": "=IF(VLOOKUP(D104,B110:BI122,60,0)<0,0,VLOOKUP(D104..."
+      }
+    ],
+    "L": [
+      {
+        "cell": "E93",
+        "formula": "=VLOOKUP(D104,B110:L122,11,0)"
+      }
+    ],
+    "O": [
+      {
+        "cell": "E94",
+        "formula": "=VLOOKUP(D104,B110:O122,14,0)"
+      }
+    ],
+    "R": [
+      {
+        "cell": "E95",
+        "formula": "=VLOOKUP(D104,B110:R122,17,0)"
+      }
+    ],
+    "AB": [
+      {
+        "cell": "E97",
+        "formula": "=VLOOKUP(D104,B110:AB122,27,0)"
+      }
+    ],
+    "AE": [
+      {
+        "cell": "E98",
+        "formula": "=VLOOKUP(D104,B110:AE122,30,0)"
+      }
+    ],
+    "AH": [
+      {
+        "cell": "E99",
+        "formula": "=VLOOKUP(D104,B110:AH122,33,0)"
+      }
+    ],
+    "AK": [
+      {
+        "cell": "E100",
+        "formula": "=VLOOKUP(D104,B110:AK122,36,0)"
+      }
+    ],
+    "H": [
+      {
+        "cell": "E104",
+        "formula": "=VLOOKUP(D104,B110:H122,7,0)"
+      }
+    ],
+    "BE": [
+      {
+        "cell": "BA147",
+        "formula": "=IF(VLOOKUP(D104,B110:BE122,56,0)<0,0,VLOOKUP(D104..."
+      },
+      {
+        "cell": "BD147",
+        "formula": "=IF(VLOOKUP(D104,B110:BF122,56,0)<0,0,VLOOKUP(D104..."
+      }
+    ],
+    "BG": [
+      {
+        "cell": "BC147",
+        "formula": "=VLOOKUP(D104,B110:BG122,58,0)"
+      }
+    ],
+    "BH": [
+      {
+        "cell": "BE147",
+        "formula": "=VLOOKUP(D104,B110:BH122,59,0)"
+      }
+    ]
+  },
+  "usage_frequency": {
+    "BB": 1,
+    "BA": 1,
+    "BD": 2,
+    "BC": 1,
+    "BI": 1,
+    "L": 1,
+    "O": 1,
+    "R": 1,
+    "AB": 1,
+    "AE": 1,
+    "AH": 1,
+    "AK": 1,
+    "H": 1,
+    "BE": 2,
+    "BG": 1,
+    "BH": 1
+  },
+  "most_used_columns": [
+    [
+      "BD",
+      2
+    ],
+    [
+      "BE",
+      2
+    ],
+    [
+      "BB",
+      1
+    ],
+    [
+      "BA",
+      1
+    ],
+    [
+      "BC",
+      1
+    ],
+    [
+      "BI",
+      1
+    ],
+    [
+      "L",
+      1
+    ],
+    [
+      "O",
+      1
+    ],
+    [
+      "R",
+      1
+    ],
+    [
+      "AB",
+      1
+    ],
+    [
+      "AE",
+      1
+    ],
+    [
+      "AH",
+      1
+    ],
+    [
+      "AK",
+      1
+    ],
+    [
+      "H",
+      1
+    ],
+    [
+      "BG",
+      1
+    ],
+    [
+      "BH",
+      1
+    ]
+  ],
+  "unused_columns": [
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "I",
+    "J",
+    "K",
+    "M",
+    "N",
+    "P",
+    "Q",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z",
+    "AA",
+    "AC",
+    "AD",
+    "AF",
+    "AG",
+    "AI",
+    "AJ",
+    "AL",
+    "AM",
+    "AN",
+    "AO",
+    "AP",
+    "AQ",
+    "AR",
+    "AS",
+    "AT",
+    "AU",
+    "AV",
+    "AW",
+    "AX",
+    "AY",
+    "AZ",
+    "BF"
+  ],
+  "headers": {
+    "B": "Пластины",
+    "C": "Длина",
+    "D": "Ширина",
+    "E": "Длина заготовки",
+    "F": "Ширина заготовки",
+    "G": "Высота",
+    "H": "масса заготовок",
+    "I": "Колонны",
+    "J": "Гребенка",
+    "K": null,
+    "L": null,
+    "M": "Полоса гребенки",
+    "N": null,
+    "O": null,
+    "P": "Лист концевой",
+    "Q": null,
+    "R": null,
+    "S": "Зеркало лист без прибавки на резку",
+    "T": "Зеркало лист",
+    "U": null,
+    "V": null,
+    "W": "Зеркало 1шт без прибавки на резку",
+    "X": null,
+    "Y": null,
+    "Z": "Зеркало А 2шт",
+    "AA": null,
+    "AB": null,
+    "AC": "Зеркало Б 2шт",
+    "AD": null,
+    "AE": null,
+    "AF": "Лист плакирующий А",
+    "AG": null,
+    "AH": null,
+    "AI": "Лист плакирующий Б",
+    "AJ": null,
+    "AK": null,
+    "AL": "Длина Гребенки",
+    "AM": "Длина полосы гребенки",
+    "AN": "Длина лист концевой",
+    "AO": "Зеркало лист",
+    "AP": "Зеркало А",
+    "AQ": "Зеркало Б",
+    "AR": "Дефлектор А",
+    "AS": "Дефлектор Б",
+    "AT": "Ласточка A",
+    "AU": "Ласточка Б",
+    "AV": "Пластина",
+    "AW": "Лист плакирующий А",
+    "AX": "Лист Плакирующий Б",
+    "AY": "отверстия листа плак А",
+    "AZ": "отверстия листа плак Б",
+    "BA": "Сумма 3мм Теплоблок (пакет)",
+    "BB": "Сумма 3мм Теплоблок (плакировка)",
+    "BC": "Сумма 3мм реинж",
+    "BD": "Сумма 1мм",
+    "BE": "Рапорка горизонтальная А",
+    "BF": "Распорка горизонтальная Б",
+    "BG": "Длина горизонтальной А",
+    "BH": "Длина горизонтальной Б",
+    "BI": "Гайка DIN933"
+  },
+  "summary": {
+    "total_vlookup_formulas": 18,
+    "columns_in_use": 16,
+    "columns_unused": 44,
+    "total_columns": 60
+  }
+}
