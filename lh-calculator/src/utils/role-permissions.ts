@@ -83,7 +83,7 @@ export const filterEditableInputs = (
   
   Object.entries(inputs).forEach(([field, value]) => {
     if (canEditField(role, field as keyof HeatExchangerInput)) {
-      (filtered as any)[field] = value;
+      (filtered as Record<string, unknown>)[field] = value;
     }
   });
   
@@ -101,7 +101,7 @@ export const filterViewableInputs = (
   
   Object.entries(inputs).forEach(([field, value]) => {
     if (canViewField(role, field as keyof HeatExchangerInput)) {
-      (filtered as any)[field] = value;
+      (filtered as Record<string, unknown>)[field] = value;
     }
   });
   
@@ -174,12 +174,11 @@ export const getRoleAccessSummary = (role: UserRole): {
       editable: number;
       viewable: number;
       hidden: number;
-      total: number;
     };
   };
 } => {
   const roleDefinition = ROLE_DEFINITIONS[role];
-  const sections: { [section: string]: any } = {};
+  const sections: { [section: string]: { editable: number; viewable: number; hidden: number } } = {};
   
   // Initialize section counters
   const sectionNames = ['technical', 'engineering', 'supply', 'executive', 'project'];
@@ -187,8 +186,7 @@ export const getRoleAccessSummary = (role: UserRole): {
     sections[section] = {
       editable: 0,
       viewable: 0,
-      hidden: 0,
-      total: 0
+      hidden: 0
     };
   });
   

@@ -7,7 +7,7 @@ import { useInputStore } from '../stores/inputStore';
 import { useCalculationStore } from '../stores/calculationStore';
 import { useMaterialStore } from '../stores/materialStore';
 import { useRoleStore } from '../stores/roleStore';
-import { useFormPermissions, useRolePermissions } from '../hooks/useRolePermissions';
+import { useRolePermissions } from '../hooks/useRolePermissions';
 import { NAMED_RANGES } from '../lib/calculation-engine/constants';
 import { calc_AI73_TestPressureHot, calc_AJ73_TestPressureCold } from '../lib/calculation-engine/formula-library-complete';
 import type { HeatExchangerInput } from '../lib/calculation-engine/types';
@@ -32,7 +32,7 @@ export const TechnicalInputFormSimple: React.FC = () => {
   
   // Role-based permissions
   const { currentRole } = useRoleStore();
-  const formPermissions = useFormPermissions();
+  // const formPermissions = useFormPermissions(); // Kept for future role-based form validation
   
   const { 
     canEdit, 

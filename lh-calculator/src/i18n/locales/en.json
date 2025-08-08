@@ -160,15 +160,50 @@
   },
   "navigation": {
     "dashboard": "Dashboard",
-    "supply": "Supply",
+    "calculations": "Calculations",
+    "projectDetails": "Project Details",
     "components": "Components",
     "flanges": "Flanges",
     "materials": "Other Materials",
-    "calculations": "Calculations",
     "savedCalculations": "Saved Calculations",
     "reports": "Reports",
     "settings": "Settings",
     "referenceData": "Reference Data"
+  },
+  "projectDetails": {
+    "sections": {
+      "projectInfo": "Project Information",
+      "documentation": "Documentation & Compliance",
+      "logistics": "Logistics & Delivery",
+      "spareParts": "Spare Parts & Extras",
+      "financialTerms": "Financial Terms"
+    }
+  },
+  "logistics": {
+    "packagingTypes": {
+      "standard": "Standard Packaging",
+      "reinforced": "Reinforced Packaging",
+      "export": "Export Packaging",
+      "custom": "Custom Packaging"
+    },
+    "shippingMethods": {
+      "road": "Road Transport",
+      "rail": "Rail Transport",
+      "sea": "Sea Freight",
+      "air": "Air Freight",
+      "combined": "Combined Transport"
+    }
+  },
+  "financial": {
+    "paymentTerms": {
+      "prepayment_100": "100% Prepayment",
+      "prepayment_50_delivery_50": "50% Prepayment, 50% on Delivery",
+      "prepayment_30_delivery_70": "30% Prepayment, 70% on Delivery",
+      "delivery_100": "100% on Delivery",
+      "net_30": "Net 30 Days",
+      "net_60": "Net 60 Days",
+      "custom": "Custom Terms"
+    }
   },
   "common": {
     "save": "Save",
@@ -760,6 +795,136 @@
       "green": "Supply & Costs",
       "red": "Executive Controls",
       "readonly": "System Calculated"
+    }
+  },
+  "pages": {
+    "calculation": "Role-Based Calculation"
+  },
+  "sections": {
+    "technicalSpecification": "Technical Specification",
+    "engineeringDesign": "Engineering Design",
+    "supplyCosts": "Supply & Costs",
+    "executiveControls": "Executive Controls"
+  },
+  "roles": {
+    "technologist": "Technologist",
+    "engineer": "Design Engineer",
+    "supplyManager": "Supply Manager",
+    "director": "Director"
+  },
+  "technical": {
+    "dropdownSelections": "VLOOKUP Driver Fields",
+    "manualParameters": "Manual Entry Parameters",
+    "equipmentType": "Equipment Type",
+    "materialPlate": "Plate Material",
+    "surfaceType": "Surface Type",
+    "corrugationType": "Corrugation Type",
+    "plateCount": "Number of Plates",
+    "bodyMaterial": "Body Material",
+    "materialBody": "Material Body",
+    "plateThickness": "Plate Thickness",
+    "pressureA": "Pressure A",
+    "pressureB": "Pressure B",
+    "temperatureA": "Temperature A",
+    "temperatureB": "Temperature B",
+    "selectEquipmentType": "Select equipment type",
+    "selectMaterial": "Select material",
+    "selectSurfaceType": "Select surface type",
+    "equipmentType": {
+      "plate": "Plate Heat Exchanger",
+      "shell": "Shell & Tube",
+      "tube": "Tube Bundle"
+    },
+    "materials": {
+      "stainlessSteel": "Stainless Steel",
+      "carbonSteel": "Carbon Steel",
+      "titanium": "Titanium"
+    },
+    "surfaceType": {
+      "smooth": "Smooth",
+      "corrugated": "Corrugated",
+      "embossed": "Embossed"
+    }
+  },
+  "engineering": {
+    "flangeSpecifications": "Flange Specifications",
+    "processParameters": "Process Parameters",
+    "componentSpecifications": "Component Specifications",
+    "fastenerDetails": "Fastener Details",
+    "manufacturingQuality": "Manufacturing & Quality",
+    "flangeHotPressure1": "Hot Side Pressure 1",
+    "flangeHotDiameter1": "Hot Side Diameter 1",
+    "flangeHotPressure2": "Hot Side Pressure 2",
+    "flangeHotDiameter2": "Hot Side Diameter 2",
+    "flangeColdPressure1": "Cold Side Pressure 1",
+    "flangeColdDiameter1": "Cold Side Diameter 1",
+    "flangeColdPressure2": "Cold Side Pressure 2",
+    "flangeColdDiameter2": "Cold Side Diameter 2",
+    "mountingPanelsCount": "Mounting Panels Count",
+    "selectPressure": "Select pressure rating",
+    "selectDiameter": "Select diameter",
+    "selectType": "Select type",
+    "selectWeldingMethod": "Select welding method",
+    "materials": {
+      "stainlessSteel316": "Stainless Steel 316",
+      "stainlessSteel304": "Stainless Steel 304",
+      "carbonSteel": "Carbon Steel"
+    },
+    "boltType": {
+      "hexBolt": "Hex Bolt",
+      "socketHead": "Socket Head",
+      "studBolt": "Stud Bolt"
+    },
+    "welding": {
+      "manualArc": "Manual Arc Welding"
+    }
+  },
+  "supply": {
+    "coreRates": "Core Rate Parameters",
+    "materialPrices": "Material Prices",
+    "componentCosts": "Component Costs",
+    "processCosts": "Process & Assembly Costs",
+    "materialCosts": "Material Additional Costs",
+    "logistics": "Logistics Parameters",
+    "cuttingCorrections": "Cutting Corrections",
+    "additionalCosts": "Additional Costs"
+  },
+  "executive": {
+    "costAdjustments": "Executive Cost Adjustments",
+    "pricingControls": "Pricing Controls",
+    "specialCost1": "Management Adjustment 1",
+    "specialCost2": "Management Adjustment 2",
+    "specialCost3": "Management Adjustment 3",
+    "specialCost4": "Management Adjustment 4",
+    "discountPercent": "Discount Percentage",
+    "specialCost1Description": "Executive cost adjustment",
+    "specialCost2Description": "Executive cost adjustment",
+    "specialCost3Description": "Executive cost adjustment",
+    "specialCost4Description": "Executive cost adjustment",
+    "discountPercentDescription": "Final price discount",
+    "noteTitle": "Executive Note:",
+    "noteDescription": "These controls represent final management decisions and override all other calculations."
+  },
+  "legend": {
+    "technologistDropdowns": "Technologist Dropdowns (VLOOKUP)",
+    "manualEntry": "Manual Entry Fields",
+    "engineeringFields": "Engineering Specifications",
+    "supplyCostFields": "Supply Cost Parameters",
+    "executiveControls": "Executive Controls"
+  },
+  "calculation": {
+    "description": "Configure parameters based on your role and calculate heat exchanger costs",
+    "results": "Calculation Results",
+    "hierarchyLevel": "Level {{level}}",
+    "saveSuccess": "Calculation saved successfully",
+    "saveFailed": "Failed to save calculation",
+    "resetSuccess": "Fields reset to defaults",
+    "tips": {
+      "title": "Role-Based Tips",
+      "technologist": "Focus on equipment type, materials, and basic parameters. Your selections drive the VLOOKUP calculations.",
+      "engineer": "Configure flanges, process parameters, and component specifications for optimal performance.",
+      "supply-manager": "Set cost parameters, material prices, and supply chain factors to ensure accurate costing.",
+      "director": "Apply final cost adjustments and discounts based on business strategy and market conditions."
     }
   }
 }

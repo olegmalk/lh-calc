@@ -166,15 +166,50 @@
   },
   "navigation": {
     "dashboard": "Панель управления",
-    "supply": "Снабжение",
+    "calculations": "Расчеты",
+    "projectDetails": "Детали проекта",
     "components": "Комплектующие",
     "flanges": "Фланцы",
     "materials": "Другие материалы",
-    "calculations": "Расчеты",
     "savedCalculations": "Сохраненные расчеты",
     "reports": "Отчеты",
     "settings": "Настройки",
     "referenceData": "Справочные данные"
+  },
+  "projectDetails": {
+    "sections": {
+      "projectInfo": "Информация о проекте",
+      "documentation": "Документация и соответствие",
+      "logistics": "Логистика и доставка",
+      "spareParts": "Запасные части",
+      "financialTerms": "Финансовые условия"
+    }
+  },
+  "logistics": {
+    "packagingTypes": {
+      "standard": "Стандартная упаковка",
+      "reinforced": "Усиленная упаковка",
+      "export": "Экспортная упаковка",
+      "custom": "Индивидуальная упаковка"
+    },
+    "shippingMethods": {
+      "road": "Автомобильный транспорт",
+      "rail": "Железнодорожный транспорт",
+      "sea": "Морской транспорт",
+      "air": "Авиатранспорт",
+      "combined": "Комбинированный транспорт"
+    }
+  },
+  "financial": {
+    "paymentTerms": {
+      "prepayment_100": "100% предоплата",
+      "prepayment_50_delivery_50": "50% предоплата, 50% при поставке",
+      "prepayment_30_delivery_70": "30% предоплата, 70% при поставке",
+      "delivery_100": "100% при поставке",
+      "net_30": "Оплата в течение 30 дней",
+      "net_60": "Оплата в течение 60 дней",
+      "custom": "Индивидуальные условия"
+    }
   },
   "common": {
     "save": "Сохранить",
@@ -694,6 +729,136 @@
       "green": "Снабжение и затраты",
       "red": "Управленческие функции",
       "readonly": "Системные расчеты"
+    }
+  },
+  "pages": {
+    "calculation": "Ролевой расчет"
+  },
+  "sections": {
+    "technicalSpecification": "Техническая спецификация",
+    "engineeringDesign": "Инженерное проектирование",
+    "supplyCosts": "Снабжение и затраты",
+    "executiveControls": "Управленческий контроль"
+  },
+  "roles": {
+    "technologist": "Технолог",
+    "engineer": "Инженер-конструктор",
+    "supplyManager": "Менеджер по снабжению",
+    "director": "Директор"
+  },
+  "technical": {
+    "dropdownSelections": "Поля драйверов VLOOKUP",
+    "manualParameters": "Параметры ручного ввода",
+    "equipmentType": "Тип оборудования",
+    "materialPlate": "Материал пластин",
+    "surfaceType": "Тип поверхности",
+    "corrugationType": "Тип гофрирования",
+    "plateCount": "Количество пластин",
+    "bodyMaterial": "Материал корпуса",
+    "materialBody": "Материал корпуса",
+    "plateThickness": "Толщина пластины",
+    "pressureA": "Давление A",
+    "pressureB": "Давление B",
+    "temperatureA": "Температура A",
+    "temperatureB": "Температура B",
+    "selectEquipmentType": "Выберите тип оборудования",
+    "selectMaterial": "Выберите материал",
+    "selectSurfaceType": "Выберите тип поверхности",
+    "equipmentType": {
+      "plate": "Пластинчатый теплообменник",
+      "shell": "Кожухотрубный",
+      "tube": "Трубный пучок"
+    },
+    "materials": {
+      "stainlessSteel": "Нержавеющая сталь",
+      "carbonSteel": "Углеродистая сталь",
+      "titanium": "Титан"
+    },
+    "surfaceType": {
+      "smooth": "Гладкая",
+      "corrugated": "Гофрированная",
+      "embossed": "Тисненая"
+    }
+  },
+  "engineering": {
+    "flangeSpecifications": "Спецификации фланцев",
+    "processParameters": "Параметры процесса",
+    "componentSpecifications": "Спецификации компонентов",
+    "fastenerDetails": "Детали крепежа",
+    "manufacturingQuality": "Производство и качество",
+    "flangeHotPressure1": "Давление горячей стороны 1",
+    "flangeHotDiameter1": "Диаметр горячей стороны 1",
+    "flangeHotPressure2": "Давление горячей стороны 2",
+    "flangeHotDiameter2": "Диаметр горячей стороны 2",
+    "flangeColdPressure1": "Давление холодной стороны 1",
+    "flangeColdDiameter1": "Диаметр холодной стороны 1",
+    "flangeColdPressure2": "Давление холодной стороны 2",
+    "flangeColdDiameter2": "Диаметр холодной стороны 2",
+    "mountingPanelsCount": "Количество монтажных панелей",
+    "selectPressure": "Выберите номинальное давление",
+    "selectDiameter": "Выберите диаметр",
+    "selectType": "Выберите тип",
+    "selectWeldingMethod": "Выберите метод сварки",
+    "materials": {
+      "stainlessSteel316": "Нержавеющая сталь 316",
+      "stainlessSteel304": "Нержавеющая сталь 304",
+      "carbonSteel": "Углеродистая сталь"
+    },
+    "boltType": {
+      "hexBolt": "Шестигранный болт",
+      "socketHead": "Под шестигранник",
+      "studBolt": "Шпильковый болт"
+    },
+    "welding": {
+      "manualArc": "Ручная дуговая сварка"
+    }
+  },
+  "supply": {
+    "coreRates": "Основные параметры ставок",
+    "materialPrices": "Цены на материалы",
+    "componentCosts": "Стоимость компонентов",
+    "processCosts": "Процесс и сборочные затраты",
+    "materialCosts": "Дополнительные материальные затраты",
+    "logistics": "Параметры логистики",
+    "cuttingCorrections": "Поправки на резку",
+    "additionalCosts": "Дополнительные затраты"
+  },
+  "executive": {
+    "costAdjustments": "Управленческие корректировки затрат",
+    "pricingControls": "Контроль ценообразования",
+    "specialCost1": "Управленческая корректировка 1",
+    "specialCost2": "Управленческая корректировка 2",
+    "specialCost3": "Управленческая корректировка 3",
+    "specialCost4": "Управленческая корректировка 4",
+    "discountPercent": "Процент скидки",
+    "specialCost1Description": "Управленческая корректировка затрат",
+    "specialCost2Description": "Управленческая корректировка затрат",
+    "specialCost3Description": "Управленческая корректировка затрат",
+    "specialCost4Description": "Управленческая корректировка затрат",
+    "discountPercentDescription": "Финальная скидка на цену",
+    "noteTitle": "Управленческая заметка:",
+    "noteDescription": "Эти элементы управления представляют окончательные управленческие решения и переопределяют все другие расчеты."
+  },
+  "legend": {
+    "technologistDropdowns": "Выпадающие списки технолога (VLOOKUP)",
+    "manualEntry": "Поля ручного ввода",
+    "engineeringFields": "Инженерные спецификации",
+    "supplyCostFields": "Параметры затрат снабжения",
+    "executiveControls": "Управленческий контроль"
+  },
+  "calculation": {
+    "description": "Настройте параметры на основе вашей роли и рассчитайте стоимость теплообменников",
+    "results": "Результаты расчета",
+    "hierarchyLevel": "Уровень {{level}}",
+    "saveSuccess": "Расчет успешно сохранен",
+    "saveFailed": "Не удалось сохранить расчет",
+    "resetSuccess": "Поля сброшены к значениям по умолчанию",
+    "tips": {
+      "title": "Советы по ролям",
+      "technologist": "Сосредоточьтесь на типе оборудования, материалах и основных параметрах. Ваш выбор управляет расчетами VLOOKUP.",
+      "engineer": "Настройте фланцы, параметры процесса и спецификации компонентов для оптимальной производительности.",
+      "supply-manager": "Установите параметры затрат, цены на материалы и факторы цепочки поставок для обеспечения точной калькуляции.",
+      "director": "Применяйте окончательные корректировки затрат и скидки на основе бизнес-стратегии и рыночных условий."
     }
   }
 }

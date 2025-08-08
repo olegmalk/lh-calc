@@ -6,8 +6,9 @@ import { AppNavbar } from '@components/layout/AppNavbar';
 
 // Pages - MVP only
 import { DashboardPage } from '@pages/Dashboard';
-import { CalculationsPage } from '@pages/Calculations';
+import { CalculationPage } from '@pages/CalculationPage';
 import { SavedCalculationsPage } from '@pages/SavedCalculations';
+import { ProjectDetailsPage } from '@pages/ProjectDetailsPage';
 import SupplyParameters from '@pages/SupplyParameters';
 
 export function AppRouter() {
@@ -43,7 +44,8 @@ export function AppRouter() {
         <Routes>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/calculations" element={<CalculationsPage />} />
+          <Route path="/calculations" element={<CalculationPage />} />
+          <Route path="/project-details" element={<ProjectDetailsPage />} />
           <Route path="/saved-calculations" element={<SavedCalculationsPage />} />
           <Route path="/supply" element={<SupplyParameters />} />
         </Routes>

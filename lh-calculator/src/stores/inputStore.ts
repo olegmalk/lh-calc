@@ -7,7 +7,8 @@ import {
   canEditField, 
   canViewField,
   filterEditableInputs,
-  filterViewableInputs
+  filterViewableInputs,
+  validateFieldAccess
 } from '../utils/role-permissions';
 
 interface InputState {
@@ -294,15 +295,15 @@ export const useInputStore = create<InputState>()(
         
         // Role-based computed properties  
         getEditableInputs: (role?: UserRole): Partial<HeatExchangerInput> => {
-          const { inputs } = get();
+          const state = useInputStore.getState();
           const targetRole = role || useRoleStore.getState().currentRole;
-          return filterEditableInputs(targetRole, inputs);
+          return filterEditableInputs(targetRole, state.inputs);
         },
         
         getViewableInputs: (role?: UserRole): Partial<HeatExchangerInput> => {
-          const { inputs } = get();
+          const state = useInputStore.getState();
           const targetRole = role || useRoleStore.getState().currentRole;
-          return filterViewableInputs(targetRole, inputs);
+          return filterViewableInputs(targetRole, state.inputs);
         },
         
         canEditField: (field: keyof HeatExchangerInput, role?: UserRole) => {
@@ -317,18 +318,25 @@ export const useInputStore = create<InputState>()(
         
         validateUpdate: (field: keyof HeatExchangerInput, role?: UserRole) => {
           const targetRole = role || useRoleStore.getState().currentRole;
-          const roleStore = useRoleStore.getState();
-          return roleStore.validateFieldAccess(field, 'write');
+          return validateFieldAccess(targetRole, field, 'write');
         },
         
         getFieldsForRole: (role?: UserRole) => {
           const targetRole = role || useRoleStore.getState().currentRole;
-          const roleStore = useRoleStore.getState();
+          const state = useInputStore.getState();
+          const editableInputs = filterEditableInputs(targetRole, state.inputs);
+          const viewableInputs = filterViewableInputs(targetRole, state.inputs);
+          
+          // Convert input objects to field key arrays
+          const editableFields = Object.keys(editableInputs) as (keyof HeatExchangerInput)[];
+          const viewableFields = Object.keys(viewableInputs) as (keyof HeatExchangerInput)[];
+          const allFields = Object.keys(state.inputs) as (keyof HeatExchangerInput)[];
+          const hiddenFields = allFields.filter(field => !viewableFields.includes(field));
           
           return {
-            editable: roleStore.getEditableFields(),
-            viewable: roleStore.getViewableFields(),
-            hidden: roleStore.getHiddenFields(),
+            editable: editableFields,
+            viewable: viewableFields,
+            hidden: hiddenFields,
           };
         },
       }),

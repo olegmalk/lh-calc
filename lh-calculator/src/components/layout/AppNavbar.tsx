@@ -4,13 +4,15 @@ import { useTranslation } from 'react-i18next';
 import {
   IconDashboard,
   IconDeviceFloppy,
-  IconBuildingWarehouse,
+  IconCalculator,
+  IconClipboardList,
 } from '@tabler/icons-react';
 
 // MVP Navigation only
 const navigation = [
   { path: '/dashboard', icon: IconDashboard, label: 'navigation.dashboard' },
-  { path: '/supply', icon: IconBuildingWarehouse, label: 'navigation.supply' },
+  { path: '/calculations', icon: IconCalculator, label: 'navigation.calculations' },
+  { path: '/project-details', icon: IconClipboardList, label: 'navigation.projectDetails' },
   { path: '/saved-calculations', icon: IconDeviceFloppy, label: 'navigation.savedCalculations' },
 ];
 

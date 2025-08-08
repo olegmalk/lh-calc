@@ -80,7 +80,7 @@ export function useRolePermissions(): RolePermissionHookReturn {
     editable: fieldFilters.getEditableFields(),
     viewable: fieldFilters.getViewableFields(),
     hidden: fieldFilters.getHiddenFields(),
-  }), [currentRole, fieldFilters]);
+  }), [fieldFilters]);
   
   // Color-based permission helpers
   const canEditColor = (color: FieldColor): boolean => {

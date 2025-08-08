@@ -176,16 +176,3 @@ export function RoleSelector({ onRoleChange, defaultRole = 'technologist' }: Rol
     </Menu>
   );
 }
-
-// Hook for other components to listen to role changes
-export function useRoleSelector() {
-  const { currentRole } = useRoleStore();
-
-  return {
-    role: currentRole,
-    roleDefinition: ROLE_DEFINITIONS[currentRole],
-    canEdit: (fieldColor: string) => ROLE_DEFINITIONS[currentRole].permissions[fieldColor as keyof typeof ROLE_DEFINITIONS[typeof currentRole]['permissions']] === 'full',
-    isReadonly: (fieldColor: string) => ROLE_DEFINITIONS[currentRole].permissions[fieldColor as keyof typeof ROLE_DEFINITIONS[typeof currentRole]['permissions']] === 'readonly',
-    isHidden: (fieldColor: string) => ROLE_DEFINITIONS[currentRole].permissions[fieldColor as keyof typeof ROLE_DEFINITIONS[typeof currentRole]['permissions']] === 'hidden',
-  };
-}
