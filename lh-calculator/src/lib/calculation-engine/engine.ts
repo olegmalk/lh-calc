@@ -2,7 +2,8 @@ import type {
   HeatExchangerInput, 
   CalculationResult, 
   FormulaContext,
-  ComponentCosts 
+  ComponentCosts,
+  ExportData
 } from './types';
 import { 
   MATERIAL_DENSITIES, 
@@ -19,7 +20,7 @@ export class CalculationEngine {
     this.context = {
       inputs: {} as HeatExchangerInput,
       materials: new Map(),
-      namedRanges: new Map(Object.entries(NAMED_RANGES)),
+      namedRanges: new Map(Object.entries(NAMED_RANGES).map(([key, value]) => [key, Array.isArray(value) ? { items: value } : { value }])),
       intermediateValues: new Map(),
       dependencies: new Map(),
     };
@@ -52,8 +53,8 @@ export class CalculationEngine {
     this.context.intermediateValues.clear();
     
     // Phase 1: Technical calculations (технолог)
-    const pressureTestA = this.calculatePressureTest(inputs.pressureA, 'A');
-    const pressureTestB = this.calculatePressureTest(inputs.pressureB, 'B');
+    const pressureTestHot = this.calculatePressureTest(inputs.pressureA, 'A');
+    const pressureTestCold = this.calculatePressureTest(inputs.pressureB, 'B');
     
     // Phase 2: Component calculations (снабжение)
     const componentDimensions = this.calculateComponentDimensions();
@@ -65,8 +66,8 @@ export class CalculationEngine {
     const costBreakdown = this.generateCostBreakdown(componentCosts);
     
     return {
-      pressureTestA,
-      pressureTestB,
+      pressureTestHot,
+      pressureTestCold,
       interpolatedValues: new Map(this.context.intermediateValues),
       componentDimensions,
       materialRequirements,
@@ -246,12 +247,30 @@ export class CalculationEngine {
   /**
    * Prepare data for Bitrix24 export
    */
-  private prepareExportData(): any {
+  private prepareExportData(): ExportData {
     return {
-      equipment: this.context.inputs.equipmentType,
-      totalCost: this.context.intermediateValues.get('totalCost'),
-      components: Object.fromEntries(this.context.intermediateValues),
-      timestamp: new Date().toISOString(),
+      equipment: {
+        type: this.context.inputs.equipmentType,
+        plateCount: this.context.inputs.plateCount,
+        configuration: this.context.inputs.plateConfiguration,
+      },
+      materials: {
+        plate: this.context.inputs.materialPlate,
+        body: this.context.inputs.materialBody,
+        surface: this.context.inputs.surfaceType,
+      },
+      parameters: {
+        pressureA: this.context.inputs.pressureA,
+        pressureB: this.context.inputs.pressureB,
+        temperatureA: this.context.inputs.temperatureA,
+        temperatureB: this.context.inputs.temperatureB,
+      },
+      costs: Object.fromEntries(this.context.intermediateValues),
+      calculations: Object.fromEntries(this.context.intermediateValues),
+      totalCost: this.context.intermediateValues.get('totalCost') || 0,
+      version: '1.0.0',
+      calculatedAt: new Date().toISOString(),
+      excelRow: 110,
     };
   }
 }

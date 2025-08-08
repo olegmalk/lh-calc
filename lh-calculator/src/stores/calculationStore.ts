@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import type { CalculationResult, HeatExchangerInput } from '../lib/calculation-engine/types';
+import type { CalculationResult, HeatExchangerInput, SupplyParameters } from '../lib/calculation-engine/types';
 import { CalculationEngineV2 } from '../lib/calculation-engine/engine-v2';
 
 interface CalculationState {
@@ -32,7 +32,35 @@ export const useCalculationStore = create<CalculationState>()(
           // Simulate async calculation (in real app, might be web worker)
           await new Promise(resolve => setTimeout(resolve, 100));
           
-          const result = get().engine.calculate(inputs);
+          // Load supply parameters from localStorage and map field names
+          const savedSupplyParams = localStorage.getItem('lh-calculator-supply-params');
+          let supplyParams: SupplyParameters | undefined = undefined;
+          
+          if (savedSupplyParams) {
+            try {
+              const rawSupplyParams = JSON.parse(savedSupplyParams);
+              // Map form field names to engine field names
+              supplyParams = {
+                plateMaterialPrice: rawSupplyParams.plateMaterialPricePerKg,
+                claddingMaterialPrice: rawSupplyParams.claddingMaterialPricePerKg,
+                columnCoverMaterialPrice: rawSupplyParams.columnCoverMaterialPricePerKg,
+                panelMaterialPrice: rawSupplyParams.panelMaterialPricePerKg,
+                laborRate: rawSupplyParams.laborRatePerHour,
+                cuttingCost: rawSupplyParams.cuttingCostPerMeter,
+                internalLogistics: rawSupplyParams.internalLogisticsCost,
+                standardLaborHours: rawSupplyParams.standardLaborHours,
+                panelFastenerQuantity: rawSupplyParams.panelFastenerQuantity,
+                claddingCorrection: rawSupplyParams.claddingCuttingCorrection,
+                columnCorrection: rawSupplyParams.columnCuttingCorrection,
+                coverCorrection: rawSupplyParams.coverCuttingCorrection,
+                panelCorrection: rawSupplyParams.panelCuttingCorrection,
+              };
+            } catch (parseError) {
+              console.warn('Failed to parse supply parameters from localStorage:', parseError);
+            }
+          }
+          
+          const result = get().engine.calculate(inputs, supplyParams);
           
           set({
             result,
@@ -41,7 +69,7 @@ export const useCalculationStore = create<CalculationState>()(
           });
         } catch (error) {
           set({
-            error: error instanceof Error ? error.message : 'Calculation failed',
+            error: error instanceof Error ? error.message : 'Calculation failed', // TODO: localize this
             isCalculating: false,
           });
         }

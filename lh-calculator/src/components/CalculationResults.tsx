@@ -15,6 +15,7 @@ import {
   Skeleton,
 } from '@mantine/core';
 import { IconAlertCircle, IconDownload, IconFileSpreadsheet } from '@tabler/icons-react';
+import { useTranslation } from 'react-i18next';
 import { useCalculationStore } from '../stores/calculationStore';
 
 const formatCurrency = (value: number): string => {
@@ -34,11 +35,12 @@ const formatNumber = (value: number, decimals = 2): string => {
 };
 
 export const CalculationResults: React.FC = () => {
+  const { t } = useTranslation();
   const { result, isCalculating, error, lastCalculatedAt, exportToExcel, exportToPDF } = useCalculationStore();
   
   if (error) {
     return (
-      <Alert icon={<IconAlertCircle size={16} />} title="Calculation Error" color="red">
+      <Alert icon={<IconAlertCircle size={16} />} title={t('results.calculationError')} color="red">
         {error}
       </Alert>
     );
@@ -60,7 +62,7 @@ export const CalculationResults: React.FC = () => {
     return (
       <Card shadow="sm" padding="lg" radius="md">
         <Text c="dimmed" ta="center" py="xl">
-          Enter technical specifications and click Calculate to see results
+          {t('results.noResults')}
         </Text>
       </Card>
     );
@@ -71,9 +73,9 @@ export const CalculationResults: React.FC = () => {
       {/* Summary Card */}
       <Card shadow="sm" padding="lg" radius="md">
         <Group justify="space-between" mb="md">
-          <Title order={3}>Calculation Results (Результат)</Title>
+          <Title order={3}>{t('results.titleWithNote')}</Title>
           <Group gap="xs">
-            <Badge color="green">Calculated</Badge>
+            <Badge color="green">{t('results.calculated')}</Badge>
             {lastCalculatedAt && (
               <Text size="xs" color="dimmed">
                 {new Date(lastCalculatedAt).toLocaleTimeString()}
@@ -85,34 +87,34 @@ export const CalculationResults: React.FC = () => {
         <Grid>
           <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
             <Paper p="md" withBorder>
-              <Text size="xs" color="dimmed" mb="xs">Total Cost</Text>
+              <Text size="xs" color="dimmed" mb="xs">{t('results.sections.totalCost')}</Text>
               <Text size="xl" fw={700} c="blue">
-                {formatCurrency(result.totalCost)}
+                {formatCurrency(result.finalCostBreakdown?.U32_GrandTotal || result.totalCost)}
               </Text>
             </Paper>
           </Grid.Col>
           
           <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
             <Paper p="md" withBorder>
-              <Text size="xs" color="dimmed" mb="xs">Pressure Test A</Text>
+              <Text size="xs" color="dimmed" mb="xs">{t('results.sections.pressureTestA')}</Text>
               <Text size="xl" fw={700}>
-                {formatNumber(result.pressureTestA)} bar
+                {formatNumber(result.pressureTestHot)} {t('supply.units.bar')}
               </Text>
             </Paper>
           </Grid.Col>
           
           <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
             <Paper p="md" withBorder>
-              <Text size="xs" color="dimmed" mb="xs">Pressure Test B</Text>
+              <Text size="xs" color="dimmed" mb="xs">{t('results.sections.pressureTestB')}</Text>
               <Text size="xl" fw={700}>
-                {formatNumber(result.pressureTestB)} bar
+                {formatNumber(result.pressureTestCold)} {t('supply.units.bar')}
               </Text>
             </Paper>
           </Grid.Col>
           
           <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
             <Paper p="md" withBorder>
-              <Text size="xs" color="dimmed" mb="xs">Components</Text>
+              <Text size="xs" color="dimmed" mb="xs">{t('results.sections.components')}</Text>
               <Text size="xl" fw={700}>
                 {Object.keys(result.componentCosts).length - 1}
               </Text>
@@ -121,59 +123,250 @@ export const CalculationResults: React.FC = () => {
         </Grid>
       </Card>
       
-      {/* Component Costs Breakdown */}
+      {/* Cost Breakdown - Use finalCostBreakdown if available, otherwise componentCosts */}
       <Card shadow="sm" padding="lg" radius="md">
-        <Title order={4} mb="md">Component Costs Breakdown</Title>
+        <Title order={4} mb="md">{t('results.sections.costBreakdown')}</Title>
         
-        <Stack gap="sm">
-          {Object.entries(result.componentCosts).map(([key, value]) => {
-            if (key === 'total') return null;
-            const percentage = (value / result.componentCosts.total) * 100;
+        {result.finalCostBreakdown ? (
+          <Stack gap="sm">
+            {/* Corpus Category J31 = G26 + H26 + I26 + J26 */}
+            <div>
+              <Group justify="space-between">
+                <Text size="sm" fw={600}>{t('results.sections.corpusCategory')}</Text>
+                <Text size="sm" fw={600}>
+                  {formatCurrency(result.finalCostBreakdown.J31_CorpusCategory)}
+                </Text>
+              </Group>
+              {result.finalCostBreakdown.J31_CorpusCategory > 0 && (
+                <Stack gap={4} ml="md" mt={4}>
+                  {result.finalCostBreakdown.I26_Covers > 0 && (
+                    <Group justify="space-between">
+                      <Text size="xs" c="dimmed">• {t('results.sections.covers')}</Text>
+                      <Text size="xs" c="dimmed">{formatCurrency(result.finalCostBreakdown.I26_Covers)}</Text>
+                    </Group>
+                  )}
+                  {result.finalCostBreakdown.J26_Columns > 0 && (
+                    <Group justify="space-between">
+                      <Text size="xs" c="dimmed">• {t('results.sections.columns')}</Text>
+                      <Text size="xs" c="dimmed">{formatCurrency(result.finalCostBreakdown.J26_Columns)}</Text>
+                    </Group>
+                  )}
+                  {result.finalCostBreakdown.H26_PanelMaterial > 0 && (
+                    <Group justify="space-between">
+                      <Text size="xs" c="dimmed">• {t('results.sections.panels')}</Text>
+                      <Text size="xs" c="dimmed">{formatCurrency(result.finalCostBreakdown.H26_PanelMaterial)}</Text>
+                    </Group>
+                  )}
+                  {result.finalCostBreakdown.G26_CorpusTotal > 0 && (
+                    <Group justify="space-between">
+                      <Text size="xs" c="dimmed">• {t('results.sections.corpusBase')}</Text>
+                      <Text size="xs" c="dimmed">{formatCurrency(result.finalCostBreakdown.G26_CorpusTotal)}</Text>
+                    </Group>
+                  )}
+                </Stack>
+              )}
+            </div>
+
+            {/* Core Category J32 = N26 + O26 + P26 */}
+            <div>
+              <Group justify="space-between">
+                <Text size="sm" fw={600}>{t('results.sections.coreCategory')}</Text>
+                <Text size="sm" fw={600}>
+                  {formatCurrency(result.finalCostBreakdown.J32_CoreCategory)}
+                </Text>
+              </Group>
+              {result.finalCostBreakdown.J32_CoreCategory > 0 && (
+                <Stack gap={4} ml="md" mt={4}>
+                  {result.finalCostBreakdown.N26_PlatePackage > 0 && (
+                    <Group justify="space-between">
+                      <Text size="xs" c="dimmed">• {t('results.sections.platePackage')}</Text>
+                      <Text size="xs" c="dimmed">{formatCurrency(result.finalCostBreakdown.N26_PlatePackage)}</Text>
+                    </Group>
+                  )}
+                  {result.finalCostBreakdown.O26_CladMaterial > 0 && (
+                    <Group justify="space-between">
+                      <Text size="xs" c="dimmed">• {t('results.sections.cladding')}</Text>
+                      <Text size="xs" c="dimmed">{formatCurrency(result.finalCostBreakdown.O26_CladMaterial)}</Text>
+                    </Group>
+                  )}
+                  {result.finalCostBreakdown.P26_InternalSupports > 0 && (
+                    <Group justify="space-between">
+                      <Text size="xs" c="dimmed">• {t('results.sections.internalSupports')}</Text>
+                      <Text size="xs" c="dimmed">{formatCurrency(result.finalCostBreakdown.P26_InternalSupports)}</Text>
+                    </Group>
+                  )}
+                </Stack>
+              )}
+            </div>
+
+            {/* Connections Category J33 = K26 + L26 + M26 */}
+            <div>
+              <Group justify="space-between">
+                <Text size="sm" fw={600}>{t('results.sections.connections')}</Text>
+                <Text size="sm" fw={600}>
+                  {formatCurrency(result.finalCostBreakdown.J33_ConnectionsCategory)}
+                </Text>
+              </Group>
+              {result.finalCostBreakdown.J33_ConnectionsCategory > 0 && (
+                <Stack gap={4} ml="md" mt={4}>
+                  {result.finalCostBreakdown.K26_Connections > 0 && (
+                    <Group justify="space-between">
+                      <Text size="xs" c="dimmed">• {t('results.sections.fasteners')}</Text>
+                      <Text size="xs" c="dimmed">{formatCurrency(result.finalCostBreakdown.K26_Connections)}</Text>
+                    </Group>
+                  )}
+                  {result.finalCostBreakdown.L26_Gaskets > 0 && (
+                    <Group justify="space-between">
+                      <Text size="xs" c="dimmed">• {t('results.sections.gaskets')}</Text>
+                      <Text size="xs" c="dimmed">{formatCurrency(result.finalCostBreakdown.L26_Gaskets)}</Text>
+                    </Group>
+                  )}
+                  {result.finalCostBreakdown.M26_GasketSets > 0 && (
+                    <Group justify="space-between">
+                      <Text size="xs" c="dimmed">• {t('results.sections.gasketSets')}</Text>
+                      <Text size="xs" c="dimmed">{formatCurrency(result.finalCostBreakdown.M26_GasketSets)}</Text>
+                    </Group>
+                  )}
+                </Stack>
+              )}
+            </div>
+
+            {/* Other Category J34 = R26 + S26 + T26 + U26 + V26 + X26 */}
+            <div>
+              <Group justify="space-between">
+                <Text size="sm" fw={600}>{t('results.sections.otherCategory')}</Text>
+                <Text size="sm" fw={600}>
+                  {formatCurrency(result.finalCostBreakdown.J34_OtherCategory)}
+                </Text>
+              </Group>
+              {result.finalCostBreakdown.J34_OtherCategory > 0 && (
+                <Stack gap={4} ml="md" mt={4}>
+                  {result.finalCostBreakdown.R26_Attachment > 0 && (
+                    <Group justify="space-between">
+                      <Text size="xs" c="dimmed">• {t('results.sections.attachments')}</Text>
+                      <Text size="xs" c="dimmed">{formatCurrency(result.finalCostBreakdown.R26_Attachment)}</Text>
+                    </Group>
+                  )}
+                  {result.finalCostBreakdown.S26_Legs > 0 && (
+                    <Group justify="space-between">
+                      <Text size="xs" c="dimmed">• {t('results.sections.legs')}</Text>
+                      <Text size="xs" c="dimmed">{formatCurrency(result.finalCostBreakdown.S26_Legs)}</Text>
+                    </Group>
+                  )}
+                  {result.finalCostBreakdown.T26_OtherMaterials > 0 && (
+                    <Group justify="space-between">
+                      <Text size="xs" c="dimmed">• {t('results.sections.otherMaterials')}</Text>
+                      <Text size="xs" c="dimmed">{formatCurrency(result.finalCostBreakdown.T26_OtherMaterials)}</Text>
+                    </Group>
+                  )}
+                  {result.finalCostBreakdown.U26_ShotBlock > 0 && (
+                    <Group justify="space-between">
+                      <Text size="xs" c="dimmed">• {t('results.sections.shotBlock')}</Text>
+                      <Text size="xs" c="dimmed">{formatCurrency(result.finalCostBreakdown.U26_ShotBlock)}</Text>
+                    </Group>
+                  )}
+                  {result.finalCostBreakdown.V26_Uncounted > 0 && (
+                    <Group justify="space-between">
+                      <Text size="xs" c="dimmed">• {t('results.sections.uncounted')}</Text>
+                      <Text size="xs" c="dimmed">{formatCurrency(result.finalCostBreakdown.V26_Uncounted)}</Text>
+                    </Group>
+                  )}
+                  {result.finalCostBreakdown.X26_InternalLogistics > 0 && (
+                    <Group justify="space-between">
+                      <Text size="xs" c="dimmed">• {t('results.sections.internalLogistics')}</Text>
+                      <Text size="xs" c="dimmed">{formatCurrency(result.finalCostBreakdown.X26_InternalLogistics)}</Text>
+                    </Group>
+                  )}
+                </Stack>
+              )}
+            </div>
+
+            {/* COF Category J35 = Q26 */}
+            {result.finalCostBreakdown.J35_COFCategory > 0 && (
+              <Group justify="space-between">
+                <Text size="sm" fw={600}>{t('results.sections.cofCategory')}</Text>
+                <Text size="sm" fw={600}>
+                  {formatCurrency(result.finalCostBreakdown.J35_COFCategory)}
+                </Text>
+              </Group>
+            )}
+
+            {/* Labor J30 = F26 */}
+            <Group justify="space-between">
+              <Text size="sm" fw={600}>{t('results.sections.labor')}</Text>
+              <Text size="sm" fw={600}>
+                {formatCurrency(result.finalCostBreakdown.J30_WorkTotal)}
+              </Text>
+            </Group>
+
+            {/* Spare Kit J36 = W26 */}
+            {result.finalCostBreakdown.J36_SpareCategory > 0 && (
+              <Group justify="space-between">
+                <Text size="sm" fw={600}>{t('results.sections.spareKit')}</Text>
+                <Text size="sm" fw={600}>
+                  {formatCurrency(result.finalCostBreakdown.J36_SpareCategory)}
+                </Text>
+              </Group>
+            )}
             
-            return (
-              <div key={key}>
-                <Group justify="space-between" mb={4}>
-                  <Text size="sm" tt="capitalize">
-                    {key.replace(/([A-Z])/g, ' $1').trim()}
-                  </Text>
-                  <Text size="sm" fw={500}>
-                    {formatCurrency(value)}
-                  </Text>
-                </Group>
-                <Progress 
-                  value={percentage} 
-                  size="sm" 
-                  color={percentage > 30 ? 'red' : percentage > 20 ? 'yellow' : 'blue'}
-                />
-              </div>
-            );
-          })}
-        </Stack>
-        
-        <Divider my="md" />
-        
-        <Group justify="space-between">
-          <Text fw={600}>Total</Text>
-          <Text fw={700} size="lg" c="blue">
-            {formatCurrency(result.componentCosts.total)}
-          </Text>
-        </Group>
+            <Divider my="sm" />
+            <Group justify="space-between">
+              <Text fw={700}>{t('results.sections.grandTotal')}</Text>
+              <Text fw={700} size="lg" c="green">
+                {formatCurrency(result.finalCostBreakdown.U32_GrandTotal)}
+              </Text>
+            </Group>
+          </Stack>
+        ) : (
+          // Fallback to componentCosts if finalCostBreakdown not available
+          <Stack gap="sm">
+            {Object.entries(result.componentCosts).map(([key, value]) => {
+              if (key === 'total') return null;
+              const percentage = (value / result.componentCosts.total) * 100;
+              
+              return (
+                <div key={key}>
+                  <Group justify="space-between" mb={4}>
+                    <Text size="sm">
+                      {t(`results.sections.${key}`)}
+                    </Text>
+                    <Text size="sm" fw={500}>
+                      {formatCurrency(value)}
+                    </Text>
+                  </Group>
+                  <Progress 
+                    value={percentage} 
+                    size="sm" 
+                    color={percentage > 30 ? 'red' : percentage > 20 ? 'yellow' : 'blue'}
+                  />
+                </div>
+              );
+            })}
+            <Divider my="md" />
+            <Group justify="space-between">
+              <Text fw={600}>{t('common.total')}</Text>
+              <Text fw={700} size="lg" c="blue">
+                {formatCurrency(result.componentCosts.total)}
+              </Text>
+            </Group>
+          </Stack>
+        )}
       </Card>
       
       {/* Material Requirements */}
       <Card shadow="sm" padding="lg" radius="md">
-        <Title order={4} mb="md">Material Requirements</Title>
+        <Title order={4} mb="md">{t('results.sections.materialRequirements')}</Title>
         
         <Grid>
           {Array.from(result.materialRequirements.entries()).map(([key, value]) => (
             <Grid.Col span={{ base: 12, sm: 6 }} key={key}>
               <Paper p="sm" withBorder>
-                <Text size="xs" c="dimmed" tt="capitalize">
-                  {key.replace(/([A-Z])/g, ' $1').trim()}
+                <Text size="xs" c="dimmed">
+                  {t(`results.sections.${key}`, { defaultValue: key.replace(/([A-Z])/g, ' $1').trim() })}
                 </Text>
                 <Text fw={500}>
                   {formatNumber(value, key.includes('Mass') ? 2 : 4)} 
-                  {key.includes('Mass') ? ' kg' : ' m³'}
+                  {key.includes('Mass') ? t('supply.units.kg') : t('supply.units.cubicMeter')}
                 </Text>
               </Paper>
             </Grid.Col>
@@ -184,21 +377,21 @@ export const CalculationResults: React.FC = () => {
       {/* Export Actions */}
       <Card shadow="sm" padding="lg" radius="md">
         <Group justify="space-between">
-          <Title order={4}>Export Options</Title>
+          <Title order={4}>{t('results.sections.exportOptions')}</Title>
           <Group>
             <Button 
               leftSection={<IconFileSpreadsheet size={16} />}
               variant="light"
               onClick={exportToExcel}
             >
-              Export to Excel
+              {t('results.exportToExcel')}
             </Button>
             <Button 
               leftSection={<IconDownload size={16} />}
               variant="light"
               onClick={exportToPDF}
             >
-              Export to PDF
+              {t('results.exportToPDF')}
             </Button>
           </Group>
         </Group>

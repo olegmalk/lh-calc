@@ -1,15 +1,13 @@
-import { Title, Paper, Text } from '@mantine/core';
-import { useTranslation } from 'react-i18next';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export function CalculationsPage() {
-  const { t } = useTranslation();
+  const navigate = useNavigate();
 
-  return (
-    <>
-      <Title order={2} mb="xl">{t('navigation.calculations')}</Title>
-      <Paper p="md" radius="md" withBorder>
-        <Text c="dimmed">{t('common.noData')}</Text>
-      </Paper>
-    </>
-  );
+  useEffect(() => {
+    // Redirect to dashboard since calculations happen there
+    navigate('/dashboard', { replace: true });
+  }, [navigate]);
+
+  return null;
 }

@@ -115,8 +115,6 @@ describe('Store Integration Tests', () => {
         materialPlate: 'AISI 316L',
         materialBody: 'AISI 304',
         surfaceType: 'Гладкая',
-        componentsA: 5,
-        componentsB: 1,
         plateThickness: 3,
       };
       
@@ -180,8 +178,6 @@ describe('Store Integration Tests', () => {
         materialPlate: 'AISI 304',
         materialBody: 'AISI 304',
         surfaceType: 'Гладкая',
-        componentsA: 3,
-        componentsB: 1,
         plateThickness: 2,
       };
       
@@ -208,8 +204,6 @@ describe('Store Integration Tests', () => {
         materialPlate: 'AISI 316L',
         materialBody: 'AISI 304',
         surfaceType: 'Гладкая',
-        componentsA: 4,
-        componentsB: 1,
         plateThickness: 2.5,
       };
       
@@ -336,8 +330,6 @@ describe('Store Integration Tests', () => {
         materialPlate: 'AISI 316L',
         materialBody: 'AISI 316L',
         surfaceType: 'Гладкая',
-        componentsA: 3,
-        componentsB: 1,
         plateThickness: 2,
       };
       
@@ -383,8 +375,6 @@ describe('Store Integration Tests', () => {
         materialPlate: 'AISI 304',
         materialBody: 'AISI 304',
         surfaceType: 'Гладкая',
-        componentsA: 3,
-        componentsB: 1,
         plateThickness: 2,
       };
       
@@ -476,8 +466,6 @@ describe('Store Integration Tests', () => {
         materialPlate: 'AISI 316L',
         materialBody: 'AISI 304',
         surfaceType: 'Гладкая',
-        componentsA: 4,
-        componentsB: 1,
         plateThickness: 2.5,
       };
       

@@ -7,7 +7,7 @@ global.Blob = vi.fn((content, options) => ({
   content,
   type: options?.type,
   size: content[0]?.length || 0,
-})) as any;
+})) as unknown as typeof Blob;
 
 global.URL.createObjectURL = vi.fn(() => 'blob:mock-url');
 global.URL.revokeObjectURL = vi.fn();
@@ -34,8 +34,6 @@ describe('Export Functionality End-to-End Tests', () => {
         materialPlate: 'AISI 316L',
         materialBody: 'AISI 304',
         surfaceType: 'Гладкая',
-        componentsA: 5,
-        componentsB: 1,
         plateThickness: 3,
       };
       
@@ -82,8 +80,6 @@ describe('Export Functionality End-to-End Tests', () => {
         materialPlate: 'AISI 316L',
         materialBody: 'AISI 304',
         surfaceType: 'Гладкая',
-        componentsA: 4,
-        componentsB: 1,
         plateThickness: 2.5,
       };
       
@@ -120,8 +116,6 @@ describe('Export Functionality End-to-End Tests', () => {
         materialPlate: 'AISI 304',
         materialBody: 'AISI 304',
         surfaceType: 'Гладкая',
-        componentsA: 3,
-        componentsB: 1,
         plateThickness: 2,
       };
       
@@ -184,8 +178,6 @@ describe('Export Functionality End-to-End Tests', () => {
           materialPlate: 'AISI 316L',
           materialBody: 'AISI 304',
           surfaceType: 'Гладкая',
-          componentsA: 4,
-          componentsB: 1,
           plateThickness: 2.5,
         };
         
@@ -212,8 +204,6 @@ describe('Export Functionality End-to-End Tests', () => {
         materialPlate: 'AISI 316L',
         materialBody: 'AISI 316L',
         surfaceType: 'Рифленая',
-        componentsA: 5,
-        componentsB: 2,
         plateThickness: 3.5,
       };
       
@@ -246,8 +236,6 @@ describe('Export Functionality End-to-End Tests', () => {
         materialPlate: '12Х18Н10Т',
         materialBody: '09Г2С',
         surfaceType: 'Шеврон',
-        componentsA: 7,
-        componentsB: 2,
         plateThickness: 4,
       };
       
@@ -281,8 +269,6 @@ describe('Export Functionality End-to-End Tests', () => {
         materialPlate: 'AISI 304',
         materialBody: 'Ст3',
         surfaceType: 'Гладкая',
-        componentsA: 3,
-        componentsB: 1,
         plateThickness: 2,
       };
       
@@ -329,8 +315,6 @@ describe('Export Functionality End-to-End Tests', () => {
         materialPlate: 'AISI 316L',
         materialBody: 'AISI 304',
         surfaceType: 'Гофра, микс',
-        componentsA: 4,
-        componentsB: 1,
         plateThickness: 2.8,
       };
       
@@ -370,8 +354,6 @@ describe('Export Functionality End-to-End Tests', () => {
         materialPlate: 'AISI 316L',
         materialBody: 'AISI 316L',
         surfaceType: 'Турбулизатор',
-        componentsA: 5,
-        componentsB: 1,
         plateThickness: 3.2,
       };
       
@@ -433,8 +415,6 @@ describe('Export Functionality End-to-End Tests', () => {
           materialPlate: 'AISI 316L',
           materialBody: 'AISI 304',
           surfaceType: 'Гладкая',
-          componentsA: 4,
-          componentsB: 1,
           plateThickness: 2.5,
         };
         

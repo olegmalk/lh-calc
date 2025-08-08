@@ -69,8 +69,6 @@ describe('Formula Library Calculations', () => {
       materialPlate: 'AISI 316L',
       materialBody: 'AISI 304',
       surfaceType: 'Гладкая',
-      componentsA: 5,
-      componentsB: 1,
       plateThickness: 3,
     };
 
@@ -192,8 +190,6 @@ describe('Complete Calculation Execution', () => {
       materialPlate: 'AISI 316L',
       materialBody: 'AISI 304',
       surfaceType: 'Гладкая',
-      componentsA: 5,
-      componentsB: 1,
       plateThickness: 3,
     };
 
@@ -292,8 +288,6 @@ describe('Integration Tests', () => {
       materialPlate: 'AISI 316L',
       materialBody: 'AISI 316L',
       surfaceType: 'Рифленая',
-      componentsA: 4,
-      componentsB: 2,
       plateThickness: 2.5,
     };
 

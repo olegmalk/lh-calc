@@ -21,8 +21,8 @@ describe('CalculationResults', () => {
   const mockExportToPDF = vi.fn();
 
   const mockResult: CalculationResult = {
-    pressureTestA: 125.5,
-    pressureTestB: 130.2,
+    pressureTestHot: 125.5,
+    pressureTestCold: 130.2,
     interpolatedValues: new Map([
       ['G_ComponentsCount', 1],
       ['H_CoverArea', 1234.56],
@@ -60,8 +60,15 @@ describe('CalculationResults', () => {
       ['materials', 12.4],
     ]),
     exportData: {
-      equipment: { type: 'К4-750', plateCount: 400 },
+      equipment: { type: 'К4-750', plateCount: 400, configuration: '1/6' },
+      materials: { plate: 'AISI 316L', body: 'AISI 304', surface: 'Гладкая' },
+      parameters: { pressureA: 100, pressureB: 100, temperatureA: 80, temperatureB: 60 },
+      costs: {},
+      calculations: {},
       totalCost: 145000,
+      version: '2.0.0',
+      calculatedAt: new Date().toISOString(),
+      excelRow: 118,
     },
   };
 

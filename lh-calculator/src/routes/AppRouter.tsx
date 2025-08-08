@@ -6,8 +6,9 @@ import { AppNavbar } from '@components/layout/AppNavbar';
 
 // Pages - MVP only
 import { DashboardPage } from '@pages/Dashboard';
-import { TechnicalPartsPage } from '@pages/TechnicalParts';
 import { CalculationsPage } from '@pages/Calculations';
+import { SavedCalculationsPage } from '@pages/SavedCalculations';
+import SupplyParameters from '@pages/SupplyParameters';
 
 export function AppRouter() {
   const [opened, { toggle }] = useDisclosure();
@@ -42,8 +43,9 @@ export function AppRouter() {
         <Routes>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/technical-parts" element={<TechnicalPartsPage />} />
           <Route path="/calculations" element={<CalculationsPage />} />
+          <Route path="/saved-calculations" element={<SavedCalculationsPage />} />
+          <Route path="/supply" element={<SupplyParameters />} />
         </Routes>
       </AppShell.Main>
     </AppShell>

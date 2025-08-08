@@ -37,8 +37,6 @@ describe('TechnicalInputForm', () => {
     materialPlate: 'AISI 316L',
     materialBody: 'AISI 304',
     surfaceType: 'Гладкая',
-    componentsA: 5,
-    componentsB: 1,
     plateThickness: 3,
   };
 

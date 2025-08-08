@@ -125,3 +125,17 @@ ACTION: Created detailed Excel structure analysis:
 - Identified 3-sheet data flow: технолог→снабжение→результат
 - Created comprehensive documentation of all input fields, their purposes, and dependencies
 - OUTPUT: EXCEL_STRUCTURE_COMPREHENSIVE.md with complete field mapping and calculation analysis
+
+## [2025-08-08] CLIENT_DATA_COLLECTION_FORM: Test Data Collection for Validation
+USER: "collect samples of excel sheet workflows from client. send them a textual form that they will fill replicating exact values that excel sheet produced. make sure you use exactly same labels as in excel sheet"
+ACTION: Created comprehensive test data collection form:
+
+- Used exact Russian field names from Excel (e.g., "типоразмер К4", "Расч Давл по Гор Ст")
+- Mapped all cell references precisely (D27-V27 for технолог, F2-P13 for снабжение)
+- Included all dropdown options verified against constants.ts
+- Created bilingual form (Russian/English) for clarity
+- Added 3 test scenario templates for different configurations
+- Included category breakdown fields (J31-J36) for result validation
+- Deep verification confirmed 100% accuracy of field names and options
+- OUTPUT: CLIENT_DATA_COLLECTION_FORM_VERIFIED.md ready for client distribution
+EOF < /dev/null

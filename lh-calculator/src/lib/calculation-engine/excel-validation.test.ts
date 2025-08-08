@@ -18,8 +18,6 @@ describe('Excel Validation Tests', () => {
       materialPlate: 'AISI 316L',
       materialBody: 'AISI 304',
       surfaceType: 'Гладкая',
-      componentsA: 5,
-      componentsB: 1,
       plateThickness: 3,
     };
 
@@ -29,11 +27,11 @@ describe('Excel Validation Tests', () => {
       // Excel формула: =ОКРВВЕРХ(1.25*B60*AA60/ПРОСМОТР(B60;Z60:Z68;AA60:AA68;1);0.01)
       // Where B60=100 (pressure), AA60=1800, safety factor=1.25
       // Expected: around 1406.25 based on interpolation
-      expect(result.pressureTestA).toBeGreaterThan(1400);
-      expect(result.pressureTestA).toBeLessThan(1410);
+      expect(result.pressureTestHot).toBeGreaterThan(1400);
+      expect(result.pressureTestHot).toBeLessThan(1410);
       
-      expect(result.pressureTestB).toBeGreaterThan(1400);
-      expect(result.pressureTestB).toBeLessThan(1410);
+      expect(result.pressureTestCold).toBeGreaterThan(1400);
+      expect(result.pressureTestCold).toBeLessThan(1410);
     });
 
     it('should calculate base dimensions correctly', () => {
@@ -118,8 +116,6 @@ describe('Excel Validation Tests', () => {
       materialPlate: 'AISI 304',
       materialBody: 'AISI 304',
       surfaceType: 'Гладкая',
-      componentsA: 3,
-      componentsB: 1,
       plateThickness: 2,
     };
 
@@ -147,8 +143,8 @@ describe('Excel Validation Tests', () => {
       const result = engine.calculate(input);
       
       // Lower pressure should result in lower test pressure
-      expect(result.pressureTestA).toBeGreaterThan(50);
-      expect(result.pressureTestA).toBeLessThan(1000);
+      expect(result.pressureTestHot).toBeGreaterThan(50);
+      expect(result.pressureTestHot).toBeLessThan(1000);
     });
   });
 
@@ -165,8 +161,6 @@ describe('Excel Validation Tests', () => {
       materialPlate: 'AISI 316L',
       materialBody: 'AISI 316L',
       surfaceType: 'Рифленая',
-      componentsA: 8,
-      componentsB: 2,
       plateThickness: 4,
     };
 
@@ -225,8 +219,6 @@ describe('Excel Validation Tests', () => {
           materialPlate: 'AISI 316L',
           materialBody: 'AISI 304',
           surfaceType: 'Гладкая',
-          componentsA: 4,
-          componentsB: 1,
           plateThickness: 2.5,
         };
 
@@ -249,8 +241,6 @@ describe('Excel Validation Tests', () => {
         materialPlate: 'AISI 316L',
         materialBody: 'AISI 304',
         surfaceType: 'Гладкая',
-        componentsA: 4,
-        componentsB: 1,
         plateThickness: 3,
       };
 
@@ -282,8 +272,6 @@ describe('Excel Validation Tests', () => {
         materialPlate: 'Ст3', // Cheaper material
         materialBody: 'Ст3',
         surfaceType: 'Гладкая',
-        componentsA: 2,
-        componentsB: 1,
         plateThickness: 1.5,
       };
 
@@ -299,8 +287,6 @@ describe('Excel Validation Tests', () => {
         materialPlate: 'AISI 316L', // Expensive material
         materialBody: 'AISI 316L',
         surfaceType: 'Гладкая',
-        componentsA: 6,
-        componentsB: 2,
         plateThickness: 4,
       };
 

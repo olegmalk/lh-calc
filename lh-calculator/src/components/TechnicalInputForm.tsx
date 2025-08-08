@@ -60,10 +60,18 @@ export const TechnicalInputForm: React.FC = () => {
     },
   });
   
-  // Sync form with store
+  // Sync form with store - only update when inputs actually change
   useEffect(() => {
     form.setValues(inputs);
-  }, [inputs]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inputs]); // Don't include form in deps to avoid infinite loop
+  
+  // Update store when form changes
+  const handleFieldChange = (field: keyof HeatExchangerInput, value: string | number | null | undefined) => {
+    form.setFieldValue(field, value ?? undefined);
+    // Update store to trigger isDirty
+    useInputStore.getState().updateInput(field, value ?? undefined);
+  };
   
   const handleSubmit = async (values: HeatExchangerInput) => {
     updateMultiple(values);
@@ -77,8 +85,7 @@ export const TechnicalInputForm: React.FC = () => {
   
   return (
     <Card shadow="sm" padding="lg" radius="md">
-      <form onSubmit={form.onSubmit(handleSubmit)}>
-        <Stack gap="md">
+      <Stack gap="md">
           <Group justify="space-between">
             <Title order={3}>Technical Specifications (Технолог)</Title>
             {isDirty && <Badge color="yellow">Unsaved changes</Badge>}
@@ -92,8 +99,13 @@ export const TechnicalInputForm: React.FC = () => {
                 label="Equipment Type (Типоразмер)"
                 placeholder="Select type"
                 data={NAMED_RANGES.типоразмеры_К4}
-                {...form.getInputProps('equipmentType')}
+                value={form.values.equipmentType}
+                onChange={(value) => handleFieldChange('equipmentType', value || '')}
+                error={form.errors.equipmentType}
                 required
+                searchable={false}
+                data-testid="equipment-type-select"
+                comboboxProps={{ withinPortal: false }}
               />
             </Grid.Col>
             
@@ -101,7 +113,9 @@ export const TechnicalInputForm: React.FC = () => {
               <TextInput
                 label="Model Code"
                 placeholder="К4-750"
-                {...form.getInputProps('modelCode')}
+                value={form.values.modelCode}
+                onChange={(event) => handleFieldChange('modelCode', event.currentTarget.value)}
+                error={form.errors.modelCode}
                 required
               />
             </Grid.Col>
@@ -111,8 +125,13 @@ export const TechnicalInputForm: React.FC = () => {
                 label="Plate Configuration"
                 placeholder="1/6"
                 data={['1/6', '1/4', '1/3', '1/2', '2/3', '3/4']}
-                {...form.getInputProps('plateConfiguration')}
+                value={form.values.plateConfiguration}
+                onChange={(value) => handleFieldChange('plateConfiguration', value || '')}
+                error={form.errors.plateConfiguration}
                 required
+                searchable={false}
+                data-testid="plate-config-select"
+                comboboxProps={{ withinPortal: false }}
               />
             </Grid.Col>
             
@@ -123,7 +142,9 @@ export const TechnicalInputForm: React.FC = () => {
                 min={10}
                 max={1000}
                 step={10}
-                {...form.getInputProps('plateCount')}
+                value={form.values.plateCount}
+                onChange={(value) => handleFieldChange('plateCount', value)}
+                error={form.errors.plateCount}
                 required
               />
             </Grid.Col>
@@ -140,7 +161,9 @@ export const TechnicalInputForm: React.FC = () => {
                 max={400}
                 decimalScale={1}
                 step={10}
-                {...form.getInputProps('pressureA')}
+                value={form.values.pressureA}
+                onChange={(value) => handleFieldChange('pressureA', value)}
+                error={form.errors.pressureA}
                 required
               />
             </Grid.Col>
@@ -153,7 +176,9 @@ export const TechnicalInputForm: React.FC = () => {
                 max={400}
                 decimalScale={1}
                 step={10}
-                {...form.getInputProps('pressureB')}
+                value={form.values.pressureB}
+                onChange={(value) => handleFieldChange('pressureB', value)}
+                error={form.errors.pressureB}
                 required
               />
             </Grid.Col>
@@ -165,7 +190,9 @@ export const TechnicalInputForm: React.FC = () => {
                 min={-40}
                 max={200}
                 step={5}
-                {...form.getInputProps('temperatureA')}
+                value={form.values.temperatureA}
+                onChange={(value) => handleFieldChange('temperatureA', value)}
+                error={form.errors.temperatureA}
                 required
               />
             </Grid.Col>
@@ -177,7 +204,9 @@ export const TechnicalInputForm: React.FC = () => {
                 min={-40}
                 max={200}
                 step={5}
-                {...form.getInputProps('temperatureB')}
+                value={form.values.temperatureB}
+                onChange={(value) => handleFieldChange('temperatureB', value)}
+                error={form.errors.temperatureB}
                 required
               />
             </Grid.Col>
@@ -191,8 +220,13 @@ export const TechnicalInputForm: React.FC = () => {
                 label="Plate Material (Материал пластин)"
                 placeholder="Select material"
                 data={availableMaterials.plate}
-                {...form.getInputProps('materialPlate')}
+                value={form.values.materialPlate}
+                onChange={(value) => handleFieldChange('materialPlate', value || '')}
+                error={form.errors.materialPlate}
                 required
+                searchable={false}
+                data-testid="plate-material-select"
+                comboboxProps={{ withinPortal: false }}
               />
             </Grid.Col>
             
@@ -201,8 +235,13 @@ export const TechnicalInputForm: React.FC = () => {
                 label="Body Material (Материал корпуса)"
                 placeholder="Select material"
                 data={availableMaterials.body}
-                {...form.getInputProps('materialBody')}
+                value={form.values.materialBody}
+                onChange={(value) => handleFieldChange('materialBody', value || '')}
+                error={form.errors.materialBody}
                 required
+                searchable={false}
+                data-testid="body-material-select"
+                comboboxProps={{ withinPortal: false }}
               />
             </Grid.Col>
             
@@ -211,8 +250,13 @@ export const TechnicalInputForm: React.FC = () => {
                 label="Surface Type (Тип поверхности)"
                 placeholder="Select type"
                 data={NAMED_RANGES.тип_поверхности}
-                {...form.getInputProps('surfaceType')}
+                value={form.values.surfaceType}
+                onChange={(value) => handleFieldChange('surfaceType', value || '')}
+                error={form.errors.surfaceType}
                 required
+                searchable={false}
+                data-testid="surface-type-select"
+                comboboxProps={{ withinPortal: false }}
               />
             </Grid.Col>
           </Grid>
@@ -222,35 +266,15 @@ export const TechnicalInputForm: React.FC = () => {
           <Grid>
             <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
               <NumberInput
-                label="Components A"
-                placeholder="5"
-                min={0}
-                max={20}
-                {...form.getInputProps('componentsA')}
-                required
-              />
-            </Grid.Col>
-            
-            <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
-              <NumberInput
-                label="Components B"
-                placeholder="1"
-                min={0}
-                max={20}
-                {...form.getInputProps('componentsB')}
-                required
-              />
-            </Grid.Col>
-            
-            <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
-              <NumberInput
                 label="Plate Thickness (mm)"
                 placeholder="3"
                 min={0.4}
                 max={10}
                 decimalScale={1}
                 step={0.1}
-                {...form.getInputProps('plateThickness')}
+                value={form.values.plateThickness}
+                onChange={(value) => handleFieldChange('plateThickness', value)}
+                error={form.errors.plateThickness}
                 required
               />
             </Grid.Col>
@@ -265,7 +289,7 @@ export const TechnicalInputForm: React.FC = () => {
               Reset
             </Button>
             <Button 
-              type="submit" 
+              onClick={() => form.onSubmit(handleSubmit)()}
               loading={isCalculating}
               disabled={!form.isValid()}
             >
@@ -273,7 +297,6 @@ export const TechnicalInputForm: React.FC = () => {
             </Button>
           </Group>
         </Stack>
-      </form>
     </Card>
   );
 };

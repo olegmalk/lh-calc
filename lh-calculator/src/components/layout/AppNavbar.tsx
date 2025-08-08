@@ -3,15 +3,15 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   IconDashboard,
-  IconPackage,
-  IconCalculator,
+  IconDeviceFloppy,
+  IconBuildingWarehouse,
 } from '@tabler/icons-react';
 
 // MVP Navigation only
 const navigation = [
   { path: '/dashboard', icon: IconDashboard, label: 'navigation.dashboard' },
-  { path: '/technical-parts', icon: IconPackage, label: 'navigation.technicalParts' },
-  { path: '/calculations', icon: IconCalculator, label: 'navigation.calculations' },
+  { path: '/supply', icon: IconBuildingWarehouse, label: 'navigation.supply' },
+  { path: '/saved-calculations', icon: IconDeviceFloppy, label: 'navigation.savedCalculations' },
 ];
 
 export function AppNavbar() {

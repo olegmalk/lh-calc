@@ -26,8 +26,6 @@ const defaultInputs: HeatExchangerInput = {
   materialPlate: 'AISI 316L',
   materialBody: 'AISI 316L',
   surfaceType: 'гофра',
-  componentsA: 5,
-  componentsB: 1,
   plateThickness: 3,
 };
 
