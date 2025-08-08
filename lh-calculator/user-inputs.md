@@ -1,5 +1,8 @@
 # USER INPUTS LOG - LH Calculator
 
+## [2025-08-08] ANALYSIS: D13/D14 null impact on Excel calculations
+**REQUEST**: Analyze impact of D13 and D14 being null/empty in Excel test data. Find formulas referencing these cells, understand purpose, calculate impact, determine if null is intentional or missing data.
+
 ## [2025-08-07] CONTEXT: Continued from previous session with critical gaps discovered
 
 ### Initial State
@@ -246,3 +249,18 @@ ACTION: Deep analysis of 6 Excel screenshots:
 - Documented dimensions: height=6.0, package height=2400
 - Still missing: VLOOKUP columns H-AK, dropdown options
 - Major breakthrough: Can now implement complete calculation logic with E19 known
+
+## [2025-08-08] VLOOKUP_TABLE_COMPLETE: Comprehensive VLOOKUP structure extraction
+
+USER: "Extract the COMPLETE VLOOKUP table structure from B110:BI122. Read ALL columns from B to BI (60+ columns). Do NOT skip any columns."
+ACTION: Complete extraction and analysis of VLOOKUP table:
+
+- Extracted ALL 60 columns (B-BI) from rows 110-122 (13 equipment types)
+- Headers from row 109: масса заготовок, Колонны, Гребенка, etc. (42 with headers)
+- К4-750 complete data: 1820.5952kg blank mass, 29.625648kg ribs, etc.
+- Identified 16 columns used in formulas (H, L, O, R, AB, AE, AH, AK, BA, BB, BC, BD, BE, BG, BH, BI)
+- Critical mass calculations: BA=171.95, BB=31.24, BC=171.95, BD=1165.15
+- Component breakdown: Basic dimensions (C-F), Component masses (H-AK), Final calculations (AL-BI)
+- Formula usage: BD (2 refs), BE (2 refs), others (1 ref each)
+- 44 unused columns identified for potential optimization
+- OUTPUT: COMPLETE_VLOOKUP_STRUCTURE.md with all 60 columns documented
