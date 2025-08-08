@@ -166,6 +166,21 @@ ACTION: Comprehensive Excel analysis with test data:
 - Created QUESTIONS_FOR_CLIENT.md with 15 questions (3 critical blockers)
 - Critical blockers: E19 calculation missing, VLOOKUP columns H-AK needed, dropdown options unclear
 
+## [2025-08-08] TEST_SCENARIO_EXTRACTION: Complete Excel data extraction for validation
+
+USER: "document all inputs and outputs from example excel so we can use it to create test scenario"
+ACTION: Comprehensive test data extraction:
+
+- Extracted 1,795 non-empty cells from all 3 sheets
+- Documented 21 input values, 962 formulas, 678 constants
+- Created TEST_SCENARIO_DATA.md with all cell values and formulas
+- Created TEST_VALIDATION_FRAMEWORK.md with validation checklist
+- Key test case: К4-750/AISI316L/400units = 1820.5952kg (exact match)
+- Test pressures: 31.46 bar (both sides via CEILING.PRECISE)
+- Total cost: 1,609,136.64 rubles
+- Complete VLOOKUP tables and material densities documented
+- Ready for automated testing once E19 logic clarified
+
 ## [2025-08-08] COMPLETE_TEST_SCENARIO: Extract EVERY single value from Excel for test validation
 
 USER: "extract EVERY SINGLE input and output value from the Excel file for creating a complete test scenario"
