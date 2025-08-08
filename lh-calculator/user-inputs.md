@@ -165,3 +165,18 @@ ACTION: Comprehensive Excel analysis with test data:
 - Created EXCEL_TO_APP_MAPPING.md showing formula-to-code mappings
 - Created QUESTIONS_FOR_CLIENT.md with 15 questions (3 critical blockers)
 - Critical blockers: E19 calculation missing, VLOOKUP columns H-AK needed, dropdown options unclear
+
+## [2025-08-08] COMPLETE_TEST_SCENARIO: Extract EVERY single value from Excel for test validation
+
+USER: "extract EVERY SINGLE input and output value from the Excel file for creating a complete test scenario"
+ACTION: Comprehensive extraction of all Excel data:
+
+- Analyzed ALL 3 sheets (технолог, снабжение, результат) completely
+- Extracted 1795 total non-empty cells (111 технолог + 1622 снабжение + 62 результат)
+- Captured 962 formulas with exact calculations and expected outputs
+- Documented material density table AS47:AT53 with 7 materials
+- Mapped complete VLOOKUP tables B110:BI122 (13 rows × 60+ columns)
+- Identified all input cells with color coding and cell references
+- Created TEST_SCENARIO_DATA.md with 2991 lines of complete test data
+- Every cell value, formula, and expected result documented for exact validation
+- Ready for comprehensive application testing against Excel ground truth
