@@ -25,7 +25,10 @@
       "claddingCorrection": "Поправка на раскрой плакировки",
       "columnCorrection": "Поправка на раскрой колонн",
       "coverCorrection": "Поправка на раскрой крышек",
-      "panelCorrection": "Поправка на раскрой панелей"
+      "panelCorrection": "Поправка на раскрой панелей",
+      "laborRateD12": "Ставка труда (D12)",
+      "laborCoefficientD13": "Коэффициент труда (D13)",
+      "materialCoefficientD14": "Коэффициент материала (D14)"
     },
     "units": {
       "hours": "часы",
@@ -123,7 +126,9 @@
       "drawDepth": "Глубина вытяжки (мм)",
       "claddingThickness": "Толщина плакировки (мм)",
       "testPressureHot": "Давление испытания Г (бар)",
-      "testPressureCold": "Давление испытания Х (бар)"
+      "testPressureCold": "Давление испытания Х (бар)",
+      "plateLength": "Длина пластины (мм)",
+      "mountingPanelsCount": "Количество монтажных панелей"
     },
     "placeholders": {
       "equipmentType": "Выберите тип",
@@ -141,7 +146,9 @@
       "drawDepth": "10",
       "claddingThickness": "0.5",
       "testPressureHot": "31.5",
-      "testPressureCold": "31.5"
+      "testPressureCold": "31.5",
+      "plateLength": "5",
+      "mountingPanelsCount": "3"
     },
     "validation": {
       "equipmentTypeRequired": "Необходимо выбрать тип оборудования",
@@ -155,6 +162,8 @@
       "temperatureMax": "Максимальная температура 200°C",
       "thicknessMin": "Минимальная толщина 0.4мм",
       "thicknessMax": "Максимальная толщина 1.2мм",
+      "plateLengthRange": "Длина пластины должна быть от 1 до 50 мм",
+      "mountingPanelsRange": "Количество монтажных панелей должно быть от 1 до 10",
       "plateMaterialRequired": "Необходимо выбрать материал пластин",
       "bodyMaterialRequired": "Необходимо выбрать материал корпуса",
       "surfaceTypeRequired": "Необходимо выбрать тип поверхности"

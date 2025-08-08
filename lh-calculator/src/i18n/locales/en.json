@@ -25,7 +25,10 @@
       "claddingCorrection": "Cladding Cutting Correction",
       "columnCorrection": "Column Cutting Correction",
       "coverCorrection": "Cover Cutting Correction",
-      "panelCorrection": "Panel Cutting Correction"
+      "panelCorrection": "Panel Cutting Correction",
+      "laborRateD12": "Labor Rate (D12)",
+      "laborCoefficientD13": "Labor Coefficient (D13)",
+      "materialCoefficientD14": "Material Coefficient (D14)"
     },
     "units": {
       "hours": "hours",
@@ -123,7 +126,9 @@
       "drawDepth": "Draw Depth (mm)",
       "claddingThickness": "Cladding Thickness (mm)",
       "testPressureHot": "Test Pressure Hot (bar)",
-      "testPressureCold": "Test Pressure Cold (bar)"
+      "testPressureCold": "Test Pressure Cold (bar)",
+      "plateLength": "Plate Length (mm)",
+      "mountingPanelsCount": "Mounting Panels Count"
     },
     "placeholders": {
       "equipmentType": "Select type",
@@ -141,7 +146,9 @@
       "drawDepth": "10",
       "claddingThickness": "0.5",
       "testPressureHot": "31.5",
-      "testPressureCold": "31.5"
+      "testPressureCold": "31.5",
+      "plateLength": "5",
+      "mountingPanelsCount": "3"
     },
     "validation": {
       "equipmentTypeRequired": "Equipment type is required",
@@ -155,6 +162,8 @@
       "temperatureMax": "Maximum temperature 200°C",
       "thicknessMin": "Minimum thickness 0.4mm",
       "thicknessMax": "Maximum thickness 1.2mm",
+      "plateLengthRange": "Plate length must be between 1-50 mm",
+      "mountingPanelsRange": "Mounting panels count must be between 1-10",
       "plateMaterialRequired": "Plate material is required",
       "bodyMaterialRequired": "Body material is required",
       "surfaceTypeRequired": "Surface type is required"

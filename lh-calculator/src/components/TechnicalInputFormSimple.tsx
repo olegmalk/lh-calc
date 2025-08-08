@@ -89,6 +89,16 @@ export const TechnicalInputFormSimple: React.FC = () => {
     if (formData.plateThickness < 0.4) newErrors.plateThickness = t('form.validation.thicknessMin');
     if (formData.plateThickness > 1.2) newErrors.plateThickness = t('form.validation.thicknessMax');
     
+    // T27 validation - Plate length (1-50 mm)
+    if (formData.plateLength && (formData.plateLength < 1 || formData.plateLength > 50)) {
+      newErrors.plateLength = t('form.validation.plateLengthRange');
+    }
+    
+    // V27 validation - Mounting panels count (1-10)
+    if (formData.mountingPanelsCount && (formData.mountingPanelsCount < 1 || formData.mountingPanelsCount > 10)) {
+      newErrors.mountingPanelsCount = t('form.validation.mountingPanelsRange');
+    }
+    
     if (!formData.materialPlate) newErrors.materialPlate = t('form.validation.plateMaterialRequired');
     if (!formData.materialBody) newErrors.materialBody = t('form.validation.bodyMaterialRequired');
     if (!formData.surfaceType) newErrors.surfaceType = t('form.validation.surfaceTypeRequired');
@@ -510,6 +520,44 @@ export const TechnicalInputFormSimple: React.FC = () => {
                 max="100"
                 step="0.1"
               />
+            </div>
+          </Grid.Col>
+          
+          <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
+            <div>
+              <label style={labelStyle}>
+                {t('form.fields.plateLength')}
+              </label>
+              <input
+                type="number"
+                style={{ ...inputStyle, ...(errors.plateLength ? errorStyle : {}) }}
+                value={formData.plateLength || 5}
+                onChange={(e) => handleChange('plateLength', parseFloat(e.target.value) || 5)}
+                placeholder={t('form.placeholders.plateLength')}
+                min="1"
+                max="50"
+                step="0.1"
+              />
+              {errors.plateLength && <div style={errorTextStyle}>{errors.plateLength}</div>}
+            </div>
+          </Grid.Col>
+          
+          <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
+            <div>
+              <label style={labelStyle}>
+                {t('form.fields.mountingPanelsCount')}
+              </label>
+              <input
+                type="number"
+                style={{ ...inputStyle, ...(errors.mountingPanelsCount ? errorStyle : {}) }}
+                value={formData.mountingPanelsCount || 3}
+                onChange={(e) => handleChange('mountingPanelsCount', parseInt(e.target.value) || 3)}
+                placeholder={t('form.placeholders.mountingPanelsCount')}
+                min="1"
+                max="10"
+                step="1"
+              />
+              {errors.mountingPanelsCount && <div style={errorTextStyle}>{errors.mountingPanelsCount}</div>}
             </div>
           </Grid.Col>
         </Grid>

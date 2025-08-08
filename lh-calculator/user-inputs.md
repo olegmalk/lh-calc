@@ -264,3 +264,33 @@ ACTION: Complete extraction and analysis of VLOOKUP table:
 - Formula usage: BD (2 refs), BE (2 refs), others (1 ref each)
 - 44 unused columns identified for potential optimization
 - OUTPUT: COMPLETE_VLOOKUP_STRUCTURE.md with all 60 columns documented
+
+## [2025-08-08] STORY_1_IMPLEMENTATION: Add Missing Critical Input Fields
+
+USER: "You are a BMAD Development Agent implementing Story 1 for the LH Calculator... Add the missing critical input fields to the application."
+ACTION: Implemented 5 missing critical input fields:
+
+### Fields Added:
+- D12: laborRate (default: 2500) - Labor rate ₽/hour
+- D13: laborCoefficient (default: 1) - Labor multiplier  
+- D14: materialCoefficient (default: 1) - Material factor (squared in formulas)
+- T27: plateLength (default: 5) - Plate length in mm
+- V27: mountingPanelsCount (default: 3) - Number of mounting panels
+
+### Implementation Details:
+1. ✅ Updated /src/stores/inputStore.ts - Added 5 new fields with correct defaults
+2. ✅ Updated /src/lib/calculation-engine/types.ts - Extended HeatExchangerInput interface
+3. ✅ Updated /src/components/TechnicalInputFormSimple.tsx - Added T27, V27 with validation (1-50, 1-10)
+4. ✅ Updated /src/components/SupplyInputForm.tsx - Added D12 to pricing, D13/D14 to coefficients
+5. ✅ Updated localization files (en.json, ru.json) - Added proper Russian/English labels
+6. ✅ Added proper validation and error handling for all fields
+
+### Technical Implementation:
+- T27/V27 added to технолог section with proper validation ranges
+- D12 added to pricing policy section (director role access)
+- D13/D14 added to corrections coefficients section (supply role access)
+- All fields integrate with existing calculation engine
+- Proper TypeScript typing maintained throughout
+- Russian/English dual language support implemented
+
+### Status: IMPLEMENTED - Ready for integration testing

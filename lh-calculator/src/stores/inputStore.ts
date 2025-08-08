@@ -27,6 +27,13 @@ const defaultInputs: HeatExchangerInput = {
   materialBody: 'AISI 316L',
   surfaceType: 'гофра',
   plateThickness: 1.0, // Changed from 3 to 1.0mm to match Excel U27 default
+  
+  // Missing critical input fields - Story 1
+  laborRate: 2500, // D12 - Labor rate ₽/hour
+  laborCoefficient: 1, // D13 - Labor multiplier
+  materialCoefficient: 1, // D14 - Material factor (squared in formulas)
+  plateLength: 5, // T27 - Plate length in mm
+  mountingPanelsCount: 3, // V27 - Number of mounting panels
 };
 
 export const useInputStore = create<InputState>()(

@@ -27,19 +27,24 @@ export interface HeatExchangerInput {
   drawDepth?: number; // T27 - глубина вытяжки (mm)
   plateThickness: number; // U27 - толщина пластины (mm)
   claddingThickness?: number; // V27 - толщина плакировки (mm)
+  plateLength?: number; // T27 - длина пластины (mm)
+  mountingPanelsCount?: number; // V27 - количество монтажных панелей
   
   // Test pressure fields (N27/O27)
   testPressureHot?: number; // N27 - давление испытания горячая сторона (bar)
   testPressureCold?: number; // O27 - давление испытания холодная сторона (bar)
   
   // снабжение sheet inputs - SUPPLY PARAMETERS
-  // Pricing Policy (D8-G8, A12-A13)
+  // Pricing Policy (D8-G8, A12-A13, D12-D14)
   plateMaterialPricePerKg?: number; // D8 - цена материала пластин
   claddingMaterialPricePerKg?: number; // E8 - цена плакировки
   columnCoverMaterialPricePerKg?: number; // F8 - цена колонн/крышек
   panelMaterialPricePerKg?: number; // G8 - цена панелей
   laborRatePerHour?: number; // A12 - стоимость нормо-часа
   cuttingCostPerMeter?: number; // A13 - стоимость раскроя
+  laborRate?: number; // D12 - Labor rate ₽/hour
+  laborCoefficient?: number; // D13 - Labor multiplier
+  materialCoefficient?: number; // D14 - Material factor (squared in formulas)
   
   // Logistics (K13, P13, P19)
   internalLogisticsCost?: number; // P13 - внутренняя логистика

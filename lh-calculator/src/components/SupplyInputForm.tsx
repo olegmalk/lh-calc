@@ -11,6 +11,9 @@ export interface SupplyInputData {
   panelMaterialPricePerKg: number; // G8 - цена материала панелей за кг
   laborRatePerHour: number; // A12 - стоимость нормо-часа
   cuttingCostPerMeter: number; // A13 - стоимость раскроя за метр
+  laborRate: number; // D12 - стоимость работы ₽/час
+  laborCoefficient: number; // D13 - коэффициент труда
+  materialCoefficient: number; // D14 - коэффициент материала
   
   // Логистика (СНАБЖЕНИЕ) - Logistics
   internalLogisticsCost: number; // P13 - внутренняя логистика
@@ -37,6 +40,9 @@ const DEFAULT_VALUES: SupplyInputData = {
   panelMaterialPricePerKg: 650,
   laborRatePerHour: 2500,
   cuttingCostPerMeter: 150,
+  laborRate: 2500,
+  laborCoefficient: 1,
+  materialCoefficient: 1,
   internalLogisticsCost: 120000,
   standardLaborHours: 1,
   panelFastenerQuantity: 88,
@@ -214,6 +220,24 @@ export const SupplyInputForm: React.FC<SupplyInputFormProps> = ({
               <Text size="xs" c="dimmed">₽/м</Text>
             </div>
           </Grid.Col>
+          
+          <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
+            <div>
+              <label style={labelStyle}>
+                {t('supply.fields.laborRateD12')}
+              </label>
+              <input
+                type="number"
+                style={canEditPricing ? inputStyle : disabledStyle}
+                value={data.laborRate}
+                onChange={(e) => handleChange('laborRate', parseFloat(e.target.value) || 0)}
+                disabled={!canEditPricing}
+                min="0"
+                step="50"
+              />
+              <Text size="xs" c="dimmed">₽/час</Text>
+            </div>
+          </Grid.Col>
         </Grid>
       </Card>
       
@@ -359,6 +383,44 @@ export const SupplyInputForm: React.FC<SupplyInputFormProps> = ({
                 disabled={!canEditCorrections}
                 min="1"
                 max="2"
+                step="0.01"
+              />
+              <Text size="xs" c="dimmed">{t('supply.units.coefficient')}</Text>
+            </div>
+          </Grid.Col>
+          
+          <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
+            <div>
+              <label style={labelStyle}>
+                {t('supply.fields.laborCoefficientD13')}
+              </label>
+              <input
+                type="number"
+                style={canEditCorrections ? inputStyle : disabledStyle}
+                value={data.laborCoefficient}
+                onChange={(e) => handleChange('laborCoefficient', parseFloat(e.target.value) || 1)}
+                disabled={!canEditCorrections}
+                min="0.1"
+                max="5"
+                step="0.01"
+              />
+              <Text size="xs" c="dimmed">{t('supply.units.coefficient')}</Text>
+            </div>
+          </Grid.Col>
+          
+          <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
+            <div>
+              <label style={labelStyle}>
+                {t('supply.fields.materialCoefficientD14')}
+              </label>
+              <input
+                type="number"
+                style={canEditCorrections ? inputStyle : disabledStyle}
+                value={data.materialCoefficient}
+                onChange={(e) => handleChange('materialCoefficient', parseFloat(e.target.value) || 1)}
+                disabled={!canEditCorrections}
+                min="0.1"
+                max="5"
                 step="0.01"
               />
               <Text size="xs" c="dimmed">{t('supply.units.coefficient')}</Text>
