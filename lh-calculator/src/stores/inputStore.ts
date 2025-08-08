@@ -1,17 +1,42 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import type { HeatExchangerInput } from '../lib/calculation-engine/types';
+import type { UserRole } from '../types/roles.types';
+import { useRoleStore } from './roleStore';
+import { 
+  canEditField, 
+  canViewField,
+  filterEditableInputs,
+  filterViewableInputs
+} from '../utils/role-permissions';
 
 interface InputState {
   inputs: HeatExchangerInput;
   isDirty: boolean;
+  
+  // Core input methods
   updateInput: <K extends keyof HeatExchangerInput>(
     field: K, 
-    value: HeatExchangerInput[K]
+    value: HeatExchangerInput[K],
+    bypassRoleCheck?: boolean
   ) => void;
-  updateMultiple: (updates: Partial<HeatExchangerInput>) => void;
+  updateMultiple: (updates: Partial<HeatExchangerInput>, bypassRoleCheck?: boolean) => void;
   reset: () => void;
   loadFromTemplate: (template: HeatExchangerInput) => void;
+  
+  // Role-based computed properties
+  getEditableInputs: (role?: UserRole) => Partial<HeatExchangerInput>;
+  getViewableInputs: (role?: UserRole) => Partial<HeatExchangerInput>;
+  canEditField: (field: keyof HeatExchangerInput, role?: UserRole) => boolean;
+  canViewField: (field: keyof HeatExchangerInput, role?: UserRole) => boolean;
+  
+  // Validation helpers
+  validateUpdate: (field: keyof HeatExchangerInput, role?: UserRole) => { allowed: boolean; reason?: string };
+  getFieldsForRole: (role?: UserRole) => {
+    editable: (keyof HeatExchangerInput)[];
+    viewable: (keyof HeatExchangerInput)[];
+    hidden: (keyof HeatExchangerInput)[];
+  };
 }
 
 const defaultInputs: HeatExchangerInput = {
@@ -198,8 +223,19 @@ export const useInputStore = create<InputState>()(
         inputs: defaultInputs,
         isDirty: false,
         
-        updateInput: (field, value) => 
+        updateInput: (field, value, bypassRoleCheck = false) => 
           set((state) => {
+            // Role-based permission check (unless bypassed for system updates)
+            if (!bypassRoleCheck) {
+              const roleStore = useRoleStore.getState();
+              const canEdit = roleStore.canEdit(field);
+              
+              if (!canEdit) {
+                console.warn(`Role ${roleStore.currentRole} cannot edit field ${field}`);
+                return state; // No update if permission denied
+              }
+            }
+            
             const newInputs = {
               ...state.inputs,
               [field]: value,
@@ -216,14 +252,33 @@ export const useInputStore = create<InputState>()(
             };
           }, false, 'updateInput'),
         
-        updateMultiple: (updates) =>
-          set((state) => ({
-            inputs: {
-              ...state.inputs,
-              ...updates,
-            },
-            isDirty: true,
-          }), false, 'updateMultiple'),
+        updateMultiple: (updates, bypassRoleCheck = false) =>
+          set((state) => {
+            let filteredUpdates = updates;
+            
+            // Role-based filtering (unless bypassed)
+            if (!bypassRoleCheck) {
+              const roleStore = useRoleStore.getState();
+              filteredUpdates = roleStore.filterForEdit(updates);
+              
+              // Log any filtered fields
+              const originalKeys = Object.keys(updates);
+              const filteredKeys = Object.keys(filteredUpdates);
+              const blockedFields = originalKeys.filter(key => !filteredKeys.includes(key));
+              
+              if (blockedFields.length > 0) {
+                console.warn(`Role ${roleStore.currentRole} blocked from editing fields:`, blockedFields);
+              }
+            }
+            
+            return {
+              inputs: {
+                ...state.inputs,
+                ...filteredUpdates,
+              },
+              isDirty: true,
+            };
+          }, false, 'updateMultiple'),
         
         reset: () =>
           set({
@@ -236,6 +291,46 @@ export const useInputStore = create<InputState>()(
             inputs: template,
             isDirty: false,
           }, false, 'loadFromTemplate'),
+        
+        // Role-based computed properties  
+        getEditableInputs: (role?: UserRole): Partial<HeatExchangerInput> => {
+          const { inputs } = get();
+          const targetRole = role || useRoleStore.getState().currentRole;
+          return filterEditableInputs(targetRole, inputs);
+        },
+        
+        getViewableInputs: (role?: UserRole): Partial<HeatExchangerInput> => {
+          const { inputs } = get();
+          const targetRole = role || useRoleStore.getState().currentRole;
+          return filterViewableInputs(targetRole, inputs);
+        },
+        
+        canEditField: (field: keyof HeatExchangerInput, role?: UserRole) => {
+          const targetRole = role || useRoleStore.getState().currentRole;
+          return canEditField(targetRole, field);
+        },
+        
+        canViewField: (field: keyof HeatExchangerInput, role?: UserRole) => {
+          const targetRole = role || useRoleStore.getState().currentRole;
+          return canViewField(targetRole, field);
+        },
+        
+        validateUpdate: (field: keyof HeatExchangerInput, role?: UserRole) => {
+          const targetRole = role || useRoleStore.getState().currentRole;
+          const roleStore = useRoleStore.getState();
+          return roleStore.validateFieldAccess(field, 'write');
+        },
+        
+        getFieldsForRole: (role?: UserRole) => {
+          const targetRole = role || useRoleStore.getState().currentRole;
+          const roleStore = useRoleStore.getState();
+          
+          return {
+            editable: roleStore.getEditableFields(),
+            viewable: roleStore.getViewableFields(),
+            hidden: roleStore.getHiddenFields(),
+          };
+        },
       }),
       {
         name: 'lh-calculator-inputs',

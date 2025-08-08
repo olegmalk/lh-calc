@@ -6,6 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { useInputStore } from '../stores/inputStore';
 import { useCalculationStore } from '../stores/calculationStore';
 import { useMaterialStore } from '../stores/materialStore';
+import { useRoleStore } from '../stores/roleStore';
+import { useFormPermissions, useRolePermissions } from '../hooks/useRolePermissions';
 import { NAMED_RANGES } from '../lib/calculation-engine/constants';
 import { calc_AI73_TestPressureHot, calc_AJ73_TestPressureCold } from '../lib/calculation-engine/formula-library-complete';
 import type { HeatExchangerInput } from '../lib/calculation-engine/types';
@@ -27,6 +29,15 @@ export const TechnicalInputFormSimple: React.FC = () => {
   const { inputs, updateInput, updateMultiple, isDirty, reset } = useInputStore();
   const { calculate, isCalculating } = useCalculationStore();
   const { availableMaterials } = useMaterialStore();
+  
+  // Role-based permissions
+  const { currentRole } = useRoleStore();
+  const formPermissions = useFormPermissions();
+  
+  const { 
+    canEdit, 
+    getFieldInfo 
+  } = useRolePermissions();
   
   // Local form state
   const [formData, setFormData] = useState<HeatExchangerInput>(inputs);
@@ -79,8 +90,14 @@ export const TechnicalInputFormSimple: React.FC = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData.pressureA, formData.pressureB, formData.temperatureA, formData.temperatureB, formData.materialPlate]);
   
-  // Handle field changes
+  // Handle field changes with role-based validation
   const handleChange = (field: keyof HeatExchangerInput, value: string | number) => {
+    // Check if current role can edit this field
+    if (!canEdit(field)) {
+      console.warn(`Role ${currentRole} cannot edit field ${field}`);
+      return;
+    }
+    
     const updatedData = { ...formData, [field]: value };
     setFormData(updatedData);
     updateInput(field, value);
@@ -175,11 +192,51 @@ export const TechnicalInputFormSimple: React.FC = () => {
     borderColor: '#fa5252',
   };
   
+  const readonlyStyle = {
+    backgroundColor: '#f8f9fa',
+    cursor: 'not-allowed',
+    color: '#6c757d',
+  };
+  
   const labelStyle = {
     display: 'block',
     marginBottom: '5px',
     fontSize: '14px',
     fontWeight: 500,
+  };
+  
+  // Role-based styling helper
+  const getFieldStyles = (field: keyof HeatExchangerInput) => {
+    const fieldInfo = getFieldInfo(field);
+    const hasError = !!errors[field];
+    const isEditable = fieldInfo.canEdit;
+    const isVisible = fieldInfo.canView;
+    
+    if (!isVisible) {
+      return {
+        container: { display: 'none' },
+        input: inputStyle,
+        label: labelStyle
+      };
+    }
+    
+    const baseInputStyle = {
+      ...inputStyle,
+      ...(hasError ? errorStyle : {}),
+      ...(isEditable ? {} : readonlyStyle)
+    };
+    
+    return {
+      container: { 
+        opacity: isEditable ? 1 : 0.7,
+        position: 'relative' as const
+      },
+      input: baseInputStyle,
+      label: {
+        ...labelStyle,
+        color: isEditable ? '#212529' : '#6c757d'
+      }
+    };
   };
   
   const errorTextStyle = {
@@ -252,15 +309,16 @@ export const TechnicalInputFormSimple: React.FC = () => {
         
         <Grid>
           <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
-            <div>
-              <label style={labelStyle}>
+            <div style={getFieldStyles('equipmentType').container}>
+              <label style={getFieldStyles('equipmentType').label}>
                 {t('form.fields.equipmentTypeWithNote')} <span style={{ color: 'red' }}>*</span>
               </label>
               <select
                 data-testid="equipment-type-select"
-                style={{ ...inputStyle, ...(errors.equipmentType ? errorStyle : {}) }}
+                style={getFieldStyles('equipmentType').input}
                 value={formData.equipmentType}
                 onChange={(e) => handleChange('equipmentType', e.target.value)}
+                disabled={!canEdit('equipmentType')}
               >
                 <option value="">{t('common.placeholder.selectType')}</option>
                 {NAMED_RANGES.типоразмеры_К4.map(type => (

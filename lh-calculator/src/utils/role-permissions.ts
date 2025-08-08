@@ -288,7 +288,7 @@ export const createFieldDescriptor = (
 /**
  * Get all field descriptors for a role
  */
-export const getAllFieldDescriptors = (role: UserRole): FieldDescriptor[] => {
+export const getAllFieldDescriptors = (): FieldDescriptor[] => {
   // This would require iterating through all fields from HeatExchangerInput
   // For now, return empty array as this requires type introspection
   return [];

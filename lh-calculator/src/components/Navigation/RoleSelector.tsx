@@ -4,6 +4,7 @@ import { IconChevronDown, IconUser, IconSettings, IconPackage, IconEye, IconTie 
 import { useTranslation } from 'react-i18next';
 import type { UserRole } from '@/types/roles.types';
 import { ROLE_DEFINITIONS } from '@/types/roles.types';
+import { useRoleStore } from '@/stores/roleStore';
 import './RoleSelector.css';
 
 const ROLE_ICONS: Record<UserRole, React.ReactNode> = {
@@ -34,23 +35,25 @@ export interface RoleSelectorProps {
 
 export function RoleSelector({ onRoleChange, defaultRole = 'technologist' }: RoleSelectorProps) {
   const { t } = useTranslation();
-  const [selectedRole, setSelectedRole] = useState<UserRole>(() => {
-    // Load from localStorage or use default
-    const stored = localStorage.getItem('selected-role');
-    return (stored as UserRole) || defaultRole;
-  });
-
+  const { currentRole, setRole } = useRoleStore();
+  
   const [isOpen, setIsOpen] = useState(false);
 
+  // Initialize role store if not set
   useEffect(() => {
-    // Save to localStorage whenever role changes
-    localStorage.setItem('selected-role', selectedRole);
-  }, [selectedRole]);
+    if (!currentRole) {
+      const stored = localStorage.getItem('selected-role') as UserRole;
+      setRole(stored || defaultRole);
+    }
+  }, [currentRole, setRole, defaultRole]);
 
   const handleRoleChange = (role: UserRole) => {
-    const previousRole = selectedRole;
-    setSelectedRole(role);
+    const previousRole = currentRole;
+    setRole(role);
     setIsOpen(false);
+
+    // Save to localStorage
+    localStorage.setItem('selected-role', role);
 
     // Emit role change event
     if (onRoleChange) {
@@ -66,7 +69,7 @@ export function RoleSelector({ onRoleChange, defaultRole = 'technologist' }: Rol
     }));
   };
 
-  const currentRoleDefinition = ROLE_DEFINITIONS[selectedRole];
+  const currentRoleDefinition = ROLE_DEFINITIONS[currentRole];
 
   return (
     <Menu
@@ -81,7 +84,7 @@ export function RoleSelector({ onRoleChange, defaultRole = 'technologist' }: Rol
     >
       <Menu.Target>
         <Tooltip
-          label={t(`roles.descriptions.${selectedRole}`)}
+          label={t(`roles.descriptions.${currentRole}`)}
           position="bottom"
           multiline
           w={250}
@@ -91,14 +94,14 @@ export function RoleSelector({ onRoleChange, defaultRole = 'technologist' }: Rol
             variant="subtle"
             size="sm"
             rightSection={<IconChevronDown size={14} />}
-            leftSection={ROLE_ICONS[selectedRole]}
-            className={`role-selector-button role-${selectedRole}`}
+            leftSection={ROLE_ICONS[currentRole]}
+            className={`role-selector-button role-${currentRole}`}
             style={{
-              '--role-color': ROLE_COLORS[selectedRole]
+              '--role-color': ROLE_COLORS[currentRole]
             } as React.CSSProperties}
           >
             <Text size="sm" fw={500}>
-              {t(`roles.names.${selectedRole}`)}
+              {t(`roles.names.${currentRole}`)}
             </Text>
           </Button>
         </Tooltip>
@@ -113,7 +116,7 @@ export function RoleSelector({ onRoleChange, defaultRole = 'technologist' }: Rol
 
         {Object.entries(ROLE_DEFINITIONS).map(([roleId, definition]) => {
           const role = roleId as UserRole;
-          const isSelected = role === selectedRole;
+          const isSelected = role === currentRole;
 
           return (
             <Menu.Item
@@ -176,20 +179,7 @@ export function RoleSelector({ onRoleChange, defaultRole = 'technologist' }: Rol
 
 // Hook for other components to listen to role changes
 export function useRoleSelector() {
-  const [currentRole, setCurrentRole] = useState<UserRole>(() => {
-    return (localStorage.getItem('selected-role') as UserRole) || 'technologist';
-  });
-
-  useEffect(() => {
-    const handleRoleChange = (event: CustomEvent<RoleChangeEvent>) => {
-      setCurrentRole(event.detail.role);
-    };
-
-    window.addEventListener('roleChanged', handleRoleChange as EventListener);
-    return () => {
-      window.removeEventListener('roleChanged', handleRoleChange as EventListener);
-    };
-  }, []);
+  const { currentRole } = useRoleStore();
 
   return {
     role: currentRole,

@@ -21,18 +21,11 @@ export const FIELD_PERMISSIONS: Record<keyof HeatExchangerInput, FieldPermission
     description: 'Equipment type selection (VLOOKUP driver)'
   },
   
-  'plateMaterial': {
-    field: 'plateMaterial',
-    color: 'yellow',
-    section: 'technical',
-    description: 'Plate material (cost driver)'
-  },
-  
   'materialPlate': {
     field: 'materialPlate',
     color: 'yellow',
     section: 'technical',
-    description: 'Plate material specification'
+    description: 'Plate material (cost driver)'
   },
   
   'surfaceType': {

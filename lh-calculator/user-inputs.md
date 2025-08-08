@@ -8,6 +8,8 @@
 
 [2025-08-08] CALCULATION_ENGINE_INTEGRATION: Updated extractMaterials method in engine-v2.ts to use VLOOKUP functions and implement exact Excel formula. Maintained backward compatibility while adding enhanced Plate Package structure with dimensions.
 
+[2025-08-08] EPIC-1-STORY-1.3-ROLE-STATE-MANAGEMENT: Completed setup of role state management using Zustand. Created roleStore.ts with current role, permission caching, field visibility states. Updated inputStore.ts with role-based permissions and computed properties for editable/viewable fields. Created useRolePermissions.ts hook providing components access to field permissions. Integrated RoleSelector component with Zustand store. Added role-based field filtering that respects calculation engine permissions. System now enforces Excel color model permissions in real-time.
+
 [2025-08-08] TRANSLATION_AUDIT: Found and added 128 missing translation keys used in components - organized by categories (fields, descriptions, placeholders, subsections) with appropriate English and Russian translations for comprehensive i18n support
 
 [2025-08-08] QA_CRITICAL_FIXES: Fixed 2 critical QA issues: 1) /calculations route now shows proper page instead of redirect (fixed E2E navigation test), 2) Component mass calculations return numbers not objects (fixed 7 failing tests expecting materialRequirements.get() to return numbers). Unit tests improved from 52 failing to 6 failing (mainly Bitrix24 network-dependent tests). Navigation E2E test now passes.
