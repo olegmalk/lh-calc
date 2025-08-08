@@ -135,7 +135,7 @@
       "pressureCold": "Рабочее давление Х",
       "temperatureHot": "Рабочая температура Г",
       "temperatureCold": "Рабочая температура Х",
-      "plateThickness": "3",
+      "plateThickness": "1.0",
       "positionNumber": "001",
       "customerOrderNumber": "БИТ-2024-001",
       "drawDepth": "10",
@@ -154,7 +154,7 @@
       "temperatureMin": "Минимальная температура -40°C",
       "temperatureMax": "Максимальная температура 200°C",
       "thicknessMin": "Минимальная толщина 0.4мм",
-      "thicknessMax": "Максимальная толщина 10мм",
+      "thicknessMax": "Максимальная толщина 1.2мм",
       "plateMaterialRequired": "Необходимо выбрать материал пластин",
       "bodyMaterialRequired": "Необходимо выбрать материал корпуса",
       "surfaceTypeRequired": "Необходимо выбрать тип поверхности"

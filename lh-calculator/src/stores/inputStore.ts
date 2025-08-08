@@ -26,7 +26,7 @@ const defaultInputs: HeatExchangerInput = {
   materialPlate: 'AISI 316L',
   materialBody: 'AISI 316L',
   surfaceType: 'гофра',
-  plateThickness: 3,
+  plateThickness: 1.0, // Changed from 3 to 1.0mm to match Excel U27 default
 };
 
 export const useInputStore = create<InputState>()(

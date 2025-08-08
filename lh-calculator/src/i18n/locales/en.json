@@ -135,7 +135,7 @@
       "pressureCold": "Cold side pressure",
       "temperatureHot": "Hot side temperature",
       "temperatureCold": "Cold side temperature",
-      "plateThickness": "3",
+      "plateThickness": "1.0",
       "positionNumber": "001",
       "customerOrderNumber": "BIT-2024-001",
       "drawDepth": "10",
@@ -154,7 +154,7 @@
       "temperatureMin": "Minimum temperature -40°C",
       "temperatureMax": "Maximum temperature 200°C",
       "thicknessMin": "Minimum thickness 0.4mm",
-      "thicknessMax": "Maximum thickness 10mm",
+      "thicknessMax": "Maximum thickness 1.2mm",
       "plateMaterialRequired": "Plate material is required",
       "bodyMaterialRequired": "Body material is required",
       "surfaceTypeRequired": "Surface type is required"

@@ -980,16 +980,7 @@
         "Z70:AA70"
       ],
       "color_groups": {
-        "FFFFFF00": [
-          "E4",
-          "F27",
-          "G27",
-          "P27",
-          "Q27",
-          "R27",
-          "S27",
-          "U27"
-        ],
+        "FFFFFF00": ["E4", "F27", "G27", "P27", "Q27", "R27", "S27", "U27"],
         "FF92D050": [
           "E5",
           "D27",
@@ -1002,10 +993,7 @@
           "M27",
           "T27"
         ],
-        "FFFFC000": [
-          "E6",
-          "V27"
-        ],
+        "FFFFC000": ["E6", "V27"],
         "Values must be of type <class 'str'>": [
           "E7",
           "E8",
@@ -15961,9 +15949,7 @@
           "E101",
           "E105"
         ],
-        "FFFFFF00": [
-          "N2"
-        ],
+        "FFFFFF00": ["N2"],
         "FFFFC000": [
           "N4",
           "D9",
@@ -15993,10 +15979,7 @@
           "Q41",
           "R41"
         ],
-        "FFFF0000": [
-          "G93",
-          "G96"
-        ]
+        "FFFF0000": ["G93", "G96"]
       },
       "formulas": [
         {
@@ -21449,17 +21432,13 @@
               "rows": "60-69",
               "cell_count": 45,
               "has_formulas": true,
-              "colors": [
-                "Values must be of type <class 'str'>"
-              ]
+              "colors": ["Values must be of type <class 'str'>"]
             },
             {
               "rows": "70-79",
               "cell_count": 16,
               "has_formulas": true,
-              "colors": [
-                "Values must be of type <class 'str'>"
-              ]
+              "colors": ["Values must be of type <class 'str'>"]
             }
           ]
         },
@@ -21495,10 +21474,7 @@
               "rows": "20-29",
               "cell_count": 96,
               "has_formulas": true,
-              "colors": [
-                "Values must be of type <class 'str'>",
-                "FFFFC000"
-              ]
+              "colors": ["Values must be of type <class 'str'>", "FFFFC000"]
             },
             {
               "rows": "30-39",
@@ -21524,10 +21500,7 @@
               "rows": "50-59",
               "cell_count": 128,
               "has_formulas": true,
-              "colors": [
-                "Values must be of type <class 'str'>",
-                "FF92D050"
-              ]
+              "colors": ["Values must be of type <class 'str'>", "FF92D050"]
             },
             {
               "rows": "60-69",
@@ -21539,44 +21512,31 @@
               "rows": "70-79",
               "cell_count": 49,
               "has_formulas": true,
-              "colors": [
-                "Values must be of type <class 'str'>",
-                "FF92D050"
-              ]
+              "colors": ["Values must be of type <class 'str'>", "FF92D050"]
             },
             {
               "rows": "90-99",
               "cell_count": 23,
               "has_formulas": true,
-              "colors": [
-                "FFFF0000",
-                "Values must be of type <class 'str'>"
-              ]
+              "colors": ["FFFF0000", "Values must be of type <class 'str'>"]
             },
             {
               "rows": "100-109",
               "cell_count": 98,
               "has_formulas": true,
-              "colors": [
-                "Values must be of type <class 'str'>",
-                "FF92D050"
-              ]
+              "colors": ["Values must be of type <class 'str'>", "FF92D050"]
             },
             {
               "rows": "110-119",
               "cell_count": 600,
               "has_formulas": true,
-              "colors": [
-                "Values must be of type <class 'str'>"
-              ]
+              "colors": ["Values must be of type <class 'str'>"]
             },
             {
               "rows": "120-129",
               "cell_count": 184,
               "has_formulas": true,
-              "colors": [
-                "Values must be of type <class 'str'>"
-              ]
+              "colors": ["Values must be of type <class 'str'>"]
             },
             {
               "rows": "130-139",
@@ -21588,9 +21548,7 @@
               "rows": "140-149",
               "cell_count": 29,
               "has_formulas": true,
-              "colors": [
-                "Values must be of type <class 'str'>"
-              ]
+              "colors": ["Values must be of type <class 'str'>"]
             },
             {
               "rows": "150-159",
@@ -21617,17 +21575,13 @@
               "rows": "20-29",
               "cell_count": 45,
               "has_formulas": true,
-              "colors": [
-                "Values must be of type <class 'str'>"
-              ]
+              "colors": ["Values must be of type <class 'str'>"]
             },
             {
               "rows": "30-39",
               "cell_count": 16,
               "has_formulas": true,
-              "colors": [
-                "Values must be of type <class 'str'>"
-              ]
+              "colors": ["Values must be of type <class 'str'>"]
             }
           ]
         }

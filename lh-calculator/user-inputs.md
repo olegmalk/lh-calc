@@ -116,6 +116,7 @@ ACTION: Fixed material mass calculations:
 - Result: Now showing realistic masses (e.g., 100 plates = ~225kg, housing = ~55kg)
 
 ## [2025-08-08] ANALYSIS: Comprehensive Excel Structure Documentation
+
 USER: "Analyze the Excel file structure comprehensively"
 ACTION: Created detailed Excel structure analysis:
 
@@ -127,6 +128,7 @@ ACTION: Created detailed Excel structure analysis:
 - OUTPUT: EXCEL_STRUCTURE_COMPREHENSIVE.md with complete field mapping and calculation analysis
 
 ## [2025-08-08] CLIENT_DATA_COLLECTION_FORM: Test Data Collection for Validation
+
 USER: "collect samples of excel sheet workflows from client. send them a textual form that they will fill replicating exact values that excel sheet produced. make sure you use exactly same labels as in excel sheet"
 ACTION: Created comprehensive test data collection form:
 
@@ -138,4 +140,28 @@ ACTION: Created comprehensive test data collection form:
 - Included category breakdown fields (J31-J36) for result validation
 - Deep verification confirmed 100% accuracy of field names and options
 - OUTPUT: CLIENT_DATA_COLLECTION_FORM_VERIFIED.md ready for client distribution
-EOF < /dev/null
+
+## [2025-08-08] REORGANIZATION: Archived analysis files to improve project structure
+
+USER: "lets archive all noise from root folder and prepare to craft new updated prd"
+ACTION: Reorganized project structure:
+
+- Moved all analysis docs to archive/analysis-docs/
+- Created test-data/ folder with excel-screenshots/ and excel-scenarios/ subdirectories
+- Prepared PRD-V2.md showing 60% field coverage, missing critical fields
+- Ready for Excel test data upload and implementation phase
+
+## [2025-08-08] EXCEL_ANALYSIS_COMPLETE: Deep analysis of test Excel with real data
+
+USER: "screenshots and example xlsx uploaded, prepare proper requirements around how calculator should work"
+ACTION: Comprehensive Excel analysis with test data:
+
+- Analyzed Excel "ТЕСТ НОМЕР 7777" with actual test values
+- Found main mass formula: (E+15)×(F+15)×G×density÷1000×count = 1820.5952kg
+- Test case: К4-750/AISI316L/400units validates to exact Excel output
+- Identified 12 equipment types with complete dimension tables
+- Mapped 7 material densities (AISI 316L=0.00788, etc.)
+- Created CALCULATOR_REQUIREMENTS_V3.md with complete calculation logic
+- Created EXCEL_TO_APP_MAPPING.md showing formula-to-code mappings
+- Created QUESTIONS_FOR_CLIENT.md with 15 questions (3 critical blockers)
+- Critical blockers: E19 calculation missing, VLOOKUP columns H-AK needed, dropdown options unclear

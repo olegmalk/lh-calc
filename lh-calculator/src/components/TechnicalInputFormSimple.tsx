@@ -87,7 +87,7 @@ export const TechnicalInputFormSimple: React.FC = () => {
     if (formData.temperatureB > 200) newErrors.temperatureB = t('form.validation.temperatureMax');
     
     if (formData.plateThickness < 0.4) newErrors.plateThickness = t('form.validation.thicknessMin');
-    if (formData.plateThickness > 10) newErrors.plateThickness = t('form.validation.thicknessMax');
+    if (formData.plateThickness > 1.2) newErrors.plateThickness = t('form.validation.thicknessMax');
     
     if (!formData.materialPlate) newErrors.materialPlate = t('form.validation.plateMaterialRequired');
     if (!formData.materialBody) newErrors.materialBody = t('form.validation.bodyMaterialRequired');
