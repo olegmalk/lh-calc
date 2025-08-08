@@ -1,6 +1,7 @@
 import { Group, Title, ActionIcon, Select, useMantineColorScheme } from '@mantine/core';
 import { IconSun, IconMoon } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
+import { RoleSelector } from '../Navigation/RoleSelector';
 
 export function AppHeader() {
   const { t, i18n } = useTranslation();
@@ -16,6 +17,7 @@ export function AppHeader() {
     <>
       <Title order={3} size="h4">{t('app.title')}</Title>
       <Group ml="auto" gap="xs">
+        <RoleSelector />
         <Select
           value={i18n.language}
           onChange={handleLanguageChange}

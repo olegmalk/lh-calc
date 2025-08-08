@@ -734,5 +734,32 @@
     "deferred30": "30 Days Deferred Payment",
     "deferred60": "60 Days Deferred Payment",
     "deferred90": "90 Days Deferred Payment"
+  },
+  "roles": {
+    "selectRole": "Select Role",
+    "currentPermissions": "Current Permissions",
+    "hierarchy": "Level",
+    "permissions": "Editable Fields",
+    "names": {
+      "technologist": "Technologist",
+      "engineer": "Design Engineer",
+      "supply-manager": "Supply Manager",
+      "director": "Director",
+      "viewer": "Viewer"
+    },
+    "descriptions": {
+      "technologist": "Technical specification and equipment configuration. Can edit technical parameters and equipment selection.",
+      "engineer": "Engineering design and component specifications. Responsible for flange specifications and design parameters.",
+      "supply-manager": "Cost management and supply chain parameters. Controls pricing, materials, and cost factors.",
+      "director": "Executive decisions and final cost adjustments. Has authority for final approvals and management decisions.",
+      "viewer": "Read-only access to all calculations. Can view all data but cannot make changes."
+    },
+    "permissions": {
+      "yellow": "Technical Parameters",
+      "orange": "Engineering Design",
+      "green": "Supply & Costs",
+      "red": "Executive Controls",
+      "readonly": "System Calculated"
+    }
   }
 }
