@@ -1,0 +1,618 @@
+{
+  "edge_case_test_scenarios": {
+    "excel_formula_edge_cases": {
+      "division_by_zero": {
+        "description": "Division operations that could result in #DIV/0! error",
+        "test_cases": [
+          {
+            "scenario": "Zero denominator in calculation",
+            "input_values": {
+              "tech_I27_quantityType": 0,
+              "sup_D8_priceMaterial": 100
+            },
+            "affected_cells": ["снабжение!E7", "снабжение!F7"],
+            "expected_behavior": "Should handle division by zero gracefully",
+            "risk_level": "high",
+            "mitigation_strategy": "Add zero-check validation before calculation, return meaningful error"
+          },
+          {
+            "scenario": "Very small numbers causing division precision issues",
+            "input_values": {
+              "tech_I27_quantityType": 0.00001,
+              "sup_D8_priceMaterial": 1000000
+            },
+            "expected_behavior": "Should handle floating point precision correctly",
+            "risk_level": "medium",
+            "mitigation_strategy": "Use proper decimal precision handling"
+          }
+        ]
+      },
+      "vlookup_failures": {
+        "description": "VLOOKUP operations that could return #N/A or #REF errors",
+        "test_cases": [
+          {
+            "scenario": "VLOOKUP with value not found in table",
+            "input_values": {
+              "tech_G27_quantityType": "INVALID_VALUE"
+            },
+            "affected_formulas": ["=VLOOKUP(технолог!G27,B110:BB122,53,0)"],
+            "expected_behavior": "Should return #N/A error or default value",
+            "risk_level": "high",
+            "mitigation_strategy": "Use IFERROR wrapper around VLOOKUP, validate enum values"
+          },
+          {
+            "scenario": "VLOOKUP with column index out of range",
+            "input_values": {
+              "sup_D104": "valid_value"
+            },
+            "affected_formulas": ["=VLOOKUP(D104,B110:AE122,100,0)"],
+            "expected_behavior": "Should return #REF error",
+            "risk_level": "high",
+            "mitigation_strategy": "Validate column indices in VLOOKUP formulas"
+          },
+          {
+            "scenario": "VLOOKUP table range corruption",
+            "input_values": {
+              "vlookup_table_missing": true
+            },
+            "expected_behavior": "Should handle missing lookup tables gracefully",
+            "risk_level": "high",
+            "mitigation_strategy": "Validate lookup table integrity before processing"
+          }
+        ]
+      },
+      "circular_references": {
+        "description": "Circular reference detection and handling",
+        "test_cases": [
+          {
+            "scenario": "Direct circular reference",
+            "input_values": {
+              "cell_a1_references_b1": "=B1",
+              "cell_b1_references_a1": "=A1"
+            },
+            "expected_behavior": "Excel should detect and report circular reference",
+            "risk_level": "medium",
+            "mitigation_strategy": "Pre-validate formula dependencies before calculation"
+          }
+        ]
+      },
+      "formula_errors": {
+        "description": "Various Excel formula error conditions",
+        "test_cases": [
+          {
+            "scenario": "Invalid cell references",
+            "input_values": {
+              "formula_with_invalid_ref": "=NONEXISTENT!A1"
+            },
+            "expected_behavior": "Should return #REF! error",
+            "risk_level": "medium",
+            "mitigation_strategy": "Validate all cell references in formulas"
+          },
+          {
+            "scenario": "Text operations on numbers",
+            "input_values": {
+              "text_function_on_number": "=CONCATENATE(123, 456)"
+            },
+            "expected_behavior": "Should handle type conversion correctly",
+            "risk_level": "low",
+            "mitigation_strategy": "Ensure proper type handling in formulas"
+          }
+        ]
+      }
+    },
+    "data_type_edge_cases": {
+      "null_undefined_empty": {
+        "description": "Handling null, undefined, and empty values",
+        "test_cases": [
+          {
+            "scenario": "Null value in required field",
+            "input_values": {
+              "tech_D27_type": null
+            },
+            "expected_behavior": "Should return validation error for required field",
+            "risk_level": "high",
+            "mitigation_strategy": "Validate required fields before processing"
+          },
+          {
+            "scenario": "Undefined value in calculation",
+            "input_values": {
+              "sup_D8_priceMaterial": undefined
+            },
+            "expected_behavior": "Should treat as missing required field",
+            "risk_level": "high",
+            "mitigation_strategy": "Convert undefined to null and validate"
+          },
+          {
+            "scenario": "Empty string in number field",
+            "input_values": {
+              "tech_I27_quantityType": ""
+            },
+            "expected_behavior": "Should return type validation error",
+            "risk_level": "medium",
+            "mitigation_strategy": "Validate data types before conversion"
+          },
+          {
+            "scenario": "Empty string in optional field",
+            "input_values": {
+              "tech_V27_thicknessType": ""
+            },
+            "expected_behavior": "Should be treated as null/unset",
+            "risk_level": "low",
+            "mitigation_strategy": "Normalize empty strings to null for optional fields"
+          }
+        ]
+      },
+      "type_conversion_errors": {
+        "description": "Invalid type conversions and format issues",
+        "test_cases": [
+          {
+            "scenario": "String in number field",
+            "input_values": {
+              "tech_D27_type": "not_a_number"
+            },
+            "expected_behavior": "Should return type validation error",
+            "risk_level": "high",
+            "mitigation_strategy": "Validate number format using regex before conversion"
+          },
+          {
+            "scenario": "Number in enum field",
+            "input_values": {
+              "sup_F2_parameter": 12345
+            },
+            "expected_behavior": "Should return enum validation error",
+            "risk_level": "high",
+            "mitigation_strategy": "Validate enum values against allowed list"
+          },
+          {
+            "scenario": "Boolean in string field",
+            "input_values": {
+              "tech_E27_weightType": true
+            },
+            "expected_behavior": "Should convert to string or return type error",
+            "risk_level": "medium",
+            "mitigation_strategy": "Normalize input types or reject invalid types"
+          }
+        ]
+      }
+    },
+    "numeric_edge_cases": {
+      "extreme_values": {
+        "description": "Very large, very small, and special numeric values",
+        "test_cases": [
+          {
+            "scenario": "Very large numbers causing overflow",
+            "input_values": {
+              "sup_D8_priceMaterial": 1.7976931348623157e+308
+            },
+            "expected_behavior": "Should handle large numbers or return overflow error",
+            "risk_level": "medium",
+            "mitigation_strategy": "Validate numeric ranges and handle overflow gracefully"
+          },
+          {
+            "scenario": "Very small numbers causing underflow",
+            "input_values": {
+              "tech_T27_materialThicknessType": 5e-324
+            },
+            "expected_behavior": "Should handle very small numbers correctly",
+            "risk_level": "low",
+            "mitigation_strategy": "Set minimum precision thresholds"
+          },
+          {
+            "scenario": "Negative values where not expected",
+            "input_values": {
+              "tech_I27_quantityType": -100
+            },
+            "expected_behavior": "Should validate against min=0 constraint",
+            "risk_level": "high",
+            "mitigation_strategy": "Enforce min/max validation rules"
+          },
+          {
+            "scenario": "Infinity values",
+            "input_values": {
+              "sup_D8_priceMaterial": "Infinity"
+            },
+            "expected_behavior": "Should reject infinite values",
+            "risk_level": "high",
+            "mitigation_strategy": "Check for finite values before processing"
+          },
+          {
+            "scenario": "NaN (Not a Number) values",
+            "input_values": {
+              "tech_J27_quantityType": "NaN"
+            },
+            "expected_behavior": "Should reject NaN values",
+            "risk_level": "high",
+            "mitigation_strategy": "Validate numbers using isNaN check"
+          },
+          {
+            "scenario": "Zero in fields where zero is invalid",
+            "input_values": {
+              "tech_I27_quantityType": 0,
+              "calculation_requires_non_zero": true
+            },
+            "expected_behavior": "Should validate business rules for zero values",
+            "risk_level": "medium",
+            "mitigation_strategy": "Implement business logic validation"
+          }
+        ]
+      },
+      "precision_issues": {
+        "description": "Floating point precision and rounding errors",
+        "test_cases": [
+          {
+            "scenario": "Floating point precision loss",
+            "input_values": {
+              "sup_D8_priceMaterial": 0.1 + 0.2
+            },
+            "expected_behavior": "Should handle floating point arithmetic correctly",
+            "risk_level": "medium",
+            "mitigation_strategy": "Use decimal arithmetic for financial calculations"
+          },
+          {
+            "scenario": "Very long decimal numbers",
+            "input_values": {
+              "tech_T27_materialThicknessType": 1.23456789012345678901234567890
+            },
+            "expected_behavior": "Should handle precision appropriately",
+            "risk_level": "low",
+            "mitigation_strategy": "Round to appropriate decimal places"
+          }
+        ]
+      }
+    },
+    "string_edge_cases": {
+      "special_characters": {
+        "description": "Special characters, Unicode, and encoding issues",
+        "test_cases": [
+          {
+            "scenario": "Cyrillic characters in equipment code",
+            "input_values": {
+              "tech_E27_weightType": "К-750А"
+            },
+            "expected_behavior": "Should validate against equipment code pattern",
+            "risk_level": "low",
+            "mitigation_strategy": "Use proper Unicode regex patterns"
+          },
+          {
+            "scenario": "SQL injection attempt",
+            "input_values": {
+              "sup_I44_priceMaterialThicknessInsulationTotalType": "'; DROP TABLE users; --"
+            },
+            "expected_behavior": "Should sanitize input and reject malicious content",
+            "risk_level": "high",
+            "mitigation_strategy": "Sanitize all string inputs, use parameterized queries"
+          },
+          {
+            "scenario": "XSS attempt in string fields",
+            "input_values": {
+              "sup_I45_priceMaterialThicknessInsulationTotalType": "<script>alert('xss')</script>"
+            },
+            "expected_behavior": "Should escape HTML and reject script tags",
+            "risk_level": "high",
+            "mitigation_strategy": "HTML encode all output, validate input format"
+          },
+          {
+            "scenario": "Very long strings",
+            "input_values": {
+              "sup_I46_priceQuantityMaterialThicknessInsulationTotalSumType": "A".repeat(10000)
+            },
+            "expected_behavior": "Should enforce string length limits",
+            "risk_level": "medium",
+            "mitigation_strategy": "Set maximum string length validation"
+          },
+          {
+            "scenario": "Unicode normalization issues",
+            "input_values": {
+              "tech_E27_weightType": "Е\u0301-113"
+            },
+            "expected_behavior": "Should handle Unicode normalization correctly",
+            "risk_level": "low",
+            "mitigation_strategy": "Normalize Unicode before validation"
+          },
+          {
+            "scenario": "Control characters in input",
+            "input_values": {
+              "sup_I44_priceMaterialThicknessInsulationTotalType": "test\x00\x01\x02"
+            },
+            "expected_behavior": "Should reject control characters",
+            "risk_level": "medium",
+            "mitigation_strategy": "Strip control characters from input"
+          }
+        ]
+      },
+      "pattern_validation": {
+        "description": "Regex pattern matching edge cases",
+        "test_cases": [
+          {
+            "scenario": "Equipment code pattern boundary cases",
+            "input_values": {
+              "tech_E27_weightType": "Е"
+            },
+            "expected_behavior": "Should validate minimum pattern requirements",
+            "risk_level": "medium",
+            "mitigation_strategy": "Test regex patterns against edge cases"
+          },
+          {
+            "scenario": "Fraction pattern edge cases",
+            "input_values": {
+              "tech_H27_quantityType": "0/0"
+            },
+            "expected_behavior": "Should validate logical fraction values",
+            "risk_level": "high",
+            "mitigation_strategy": "Add business logic validation beyond regex"
+          },
+          {
+            "scenario": "Invalid fraction format",
+            "input_values": {
+              "tech_H27_quantityType": "1.5/2.3"
+            },
+            "expected_behavior": "Should reject non-integer fractions",
+            "risk_level": "medium",
+            "mitigation_strategy": "Enforce integer-only fraction patterns"
+          }
+        ]
+      }
+    },
+    "enum_validation_edge_cases": {
+      "invalid_enum_values": {
+        "description": "Invalid enum values and case sensitivity",
+        "test_cases": [
+          {
+            "scenario": "Case sensitivity in material codes",
+            "input_values": {
+              "sup_F2_parameter": "09г2с"
+            },
+            "expected_behavior": "Should handle case sensitivity appropriately",
+            "risk_level": "medium",
+            "mitigation_strategy": "Normalize case before validation or enforce exact case"
+          },
+          {
+            "scenario": "Whitespace in enum values",
+            "input_values": {
+              "sup_D9_priceMaterial": " 09Г2С "
+            },
+            "expected_behavior": "Should trim whitespace or reject",
+            "risk_level": "medium",
+            "mitigation_strategy": "Trim whitespace before validation"
+          },
+          {
+            "scenario": "Similar but invalid enum value",
+            "input_values": {
+              "sup_C28_priceWeightThickness": "Ру10.0"
+            },
+            "expected_behavior": "Should reject close but invalid matches",
+            "risk_level": "medium",
+            "mitigation_strategy": "Use exact matching for enum validation"
+          },
+          {
+            "scenario": "Empty enum value",
+            "input_values": {
+              "sup_P20_priceQuantityWeightMaterial": ""
+            },
+            "expected_behavior": "Should handle based on required/optional status",
+            "risk_level": "low",
+            "mitigation_strategy": "Check required status before enum validation"
+          }
+        ]
+      }
+    },
+    "concurrent_processing": {
+      "description": "Race conditions and concurrent access issues",
+      "test_cases": [
+        {
+          "scenario": "Multiple simultaneous calculations",
+          "input_values": {
+            "concurrent_requests": 50,
+            "identical_input": true
+          },
+          "expected_behavior": "Should handle concurrent requests without corruption",
+          "risk_level": "high",
+          "mitigation_strategy": "Use thread-safe Excel processing, queue requests"
+        },
+        {
+          "scenario": "Excel file locked during processing",
+          "input_values": {
+            "file_locked": true
+          },
+          "expected_behavior": "Should wait or return appropriate error",
+          "risk_level": "high",
+          "mitigation_strategy": "Implement file locking detection and retry logic"
+        },
+        {
+          "scenario": "Memory exhaustion under load",
+          "input_values": {
+            "large_calculation_load": true,
+            "memory_pressure": true
+          },
+          "expected_behavior": "Should handle memory pressure gracefully",
+          "risk_level": "medium",
+          "mitigation_strategy": "Monitor memory usage, implement request queuing"
+        }
+      ]
+    },
+    "dependency_and_calculation_order": {
+      "description": "Formula dependency chain and calculation order issues",
+      "test_cases": [
+        {
+          "scenario": "Complex dependency chain failure",
+          "input_values": {
+            "tech_P27_materialType": "depends_on_failed_cell"
+          },
+          "expected_behavior": "Should handle dependency failures gracefully",
+          "risk_level": "high",
+          "mitigation_strategy": "Validate entire dependency chain before calculation"
+        },
+        {
+          "scenario": "Partial calculation with missing dependencies",
+          "input_values": {
+            "some_required_fields_missing": true
+          },
+          "expected_behavior": "Should identify and report missing dependencies",
+          "risk_level": "high",
+          "mitigation_strategy": "Pre-validate all dependencies before starting calculation"
+        },
+        {
+          "scenario": "Calculation timeout on complex dependencies",
+          "input_values": {
+            "complex_calculation_chain": true
+          },
+          "expected_behavior": "Should timeout gracefully and report status",
+          "risk_level": "medium",
+          "mitigation_strategy": "Implement calculation timeout and progress tracking"
+        }
+      ]
+    },
+    "field_combination_edge_cases": {
+      "description": "Invalid combinations of field values",
+      "test_cases": [
+        {
+          "scenario": "Incompatible material and thickness combination",
+          "input_values": {
+            "sup_F2_parameter": "0000",
+            "tech_V27_thicknessType": 10
+          },
+          "expected_behavior": "Should validate business logic constraints",
+          "risk_level": "medium",
+          "mitigation_strategy": "Implement cross-field validation rules"
+        },
+        {
+          "scenario": "Pressure rating incompatible with diameter",
+          "input_values": {
+            "sup_C28_priceWeightThickness": "Ру160",
+            "sup_D28_priceWeightThickness": "Ду25"
+          },
+          "expected_behavior": "Should validate engineering constraints",
+          "risk_level": "high",
+          "mitigation_strategy": "Implement engineering validation matrix"
+        },
+        {
+          "scenario": "Temperature values exceeding material limits",
+          "input_values": {
+            "tech_L27_quantity": 500,
+            "sup_F2_parameter": "09Г2С"
+          },
+          "expected_behavior": "Should validate material temperature limits",
+          "risk_level": "high",
+          "mitigation_strategy": "Implement material property validation"
+        }
+      ]
+    },
+    "performance_edge_cases": {
+      "description": "Performance degradation scenarios",
+      "test_cases": [
+        {
+          "scenario": "Very large input values causing slow calculations",
+          "input_values": {
+            "tech_I27_quantityType": 999999,
+            "complex_calculations": true
+          },
+          "expected_behavior": "Should complete within reasonable time limits",
+          "risk_level": "medium",
+          "mitigation_strategy": "Set calculation timeouts and optimize formulas"
+        },
+        {
+          "scenario": "Memory usage spike with complex formulas",
+          "input_values": {
+            "memory_intensive_calculation": true
+          },
+          "expected_behavior": "Should monitor and limit memory usage",
+          "risk_level": "medium",
+          "mitigation_strategy": "Monitor memory usage and implement limits"
+        }
+      ]
+    },
+    "api_contract_edge_cases": {
+      "description": "API contract validation and response handling",
+      "test_cases": [
+        {
+          "scenario": "Missing required fields in request",
+          "input_values": {
+            "incomplete_request": true,
+            "missing_fields": ["tech_D27_type", "sup_F2_parameter"]
+          },
+          "expected_behavior": "Should return 422 with detailed field errors",
+          "risk_level": "high",
+          "mitigation_strategy": "Comprehensive request validation before processing"
+        },
+        {
+          "scenario": "Extra unknown fields in request",
+          "input_values": {
+            "unknown_field_123": "value",
+            "invalid_prefix_field": "value"
+          },
+          "expected_behavior": "Should ignore unknown fields or return warning",
+          "risk_level": "low",
+          "mitigation_strategy": "Filter known fields, optionally warn about unknown fields"
+        },
+        {
+          "scenario": "Request exceeding size limits",
+          "input_values": {
+            "request_size": "10MB",
+            "oversized_request": true
+          },
+          "expected_behavior": "Should reject with 413 Request Entity Too Large",
+          "risk_level": "medium",
+          "mitigation_strategy": "Implement request size limits"
+        }
+      ]
+    },
+    "excel_file_integrity": {
+      "description": "Excel file corruption and integrity issues",
+      "test_cases": [
+        {
+          "scenario": "Corrupted Excel file",
+          "input_values": {
+            "corrupted_file": true
+          },
+          "expected_behavior": "Should detect corruption and return appropriate error",
+          "risk_level": "high",
+          "mitigation_strategy": "Validate file integrity before processing"
+        },
+        {
+          "scenario": "Modified Excel structure",
+          "input_values": {
+            "modified_sheets": true,
+            "missing_cells": ["технолог!D27"]
+          },
+          "expected_behavior": "Should detect structural changes and handle gracefully",
+          "risk_level": "high",
+          "mitigation_strategy": "Validate expected cell structure before calculation"
+        },
+        {
+          "scenario": "Excel version compatibility issues",
+          "input_values": {
+            "excel_version": "older_version"
+          },
+          "expected_behavior": "Should handle different Excel versions appropriately",
+          "risk_level": "medium",
+          "mitigation_strategy": "Test with different Excel versions and formats"
+        }
+      ]
+    }
+  },
+  "test_execution_recommendations": {
+    "priority_order": [
+      "excel_formula_edge_cases.division_by_zero",
+      "excel_formula_edge_cases.vlookup_failures", 
+      "numeric_edge_cases.extreme_values",
+      "string_edge_cases.special_characters",
+      "field_combination_edge_cases",
+      "concurrent_processing",
+      "api_contract_edge_cases",
+      "excel_file_integrity"
+    ],
+    "automation_strategy": "Create parameterized tests for each scenario with comprehensive input/output validation",
+    "monitoring_requirements": [
+      "Track calculation timeouts",
+      "Monitor memory usage during processing",
+      "Log all validation failures with detailed context",
+      "Alert on Excel formula errors",
+      "Track request success/failure rates"
+    ],
+    "environment_considerations": {
+      "test_data_isolation": "Use separate test Excel files to prevent production data corruption",
+      "concurrent_testing": "Test with multiple threads/processes to simulate production load",
+      "error_recovery": "Test system recovery after various failure scenarios"
+    }
+  }
+}
