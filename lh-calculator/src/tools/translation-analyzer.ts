@@ -111,7 +111,7 @@ class TranslationAnalyzer {
   /**
    * Flatten nested translation object into dot notation keys
    */
-  private flattenKeys(obj: any, prefix: string = ''): Set<string> {
+  private flattenKeys(obj: Record<string, unknown>, prefix: string = ''): Set<string> {
     const keys = new Set<string>();
 
     Object.keys(obj).forEach(key => {
@@ -227,8 +227,8 @@ class TranslationAnalyzer {
   /**
    * Generate auto-fix suggestions for missing keys
    */
-  generateMissingKeysJSON(analysis: TranslationAnalysis): Record<string, any> {
-    const missingKeysObj: Record<string, any> = {};
+  generateMissingKeysJSON(analysis: TranslationAnalysis): Record<string, unknown> {
+    const missingKeysObj: Record<string, unknown> = {};
 
     analysis.missingKeys.forEach(key => {
       // Smart default value generation

@@ -57,9 +57,9 @@ export const TechnicalSection: React.FC<TechnicalSectionProps> = ({
     
     // Equipment type dropdown options
     const equipmentTypes = [
-      { value: 'plate', label: t('technical.equipmentType.plate') },
-      { value: 'shell', label: t('technical.equipmentType.shell') },
-      { value: 'tube', label: t('technical.equipmentType.tube') }
+      { value: 'plate', label: t('technical.equipmentTypeOptions.plate') },
+      { value: 'shell', label: t('technical.equipmentTypeOptions.shell') },
+      { value: 'tube', label: t('technical.equipmentTypeOptions.tube') }
     ];
 
     // Material options for dropdowns
@@ -70,9 +70,9 @@ export const TechnicalSection: React.FC<TechnicalSectionProps> = ({
     ];
 
     const surfaceTypes = [
-      { value: 'smooth', label: t('technical.surfaceType.smooth') },
-      { value: 'corrugated', label: t('technical.surfaceType.corrugated') },
-      { value: 'embossed', label: t('technical.surfaceType.embossed') }
+      { value: 'smooth', label: t('technical.surfaceTypeOptions.smooth') },
+      { value: 'corrugated', label: t('technical.surfaceTypeOptions.corrugated') },
+      { value: 'embossed', label: t('technical.surfaceTypeOptions.embossed') }
     ];
 
     switch (fieldName) {

@@ -244,10 +244,10 @@ class TranslationAutoFixer {
    * Add missing keys to translations object while preserving structure
    */
   private addMissingKeys(
-    translations: Record<string, any>, 
+    translations: Record<string, unknown>, 
     missingKeys: Record<string, string>,
     locale: string
-  ): Record<string, any> {
+  ): Record<string, unknown> {
     const updated = { ...translations };
 
     Object.entries(missingKeys).forEach(([key, defaultValue]) => {
@@ -267,7 +267,7 @@ class TranslationAutoFixer {
   /**
    * Set a nested key in an object using dot notation
    */
-  private setNestedKey(obj: Record<string, any>, key: string, value: string): void {
+  private setNestedKey(obj: Record<string, unknown>, key: string, value: string): void {
     const parts = key.split('.');
     let current = obj;
 
@@ -437,7 +437,7 @@ class TranslationAutoFixer {
   /**
    * Remove specific keys from a nested object
    */
-  private removeKeysFromObject(obj: Record<string, any>, keysToRemove: string[]): Record<string, any> {
+  private removeKeysFromObject(obj: Record<string, unknown>, keysToRemove: string[]): Record<string, unknown> {
     const updated = JSON.parse(JSON.stringify(obj)); // Deep clone
 
     keysToRemove.forEach(key => {
@@ -450,7 +450,7 @@ class TranslationAutoFixer {
   /**
    * Remove a nested key from an object
    */
-  private removeNestedKey(obj: Record<string, any>, key: string): void {
+  private removeNestedKey(obj: Record<string, unknown>, key: string): void {
     const parts = key.split('.');
     let current = obj;
 

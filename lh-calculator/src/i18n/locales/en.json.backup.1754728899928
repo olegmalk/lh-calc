@@ -695,25 +695,18 @@
   "technical": {
     "dropdownSelections": "VLOOKUP Driver Fields",
     "manualParameters": "Manual Entry Parameters",
-    "equipmentType": "Equipment Type",
-    "equipmentTypeOptions": {
+    "equipmentType": {
       "plate": "Plate Heat Exchanger",
       "shell": "Shell & Tube",
       "tube": "Tube Bundle"
     },
     "materialPlate": "Plate Material",
-    "surfaceType": "Surface Type",
-    "surfaceTypeOptions": {
+    "surfaceType": {
       "smooth": "Smooth",
       "corrugated": "Corrugated",
       "embossed": "Embossed"
     },
     "corrugationType": "Corrugation Type",
-    "modelCode": "Model Code",
-    "plateConfiguration": "Plate Configuration",
-    "solutionVolume": "Solution Volume",
-    "equipmentTypeDetail": "Equipment Type Detail",
-    "flowRatio": "Flow Ratio",
     "plateCount": "Number of Plates",
     "bodyMaterial": "Body Material",
     "materialBody": "Material Body",

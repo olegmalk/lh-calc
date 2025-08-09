@@ -2,7 +2,8 @@
 
 import fs from 'fs';
 import path from 'path';
-import { TranslationAnalyzer, TranslationAnalysis } from './translation-analyzer';
+import { TranslationAnalyzer } from './translation-analyzer';
+import type { TranslationAnalysis } from './translation-analyzer';
 
 interface ValidationResult {
   isValid: boolean;

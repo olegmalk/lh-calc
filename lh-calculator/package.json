@@ -24,7 +24,11 @@
     "docker:build": "docker build -t lh-calculator:latest .",
     "docker:run": "docker run -p 80:80 lh-calculator:latest",
     "deploy:prod": "./scripts/deploy.sh",
-    "health:check": "./scripts/health-check.sh"
+    "health:check": "./scripts/health-check.sh",
+    "translations:analyze": "tsx src/tools/translation-analyzer.ts",
+    "translations:fix": "tsx src/tools/translation-auto-fixer.ts",
+    "translations:fix:dry-run": "tsx src/tools/translation-auto-fixer.ts --dry-run",
+    "translations:check": "npm run translations:analyze && npm run translations:fix --dry-run"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -80,6 +84,7 @@
     "prettier": "^3.6.2",
     "puppeteer": "^24.16.0",
     "tsc-files": "^1.1.4",
+    "tsx": "^4.20.3",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.35.1",
     "vite": "^7.0.4",

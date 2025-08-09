@@ -1,6 +1,7 @@
 #!/usr/bin/env ts-node
 
-import { chromium, Browser, Page, BrowserContext } from 'playwright';
+import { chromium } from 'playwright';
+import type { Browser, Page, BrowserContext } from 'playwright';
 import fs from 'fs';
 import path from 'path';
 
@@ -331,7 +332,7 @@ class TranslationRuntimeDetector {
   /**
    * Get a unique selector for an element
    */
-  private async getElementSelector(page: Page, element: any): Promise<string> {
+  private async getElementSelector(page: Page, element: unknown): Promise<string> {
     return await page.evaluate((el) => {
       // Generate a unique selector
       if (el.id) return `#${el.id}`;
@@ -359,7 +360,7 @@ class TranslationRuntimeDetector {
   /**
    * Get context information for an element
    */
-  private async getElementContext(page: Page, element: any): Promise<string> {
+  private async getElementContext(page: Page, element: unknown): Promise<string> {
     return await page.evaluate((el) => {
       // Find the nearest parent with meaningful context
       let parent = el.parentElement;
@@ -379,7 +380,7 @@ class TranslationRuntimeDetector {
   /**
    * Take a screenshot of an element
    */
-  private async takeElementScreenshot(page: Page, element: any, pagePath: string, locale: string): Promise<string> {
+  private async takeElementScreenshot(_page: Page, _element: unknown, _pagePath: string, _locale: string): Promise<string> {
     try {
       const filename = `untranslated-${pagePath.replace(/[^a-zA-Z0-9]/g, '-')}-${locale}-${Date.now()}.png`;
       const filepath = path.join(this.config.outputDir, filename);

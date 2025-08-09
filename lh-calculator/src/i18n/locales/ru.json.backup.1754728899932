@@ -623,25 +623,18 @@
   "technical": {
     "dropdownSelections": "Поля драйверов VLOOKUP",
     "manualParameters": "Параметры ручного ввода",
-    "equipmentType": "Тип оборудования",
-    "equipmentTypeOptions": {
+    "equipmentType": {
       "plate": "Пластинчатый теплообменник",
       "shell": "Кожухотрубный",
       "tube": "Трубный пучок"
     },
     "materialPlate": "Материал пластин",
-    "surfaceType": "Тип поверхности",
-    "surfaceTypeOptions": {
+    "surfaceType": {
       "smooth": "Гладкая",
       "corrugated": "Гофрированная",
       "embossed": "Тисненая"
     },
     "corrugationType": "Тип гофрирования",
-    "modelCode": "Код модели",
-    "plateConfiguration": "Конфигурация пластин",
-    "solutionVolume": "Объем раствора",
-    "equipmentTypeDetail": "Детали типа оборудования",
-    "flowRatio": "Соотношение потоков",
     "plateCount": "Количество пластин",
     "bodyMaterial": "Материал корпуса",
     "materialBody": "Материал корпуса",
