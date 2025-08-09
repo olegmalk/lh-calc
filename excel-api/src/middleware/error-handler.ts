@@ -54,7 +54,7 @@ export class ErrorHandler {
    * Express middleware error handler
    */
   middleware() {
-    return async (error: Error, req: Request, res: Response, next: NextFunction) => {
+    return async (error: Error, req: Request, res: Response, _next: NextFunction) => {
       const requestId = (req as any).requestId || 'unknown';
       const startTime = Date.now();
 
@@ -111,7 +111,7 @@ export class ErrorHandler {
   /**
    * Normalize generic errors to ExcelApiError
    */
-  private normalizeError(error: Error, req: Request): ExcelApiError {
+  private normalizeError(error: Error, _req: Request): ExcelApiError {
     if (error instanceof ExcelApiError) {
       return error;
     }
@@ -187,7 +187,7 @@ export class ErrorHandler {
   /**
    * Attempt error recovery based on error type
    */
-  private async attemptRecovery(error: ExcelApiError, req: Request): Promise<ErrorRecoveryResult> {
+  private async attemptRecovery(error: ExcelApiError, _req: Request): Promise<ErrorRecoveryResult> {
     try {
       switch (error.type) {
         case ErrorType.TIMEOUT_ERROR:

@@ -5,7 +5,7 @@
 
 import { promises as fs } from 'fs';
 import * as path from 'path';
-import * as os from 'os';
+// import * as os from 'os'; // Unused import
 import { ExcelApiError, ErrorType, ErrorSeverity, SecurityError } from '../errors/custom-errors';
 
 export interface LogContext {

@@ -19,11 +19,7 @@ import {
   ExcelApiError,
   ErrorType,
   ErrorSeverity,
-  FormulaError,
   DivisionByZeroError,
-  VLookupError,
-  CircularReferenceError,
-  TypeConversionError,
   NumericOverflowError,
   NumericUnderflowError,
   FileCorruptionError,
@@ -31,6 +27,7 @@ import {
   MemoryExhaustionError,
   ConcurrentAccessError,
   FileLockError,
+  EngineeringConstraintError,
   ErrorFactory
 } from '../errors/custom-errors';
 import { ErrorLogger } from '../services/error-logger';
@@ -118,7 +115,6 @@ export class ExcelProcessor {
 
       for (let attempt = 0; attempt <= maxRetries; attempt++) {
         const startTime = Date.now();
-        let tempFilePath: string | undefined;
         let timeoutHandle: NodeJS.Timeout | undefined;
 
         try {
@@ -222,7 +218,7 @@ export class ExcelProcessor {
    */
   private async performCalculation(
     inputData: CalculationRequest, 
-    processId: string, 
+    _processId: string, 
     warnings: string[]
   ): Promise<{ results: CalculationResults; tempFilePath?: string }> {
     let tempFilePath: string | undefined;
@@ -403,7 +399,7 @@ export class ExcelProcessor {
     }
   }
 
-  private async validateBusinessLogic(inputData: CalculationRequest, warnings: string[]): Promise<void> {
+  private async validateBusinessLogic(inputData: CalculationRequest, _warnings: string[]): Promise<void> {
     // Validate material and temperature combinations
     if (inputData.sup_F2_parameter && inputData.tech_L27_quantity) {
       const material = inputData.sup_F2_parameter;
@@ -1049,7 +1045,7 @@ export class ExcelProcessor {
 
       // Validate calculated values
       let emptyCount = 0;
-      for (const [key, value] of Object.entries(calculatedValues)) {
+      for (const [_key, value] of Object.entries(calculatedValues)) {
         if (value === '' || value === 0) {
           emptyCount++;
         }
@@ -1159,6 +1155,7 @@ export class ExcelProcessor {
   /**
    * Legacy createTempFile method (kept for compatibility)
    */
+  // @ts-ignore - Unused legacy method
   private async createTempFile(): Promise<string> {
     try {
       const templatePath = this.options.templatePath || this.DEFAULT_TEMPLATE_PATH;
@@ -1200,6 +1197,7 @@ export class ExcelProcessor {
   /**
    * Maps input data to Excel cells using field mappings
    */
+  // @ts-ignore - Unused legacy method
   private async mapInputsToWorkbook(workbook: Excel.Workbook, inputData: CalculationRequest): Promise<void> {
     const failedCells: string[] = [];
     
@@ -1280,6 +1278,7 @@ export class ExcelProcessor {
   /**
    * Forces recalculation of all formulas in workbook
    */
+  // @ts-ignore - Unused legacy method
   private forceRecalculation(workbook: Excel.Workbook): void {
     try {
       // Set calculation mode to automatic and force full calculation
@@ -1312,6 +1311,7 @@ export class ExcelProcessor {
   /**
    * Extracts calculation results from the results sheet
    */
+  // @ts-ignore - Unused legacy method
   private async extractResults(workbook: Excel.Workbook): Promise<CalculationResults> {
     try {
       // Get results worksheet

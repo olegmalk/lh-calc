@@ -206,7 +206,7 @@ export class SecurityError extends ExcelApiError {
 }
 
 export class XSSAttemptError extends SecurityError {
-  constructor(field: string, value: string, context: ErrorContext = {}) {
+  constructor(field: string, _value: string, context: ErrorContext = {}) {
     super(
       `XSS attempt detected in field '${field}'`,
       ErrorType.XSS_ATTEMPT,
@@ -216,7 +216,7 @@ export class XSSAttemptError extends SecurityError {
 }
 
 export class SQLInjectionError extends SecurityError {
-  constructor(field: string, value: string, context: ErrorContext = {}) {
+  constructor(field: string, _value: string, context: ErrorContext = {}) {
     super(
       `SQL injection attempt detected in field '${field}'`,
       ErrorType.SQL_INJECTION_ATTEMPT,
@@ -230,7 +230,7 @@ export class SQLInjectionError extends SecurityError {
  */
 export class StringValidationError extends ValidationError {
   constructor(message: string, type: ErrorType, context: ErrorContext = {}) {
-    super(message, type, ErrorSeverity.MEDIUM, context, true);
+    super(message, type, context);
     this.name = 'StringValidationError';
   }
 }
