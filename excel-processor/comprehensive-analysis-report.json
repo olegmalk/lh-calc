@@ -1,0 +1,1393 @@
+{
+  "executive_summary": {
+    "total_colored_cells": 143,
+    "sheets_analyzed": 3,
+    "color_distribution": {
+      "FFFFFF00": 11,
+      "FF92D050": 99,
+      "FFFFC000": 33
+    },
+    "classification_breakdown": {
+      "input": 99,
+      "output": 0,
+      "intermediate": 44
+    },
+    "key_insights": [
+      "Found 143 colored cells across 3 sheets",
+      "99 input fields identified for user data collection",
+      "44 intermediate calculation fields for processing logic",
+      "Green cells (FF92D050) represent technologist inputs: 99 fields",
+      "Orange cells (FFFFC000) represent engineering inputs: 33 fields",
+      "Yellow cells (FFFFFF00) represent computed values: 11 fields"
+    ]
+  },
+  "detailed_findings": {
+    "технолог": {
+      "total_cells": 20,
+      "color_breakdown": {
+        "FFFFFF00": 8,
+        "FF92D050": 10,
+        "FFFFC000": 2
+      },
+      "purpose": "Technical parameters input",
+      "key_observations": [
+        "Contains technical parameter inputs for heat block calculations",
+        "Includes instructional cells explaining color coding system",
+        "Focus on material specifications and dimensions",
+        "Yellow cells: 8 found",
+        "Green cells: 10 found",
+        "Orange cells: 2 found"
+      ]
+    },
+    "снабжение": {
+      "total_cells": 123,
+      "color_breakdown": {
+        "FF92D050": 89,
+        "FFFFFF00": 3,
+        "FFFFC000": 31
+      },
+      "purpose": "Supply and cost parameters",
+      "key_observations": [
+        "Largest sheet with 123 colored cells for supply chain parameters",
+        "Contains cost calculations and material specifications",
+        "Mix of input fields and computed intermediate values",
+        "Green cells: 89 found",
+        "Yellow cells: 3 found",
+        "Orange cells: 31 found"
+      ]
+    },
+    "результат ": {
+      "total_cells": 0,
+      "color_breakdown": {},
+      "purpose": "Calculation results and outputs",
+      "key_observations": [
+        "Results sheet with calculation outputs",
+        "No colored cells found - may use different formatting",
+        "Requires further analysis to understand output structure"
+      ]
+    }
+  },
+  "input_inventory": {
+    "total_inputs": 99,
+    "by_sheet": {
+      "технолог": [
+        {
+          "id": "технолог_e5",
+          "coordinate": "E5",
+          "label": "зелёным выделено то, что нужно ввести в ручную ТЕХ...",
+          "type": "string",
+          "default": "зелёным выделено то, что нужно ввести в ручную ТЕХНОЛОГ"
+        },
+        {
+          "id": "технолог_d27",
+          "coordinate": "D27",
+          "label": "Technical D27",
+          "type": "number",
+          "default": 1
+        },
+        {
+          "id": "технолог_e27",
+          "coordinate": "E27",
+          "label": "Technical E27",
+          "type": "string",
+          "default": "Е-113"
+        },
+        {
+          "id": "технолог_h27",
+          "coordinate": "H27",
+          "label": "Technical H27",
+          "type": "string",
+          "default": "1/6"
+        },
+        {
+          "id": "технолог_i27",
+          "coordinate": "I27",
+          "label": "Technical I27",
+          "type": "number",
+          "default": 400
+        },
+        {
+          "id": "технолог_j27",
+          "coordinate": "J27",
+          "label": "Technical J27",
+          "type": "number",
+          "default": 22
+        },
+        {
+          "id": "технолог_k27",
+          "coordinate": "K27",
+          "label": "Technical K27",
+          "type": "number",
+          "default": 22
+        },
+        {
+          "id": "технолог_l27",
+          "coordinate": "L27",
+          "label": "Technical L27",
+          "type": "number",
+          "default": 100
+        },
+        {
+          "id": "технолог_m27",
+          "coordinate": "M27",
+          "label": "Technical M27",
+          "type": "number",
+          "default": 100
+        },
+        {
+          "id": "технолог_t27",
+          "coordinate": "T27",
+          "label": "Technical T27",
+          "type": "number",
+          "default": 5
+        }
+      ],
+      "снабжение": [
+        {
+          "id": "снабжение_f2",
+          "coordinate": "F2",
+          "label": "Supply F2",
+          "type": "string",
+          "default": "0000"
+        },
+        {
+          "id": "снабжение_n3",
+          "coordinate": "N3",
+          "label": "зелёным выделено то, что нужно ввести в ручную СНА...",
+          "type": "string",
+          "default": "зелёным выделено то, что нужно ввести в ручную СНАБЖЕНИЕ"
+        },
+        {
+          "id": "снабжение_d8",
+          "coordinate": "D8",
+          "label": "Supply D8",
+          "type": "number",
+          "default": 700
+        },
+        {
+          "id": "снабжение_e8",
+          "coordinate": "E8",
+          "label": "Supply E8",
+          "type": "number",
+          "default": 700
+        },
+        {
+          "id": "снабжение_d10",
+          "coordinate": "D10",
+          "label": "Supply D10",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_d11",
+          "coordinate": "D11",
+          "label": "Supply D11",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_k13",
+          "coordinate": "K13",
+          "label": "Supply K13",
+          "type": "number",
+          "default": 1
+        },
+        {
+          "id": "снабжение_p13",
+          "coordinate": "P13",
+          "label": "Supply P13",
+          "type": "number",
+          "default": 120000
+        },
+        {
+          "id": "снабжение_d17",
+          "coordinate": "D17",
+          "label": "Supply D17",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_e20",
+          "coordinate": "E20",
+          "label": "Supply E20",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_k20",
+          "coordinate": "K20",
+          "label": "Supply K20",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_e21",
+          "coordinate": "E21",
+          "label": "Supply E21",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_k21",
+          "coordinate": "K21",
+          "label": "Supply K21",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_q22",
+          "coordinate": "Q22",
+          "label": "Supply Q22",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_q23",
+          "coordinate": "Q23",
+          "label": "Supply Q23",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_q24",
+          "coordinate": "Q24",
+          "label": "Supply Q24",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_e26",
+          "coordinate": "E26",
+          "label": "Supply E26",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_k26",
+          "coordinate": "K26",
+          "label": "Supply K26",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_e27",
+          "coordinate": "E27",
+          "label": "Supply E27",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_k27",
+          "coordinate": "K27",
+          "label": "Supply K27",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_f28",
+          "coordinate": "F28",
+          "label": "Supply F28",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_l28",
+          "coordinate": "L28",
+          "label": "Supply L28",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_f29",
+          "coordinate": "F29",
+          "label": "Supply F29",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_l29",
+          "coordinate": "L29",
+          "label": "Supply L29",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_t29",
+          "coordinate": "T29",
+          "label": "Supply T29",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_f30",
+          "coordinate": "F30",
+          "label": "Supply F30",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_l30",
+          "coordinate": "L30",
+          "label": "Supply L30",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_t30",
+          "coordinate": "T30",
+          "label": "Supply T30",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_f31",
+          "coordinate": "F31",
+          "label": "Supply F31",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_l31",
+          "coordinate": "L31",
+          "label": "Supply L31",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_t31",
+          "coordinate": "T31",
+          "label": "Supply T31",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_f32",
+          "coordinate": "F32",
+          "label": "Supply F32",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_l32",
+          "coordinate": "L32",
+          "label": "Supply L32",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_f33",
+          "coordinate": "F33",
+          "label": "Supply F33",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_l33",
+          "coordinate": "L33",
+          "label": "Supply L33",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_t33",
+          "coordinate": "T33",
+          "label": "Supply T33",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_t34",
+          "coordinate": "T34",
+          "label": "Supply T34",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_t35",
+          "coordinate": "T35",
+          "label": "Supply T35",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_t37",
+          "coordinate": "T37",
+          "label": "Supply T37",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_d38",
+          "coordinate": "D38",
+          "label": "Supply D38",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_i38",
+          "coordinate": "I38",
+          "label": "Supply I38",
+          "type": "number",
+          "default": 1000
+        },
+        {
+          "id": "снабжение_k38",
+          "coordinate": "K38",
+          "label": "Supply K38",
+          "type": "number",
+          "default": 1500
+        },
+        {
+          "id": "снабжение_m38",
+          "coordinate": "M38",
+          "label": "Supply M38",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "id": "снабжение_t38",
+          "coordinate": "T38",
+          "label": "Supply T38",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_i39",
+          "coordinate": "I39",
+          "label": "Supply I39",
+          "type": "number",
+          "default": 1000
+        },
+        {
+          "id": "снабжение_k39",
+          "coordinate": "K39",
+          "label": "Supply K39",
+          "type": "number",
+          "default": 1200
+        },
+        {
+          "id": "снабжение_m39",
+          "coordinate": "M39",
+          "label": "Supply M39",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "id": "снабжение_t39",
+          "coordinate": "T39",
+          "label": "Supply T39",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_t41",
+          "coordinate": "T41",
+          "label": "Supply T41",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_t42",
+          "coordinate": "T42",
+          "label": "Supply T42",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_d43",
+          "coordinate": "D43",
+          "label": "Supply D43",
+          "type": "number",
+          "default": 3300
+        },
+        {
+          "id": "снабжение_g43",
+          "coordinate": "G43",
+          "label": "Supply G43",
+          "type": "number",
+          "default": 600
+        },
+        {
+          "id": "снабжение_t43",
+          "coordinate": "T43",
+          "label": "Supply T43",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_d44",
+          "coordinate": "D44",
+          "label": "Supply D44",
+          "type": "number",
+          "default": 1750
+        },
+        {
+          "id": "снабжение_g44",
+          "coordinate": "G44",
+          "label": "Supply G44",
+          "type": "number",
+          "default": 87
+        },
+        {
+          "id": "снабжение_i44",
+          "coordinate": "I44",
+          "label": "втулка теплоизоляции 90шт",
+          "type": "string",
+          "default": "втулка теплоизоляции 90шт"
+        },
+        {
+          "id": "снабжение_m44",
+          "coordinate": "M44",
+          "label": "Supply M44",
+          "type": "number",
+          "default": 50000
+        },
+        {
+          "id": "снабжение_d45",
+          "coordinate": "D45",
+          "label": "Supply D45",
+          "type": "number",
+          "default": 2800
+        },
+        {
+          "id": "снабжение_g45",
+          "coordinate": "G45",
+          "label": "Supply G45",
+          "type": "number",
+          "default": 50
+        },
+        {
+          "id": "снабжение_i45",
+          "coordinate": "I45",
+          "label": "впишите информацию",
+          "type": "string",
+          "default": "впишите информацию"
+        },
+        {
+          "id": "снабжение_m45",
+          "coordinate": "M45",
+          "label": "Supply M45",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "id": "снабжение_p45",
+          "coordinate": "P45",
+          "label": "Supply P45",
+          "type": "number",
+          "default": 20000
+        },
+        {
+          "id": "снабжение_d46",
+          "coordinate": "D46",
+          "label": "Supply D46",
+          "type": "number",
+          "default": 1200
+        },
+        {
+          "id": "снабжение_g46",
+          "coordinate": "G46",
+          "label": "Supply G46",
+          "type": "string",
+          "default": null
+        },
+        {
+          "id": "снабжение_i46",
+          "coordinate": "I46",
+          "label": "впишите информацию",
+          "type": "string",
+          "default": "впишите информацию"
+        },
+        {
+          "id": "снабжение_m46",
+          "coordinate": "M46",
+          "label": "Supply M46",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "id": "снабжение_i50",
+          "coordinate": "I50",
+          "label": "Supply I50",
+          "type": "number",
+          "default": 10
+        },
+        {
+          "id": "снабжение_n50",
+          "coordinate": "N50",
+          "label": "Supply N50",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "id": "снабжение_i51",
+          "coordinate": "I51",
+          "label": "Supply I51",
+          "type": "number",
+          "default": 10
+        },
+        {
+          "id": "снабжение_m51",
+          "coordinate": "M51",
+          "label": "Supply M51",
+          "type": "number",
+          "default": 5000
+        },
+        {
+          "id": "снабжение_n51",
+          "coordinate": "N51",
+          "label": "Supply N51",
+          "type": "number",
+          "default": 1
+        },
+        {
+          "id": "снабжение_i52",
+          "coordinate": "I52",
+          "label": "Supply I52",
+          "type": "number",
+          "default": 0
+        },
+        {
+          "id": "снабжение_m52",
+          "coordinate": "M52",
+          "label": "Supply M52",
+          "type": "number",
+          "default": 7000
+        },
+        {
+          "id": "снабжение_n52",
+          "coordinate": "N52",
+          "label": "Supply N52",
+          "type": "number",
+          "default": 1
+        },
+        {
+          "id": "снабжение_h54",
+          "coordinate": "H54",
+          "label": "Supply H54",
+          "type": "number",
+          "default": 100
+        },
+        {
+          "id": "снабжение_i54",
+          "coordinate": "I54",
+          "label": "Supply I54",
+          "type": "number",
+          "default": 2
+        },
+        {
+          "id": "снабжение_n54",
+          "coordinate": "N54",
+          "label": "Supply N54",
+          "type": "number",
+          "default": 1
+        },
+        {
+          "id": "снабжение_h55",
+          "coordinate": "H55",
+          "label": "Supply H55",
+          "type": "number",
+          "default": 100
+        },
+        {
+          "id": "снабжение_i55",
+          "coordinate": "I55",
+          "label": "Supply I55",
+          "type": "number",
+          "default": 2
+        },
+        {
+          "id": "снабжение_n55",
+          "coordinate": "N55",
+          "label": "Supply N55",
+          "type": "number",
+          "default": 1
+        },
+        {
+          "id": "снабжение_h56",
+          "coordinate": "H56",
+          "label": "Supply H56",
+          "type": "number",
+          "default": 200
+        },
+        {
+          "id": "снабжение_i56",
+          "coordinate": "I56",
+          "label": "Supply I56",
+          "type": "number",
+          "default": 2
+        },
+        {
+          "id": "снабжение_n56",
+          "coordinate": "N56",
+          "label": "Supply N56",
+          "type": "number",
+          "default": 1
+        },
+        {
+          "id": "снабжение_h57",
+          "coordinate": "H57",
+          "label": "Supply H57",
+          "type": "number",
+          "default": 150
+        },
+        {
+          "id": "снабжение_i57",
+          "coordinate": "I57",
+          "label": "Supply I57",
+          "type": "number",
+          "default": 2
+        },
+        {
+          "id": "снабжение_n57",
+          "coordinate": "N57",
+          "label": "Supply N57",
+          "type": "number",
+          "default": 1
+        },
+        {
+          "id": "снабжение_d78",
+          "coordinate": "D78",
+          "label": "Supply D78",
+          "type": "number",
+          "default": 3
+        },
+        {
+          "id": "снабжение_e101",
+          "coordinate": "E101",
+          "label": "=SUM(E93:E98)",
+          "type": "number",
+          "default": "=SUM(E93:E98)"
+        },
+        {
+          "id": "снабжение_e105",
+          "coordinate": "E105",
+          "label": "Supply E105",
+          "type": "number",
+          "default": "=E104"
+        }
+      ]
+    },
+    "by_type": {
+      "string": [
+        "технолог_e5",
+        "технолог_e27",
+        "технолог_h27",
+        "снабжение_f2",
+        "снабжение_n3",
+        "снабжение_d10",
+        "снабжение_d11",
+        "снабжение_d17",
+        "снабжение_e20",
+        "снабжение_k20",
+        "снабжение_e21",
+        "снабжение_k21",
+        "снабжение_q22",
+        "снабжение_q23",
+        "снабжение_q24",
+        "снабжение_e26",
+        "снабжение_k26",
+        "снабжение_e27",
+        "снабжение_k27",
+        "снабжение_f28",
+        "снабжение_l28",
+        "снабжение_f29",
+        "снабжение_l29",
+        "снабжение_t29",
+        "снабжение_f30",
+        "снабжение_l30",
+        "снабжение_t30",
+        "снабжение_f31",
+        "снабжение_l31",
+        "снабжение_t31",
+        "снабжение_f32",
+        "снабжение_l32",
+        "снабжение_f33",
+        "снабжение_l33",
+        "снабжение_t33",
+        "снабжение_t34",
+        "снабжение_t35",
+        "снабжение_t37",
+        "снабжение_d38",
+        "снабжение_t38",
+        "снабжение_t39",
+        "снабжение_t41",
+        "снабжение_t42",
+        "снабжение_t43",
+        "снабжение_i44",
+        "снабжение_i45",
+        "снабжение_g46",
+        "снабжение_i46"
+      ],
+      "number": [
+        "технолог_d27",
+        "технолог_i27",
+        "технолог_j27",
+        "технолог_k27",
+        "технолог_l27",
+        "технолог_m27",
+        "технолог_t27",
+        "снабжение_d8",
+        "снабжение_e8",
+        "снабжение_k13",
+        "снабжение_p13",
+        "снабжение_i38",
+        "снабжение_k38",
+        "снабжение_m38",
+        "снабжение_i39",
+        "снабжение_k39",
+        "снабжение_m39",
+        "снабжение_d43",
+        "снабжение_g43",
+        "снабжение_d44",
+        "снабжение_g44",
+        "снабжение_m44",
+        "снабжение_d45",
+        "снабжение_g45",
+        "снабжение_m45",
+        "снабжение_p45",
+        "снабжение_d46",
+        "снабжение_m46",
+        "снабжение_i50",
+        "снабжение_n50",
+        "снабжение_i51",
+        "снабжение_m51",
+        "снабжение_n51",
+        "снабжение_i52",
+        "снабжение_m52",
+        "снабжение_n52",
+        "снабжение_h54",
+        "снабжение_i54",
+        "снабжение_n54",
+        "снабжение_h55",
+        "снабжение_i55",
+        "снабжение_n55",
+        "снабжение_h56",
+        "снабжение_i56",
+        "снабжение_n56",
+        "снабжение_h57",
+        "снабжение_i57",
+        "снабжение_n57",
+        "снабжение_d78",
+        "снабжение_e101",
+        "снабжение_e105"
+      ]
+    },
+    "by_role": {
+      "technologist": [
+        "технолог_e5",
+        "технолог_d27",
+        "технолог_e27",
+        "технолог_h27",
+        "технолог_i27",
+        "технолог_j27",
+        "технолог_k27",
+        "технолог_l27",
+        "технолог_m27",
+        "технолог_t27",
+        "снабжение_f2",
+        "снабжение_n3",
+        "снабжение_d8",
+        "снабжение_e8",
+        "снабжение_d10",
+        "снабжение_d11",
+        "снабжение_k13",
+        "снабжение_p13",
+        "снабжение_d17",
+        "снабжение_e20",
+        "снабжение_k20",
+        "снабжение_e21",
+        "снабжение_k21",
+        "снабжение_q22",
+        "снабжение_q23",
+        "снабжение_q24",
+        "снабжение_e26",
+        "снабжение_k26",
+        "снабжение_e27",
+        "снабжение_k27",
+        "снабжение_f28",
+        "снабжение_l28",
+        "снабжение_f29",
+        "снабжение_l29",
+        "снабжение_t29",
+        "снабжение_f30",
+        "снабжение_l30",
+        "снабжение_t30",
+        "снабжение_f31",
+        "снабжение_l31",
+        "снабжение_t31",
+        "снабжение_f32",
+        "снабжение_l32",
+        "снабжение_f33",
+        "снабжение_l33",
+        "снабжение_t33",
+        "снабжение_t34",
+        "снабжение_t35",
+        "снабжение_t37",
+        "снабжение_d38",
+        "снабжение_i38",
+        "снабжение_k38",
+        "снабжение_m38",
+        "снабжение_t38",
+        "снабжение_i39",
+        "снабжение_k39",
+        "снабжение_m39",
+        "снабжение_t39",
+        "снабжение_t41",
+        "снабжение_t42",
+        "снабжение_d43",
+        "снабжение_g43",
+        "снабжение_t43",
+        "снабжение_d44",
+        "снабжение_g44",
+        "снабжение_i44",
+        "снабжение_m44",
+        "снабжение_d45",
+        "снабжение_g45",
+        "снабжение_i45",
+        "снабжение_m45",
+        "снабжение_p45",
+        "снабжение_d46",
+        "снабжение_g46",
+        "снабжение_i46",
+        "снабжение_m46",
+        "снабжение_i50",
+        "снабжение_n50",
+        "снабжение_i51",
+        "снабжение_m51",
+        "снабжение_n51",
+        "снабжение_i52",
+        "снабжение_m52",
+        "снабжение_n52",
+        "снабжение_h54",
+        "снабжение_i54",
+        "снабжение_n54",
+        "снабжение_h55",
+        "снабжение_i55",
+        "снабжение_n55",
+        "снабжение_h56",
+        "снабжение_i56",
+        "снабжение_n56",
+        "снабжение_h57",
+        "снабжение_i57",
+        "снабжение_n57",
+        "снабжение_d78",
+        "снабжение_e101",
+        "снабжение_e105"
+      ]
+    }
+  },
+  "output_inventory": {
+    "classified_outputs": 0,
+    "results_sheet_analysis": {
+      "total_cells_with_data": 62,
+      "data_ranges": [],
+      "potential_results": [
+        {
+          "coordinate": "F18",
+          "value": "СВОДНЫЙ РЕЗУЛЬТАТ",
+          "calculated_value": "СВОДНЫЙ РЕЗУЛЬТАТ",
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "F23",
+          "value": "РАБОТЫ",
+          "calculated_value": "РАБОТЫ",
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "G23",
+          "value": "КОРПУС",
+          "calculated_value": "КОРПУС",
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "K23",
+          "value": "СОЕДИНЕНИЯ",
+          "calculated_value": "СОЕДИНЕНИЯ",
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "N23",
+          "value": "пакет пластин (материал + раскрой)",
+          "calculated_value": "пакет пластин (материал + раскрой)",
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "O23",
+          "value": "зеркала, гребёнки, плакировка крышек, перегородки (материал + раскрой)",
+          "calculated_value": "зеркала, гребёнки, плакировка крышек, перегородки (материал + раскрой)",
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "P23",
+          "value": "внутренние распорки (шпильки+гайки)",
+          "calculated_value": "внутренние распорки (шпильки+гайки)",
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "Q23",
+          "value": "ПРОЧЕЕ",
+          "calculated_value": "ПРОЧЕЕ",
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "X23",
+          "value": "Внутренняя логистика",
+          "calculated_value": "Внутренняя логистика",
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "G24",
+          "value": "панели (материал+обработка, патрубки, фланцы)",
+          "calculated_value": "панели (материал+обработка, патрубки, фланцы)",
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "H24",
+          "value": "плакировка панелей  (материал + раскрой)",
+          "calculated_value": "плакировка панелей  (материал + раскрой)",
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "I24",
+          "value": "крышки (материал + обработка)",
+          "calculated_value": "крышки (материал + обработка)",
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "J24",
+          "value": "стойки (материал + обработка)",
+          "calculated_value": "стойки (материал + обработка)",
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "K24",
+          "value": "КРЕПЁЖ ПАНЕЛЕЙ шпильки и гайки (для стяжки панелей)",
+          "calculated_value": "КРЕПЁЖ ПАНЕЛЕЙ шпильки и гайки (для стяжки панелей)",
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "L24",
+          "value": "прокладки панелей (1 комплект)",
+          "calculated_value": "прокладки панелей (1 комплект)",
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "M24",
+          "value": "резервных комплектов предусмотрено",
+          "calculated_value": "резервных комплектов предусмотрено",
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "Q24",
+          "value": "КОФ",
+          "calculated_value": "КОФ",
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "R24",
+          "value": "проушины",
+          "calculated_value": "проушины",
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "S24",
+          "value": "лапы",
+          "calculated_value": "лапы",
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "T24",
+          "value": "другие материалы",
+          "calculated_value": "другие материалы",
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "U24",
+          "value": "ШОТ-БЛОК",
+          "calculated_value": "ШОТ-БЛОК",
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "V24",
+          "value": "НЕУЧТЁНКА",
+          "calculated_value": "НЕУЧТЁНКА",
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "W24",
+          "value": "ЗИП",
+          "calculated_value": "ЗИП",
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "E25",
+          "value": "цена за 1 кг материала проточной части теплообменника",
+          "calculated_value": "цена за 1 кг материала проточной части теплообменника",
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "M25",
+          "value": "=снабжение!F39",
+          "calculated_value": 2,
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "U25",
+          "value": "раскосы",
+          "calculated_value": "раскосы",
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "E26",
+          "value": "=IF(AND(технолог!P27=снабжение!D7),снабжение!D8,IF(AND(технолог!P27=снабжение!E7),снабжение!E8,IF(AND(технолог!P27=снабжение!F7),снабжение!F8,снабжение!G8)))",
+          "calculated_value": 700,
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "F26",
+          "value": "=снабжение!K14",
+          "calculated_value": 0,
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "G26",
+          "value": "=снабжение!G35+снабжение!M35",
+          "calculated_value": 0,
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "H26",
+          "value": "=снабжение!E8*снабжение!G78*снабжение!D14*снабжение!D14+технолог!V27*снабжение!H78*снабжение!D13",
+          "calculated_value": 0,
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "I26",
+          "value": "=снабжение!G22*2",
+          "calculated_value": 0,
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "J26",
+          "value": "=снабжение!M22*4",
+          "calculated_value": 0,
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "K26",
+          "value": "=снабжение!Q25",
+          "calculated_value": 0,
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "L26",
+          "value": "=снабжение!F38",
+          "calculated_value": 0,
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "M26",
+          "value": "=L26*M25",
+          "calculated_value": 0,
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "N26",
+          "value": "=снабжение!F78*снабжение!D8+технолог!U27*снабжение!J78*снабжение!D13",
+          "calculated_value": 1274416.64,
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "O26",
+          "value": "=снабжение!D8*снабжение!E78*снабжение!D14*снабжение!D14+снабжение!D78*снабжение!I78*снабжение!D13",
+          "calculated_value": 0,
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "P26",
+          "value": "=IF(технолог!G27=\"К4-750\",снабжение!Q78,IF(технолог!G27=\"К4-1200\",снабжение!Q78,IF(технолог!G27=\"К4-1000*500\",снабжение!Q78,IF(технолог!G27=\"К4-1200*600\",снабжение!Q78,IF(технолог!G27=\"К4-1000\",снабжение!Q78,снабжение!R78)))))",
+          "calculated_value": 81920,
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "Q26",
+          "value": "=снабжение!T44",
+          "calculated_value": 0,
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "R26",
+          "value": "=снабжение!I40",
+          "calculated_value": 2000,
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "S26",
+          "value": "=снабжение!K40",
+          "calculated_value": 2700,
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "T26",
+          "value": "=снабжение!M44+снабжение!M45+снабжение!M46",
+          "calculated_value": 50000,
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "U26",
+          "value": "=снабжение!M40",
+          "calculated_value": 0,
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "V26",
+          "value": "=снабжение!P45",
+          "calculated_value": 20000,
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "W26",
+          "value": "=снабжение!J53+снабжение!J58+снабжение!O53+снабжение!O58",
+          "calculated_value": 58100,
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "X26",
+          "value": "=снабжение!P13",
+          "calculated_value": 120000,
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "I30",
+          "value": "РАБОТЫ",
+          "calculated_value": "РАБОТЫ",
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "J30",
+          "value": "=F26",
+          "calculated_value": 0,
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "I31",
+          "value": "КОРПУС",
+          "calculated_value": "КОРПУС",
+          "has_formula": false,
+          "data_type": "text"
+        },
+        {
+          "coordinate": "J31",
+          "value": "=G26+H26+I26+J26",
+          "calculated_value": 0,
+          "has_formula": false,
+          "data_type": "text"
+        }
+      ],
+      "structure_analysis": {
+        "rows_with_data": 25,
+        "columns_with_data": 12,
+        "density": 0.20666666666666667
+      }
+    },
+    "potential_outputs": []
+  },
+  "technical_analysis": {
+    "formula_complexity": {
+      "total_formulas": 0,
+      "by_sheet": {
+        "технолог": 0,
+        "снабжение": 0,
+        "результат ": 0
+      },
+      "complex_formulas": []
+    },
+    "data_type_distribution": {
+      "text": 44,
+      "number": 53,
+      "empty": 46
+    },
+    "cross_sheet_references": {
+      "total_cross_references": 0,
+      "reference_patterns": []
+    },
+    "calculation_patterns": {
+      "vlookup_usage": 0,
+      "if_statements": 0,
+      "arithmetic_operations": 0
+    }
+  },
+  "api_recommendations": {
+    "endpoint_structure": {
+      "inputs": "/api/calculator/inputs",
+      "calculate": "/api/calculator/calculate",
+      "results": "/api/calculator/results"
+    },
+    "role_based_access": {
+      "technologist_fields": 99,
+      "engineer_fields": 0
+    },
+    "validation_requirements": {
+      "required_fields": 99,
+      "numeric_validations": 51,
+      "string_validations": 48
+    },
+    "recommendations": [
+      "Implement role-based field visibility",
+      "Create multi-step form based on sheet structure",
+      "Add real-time validation for numeric inputs",
+      "Implement calculation engine for intermediate values",
+      "Create comprehensive results export functionality"
+    ]
+  }
+}
