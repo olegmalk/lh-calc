@@ -6,8 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useInputStore } from '../stores/inputStore';
 import { useCalculationStore } from '../stores/calculationStore';
 import { useMaterialStore } from '../stores/materialStore';
-// import { useRoleStore } from '../stores/roleStore';
-// import { useRolePermissions } from '../hooks/useRolePermissions';
+import { useRolePermissions } from '../hooks/useRolePermissions';
 import { NAMED_RANGES } from '../lib/calculation-engine/constants';
 import { calc_AI73_TestPressureHot, calc_AJ73_TestPressureCold } from '../lib/calculation-engine/formula-library-complete';
 import type { HeatExchangerInput } from '../lib/calculation-engine/types';
@@ -31,18 +30,14 @@ export const TechnicalInputFormSimple: React.FC = () => {
   const { availableMaterials } = useMaterialStore();
   
   // Role-based permissions
-  // const { currentRole } = useRoleStore();
-  const currentRole = 'technologist'; // Temporary default
+  // Role switching functionality now available through RoleSelector component
   // const formPermissions = useFormPermissions(); // Kept for future role-based form validation
   
   // const { 
   //   canEdit, 
   //   getFieldInfo 
-  // } = useRolePermissions();
-  
-  // Temporary mock functions to fix infinite loop
-  const canEdit = (_field: string) => true;
-  const getFieldInfo = (_field: string) => ({ color: 'green', section: 'technical' });
+  // Get role permissions
+  // (Role permissions moved to getFieldStyles for better organization)
   
   // Local form state
   const [formData, setFormData] = useState<HeatExchangerInput>(inputs);
@@ -98,8 +93,8 @@ export const TechnicalInputFormSimple: React.FC = () => {
   // Handle field changes with role-based validation
   const handleChange = (field: keyof HeatExchangerInput, value: string | number) => {
     // Check if current role can edit this field
-    if (!canEdit(field)) {
-      console.warn(`Role ${currentRole} cannot edit field ${field}`);
+    if (!canEditField(field)) {
+      console.warn(`Current role cannot edit field ${field}`);
       return;
     }
     
@@ -211,11 +206,11 @@ export const TechnicalInputFormSimple: React.FC = () => {
   };
   
   // Role-based styling helper
+  const { canEditField, canViewField } = useRolePermissions();
   const getFieldStyles = (field: keyof HeatExchangerInput) => {
-    const fieldInfo = getFieldInfo(field);
     const hasError = !!errors[field];
-    const isEditable = fieldInfo.canEdit;
-    const isVisible = fieldInfo.canView;
+    const isEditable = canEditField(field);
+    const isVisible = canViewField(field);
     
     if (!isVisible) {
       return {
@@ -323,7 +318,7 @@ export const TechnicalInputFormSimple: React.FC = () => {
                 style={getFieldStyles('equipmentType').input}
                 value={formData.equipmentType}
                 onChange={(e) => handleChange('equipmentType', e.target.value)}
-                disabled={!canEdit('equipmentType')}
+                disabled={!canEditField('equipmentType')}
               >
                 <option value="">{t('common.placeholder.selectType')}</option>
                 {NAMED_RANGES.типоразмеры_К4.map(type => (

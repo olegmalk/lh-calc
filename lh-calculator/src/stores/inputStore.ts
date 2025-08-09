@@ -2,14 +2,9 @@ import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import type { HeatExchangerInput } from '../lib/calculation-engine/types';
 import type { UserRole } from '../types/roles.types';
-// import { useRoleStore } from './roleStore';
-import { 
-  canEditField, 
-  canViewField,
-  filterEditableInputs,
-  filterViewableInputs,
-  validateFieldAccess
-} from '../utils/role-permissions';
+import { rolePermissionService } from '../services/rolePermissionService';
+import { useRoleStore } from './roleStore';
+import { FIELD_PERMISSIONS } from '../config/field-permissions';
 
 interface InputState {
   inputs: HeatExchangerInput;
@@ -25,13 +20,13 @@ interface InputState {
   reset: () => void;
   loadFromTemplate: (template: HeatExchangerInput) => void;
   
-  // Role-based computed properties
+  // Role-based computed properties (using service)
   getEditableInputs: (role?: UserRole) => Partial<HeatExchangerInput>;
   getViewableInputs: (role?: UserRole) => Partial<HeatExchangerInput>;
   canEditField: (field: keyof HeatExchangerInput, role?: UserRole) => boolean;
   canViewField: (field: keyof HeatExchangerInput, role?: UserRole) => boolean;
   
-  // Validation helpers
+  // Validation helpers (using service)
   validateUpdate: (field: keyof HeatExchangerInput, role?: UserRole) => { allowed: boolean; reason?: string };
   getFieldsForRole: (role?: UserRole) => {
     editable: (keyof HeatExchangerInput)[];
@@ -224,19 +219,18 @@ export const useInputStore = create<InputState>()(
         inputs: defaultInputs,
         isDirty: false,
         
-        updateInput: (field, value, _bypassRoleCheck = false) => 
+        updateInput: (field, value, bypassRoleCheck = false) => 
           set((state) => {
-            // Role-based permission check (unless bypassed for system updates)
-            // Role check temporarily disabled to fix infinite loop
-            // if (!bypassRoleCheck) {
-            //   const roleStore = useRoleStore.getState();
-            //   const canEdit = roleStore.canEdit(field);
-            //   
-            //   if (!canEdit) {
-            //     console.warn(`Role ${roleStore.currentRole} cannot edit field ${field}`);
-            //     return state; // No update if permission denied
-            //   }
-            // }
+            // Role-based permission check using service
+            if (!bypassRoleCheck) {
+              const currentRole = useRoleStore.getState().currentRole;
+              const canEdit = rolePermissionService.canEditField(currentRole, field);
+              
+              if (!canEdit) {
+                console.warn(`Role ${currentRole} cannot edit field ${field}`);
+                return state; // No update if permission denied
+              }
+            }
             
             const newInputs = {
               ...state.inputs,
@@ -254,24 +248,24 @@ export const useInputStore = create<InputState>()(
             };
           }, false, 'updateInput'),
         
-        updateMultiple: (updates, _bypassRoleCheck = false) =>
+        updateMultiple: (updates, bypassRoleCheck = false) =>
           set((state) => {
             let filteredUpdates = updates;
             
-            // Role-based filtering temporarily disabled to fix infinite loop
-            // if (!bypassRoleCheck) {
-            //   const roleStore = useRoleStore.getState();
-            //   filteredUpdates = roleStore.filterForEdit(updates);
-            //   
-            //   // Log any filtered fields
-            //   const originalKeys = Object.keys(updates);
-            //   const filteredKeys = Object.keys(filteredUpdates);
-            //   const blockedFields = originalKeys.filter(key => !filteredKeys.includes(key));
-            //   
-            //   if (blockedFields.length > 0) {
-            //     console.warn(`Role ${roleStore.currentRole} blocked from editing fields:`, blockedFields);
-            //   }
-            // }
+            // Role-based filtering using service
+            if (!bypassRoleCheck) {
+              const currentRole = useRoleStore.getState().currentRole;
+              filteredUpdates = rolePermissionService.filterEditableInputs(currentRole, updates);
+              
+              // Log any filtered fields
+              const originalKeys = Object.keys(updates);
+              const filteredKeys = Object.keys(filteredUpdates);
+              const blockedFields = originalKeys.filter(key => !filteredKeys.includes(key));
+              
+              if (blockedFields.length > 0) {
+                console.warn(`Role ${currentRole} blocked from editing fields:`, blockedFields);
+              }
+            }
             
             return {
               inputs: {
@@ -294,50 +288,42 @@ export const useInputStore = create<InputState>()(
             isDirty: false,
           }, false, 'loadFromTemplate'),
         
-        // Role-based computed properties  
+        // Role-based computed properties using service
         getEditableInputs: (role?: UserRole): Partial<HeatExchangerInput> => {
           const state = useInputStore.getState();
           const targetRole = role || useRoleStore.getState().currentRole;
-          return filterEditableInputs(targetRole, state.inputs);
+          return rolePermissionService.filterEditableInputs(targetRole, state.inputs);
         },
         
         getViewableInputs: (role?: UserRole): Partial<HeatExchangerInput> => {
           const state = useInputStore.getState();
           const targetRole = role || useRoleStore.getState().currentRole;
-          return filterViewableInputs(targetRole, state.inputs);
+          return rolePermissionService.filterViewableInputs(targetRole, state.inputs);
         },
         
         canEditField: (field: keyof HeatExchangerInput, role?: UserRole) => {
           const targetRole = role || useRoleStore.getState().currentRole;
-          return canEditField(targetRole, field);
+          return rolePermissionService.canEditField(targetRole, field);
         },
         
         canViewField: (field: keyof HeatExchangerInput, role?: UserRole) => {
           const targetRole = role || useRoleStore.getState().currentRole;
-          return canViewField(targetRole, field);
+          return rolePermissionService.canViewField(targetRole, field);
         },
         
         validateUpdate: (field: keyof HeatExchangerInput, role?: UserRole) => {
           const targetRole = role || useRoleStore.getState().currentRole;
-          return validateFieldAccess(targetRole, field, 'write');
+          return rolePermissionService.validateFieldAccess(targetRole, field, 'write');
         },
         
         getFieldsForRole: (role?: UserRole) => {
           const targetRole = role || useRoleStore.getState().currentRole;
-          const state = useInputStore.getState();
-          const editableInputs = filterEditableInputs(targetRole, state.inputs);
-          const viewableInputs = filterViewableInputs(targetRole, state.inputs);
-          
-          // Convert input objects to field key arrays
-          const editableFields = Object.keys(editableInputs) as (keyof HeatExchangerInput)[];
-          const viewableFields = Object.keys(viewableInputs) as (keyof HeatExchangerInput)[];
-          const allFields = Object.keys(state.inputs) as (keyof HeatExchangerInput)[];
-          const hiddenFields = allFields.filter(field => !viewableFields.includes(field));
+          const allFields = Object.keys(FIELD_PERMISSIONS) as (keyof HeatExchangerInput)[];
           
           return {
-            editable: editableFields,
-            viewable: viewableFields,
-            hidden: hiddenFields,
+            editable: rolePermissionService.getEditableFields(targetRole, allFields),
+            viewable: rolePermissionService.getViewableFields(targetRole, allFields),
+            hidden: rolePermissionService.getHiddenFields(targetRole, allFields),
           };
         },
       }),

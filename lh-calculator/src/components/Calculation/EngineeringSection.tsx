@@ -13,7 +13,8 @@ import {
 import { IconChevronDown, IconChevronUp, IconSettings } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { useInputStore } from '../../stores/inputStore';
-// import { useRolePermissions, useCurrentRole } from '../../stores/roleStore';
+import { useCurrentRole } from '../../stores/roleStore';
+import { useRolePermissions } from '../../hooks/useRolePermissions';
 import { FIELD_GROUPS } from '../../config/field-permissions';
 import type { HeatExchangerInput } from '../../lib/calculation-engine/types';
 import './CalculationSection.css';
@@ -29,10 +30,10 @@ export const EngineeringSection: React.FC<EngineeringSectionProps> = ({
 }) => {
   const { t } = useTranslation();
   const { inputs, updateInput } = useInputStore();
-  // Temporarily disabled to fix infinite loop
-  const canEdit = (_field: string) => true;
-  const canView = (_field: string) => true;
-  const currentRole = 'engineer';
+  const { canEditField, canViewField } = useRolePermissions();
+  const currentRole = useCurrentRole();
+  const canEdit = canEditField;
+  const canView = canViewField;
 
   // Get engineering fields from field permissions
   const orangeFields = FIELD_GROUPS.engineering.orange;

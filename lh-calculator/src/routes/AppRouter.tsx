@@ -5,7 +5,6 @@ import { AppHeader } from '@components/layout/AppHeader';
 import { AppNavbar } from '@components/layout/AppNavbar';
 
 // Pages - MVP only
-import { DashboardPage } from '@pages/Dashboard';
 import { CalculationPage } from '@pages/CalculationPage';
 import { SavedCalculationsPage } from '@pages/SavedCalculations';
 import { ProjectDetailsPage } from '@pages/ProjectDetailsPage';
@@ -42,8 +41,8 @@ export function AppRouter() {
 
       <AppShell.Main>
         <Routes>
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/" element={<Navigate to="/calculations" replace />} />
+          <Route path="/dashboard" element={<Navigate to="/calculations" replace />} />
           <Route path="/calculations" element={<CalculationPage />} />
           <Route path="/project-details" element={<ProjectDetailsPage />} />
           <Route path="/saved-calculations" element={<SavedCalculationsPage />} />

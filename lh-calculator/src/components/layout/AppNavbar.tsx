@@ -2,7 +2,6 @@ import { NavLink } from '@mantine/core';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
-  IconDashboard,
   IconDeviceFloppy,
   IconCalculator,
   IconClipboardList,
@@ -10,7 +9,6 @@ import {
 
 // MVP Navigation only
 const navigation = [
-  { path: '/dashboard', icon: IconDashboard, label: 'navigation.dashboard' },
   { path: '/calculations', icon: IconCalculator, label: 'navigation.calculations' },
   { path: '/project-details', icon: IconClipboardList, label: 'navigation.projectDetails' },
   { path: '/saved-calculations', icon: IconDeviceFloppy, label: 'navigation.savedCalculations' },

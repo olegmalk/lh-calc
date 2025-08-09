@@ -10,7 +10,8 @@ import {
 import { IconChevronDown, IconChevronUp, IconCrown } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { useInputStore } from '../../stores/inputStore';
-// import { useRolePermissions, useCurrentRole } from '../../stores/roleStore';
+import { useCurrentRole } from '../../stores/roleStore';
+import { useRolePermissions } from '../../hooks/useRolePermissions';
 import { FIELD_GROUPS } from '../../config/field-permissions';
 import type { HeatExchangerInput } from '../../lib/calculation-engine/types';
 import './CalculationSection.css';
@@ -26,10 +27,10 @@ export const ExecutiveSection: React.FC<ExecutiveSectionProps> = ({
 }) => {
   const { t } = useTranslation();
   const { inputs, updateInput } = useInputStore();
-  // Temporarily disabled to fix infinite loop
-  const canEdit = (_field: string) => true;
-  const canView = (_field: string) => true;
-  const currentRole = 'director';
+  const { canEditField, canViewField } = useRolePermissions();
+  const currentRole = useCurrentRole();
+  const canEdit = canEditField;
+  const canView = canViewField;
 
   // Get executive fields from field permissions
   const redFields = FIELD_GROUPS.executive.red;

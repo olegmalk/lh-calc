@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { UserRole } from '../types/roles.types';
+import type { UserRole } from '../types/roles.types';
 
 /**
  * Safe translation hook that provides fallbacks if translations are missing
