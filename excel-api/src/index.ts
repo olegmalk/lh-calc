@@ -15,6 +15,7 @@ import { ErrorLogger } from './services/error-logger';
 import { SecuritySanitizer } from './utils/security-sanitizer';
 import { 
   CalculationRequest, 
+  CalculationResponse,
   createSuccessResponse, 
   createErrorResponse, 
   generateRequestId
@@ -26,6 +27,8 @@ import {
   ErrorFactory,
   ErrorClassifier
 } from './errors/custom-errors';
+import { Bitrix24Integration, BitrixConfig } from './integrations/bitrix24';
+import { BitrixAuthMiddleware, BitrixAuthConfig } from './middleware/bitrix-auth';
 
 // Load environment variables
 dotenv.config();
@@ -64,6 +67,29 @@ const queueManager = new QueueManager(excelProcessor, {
 
 // Circuit breaker for critical operations
 const circuitBreaker = new CircuitBreaker(5, 60000);
+
+// Initialize Bitrix24 integration
+const bitrixConfig: BitrixConfig = {
+  webhookSecret: process.env.BITRIX_WEBHOOK_SECRET || '',
+  applicationId: process.env.BITRIX_APPLICATION_ID || '',
+  applicationSecret: process.env.BITRIX_APPLICATION_SECRET || '',
+  verifySignatures: process.env.BITRIX_VERIFY_SIGNATURES === 'true',
+  logWebhooks: process.env.BITRIX_LOG_WEBHOOKS !== 'false',
+  corsOrigins: process.env.BITRIX_CORS_ORIGINS ? process.env.BITRIX_CORS_ORIGINS.split(',') : []
+};
+
+const bitrixAuthConfig: BitrixAuthConfig = {
+  webhookSecret: process.env.BITRIX_WEBHOOK_SECRET || '',
+  applicationId: process.env.BITRIX_APPLICATION_ID || '',
+  applicationSecret: process.env.BITRIX_APPLICATION_SECRET || '',
+  verifySignatures: process.env.BITRIX_VERIFY_SIGNATURES === 'true',
+  allowedApplications: process.env.BITRIX_ALLOWED_APPS ? process.env.BITRIX_ALLOWED_APPS.split(',') : [],
+  enableOriginCheck: process.env.BITRIX_CHECK_ORIGIN === 'true',
+  rateLimitByApp: process.env.BITRIX_RATE_LIMIT_BY_APP === 'true'
+};
+
+const bitrix24Integration = new Bitrix24Integration(bitrixConfig);
+const bitrixAuthMiddleware = new BitrixAuthMiddleware(bitrixAuthConfig);
 
 // Middleware
 app.use(express.json({ limit: '10mb' }));
@@ -138,6 +164,142 @@ app.use(async (req: Request, res: Response, next: NextFunction) => {
   }
   
   next();
+});
+
+// Helper function to create a unified calculation handler
+async function executeCalculation(data: CalculationRequest, requestId: string): Promise<CalculationResponse> {
+  const startTime = Date.now();
+  
+  try {
+    // Security sanitization
+    const sanitizationResult = await sanitizeRequestData(data, requestId);
+    
+    // Validation
+    const validationResult = await validator.validate(sanitizationResult.sanitizedData);
+    
+    if (!validationResult.isValid) {
+      return createErrorResponse(
+        'VALIDATION_FAILED',
+        'Input validation failed',
+        requestId,
+        { 
+          details: validationResult.errors,
+          processingTimeMs: Date.now() - startTime
+        }
+      );
+    }
+
+    // Process calculation
+    const processingResult = await queueManager.processRequest(
+      requestId, 
+      validationResult.sanitizedData as CalculationRequest
+    );
+
+    if (!processingResult.success) {
+      return createErrorResponse(
+        'PROCESSING_FAILED',
+        processingResult.error || 'Processing failed',
+        requestId,
+        {
+          queueTimeMs: processingResult.queueTimeMs,
+          processingTimeMs: processingResult.processingTimeMs
+        }
+      );
+    }
+
+    // Success response
+    return createSuccessResponse(
+      processingResult.results!,
+      requestId,
+      processingResult.processingTimeMs,
+      {
+        excelVersion: 'calc.xlsx v7 with Bitrix24 integration',
+        timestamp: new Date().toISOString(),
+        queueTimeMs: processingResult.queueTimeMs,
+        totalTimeMs: Date.now() - startTime,
+        securityThreatsHandled: sanitizationResult.securityThreats.length
+      }
+    );
+
+  } catch (error) {
+    return createErrorResponse(
+      'INTERNAL_ERROR',
+      error instanceof Error ? error.message : String(error),
+      requestId,
+      { processingTimeMs: Date.now() - startTime }
+    );
+  }
+}
+
+// Bitrix24 webhook endpoint
+app.post('/api/bitrix24/webhook', 
+  bitrixAuthMiddleware.handlePreflight(),
+  bitrixAuthMiddleware.addBitrixHeaders(),
+  bitrixAuthMiddleware.authenticate(),
+  async (req: Request, res: Response) => {
+    await bitrix24Integration.handleCalculationWebhook(req, res, executeCalculation);
+  }
+);
+
+// Bitrix24 REST API endpoint
+app.post('/api/bitrix24/rest',
+  bitrixAuthMiddleware.handlePreflight(),
+  bitrixAuthMiddleware.addBitrixHeaders(),
+  bitrixAuthMiddleware.authenticate(),
+  async (req: Request, res: Response) => {
+    await bitrix24Integration.handleRestRequest(req, res, executeCalculation);
+  }
+);
+
+// Bitrix24 auth stats endpoint
+app.get('/api/bitrix24/auth/stats', (req: Request, res: Response) => {
+  try {
+    const stats = bitrixAuthMiddleware.getAuthStats();
+    res.json({
+      success: true,
+      bitrix_auth_stats: stats,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: `Failed to get auth stats: ${error instanceof Error ? error.message : String(error)}`
+    });
+  }
+});
+
+// Bitrix24 admin endpoints
+app.post('/api/admin/bitrix24/auth/reset/:app', (req: Request, res: Response) => {
+  try {
+    const { app } = req.params;
+    bitrixAuthMiddleware.resetApplicationRateLimit(app);
+    res.json({
+      success: true,
+      message: `Rate limit reset for application: ${app}`,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: `Failed to reset rate limit: ${error instanceof Error ? error.message : String(error)}`
+    });
+  }
+});
+
+app.post('/api/admin/bitrix24/auth/clear-all', (req: Request, res: Response) => {
+  try {
+    bitrixAuthMiddleware.clearAllRateLimits();
+    res.json({
+      success: true,
+      message: 'All Bitrix24 rate limits cleared',
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: `Failed to clear rate limits: ${error instanceof Error ? error.message : String(error)}`
+    });
+  }
 });
 
 // Health check endpoint
@@ -497,6 +659,7 @@ app.post('/api/calculate', async (req: Request, res: Response): Promise<Response
         }
       });
     }
+  });
 });
 
 // Apply comprehensive error handling middleware
@@ -561,11 +724,17 @@ app.listen(PORT, () => {
   console.log(`  Diagnostics:      GET  http://localhost:${PORT}/api/diagnostics`);
   console.log(`  Metrics:          GET  http://localhost:${PORT}/api/metrics`);
   console.log('');
+  console.log('Bitrix24 Endpoints:');
+  console.log(`  Webhook:          POST http://localhost:${PORT}/api/bitrix24/webhook`);
+  console.log(`  REST API:         POST http://localhost:${PORT}/api/bitrix24/rest`);
+  console.log(`  Auth stats:       GET  http://localhost:${PORT}/api/bitrix24/auth/stats`);
+  console.log('');
   console.log('Admin Endpoints:');
   console.log(`  Queue stats:      GET  http://localhost:${PORT}/api/admin/queue/stats`);
   console.log(`  Error monitoring: GET  http://localhost:${PORT}/api/admin/errors/recent`);
   console.log(`  Security events:  GET  http://localhost:${PORT}/api/admin/errors/security`);
   console.log(`  Circuit breaker:  GET  http://localhost:${PORT}/api/admin/circuit-breaker/status`);
+  console.log(`  Bitrix24 reset:   POST http://localhost:${PORT}/api/admin/bitrix24/auth/reset/:app`);
   console.log('');
   console.log('System Status:');
   console.log(`  Workers: ${queueManager.getStats().totalWorkers}`);

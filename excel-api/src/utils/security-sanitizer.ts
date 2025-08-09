@@ -36,7 +36,7 @@ export class SecuritySanitizer {
     /\\b(OR|AND)\\b.*(=|LIKE|IN|EXISTS)/gi,
     /\\b(WAITFOR|DELAY)\\b/gi,
     /(xp_|sp_)/gi,
-    /\\/\\*.*\\*\\//g,
+    /\/\*.*\*\//g,
     /;\\s*(SELECT|INSERT|UPDATE|DELETE|DROP)/gi
   ];
 
@@ -49,9 +49,9 @@ export class SecuritySanitizer {
     // Advanced XSS patterns
     /&lt;|&gt;|&quot;|&#x|&#\\d+/gi,
     /%3C|%3E|%22|%27/gi,
-    /\\\\u[0-9a-fA-F]{4}/g,
-    /data:text\\/html/gi,
-    /data:image\\/svg/gi,
+    /\\u[0-9a-fA-F]{4}/g,
+    /data:text\/html/gi,
+    /data:image\/svg/gi,
     // Event handlers
     /(onabort|onblur|onchange|onclick|ondblclick|onerror|onfocus)/gi,
     /(onkeydown|onkeypress|onkeyup|onload|onmousedown|onmousemove)/gi,
@@ -64,7 +64,7 @@ export class SecuritySanitizer {
     /[;&|`$()\\\\]/g,
     /\\b(cmd|powershell|bash|sh|exec|eval)\\b/gi,
     /\\$\\{.*\\}/g,
-    /\\.\\.\\/|\\.\\.\\\\/g,
+    /\.\.\//g,
     /%2e%2e%2f|%2e%2e%5c/gi
   ];
 
@@ -283,7 +283,7 @@ export class SecuritySanitizer {
   }
 
   private containsPathTraversal(input: string): boolean {
-    return /(\\.\\.\\/|\\.\\.\\\\/|%2e%2e%2f|%2e%2e%5c)/gi.test(input);
+    return /(\.\.|%2e%2e)/gi.test(input);
   }
 
   /**
@@ -361,9 +361,8 @@ export class SecuritySanitizer {
     let sanitized = input;
     
     // Remove path traversal sequences
-    sanitized = sanitized.replace(/(\\.\\.\\/|\\.\\.\\\\/)/g, '');
-    sanitized = sanitized.replace(/%2e%2e%2f/gi, '');
-    sanitized = sanitized.replace(/%2e%2e%5c/gi, '');
+    sanitized = sanitized.replace(/\.\./g, '');
+    sanitized = sanitized.replace(/%2e%2e/gi, '');
     
     return sanitized;
   }
@@ -405,7 +404,7 @@ export class SecuritySanitizer {
     }
     
     // Check for Excel functions
-    if (/(SUM|COUNT|VLOOKUP|INDEX|MATCH)\\s*\\(/i.test(input)) {
+    if (/(SUM|COUNT|VLOOKUP|INDEX|MATCH)\s*\(/i.test(input)) {
       issues.push('Contains Excel function calls');
     }
     
