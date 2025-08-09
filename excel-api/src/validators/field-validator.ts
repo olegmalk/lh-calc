@@ -1,12 +1,28 @@
 /**
- * Core Field Validation Framework
- * Validates all 134 fields from Excel template
+ * Enhanced Field Validation Framework
+ * Comprehensive validation for all Excel API edge cases
  */
 
 import Joi from 'joi';
-
-// Import validation rules from excel-processor
-import { VALIDATION_RULES } from '../../validation-rules-import';
+import {
+  ExcelApiError,
+  ErrorType,
+  ErrorSeverity,
+  ErrorFactory,
+  ValidationError as CustomValidationError,
+  TypeConversionError,
+  NumericOverflowError,
+  NumericUnderflowError,
+  StringValidationError,
+  PatternValidationError,
+  EnumValidationError,
+  BusinessLogicError,
+  FieldCombinationError,
+  EngineeringConstraintError,
+  MaterialPropertyError,
+  UnicodeError
+} from '../errors/custom-errors';
+import { ErrorLogger } from '../services/error-logger';
 
 export interface ValidationResult {
   isValid: boolean;

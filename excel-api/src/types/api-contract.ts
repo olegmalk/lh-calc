@@ -218,9 +218,15 @@ export interface ErrorDetails {
   field_errors?: Record<string, string>;
   missing_required_fields?: string[];
   excel_errors?: string[];
+  processing_errors?: string[];
   failed_cells?: string[];
   error_type?: string;
   message?: string;
+  queue_time_ms?: number;
+  processing_time_ms?: number;
+  queue_full?: boolean;
+  retry_after?: string;
+  timeout_ms?: number;
 }
 
 /**
@@ -281,6 +287,7 @@ export enum ErrorCode {
   EXCEL_FILE_NOT_FOUND = 'EXCEL_FILE_NOT_FOUND',
   INTERNAL_ERROR = 'INTERNAL_ERROR',
   INVALID_REQUEST = 'INVALID_REQUEST',
+  INVALID_INPUT_DATA = 'INVALID_INPUT_DATA',
   MISSING_REQUIRED_FIELDS = 'MISSING_REQUIRED_FIELDS'
 }
 
