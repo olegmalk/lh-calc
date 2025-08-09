@@ -67,8 +67,25 @@ export const ExecutiveSection: React.FC<ExecutiveSectionProps> = ({
             min={0}
             max={100}
             step={0.1}
-            precision={1}
+            decimalScale={1}
             suffix="%"
+          />
+        );
+
+      case 'laborRate':
+        return (
+          <NumberInput
+            key={fieldName}
+            className={`field-container ${colorClass}`}
+            label={t(`executive.${fieldName}`)}
+            placeholder={t(`executive.${fieldName}Placeholder`)}
+            description={t(`executive.${fieldName}Description`)}
+            value={inputs[fieldName] || 0}
+            onChange={(value) => handleInputChange(fieldName, value)}
+            disabled={!canEditField}
+            min={0}
+            step={10}
+            leftSection="₽"
           />
         );
 
@@ -92,6 +109,40 @@ export const ExecutiveSection: React.FC<ExecutiveSectionProps> = ({
           />
         );
 
+      case 'managementCoefficient':
+        return (
+          <NumberInput
+            key={fieldName}
+            className={`field-container ${colorClass}`}
+            label={t(`executive.${fieldName}`)}
+            placeholder={t(`executive.${fieldName}Placeholder`)}
+            description={t(`executive.${fieldName}Description`)}
+            value={inputs[fieldName] || 0}
+            onChange={(value) => handleInputChange(fieldName, value)}
+            disabled={!canEditField}
+            min={0}
+            step={0.01}
+            decimalScale={2}
+          />
+        );
+
+      case 'directorReserve':
+        return (
+          <NumberInput
+            key={fieldName}
+            className={`field-container ${colorClass}`}
+            label={t(`executive.${fieldName}`)}
+            placeholder={t(`executive.${fieldName}Placeholder`)}
+            description={t(`executive.${fieldName}Description`)}
+            value={inputs[fieldName] || 0}
+            onChange={(value) => handleInputChange(fieldName, value)}
+            disabled={!canEditField}
+            min={0}
+            step={100}
+            leftSection="₽"
+          />
+        );
+
       default:
         return (
           <NumberInput
@@ -99,7 +150,7 @@ export const ExecutiveSection: React.FC<ExecutiveSectionProps> = ({
             className={`field-container ${colorClass}`}
             label={t(`executive.${fieldName}`)}
             placeholder={t(`executive.${fieldName}Placeholder`)}
-            value={inputs[fieldName] || 0}
+            value={typeof inputs[fieldName] === 'number' ? inputs[fieldName] : 0}
             onChange={(value) => handleInputChange(fieldName, value)}
             disabled={!canEditField}
             min={0}
@@ -150,7 +201,17 @@ export const ExecutiveSection: React.FC<ExecutiveSectionProps> = ({
         </Text>
         <div className="field-group">
           {redFields
-            .filter(field => field.field === 'discountPercent')
+            .filter(field => ['laborRate', 'discountPercent'].includes(field.field))
+            .map(fieldConfig => renderField(fieldConfig))}
+        </div>
+
+        {/* Strategic Controls */}
+        <Text size="sm" fw={500} mb="sm" c="dimmed" mt="lg">
+          {t('executive.strategicControls')}
+        </Text>
+        <div className="field-group">
+          {redFields
+            .filter(field => ['managementCoefficient', 'directorReserve'].includes(field.field))
             .map(fieldConfig => renderField(fieldConfig))}
         </div>
 

@@ -196,12 +196,6 @@ export const FIELD_PERMISSIONS: Record<keyof HeatExchangerInput, FieldPermission
   // ====================================
   
   // Green fields: Supply cost parameters (direct cost factors)
-  'laborRate': {
-    field: 'laborRate',
-    color: 'green',
-    section: 'supply',
-    description: 'Labor rate per hour (direct cost factor)'
-  },
   
   'laborCoefficient': {
     field: 'laborCoefficient',
@@ -282,6 +276,13 @@ export const FIELD_PERMISSIONS: Record<keyof HeatExchangerInput, FieldPermission
   // ====================================
   
   // Red fields: Executive/Director final cost modifiers
+  'laborRate': {
+    field: 'laborRate',
+    color: 'red',
+    section: 'executive',
+    description: 'Labor rate per hour (executive pricing control)'
+  },
+
   'specialCost1': {
     field: 'specialCost1',
     color: 'red',
@@ -298,6 +299,20 @@ export const FIELD_PERMISSIONS: Record<keyof HeatExchangerInput, FieldPermission
     color: 'red',
     section: 'executive',
     description: 'Discount percentage (price adjustment)'
+  },
+
+  'managementCoefficient': {
+    field: 'managementCoefficient',
+    color: 'red',
+    section: 'executive',
+    description: 'Management coefficient (коэффициент управления) - G93'
+  },
+
+  'directorReserve': {
+    field: 'directorReserve',
+    color: 'red',
+    section: 'executive',
+    description: 'Director\'s Reserve (резерв директора) - G96'
   },
   
   // ====================================

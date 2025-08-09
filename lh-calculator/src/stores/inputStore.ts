@@ -210,6 +210,10 @@ const defaultInputs: HeatExchangerInput = {
   additionalServiceCost2: 0,
   additionalService3: '',
   additionalServiceCost3: 0,
+
+  // CRITICAL MISSING FIELDS: Director-level controls (G93, G96)
+  managementCoefficient: 1.0,    // G93 - Management coefficient (default 1.0)
+  directorReserve: 0,            // G96 - Director's reserve (default 0)
 };
 
 export const useInputStore = create<InputState>()(

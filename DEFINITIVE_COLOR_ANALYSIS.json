@@ -1,0 +1,1447 @@
+{
+  "analysis_date": "2025-08-09",
+  "excel_file": "/home/vmuser/dev/lh_calc/Себестоимость ТЕПЛОБЛОК шаблон для снабжения версия 7 ДЛЯ БИТРИКС (1) (1).xlsx",
+  "sheet_name": "снабжение",
+  "d12_analysis": {
+    "coordinate": "D12",
+    "value": "EMPTY",
+    "background_color": "THEME_5_TINT_0.3999755851924192",
+    "background_classification": "ACCENT2_LIGHTER",
+    "font_color": "THEME_1_TINT_0.0",
+    "font_classification": "DARK1",
+    "has_fill": true
+  },
+  "d12_is_actually_colored": true,
+  "row_12_colored_cells": [
+    {
+      "coordinate": "A12",
+      "value": "Принятая цена нормочаса, руб",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "B12",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "C12",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "D12",
+      "value": "EMPTY",
+      "background_color": "THEME_5_TINT_0.3999755851924192",
+      "background_classification": "ACCENT2_LIGHTER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "E12",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    }
+  ],
+  "all_colored_cells_context": [
+    {
+      "coordinate": "A8",
+      "value": "Принятая Цена материала проточной части за кг, руб",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "B8",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "C8",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "D8",
+      "value": "700",
+      "background_color": "FF92D050",
+      "background_classification": "GREEN",
+      "font_color": null,
+      "font_classification": null,
+      "has_fill": true
+    },
+    {
+      "coordinate": "E8",
+      "value": "700",
+      "background_color": "FF92D050",
+      "background_classification": "GREEN",
+      "font_color": null,
+      "font_classification": null,
+      "has_fill": true
+    },
+    {
+      "coordinate": "F8",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "G8",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "H8",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "FFFF0000",
+      "font_classification": "RED",
+      "has_fill": true
+    },
+    {
+      "coordinate": "I8",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "J8",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "K8",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "L8",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "M8",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "N8",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "O8",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "P8",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "Q8",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "R8",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "S8",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "A9",
+      "value": "Материал корпуса",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "B9",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "C9",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "D9",
+      "value": "09Г2С",
+      "background_color": "FFFFC000",
+      "background_classification": "ORANGE",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "E9",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "F9",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "G9",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "H9",
+      "value": "поз",
+      "background_color": "THEME_9_TINT_0.7999816888943144",
+      "background_classification": "ACCENT6_LIGHTER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "I9",
+      "value": "типоразмер",
+      "background_color": "THEME_9_TINT_0.7999816888943144",
+      "background_classification": "ACCENT6_LIGHTER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "J9",
+      "value": "ходы",
+      "background_color": "THEME_9_TINT_0.7999816888943144",
+      "background_classification": "ACCENT6_LIGHTER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "K9",
+      "value": "кол-во пластин",
+      "background_color": "THEME_9_TINT_0.7999816888943144",
+      "background_classification": "ACCENT6_LIGHTER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "L9",
+      "value": "тип пластин",
+      "background_color": "THEME_9_TINT_0.7999816888943144",
+      "background_classification": "ACCENT6_LIGHTER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "M9",
+      "value": "материал пластин",
+      "background_color": "THEME_9_TINT_0.7999816888943144",
+      "background_classification": "ACCENT6_LIGHTER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "N9",
+      "value": "толщина пластин,мм",
+      "background_color": "THEME_9_TINT_0.7999816888943144",
+      "background_classification": "ACCENT6_LIGHTER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "O9",
+      "value": "вытяжка, мм",
+      "background_color": "THEME_9_TINT_0.7999816888943144",
+      "background_classification": "ACCENT6_LIGHTER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "P9",
+      "value": "материал плакировки панелей",
+      "background_color": "THEME_9_TINT_0.7999816888943144",
+      "background_classification": "ACCENT6_LIGHTER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "Q9",
+      "value": "толщина плакировки панелей, мм",
+      "background_color": "THEME_9_TINT_0.7999816888943144",
+      "background_classification": "ACCENT6_LIGHTER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "R9",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "S9",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "A10",
+      "value": "Принятая цена материала колонн, крышек, руб за кг",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "B10",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "C10",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "D10",
+      "value": "EMPTY",
+      "background_color": "FF92D050",
+      "background_classification": "GREEN",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "E10",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "F10",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "G10",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "H10",
+      "value": "=технолог!E27",
+      "background_color": "THEME_4_TINT_0.7999816888943144",
+      "background_classification": "ACCENT1_LIGHTER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "I10",
+      "value": "=технолог!G27",
+      "background_color": "THEME_4_TINT_0.7999816888943144",
+      "background_classification": "ACCENT1_LIGHTER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "J10",
+      "value": "=технолог!H27",
+      "background_color": "THEME_4_TINT_0.7999816888943144",
+      "background_classification": "ACCENT1_LIGHTER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "K10",
+      "value": "=технолог!I27",
+      "background_color": "THEME_4_TINT_0.7999816888943144",
+      "background_classification": "ACCENT1_LIGHTER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "L10",
+      "value": "=технолог!S27",
+      "background_color": "THEME_4_TINT_0.7999816888943144",
+      "background_classification": "ACCENT1_LIGHTER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "M10",
+      "value": "=технолог!P27",
+      "background_color": "THEME_4_TINT_0.7999816888943144",
+      "background_classification": "ACCENT1_LIGHTER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "N10",
+      "value": "=технолог!U27",
+      "background_color": "THEME_4_TINT_0.7999816888943144",
+      "background_classification": "ACCENT1_LIGHTER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "O10",
+      "value": "=технолог!T27",
+      "background_color": "THEME_4_TINT_0.7999816888943144",
+      "background_classification": "ACCENT1_LIGHTER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "P10",
+      "value": "=технолог!Q27",
+      "background_color": "THEME_4_TINT_0.7999816888943144",
+      "background_classification": "ACCENT1_LIGHTER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "Q10",
+      "value": "=технолог!V27",
+      "background_color": "THEME_4_TINT_0.7999816888943144",
+      "background_classification": "ACCENT1_LIGHTER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "R10",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "S10",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "A11",
+      "value": "Принятая цена материала панелей, руб за кг",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "B11",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "C11",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "D11",
+      "value": "EMPTY",
+      "background_color": "FF92D050",
+      "background_classification": "GREEN",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "E11",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "F11",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "G11",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "H11",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "I11",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "J11",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "K11",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "L11",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "M11",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "N11",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "O11",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "P11",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "Q11",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "R11",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "S11",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "A12",
+      "value": "Принятая цена нормочаса, руб",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "B12",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "C12",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "D12",
+      "value": "EMPTY",
+      "background_color": "THEME_5_TINT_0.3999755851924192",
+      "background_classification": "ACCENT2_LIGHTER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "E12",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "F12",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "G12",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "H12",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "I12",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "J12",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "K12",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "L12",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "M12",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "N12",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "O12",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "P12",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "Q12",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "R12",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "S12",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "A13",
+      "value": "Стоимость раскроя - песок, электричество, вода (руб/метр) ",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "B13",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "C13",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "D13",
+      "value": "EMPTY",
+      "background_color": "THEME_5_TINT_0.3999755851924192",
+      "background_classification": "ACCENT2_LIGHTER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "E13",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "F13",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "G13",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "H13",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "I13",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "J13",
+      "value": "количество нормачасов",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "K13",
+      "value": "1",
+      "background_color": "FF92D050",
+      "background_classification": "GREEN",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "L13",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "M13",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "N13",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "O13",
+      "value": "внутренняя логитика",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "P13",
+      "value": "120000",
+      "background_color": "FF92D050",
+      "background_classification": "GREEN",
+      "font_color": "FFFF0000",
+      "font_classification": "RED",
+      "has_fill": true
+    },
+    {
+      "coordinate": "Q13",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "R13",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "S13",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "A14",
+      "value": "Поправка на раскрой для плакировки и гребёнок",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "B14",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "C14",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "D14",
+      "value": "EMPTY",
+      "background_color": "THEME_5_TINT_0.3999755851924192",
+      "background_classification": "ACCENT2_LIGHTER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "E14",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "F14",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "G14",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "H14",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "I14",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "J14",
+      "value": "ИТОГО",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "K14",
+      "value": "=K13*D12",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "FFFF0000",
+      "font_classification": "RED",
+      "has_fill": true
+    },
+    {
+      "coordinate": "L14",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "M14",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "N14",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "O14",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "P14",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "FFFF0000",
+      "font_classification": "RED",
+      "has_fill": true
+    },
+    {
+      "coordinate": "Q14",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "R14",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "S14",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "A15",
+      "value": "поправка на раскрой колонн",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "B15",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "C15",
+      "value": "EMPTY",
+      "background_color": "00000000",
+      "background_classification": "RGB_00000000",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "D15",
+      "value": "EMPTY",
+      "background_color": "THEME_5_TINT_0.3999450666829432",
+      "background_classification": "ACCENT2_LIGHTER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "E15",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "F15",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "G15",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "H15",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "I15",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "J15",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "K15",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "L15",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "M15",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "N15",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "O15",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "P15",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "Q15",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "R15",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    },
+    {
+      "coordinate": "S15",
+      "value": "EMPTY",
+      "background_color": "THEME_0_TINT_-0.1499984740745262",
+      "background_classification": "LIGHT1_DARKER",
+      "font_color": "THEME_1_TINT_0.0",
+      "font_classification": "DARK1",
+      "has_fill": true
+    }
+  ],
+  "color_classification_summary": {
+    "RGB_00000000": 47,
+    "GREEN": 6,
+    "LIGHT1_DARKER": 74,
+    "ORANGE": 1,
+    "ACCENT6_LIGHTER": 10,
+    "ACCENT1_LIGHTER": 10,
+    "ACCENT2_LIGHTER": 4
+  },
+  "definitive_conclusion": {
+    "green_input_fields": 6,
+    "red_computed_fields": 0,
+    "orange_special_fields": 1,
+    "d12_color_status": "ACCENT2_LIGHTER"
+  }
+}

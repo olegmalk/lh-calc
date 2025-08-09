@@ -37,7 +37,8 @@ describe('Role Permission System', () => {
 
     test('Supply Manager can edit green fields only', () => {
       expect(canEditField('supply-manager', 'plateCount')).toBe(true); // green
-      expect(canEditField('supply-manager', 'laborRate')).toBe(true); // green
+      expect(canEditField('supply-manager', 'laborCoefficient')).toBe(true); // green
+      expect(canEditField('supply-manager', 'laborRate')).toBe(false); // red (Director only)
       expect(canEditField('supply-manager', 'equipmentType')).toBe(false); // yellow
       expect(canEditField('supply-manager', 'flangeHotPressure1')).toBe(false); // orange
       expect(canEditField('supply-manager', 'discountPercent')).toBe(false); // red
@@ -46,6 +47,7 @@ describe('Role Permission System', () => {
     test('Director can edit red fields only', () => {
       expect(canEditField('director', 'discountPercent')).toBe(true); // red
       expect(canEditField('director', 'specialCost1')).toBe(true); // red
+      expect(canEditField('director', 'laborRate')).toBe(true); // red
       expect(canEditField('director', 'equipmentType')).toBe(false); // yellow
       expect(canEditField('director', 'plateCount')).toBe(false); // green
       expect(canEditField('director', 'flangeHotPressure1')).toBe(false); // orange

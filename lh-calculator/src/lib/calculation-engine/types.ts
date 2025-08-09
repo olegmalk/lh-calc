@@ -223,6 +223,10 @@ export interface HeatExchangerInput {
   additionalServiceCost2?: number; // DN27 - additional service 2 cost
   additionalService3?: string;    // DO27 - additional service 3 description
   additionalServiceCost3?: number; // DP27 - additional service 3 cost
+
+  // CRITICAL MISSING FIELDS: Director-level controls (G93, G96)
+  managementCoefficient?: number;  // G93 - Management coefficient (коэффициент управления)
+  directorReserve?: number;        // G96 - Director's reserve (резерв директора)
 }
 
 export interface MaterialProperties {
