@@ -1,19 +1,14 @@
 /**
- * Bitrix24 Integration Layer
- * Production-ready webhook handler with signature verification and response formatting
+ * Simplified Bitrix24 Integration Layer
+ * Basic webhook handler without authentication for private deployment
  */
 
 import { Request, Response } from 'express';
-import crypto from 'crypto';
 import { 
   CalculationRequest, 
   CalculationResponse,
-  createSuccessResponse,
-  createErrorResponse,
   generateRequestId 
 } from '../types/api-contract';
-import { ExcelApiError, ErrorType, ErrorFactory } from '../errors/custom-errors';
-import { ErrorLogger } from '../services/error-logger';
 
 export interface BitrixWebhookRequest {
   data: {
@@ -45,45 +40,9 @@ export interface BitrixResponse {
   };
 }
 
-export interface BitrixConfig {
-  webhookSecret: string;
-  applicationId: string;
-  applicationSecret: string;
-  verifySignatures: boolean;
-  logWebhooks: boolean;
-  corsOrigins: string[];
-}
-
 export class Bitrix24Integration {
-  private config: BitrixConfig;
-  private errorLogger: ErrorLogger;
-
-  constructor(config: BitrixConfig) {
-    this.config = config;
-    this.errorLogger = new ErrorLogger();
-  }
-
-  /**
-   * Verify Bitrix24 webhook signature for security
-   */
-  verifyWebhookSignature(payload: string, signature: string): boolean {
-    if (!this.config.verifySignatures) {
-      return true;
-    }
-
-    if (!signature || !this.config.webhookSecret) {
-      return false;
-    }
-
-    const expectedSignature = crypto
-      .createHmac('sha256', this.config.webhookSecret)
-      .update(payload)
-      .digest('hex');
-
-    return crypto.timingSafeEqual(
-      Buffer.from(signature, 'hex'),
-      Buffer.from(expectedSignature, 'hex')
-    );
+  constructor() {
+    // No configuration needed for simplified version
   }
 
   /**
@@ -160,8 +119,8 @@ export class Bitrix24Integration {
     } else {
       return {
         error: {
-          error: response.error?.code || 'CALCULATION_ERROR',
-          error_description: response.error?.message || 'Calculation failed'
+          error: 'CALCULATION_ERROR',
+          error_description: 'Calculation failed'
         },
         time: {
           start: startTime / 1000,
@@ -197,42 +156,7 @@ export class Bitrix24Integration {
   }
 
   /**
-   * Log webhook interaction for audit
-   */
-  async logWebhookInteraction(
-    requestId: string,
-    event: string,
-    success: boolean,
-    processingTimeMs: number,
-    metadata?: any
-  ): Promise<void> {
-    if (!this.config.logWebhooks) {
-      return;
-    }
-
-    const logData = {
-      requestId,
-      source: 'bitrix24_webhook',
-      event,
-      success,
-      processingTimeMs,
-      timestamp: new Date().toISOString(),
-      ...metadata
-    };
-
-    console.log(`[BITRIX24] ${requestId} ${event} - ${success ? 'SUCCESS' : 'FAILED'} (${processingTimeMs}ms)`);
-    
-    if (!success && metadata?.error) {
-      await this.errorLogger.logError(metadata.error, {
-        source: 'bitrix24_integration',
-        requestId,
-        event
-      });
-    }
-  }
-
-  /**
-   * Validate Bitrix24 webhook structure
+   * Basic validation for request data
    */
   validateWebhookStructure(data: any): { valid: boolean; errors: string[] } {
     const errors: string[] = [];
@@ -245,22 +169,6 @@ export class Bitrix24Integration {
       errors.push('Missing or invalid FIELDS object');
     }
 
-    if (!data.auth || typeof data.auth !== 'object') {
-      errors.push('Missing or invalid auth object');
-    }
-
-    if (!data.auth?.access_token || typeof data.auth.access_token !== 'string') {
-      errors.push('Missing or invalid access_token');
-    }
-
-    if (!data.event || typeof data.event !== 'string') {
-      errors.push('Missing or invalid event');
-    }
-
-    if (typeof data.ts !== 'number') {
-      errors.push('Missing or invalid timestamp');
-    }
-
     return {
       valid: errors.length === 0,
       errors
@@ -268,7 +176,7 @@ export class Bitrix24Integration {
   }
 
   /**
-   * Check if request is from allowed Bitrix24 domain
+   * Check if request is from Bitrix24 domain (for CORS)
    */
   isValidBitrixOrigin(origin: string | undefined): boolean {
     if (!origin) return false;
@@ -277,25 +185,28 @@ export class Bitrix24Integration {
       /^https:\/\/.*\.bitrix24\.com$/,
       /^https:\/\/.*\.bitrix24\.ru$/,
       /^https:\/\/.*\.bitrix24\.eu$/,
-      /^https:\/\/.*\.bitrix24\.de$/,
-      ...this.config.corsOrigins.map(o => new RegExp(`^${o.replace(/\*/g, '.*')}$`))
+      /^https:\/\/.*\.bitrix24\.de$/
     ];
 
     return bitrixDomains.some(pattern => pattern.test(origin));
   }
 
   /**
-   * Add Bitrix24 specific headers to response
+   * Add headers with CORS support
    */
-  setBitrixHeaders(res: Response): void {
-    res.setHeader('X-Bitrix24-Integration', 'v1.0.0');
-    res.setHeader('Access-Control-Allow-Origin', '*');
+  setBitrixHeaders(res: Response, origin?: string): void {
+    if (origin && this.isValidBitrixOrigin(origin)) {
+      res.setHeader('Access-Control-Allow-Origin', origin);
+    } else {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+    }
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Bitrix24-Signature');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('X-Bitrix24-Integration', 'v1.0.0');
   }
 
   /**
-   * Handle calculation request from Bitrix24 webhook
+   * Simplified webhook handler
    */
   async handleCalculationWebhook(
     req: Request,
@@ -305,47 +216,18 @@ export class Bitrix24Integration {
     const requestId = generateRequestId();
     const startTime = Date.now();
 
-    this.setBitrixHeaders(res);
+    this.setBitrixHeaders(res, req.get('Origin'));
 
     try {
-      // Validate webhook structure
+      // Basic validation only
       const validation = this.validateWebhookStructure(req.body);
       if (!validation.valid) {
         const error = this.createBitrixError(
           'INVALID_WEBHOOK_STRUCTURE',
-          `Webhook validation failed: ${validation.errors.join(', ')}`
+          `Validation failed: ${validation.errors.join(', ')}`
         );
-        
-        await this.logWebhookInteraction(
-          requestId,
-          req.body?.event || 'unknown',
-          false,
-          Date.now() - startTime,
-          { errors: validation.errors }
-        );
-
-        return res.status(400).json(error);
-      }
-
-      // Verify signature if enabled
-      const signature = req.get('X-Bitrix24-Signature');
-      const payload = JSON.stringify(req.body);
-      
-      if (!this.verifyWebhookSignature(payload, signature || '')) {
-        const error = this.createBitrixError(
-          'SIGNATURE_VERIFICATION_FAILED',
-          'Webhook signature verification failed'
-        );
-
-        await this.logWebhookInteraction(
-          requestId,
-          req.body.event,
-          false,
-          Date.now() - startTime,
-          { reason: 'signature_verification_failed' }
-        );
-
-        return res.status(401).json(error);
+        res.status(400).json(error);
+        return;
       }
 
       // Transform webhook data
@@ -357,17 +239,6 @@ export class Bitrix24Integration {
       // Transform response to Bitrix24 format
       const bitrixResponse = this.transformResponseToBitrix(result, Date.now() - startTime);
       
-      await this.logWebhookInteraction(
-        requestId,
-        req.body.event,
-        result.success,
-        Date.now() - startTime,
-        { 
-          fieldsCount: Object.keys(req.body.data.FIELDS).length,
-          event: req.body.event 
-        }
-      );
-
       res.json(bitrixResponse);
 
     } catch (error) {
@@ -375,23 +246,12 @@ export class Bitrix24Integration {
         'INTERNAL_ERROR',
         `Processing failed: ${error instanceof Error ? error.message : String(error)}`
       );
-
-      await this.logWebhookInteraction(
-        requestId,
-        req.body?.event || 'unknown',
-        false,
-        Date.now() - startTime,
-        { 
-          error: error instanceof Error ? error.message : String(error)
-        }
-      );
-
       res.status(500).json(bitrixError);
     }
   }
 
   /**
-   * Handle Bitrix24 REST API format requests
+   * Handle REST API format requests
    */
   async handleRestRequest(
     req: Request,
@@ -401,7 +261,7 @@ export class Bitrix24Integration {
     const requestId = generateRequestId();
     const startTime = Date.now();
 
-    this.setBitrixHeaders(res);
+    this.setBitrixHeaders(res, req.get('Origin'));
 
     try {
       // For REST API, data comes directly in request body
@@ -410,13 +270,6 @@ export class Bitrix24Integration {
       // Transform to Bitrix24 format
       const bitrixResponse = this.transformResponseToBitrix(result, Date.now() - startTime);
       
-      await this.logWebhookInteraction(
-        requestId,
-        'rest_api_call',
-        result.success,
-        Date.now() - startTime
-      );
-
       res.json(bitrixResponse);
 
     } catch (error) {
@@ -424,15 +277,6 @@ export class Bitrix24Integration {
         'INTERNAL_ERROR',
         `Processing failed: ${error instanceof Error ? error.message : String(error)}`
       );
-
-      await this.logWebhookInteraction(
-        requestId,
-        'rest_api_call',
-        false,
-        Date.now() - startTime,
-        { error: error instanceof Error ? error.message : String(error) }
-      );
-
       res.status(500).json(bitrixError);
     }
   }

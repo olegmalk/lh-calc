@@ -12,7 +12,6 @@ import { rateLimiter } from './middleware/rate-limiter';
 import { QueueManager } from './services/queue-manager';
 import { ErrorHandler, GlobalErrorHandler, CircuitBreaker } from './middleware/error-handler';
 import { ErrorLogger } from './services/error-logger';
-import { SecuritySanitizer } from './utils/security-sanitizer';
 import { 
   CalculationRequest, 
   CalculationResponse,
@@ -23,12 +22,10 @@ import {
 import {
   ExcelApiError,
   ErrorType,
-  ErrorSeverity,
-  ErrorFactory,
-  ErrorClassifier
+  ErrorFactory
 } from './errors/custom-errors';
-import { Bitrix24Integration, BitrixConfig } from './integrations/bitrix24';
-import { BitrixAuthMiddleware, BitrixAuthConfig } from './middleware/bitrix-auth';
+import { Bitrix24Integration } from './integrations/bitrix24';
+import { BitrixAuthMiddleware } from './middleware/bitrix-auth';
 
 // Load environment variables
 dotenv.config();
@@ -42,7 +39,6 @@ const PORT = process.env.PORT || 3000;
 // Initialize services with enhanced error handling
 const validator = new FieldValidator();
 const errorLogger = new ErrorLogger();
-const securitySanitizer = new SecuritySanitizer();
 const errorHandler = new ErrorHandler({
   enableRecovery: true,
   maxRetryAttempts: 3,
@@ -68,28 +64,9 @@ const queueManager = new QueueManager(excelProcessor, {
 // Circuit breaker for critical operations
 const circuitBreaker = new CircuitBreaker(5, 60000);
 
-// Initialize Bitrix24 integration
-const bitrixConfig: BitrixConfig = {
-  webhookSecret: process.env.BITRIX_WEBHOOK_SECRET || '',
-  applicationId: process.env.BITRIX_APPLICATION_ID || '',
-  applicationSecret: process.env.BITRIX_APPLICATION_SECRET || '',
-  verifySignatures: process.env.BITRIX_VERIFY_SIGNATURES === 'true',
-  logWebhooks: process.env.BITRIX_LOG_WEBHOOKS !== 'false',
-  corsOrigins: process.env.BITRIX_CORS_ORIGINS ? process.env.BITRIX_CORS_ORIGINS.split(',') : []
-};
-
-const bitrixAuthConfig: BitrixAuthConfig = {
-  webhookSecret: process.env.BITRIX_WEBHOOK_SECRET || '',
-  applicationId: process.env.BITRIX_APPLICATION_ID || '',
-  applicationSecret: process.env.BITRIX_APPLICATION_SECRET || '',
-  verifySignatures: process.env.BITRIX_VERIFY_SIGNATURES === 'true',
-  allowedApplications: process.env.BITRIX_ALLOWED_APPS ? process.env.BITRIX_ALLOWED_APPS.split(',') : [],
-  enableOriginCheck: process.env.BITRIX_CHECK_ORIGIN === 'true',
-  rateLimitByApp: process.env.BITRIX_RATE_LIMIT_BY_APP === 'true'
-};
-
-const bitrix24Integration = new Bitrix24Integration(bitrixConfig);
-const bitrixAuthMiddleware = new BitrixAuthMiddleware(bitrixAuthConfig);
+// Initialize simplified Bitrix24 integration (no auth)
+const bitrix24Integration = new Bitrix24Integration();
+const bitrixAuthMiddleware = new BitrixAuthMiddleware();
 
 // Middleware
 app.use(express.json({ limit: '10mb' }));
@@ -111,39 +88,20 @@ app.use(cors({
 // Rate limiting middleware (apply globally)
 app.use(rateLimiter.middleware());
 
-// Enhanced request logging and security middleware
-app.use(async (req: Request, res: Response, next: NextFunction) => {
+// Basic request logging middleware
+app.use((req: Request, res: Response, next: NextFunction) => {
   const requestId = generateRequestId();
   const startTime = Date.now();
   (req as any).requestId = requestId;
   (req as any).startTime = startTime;
   
-  // Enhanced logging with security context
-  const logContext = {
-    requestId,
-    method: req.method,
-    path: req.path,
-    userAgent: req.get('User-Agent'),
-    ip: req.ip,
-    timestamp: new Date().toISOString()
-  };
+  console.log(`[${new Date().toISOString()}] ${requestId} ${req.method} ${req.path} - ${req.ip}`);
   
-  console.log(`[${logContext.timestamp}] ${requestId} ${req.method} ${req.path} - ${req.ip}`);
-  
-  // Basic security checks on request
+  // Basic size limit check only
   if (req.body && typeof req.body === 'object') {
     try {
-      // Quick security scan of request body
       const bodyStr = JSON.stringify(req.body);
       if (bodyStr.length > 1000000) { // 1MB limit
-        const error = ErrorFactory.create(
-          ErrorType.REQUEST_SIZE_EXCEEDED,
-          'Request body exceeds size limit',
-          { size: bodyStr.length, limit: 1000000, requestId }
-        );
-        
-        await errorLogger.logError(error, logContext);
-        
         return res.status(413).json({
           success: false,
           error: 'Request too large',
@@ -152,41 +110,28 @@ app.use(async (req: Request, res: Response, next: NextFunction) => {
         });
       }
     } catch (error) {
-      // JSON stringification failed - potential security issue
-      const securityError = ErrorFactory.create(
-        ErrorType.INTERNAL_ERROR,
-        'Request body processing failed',
-        { requestId, error: error instanceof Error ? error.message : String(error) }
-      );
-      
-      await errorLogger.logError(securityError, logContext);
+      console.warn(`[${requestId}] Request body processing warning:`, error instanceof Error ? error.message : String(error));
     }
   }
   
   next();
+  return;
 });
 
-// Helper function to create a unified calculation handler
+// Simplified calculation handler
 async function executeCalculation(data: CalculationRequest, requestId: string): Promise<CalculationResponse> {
   const startTime = Date.now();
   
   try {
-    // Security sanitization
-    const sanitizationResult = await sanitizeRequestData(data, requestId);
-    
-    // Validation
-    const validationResult = await validator.validate(sanitizationResult.sanitizedData);
+    // Basic validation only
+    const validationResult = await validator.validate(data);
     
     if (!validationResult.isValid) {
       return createErrorResponse(
         'VALIDATION_FAILED',
-        'Input validation failed',
         requestId,
-        { 
-          details: validationResult.errors,
-          processingTimeMs: Date.now() - startTime
-        }
-      );
+        { details: validationResult.errors }
+      ) as any;
     }
 
     // Process calculation
@@ -197,14 +142,10 @@ async function executeCalculation(data: CalculationRequest, requestId: string): 
 
     if (!processingResult.success) {
       return createErrorResponse(
-        'PROCESSING_FAILED',
-        processingResult.error || 'Processing failed',
+        'PROCESSING_FAILED', 
         requestId,
-        {
-          queueTimeMs: processingResult.queueTimeMs,
-          processingTimeMs: processingResult.processingTimeMs
-        }
-      );
+        { message: processingResult.error || 'Processing failed', processingTimeMs: processingResult.processingTimeMs }
+      ) as any;
     }
 
     // Success response
@@ -213,21 +154,19 @@ async function executeCalculation(data: CalculationRequest, requestId: string): 
       requestId,
       processingResult.processingTimeMs,
       {
-        excelVersion: 'calc.xlsx v7 with Bitrix24 integration',
+        excelVersion: 'calc.xlsx v7',
         timestamp: new Date().toISOString(),
         queueTimeMs: processingResult.queueTimeMs,
-        totalTimeMs: Date.now() - startTime,
-        securityThreatsHandled: sanitizationResult.securityThreats.length
+        totalTimeMs: Date.now() - startTime
       }
     );
 
   } catch (error) {
     return createErrorResponse(
       'INTERNAL_ERROR',
-      error instanceof Error ? error.message : String(error),
       requestId,
-      { processingTimeMs: Date.now() - startTime }
-    );
+      { message: error instanceof Error ? error.message : String(error), processingTimeMs: Date.now() - startTime }
+    ) as any;
   }
 }
 
@@ -251,56 +190,6 @@ app.post('/api/bitrix24/rest',
   }
 );
 
-// Bitrix24 auth stats endpoint
-app.get('/api/bitrix24/auth/stats', (req: Request, res: Response) => {
-  try {
-    const stats = bitrixAuthMiddleware.getAuthStats();
-    res.json({
-      success: true,
-      bitrix_auth_stats: stats,
-      timestamp: new Date().toISOString()
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: `Failed to get auth stats: ${error instanceof Error ? error.message : String(error)}`
-    });
-  }
-});
-
-// Bitrix24 admin endpoints
-app.post('/api/admin/bitrix24/auth/reset/:app', (req: Request, res: Response) => {
-  try {
-    const { app } = req.params;
-    bitrixAuthMiddleware.resetApplicationRateLimit(app);
-    res.json({
-      success: true,
-      message: `Rate limit reset for application: ${app}`,
-      timestamp: new Date().toISOString()
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: `Failed to reset rate limit: ${error instanceof Error ? error.message : String(error)}`
-    });
-  }
-});
-
-app.post('/api/admin/bitrix24/auth/clear-all', (req: Request, res: Response) => {
-  try {
-    bitrixAuthMiddleware.clearAllRateLimits();
-    res.json({
-      success: true,
-      message: 'All Bitrix24 rate limits cleared',
-      timestamp: new Date().toISOString()
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: `Failed to clear rate limits: ${error instanceof Error ? error.message : String(error)}`
-    });
-  }
-});
 
 // Health check endpoint
 app.get('/health', (_req: Request, res: Response) => {
@@ -492,54 +381,6 @@ app.get('/api/admin/circuit-breaker/status', (_req: Request, res: Response) => {
   });
 });
 
-// Helper function for comprehensive request sanitization
-async function sanitizeRequestData(requestBody: any, requestId: string): Promise<{
-  sanitizedData: any;
-  securityThreats: any[];
-  sanitizationApplied: boolean;
-}> {
-  const sanitizedData: any = {};
-  const securityThreats: any[] = [];
-  let sanitizationApplied = false;
-
-  for (const [key, value] of Object.entries(requestBody)) {
-    if (typeof value === 'string') {
-      const sanitizationResult = securitySanitizer.sanitizeString(value, key);
-      sanitizedData[key] = sanitizationResult.sanitized;
-      
-      if (sanitizationResult.threatsDetected.length > 0) {
-        securityThreats.push(...sanitizationResult.threatsDetected);
-        sanitizationApplied = true;
-        
-        // Log security threats
-        for (const threat of sanitizationResult.threatsDetected) {
-          const securityError = securitySanitizer.createSecurityError(threat);
-          await errorLogger.logSecurityIncident(securityError, {
-            requestId,
-            field: key,
-            threatType: threat.type
-          });
-        }
-      }
-    } else if (typeof value === 'number') {
-      const numericResult = securitySanitizer.sanitizeNumber(value, key);
-      sanitizedData[key] = numericResult.sanitized;
-      
-      if (numericResult.threats.length > 0) {
-        securityThreats.push(...numericResult.threats);
-        sanitizationApplied = true;
-      }
-    } else {
-      sanitizedData[key] = value;
-    }
-  }
-
-  return {
-    sanitizedData,
-    securityThreats,
-    sanitizationApplied
-  };
-}
 
 // Main calculation endpoint with comprehensive error handling
 app.post('/api/calculate', async (req: Request, res: Response): Promise<Response> => {
@@ -550,11 +391,8 @@ app.post('/api/calculate', async (req: Request, res: Response): Promise<Response
     try {
       console.log(`[${requestId}] Processing calculation request with enhanced error handling`);
 
-      // Step 1: Security sanitization and threat detection
-      const sanitizationResult = await sanitizeRequestData(req.body, requestId);
-      
-      // Step 2: Enhanced validation with edge case detection  
-      const validationResult = await validator.validate(sanitizationResult.sanitizedData);
+      // Basic validation
+      const validationResult = await validator.validate(req.body);
 
       // Handle validation errors with enhanced error responses
       if (!validationResult.isValid) {
@@ -610,11 +448,10 @@ app.post('/api/calculate', async (req: Request, res: Response): Promise<Response
         requestId,
         processingResult.processingTimeMs,
         {
-          excelVersion: 'calc.xlsx v7 with comprehensive error handling',
+          excelVersion: 'calc.xlsx v7',
           timestamp: new Date().toISOString(),
           queueTimeMs: processingResult.queueTimeMs,
-          totalTimeMs: Date.now() - startTime,
-          securityThreatsHandled: sanitizationResult.securityThreats.length
+          totalTimeMs: Date.now() - startTime
         }
       );
 
@@ -666,7 +503,7 @@ app.post('/api/calculate', async (req: Request, res: Response): Promise<Response
 app.use(errorHandler.middleware());
 
 // Final error handling middleware for any remaining errors
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
   const requestId = (req as any).requestId || 'unknown';
   console.error(`[${requestId}] Unhandled error:`, err);
   

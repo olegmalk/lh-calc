@@ -1,28 +1,9 @@
 /**
- * Enhanced Field Validation Framework
- * Comprehensive validation for all Excel API edge cases
+ * Simplified Field Validation
+ * Basic validation for Excel API
  */
 
 import Joi from 'joi';
-import {
-  ExcelApiError,
-  ErrorType,
-  ErrorSeverity,
-  ErrorFactory,
-  ValidationError as CustomValidationError,
-  TypeConversionError,
-  NumericOverflowError,
-  NumericUnderflowError,
-  StringValidationError,
-  PatternValidationError,
-  EnumValidationError,
-  BusinessLogicError,
-  FieldCombinationError,
-  EngineeringConstraintError,
-  MaterialPropertyError,
-  UnicodeError
-} from '../errors/custom-errors';
-import { ErrorLogger } from '../services/error-logger';
 
 export interface ValidationResult {
   isValid: boolean;
@@ -45,10 +26,8 @@ export interface ValidationWarning {
 
 export class FieldValidator {
   private schema: Joi.ObjectSchema;
-  private validationRules: typeof VALIDATION_RULES;
 
   constructor() {
-    this.validationRules = VALIDATION_RULES;
     this.schema = this.buildJoiSchema();
   }
 
