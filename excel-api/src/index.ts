@@ -130,7 +130,12 @@ async function executeCalculation(data: CalculationRequest, requestId: string): 
       return createErrorResponse(
         'VALIDATION_FAILED',
         requestId,
-        { details: validationResult.errors }
+        { 
+          field_errors: validationResult.errors.reduce((acc, err) => {
+            acc[err.field] = err.message;
+            return acc;
+          }, {} as Record<string, string>)
+        }
       ) as any;
     }
 
@@ -144,7 +149,7 @@ async function executeCalculation(data: CalculationRequest, requestId: string): 
       return createErrorResponse(
         'PROCESSING_FAILED', 
         requestId,
-        { message: processingResult.error || 'Processing failed', processingTimeMs: processingResult.processingTimeMs }
+        { message: processingResult.error || 'Processing failed', processing_time_ms: processingResult.processingTimeMs }
       ) as any;
     }
 
@@ -165,7 +170,7 @@ async function executeCalculation(data: CalculationRequest, requestId: string): 
     return createErrorResponse(
       'INTERNAL_ERROR',
       requestId,
-      { message: error instanceof Error ? error.message : String(error), processingTimeMs: Date.now() - startTime }
+      { message: error instanceof Error ? error.message : String(error), processing_time_ms: Date.now() - startTime }
     ) as any;
   }
 }

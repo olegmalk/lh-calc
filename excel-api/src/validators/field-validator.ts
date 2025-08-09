@@ -370,16 +370,8 @@ export class FieldValidator {
   /**
    * Get field metadata
    */
-  public getFieldMetadata(fieldName: string): any {
-    // Map field names to validation rules
-    const mappings: Record<string, string> = {
-      'tech_D27_type': 'технолог_D27',
-      'tech_E27_weightType': 'технолог_E27',
-      'tech_H27_quantityType': 'технолог_H27',
-      // ... add more mappings
-    };
-
-    const ruleKey = mappings[fieldName];
-    return ruleKey ? this.validationRules[ruleKey] : null;
+  public getFieldMetadata(_fieldName: string): any {
+    // TODO: Implement field metadata lookup when needed
+    return null;
   }
 }
