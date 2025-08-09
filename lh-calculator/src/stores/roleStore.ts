@@ -156,7 +156,7 @@ export const useRoleStore = create<RoleState>()(
   devtools(
     persist(
       (set, get) => ({
-        currentRole: 'technologist',
+        currentRole: 'technologist' as UserRole,
         permissionCache: new Map<string, PermissionLevel>(),
         fieldVisibilityCache: new Map<string, boolean>(),
         
@@ -180,13 +180,29 @@ export const useRoleStore = create<RoleState>()(
           }), false, 'resetPermissions'),
         
         canEdit: (field: keyof HeatExchangerInput): boolean => {
-          const { currentRole } = get();
-          return canEditField(currentRole, field);
+          try {
+            const { currentRole } = get();
+            if (!currentRole || !ROLE_DEFINITIONS[currentRole]) {
+              return false;
+            }
+            return canEditField(currentRole, field);
+          } catch (error) {
+            console.warn('Error checking edit permission:', error);
+            return false;
+          }
         },
         
         canView: (field: keyof HeatExchangerInput): boolean => {
-          const { currentRole } = get();
-          return canViewField(currentRole, field);
+          try {
+            const { currentRole } = get();
+            if (!currentRole || !ROLE_DEFINITIONS[currentRole]) {
+              return true; // Default to viewable if role system fails
+            }
+            return canViewField(currentRole, field);
+          } catch (error) {
+            console.warn('Error checking view permission:', error);
+            return true; // Default to viewable on error
+          }
         },
         
         getPermission: (field: keyof HeatExchangerInput): PermissionLevel => {

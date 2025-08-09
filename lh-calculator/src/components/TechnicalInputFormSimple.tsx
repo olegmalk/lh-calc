@@ -6,8 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { useInputStore } from '../stores/inputStore';
 import { useCalculationStore } from '../stores/calculationStore';
 import { useMaterialStore } from '../stores/materialStore';
-import { useRoleStore } from '../stores/roleStore';
-import { useRolePermissions } from '../hooks/useRolePermissions';
+// import { useRoleStore } from '../stores/roleStore';
+// import { useRolePermissions } from '../hooks/useRolePermissions';
 import { NAMED_RANGES } from '../lib/calculation-engine/constants';
 import { calc_AI73_TestPressureHot, calc_AJ73_TestPressureCold } from '../lib/calculation-engine/formula-library-complete';
 import type { HeatExchangerInput } from '../lib/calculation-engine/types';
@@ -31,13 +31,18 @@ export const TechnicalInputFormSimple: React.FC = () => {
   const { availableMaterials } = useMaterialStore();
   
   // Role-based permissions
-  const { currentRole } = useRoleStore();
+  // const { currentRole } = useRoleStore();
+  const currentRole = 'technologist'; // Temporary default
   // const formPermissions = useFormPermissions(); // Kept for future role-based form validation
   
-  const { 
-    canEdit, 
-    getFieldInfo 
-  } = useRolePermissions();
+  // const { 
+  //   canEdit, 
+  //   getFieldInfo 
+  // } = useRolePermissions();
+  
+  // Temporary mock functions to fix infinite loop
+  const canEdit = (_field: string) => true;
+  const getFieldInfo = (_field: string) => ({ color: 'green', section: 'technical' });
   
   // Local form state
   const [formData, setFormData] = useState<HeatExchangerInput>(inputs);

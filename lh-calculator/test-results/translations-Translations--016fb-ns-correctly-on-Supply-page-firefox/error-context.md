@@ -2,81 +2,83 @@
 
 ```yaml
 - banner:
-    - heading "LH Calculator" [level=3]
-    - textbox: EN
+  - heading "LH Calculator" [level=3]
+  - textbox: EN
+  - img
+  - button "Toggle color scheme":
     - img
-    - button "Toggle color scheme":
-        - img
 - navigation:
-    - img
-    - text: Dashboard
-    - img
-    - text: Supply
-    - img
-    - text: Saved Calculations
+  - img
+  - text: Dashboard
+  - img
+  - text: Calculations
+  - img
+  - text: Project Details
+  - img
+  - text: Saved Calculations
 - main:
-    - heading "Supply Parameters" [level=2]
-    - alert:
-        - img
-        - paragraph: These parameters affect cost calculations. Only modify if you have appropriate access rights.
-    - heading "Pricing Policy" [level=4]
-    - text: Plate Material Price
-    - spinbutton: "700"
-    - paragraph: ₽/кг
-    - text: Cladding Material Price
-    - spinbutton: "700"
-    - paragraph: ₽/кг
-    - text: Column/Cover Material Price
-    - spinbutton: "750"
-    - paragraph: ₽/кг
-    - text: Panel Material Price
-    - spinbutton: "650"
-    - paragraph: ₽/кг
-    - text: Labor Rate per Hour
-    - spinbutton: "2500"
-    - paragraph: ₽/час
-    - text: Cutting Cost
-    - spinbutton: "150"
-    - paragraph: ₽/м
-    - text: Labor Rate (D12)
-    - spinbutton: "2500"
-    - paragraph: ₽/час
-    - heading "Logistics" [level=4]
-    - text: Internal Logistics
-    - spinbutton: "120000"
-    - paragraph: ₽
-    - text: Standard Labor Hours
-    - spinbutton: "1"
-    - paragraph: hours
-    - text: Panel Fastener Quantity
-    - spinbutton: "88"
-    - paragraph: pcs
-    - heading "Correction Factors" [level=4]
-    - text: Cladding Cutting Correction
-    - spinbutton: "1.05"
-    - paragraph: coeff.
-    - text: Column Cutting Correction
-    - spinbutton: "1.03"
-    - paragraph: coeff.
-    - text: Cover Cutting Correction
-    - spinbutton: "1.02"
-    - paragraph: coeff.
-    - text: Panel Cutting Correction
-    - spinbutton: "1.04"
-    - paragraph: coeff.
-    - text: Labor Coefficient (D13)
-    - spinbutton: "1.2"
-    - paragraph: coeff.
-    - text: Material Coefficient (D14)
-    - spinbutton: "1.05"
-    - paragraph: coeff.
-    - button "Reset"
-    - button "Save":
-        - img
-        - text: Save
-    - button "Save & Calculate":
-        - img
-        - text: Save & Calculate
-- button "Open Tanstack query devtools":
+  - heading "supply.title" [level=2]
+  - alert:
     - img
+    - paragraph: supply.warning
+  - heading "supply.sections.pricingPolicy" [level=4]
+  - text: supply.fields.plateMaterialPrice
+  - spinbutton: "700"
+  - paragraph: ₽/кг
+  - text: supply.fields.claddingMaterialPrice
+  - spinbutton: "700"
+  - paragraph: ₽/кг
+  - text: supply.fields.columnCoverMaterialPrice
+  - spinbutton: "750"
+  - paragraph: ₽/кг
+  - text: supply.fields.panelMaterialPrice
+  - spinbutton: "650"
+  - paragraph: ₽/кг
+  - text: supply.fields.laborRate
+  - spinbutton: "2500"
+  - paragraph: ₽/час
+  - text: supply.fields.cuttingCost
+  - spinbutton: "150"
+  - paragraph: ₽/м
+  - text: supply.fields.laborRateD12
+  - spinbutton: "2500"
+  - paragraph: ₽/час
+  - heading "supply.sections.logistics" [level=4]
+  - text: supply.fields.internalLogistics
+  - spinbutton: "120000"
+  - paragraph: ₽
+  - text: supply.fields.standardLaborHours
+  - spinbutton: "1"
+  - paragraph: supply.units.hours
+  - text: supply.fields.panelFastenerQuantity
+  - spinbutton: "88"
+  - paragraph: supply.units.pieces
+  - heading "supply.sections.corrections" [level=4]
+  - text: supply.fields.claddingCorrection
+  - spinbutton: "1.05"
+  - paragraph: supply.units.coefficient
+  - text: supply.fields.columnCorrection
+  - spinbutton: "1.03"
+  - paragraph: supply.units.coefficient
+  - text: supply.fields.coverCorrection
+  - spinbutton: "1.02"
+  - paragraph: supply.units.coefficient
+  - text: supply.fields.panelCorrection
+  - spinbutton: "1.04"
+  - paragraph: supply.units.coefficient
+  - text: supply.fields.laborCoefficientD13
+  - spinbutton: "1.2"
+  - paragraph: supply.units.coefficient
+  - text: supply.fields.materialCoefficientD14
+  - spinbutton: "1.05"
+  - paragraph: supply.units.coefficient
+  - button "Reset"
+  - button "Save":
+    - img
+    - text: Save
+  - button "supply.saveAndCalculate":
+    - img
+    - text: supply.saveAndCalculate
+- button "Open Tanstack query devtools":
+  - img
 ```

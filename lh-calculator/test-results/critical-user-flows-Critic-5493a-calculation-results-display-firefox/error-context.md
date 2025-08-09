@@ -1,0 +1,54 @@
+# Page snapshot
+
+```yaml
+- banner:
+  - heading "LH Calculator" [level=3]
+  - textbox: EN
+  - img
+  - button "Toggle color scheme":
+    - img
+- navigation:
+  - img
+  - text: Dashboard
+  - img
+  - text: Calculations
+  - img
+  - text: Project Details
+  - img
+  - text: Saved Calculations
+- main
+- complementary "Tanstack query devtools":
+  - button "Close tanstack query devtools":
+    - img
+  - button "Close Tanstack query devtools": TANSTACK React Query v5
+  - radiogroup:
+    - group:
+      - radio "Queries" [checked]
+      - text: Queries
+    - group:
+      - radio "Mutations"
+      - text: Mutations
+  - button "Fresh 0" [disabled]
+  - button "Fetching 0" [disabled]
+  - button "Paused 0" [disabled]
+  - button "Stale 0" [disabled]
+  - button "Inactive 0" [disabled]
+  - img
+  - textbox "Filter queries by query key"
+  - combobox:
+    - option "Sort by status" [selected]
+    - option "Sort by query hash"
+    - option "Sort by last updated"
+  - img
+  - button "Sort order ascending":
+    - text: Asc
+    - img
+  - button "Clear query cache":
+    - img
+  - button "Mock offline behavior":
+    - img
+  - button "Open in picture-in-picture mode":
+    - img
+  - button:
+    - img
+```

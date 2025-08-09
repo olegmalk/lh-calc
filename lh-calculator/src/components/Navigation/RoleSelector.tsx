@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, Button, Group, Text, Tooltip } from '@mantine/core';
 import { IconChevronDown, IconUser, IconSettings, IconPackage, IconEye, IconTie } from '@tabler/icons-react';
-import { useTranslation } from 'react-i18next';
-import type { UserRole } from '@/types/roles.types';
-import { ROLE_DEFINITIONS } from '@/types/roles.types';
-import { useRoleStore } from '@/stores/roleStore';
+import { useSafeTranslation } from '@/hooks/useSafeTranslation';
+import { type UserRole, ROLE_DEFINITIONS } from '../../types/roles.types';
+import { useRoleStore } from '../../stores/roleStore';
 import './RoleSelector.css';
 
 const ROLE_ICONS: Record<UserRole, React.ReactNode> = {
@@ -34,16 +33,31 @@ export interface RoleSelectorProps {
 }
 
 export function RoleSelector({ onRoleChange, defaultRole = 'technologist' }: RoleSelectorProps) {
-  const { t } = useTranslation();
-  const { currentRole, setRole } = useRoleStore();
+  const { t, getRoleName, getRoleDescription } = useSafeTranslation();
+  
+  // Safe initialization with fallbacks
+  const store = useRoleStore();
+  const currentRole = store?.currentRole || defaultRole;
+  const setRole = store?.setRole || (() => {});
   
   const [isOpen, setIsOpen] = useState(false);
 
-  // Initialize role store if not set
+  // Initialize role store if not set, with error handling
   useEffect(() => {
-    if (!currentRole) {
-      const stored = localStorage.getItem('selected-role') as UserRole;
-      setRole(stored || defaultRole);
+    try {
+      if (!currentRole || currentRole === defaultRole) {
+        const stored = localStorage.getItem('selected-role') as UserRole;
+        const roleToSet = stored && ROLE_DEFINITIONS[stored] ? stored : defaultRole;
+        setRole(roleToSet);
+      }
+    } catch (error) {
+      console.warn('Error initializing role:', error);
+      // Fallback to default role
+      try {
+        setRole(defaultRole);
+      } catch (fallbackError) {
+        console.error('Failed to set fallback role:', fallbackError);
+      }
     }
   }, [currentRole, setRole, defaultRole]);
 
@@ -69,7 +83,7 @@ export function RoleSelector({ onRoleChange, defaultRole = 'technologist' }: Rol
     }));
   };
 
-  const currentRoleDefinition = ROLE_DEFINITIONS[currentRole];
+  const currentRoleDefinition = ROLE_DEFINITIONS[currentRole] || ROLE_DEFINITIONS[defaultRole];
 
   return (
     <Menu
@@ -84,7 +98,7 @@ export function RoleSelector({ onRoleChange, defaultRole = 'technologist' }: Rol
     >
       <Menu.Target>
         <Tooltip
-          label={t(`roles.descriptions.${currentRole}`)}
+          label={getRoleDescription(currentRole)}
           position="bottom"
           multiline
           w={250}
@@ -101,7 +115,7 @@ export function RoleSelector({ onRoleChange, defaultRole = 'technologist' }: Rol
             } as React.CSSProperties}
           >
             <Text size="sm" fw={500}>
-              {t(`roles.names.${currentRole}`)}
+              {getRoleName(currentRole)}
             </Text>
           </Button>
         </Tooltip>
@@ -110,7 +124,7 @@ export function RoleSelector({ onRoleChange, defaultRole = 'technologist' }: Rol
       <Menu.Dropdown>
         <Menu.Label>
           <Text size="xs" c="dimmed" tt="uppercase" fw={600}>
-            {t('roles.selectRole')}
+            {t('roles.selectRole', 'Select Role')}
           </Text>
         </Menu.Label>
 
@@ -136,17 +150,17 @@ export function RoleSelector({ onRoleChange, defaultRole = 'technologist' }: Rol
             >
               <div>
                 <Text size="sm" fw={isSelected ? 600 : 500}>
-                  {t(`roles.names.${role}`)}
+                  {getRoleName(role)}
                 </Text>
                 <Text size="xs" c="dimmed" lineClamp={2}>
-                  {t(`roles.descriptions.${role}`)}
+                  {getRoleDescription(role)}
                 </Text>
                 <Group gap={4} mt={4}>
                   <Text size="xs" c="dimmed">
-                    {t('roles.hierarchy')}: {definition.hierarchy}
+                    {t('roles.hierarchy', 'Level')}: {definition.hierarchy}
                   </Text>
                   <Text size="xs" c="dimmed">
-                    • {t('roles.permissions')}: {Object.values(definition.permissions).filter(p => p === 'full').length}
+                    • {t('roles.permissions', 'Editable Fields')}: {Object.values(definition.permissions).filter(p => p === 'full').length}
                   </Text>
                 </Group>
               </div>
@@ -158,7 +172,7 @@ export function RoleSelector({ onRoleChange, defaultRole = 'technologist' }: Rol
         
         <Menu.Item disabled className="role-info">
           <Text size="xs" c="dimmed">
-            {t('roles.currentPermissions')}:
+            {t('roles.currentPermissions', 'Current Permissions')}:
           </Text>
           <Group gap={6} mt={2}>
             {Object.entries(currentRoleDefinition.permissions).map(([color, level]) => (
@@ -166,7 +180,7 @@ export function RoleSelector({ onRoleChange, defaultRole = 'technologist' }: Rol
                 <div
                   key={color}
                   className={`permission-indicator ${color}`}
-                  title={t(`roles.permissions.${color}`)}
+                  title={t(`roles.permissions.${color}`, color)}
                 />
               )
             ))}

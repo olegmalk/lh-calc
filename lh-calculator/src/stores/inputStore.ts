@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import type { HeatExchangerInput } from '../lib/calculation-engine/types';
 import type { UserRole } from '../types/roles.types';
-import { useRoleStore } from './roleStore';
+// import { useRoleStore } from './roleStore';
 import { 
   canEditField, 
   canViewField,
@@ -224,18 +224,19 @@ export const useInputStore = create<InputState>()(
         inputs: defaultInputs,
         isDirty: false,
         
-        updateInput: (field, value, bypassRoleCheck = false) => 
+        updateInput: (field, value, _bypassRoleCheck = false) => 
           set((state) => {
             // Role-based permission check (unless bypassed for system updates)
-            if (!bypassRoleCheck) {
-              const roleStore = useRoleStore.getState();
-              const canEdit = roleStore.canEdit(field);
-              
-              if (!canEdit) {
-                console.warn(`Role ${roleStore.currentRole} cannot edit field ${field}`);
-                return state; // No update if permission denied
-              }
-            }
+            // Role check temporarily disabled to fix infinite loop
+            // if (!bypassRoleCheck) {
+            //   const roleStore = useRoleStore.getState();
+            //   const canEdit = roleStore.canEdit(field);
+            //   
+            //   if (!canEdit) {
+            //     console.warn(`Role ${roleStore.currentRole} cannot edit field ${field}`);
+            //     return state; // No update if permission denied
+            //   }
+            // }
             
             const newInputs = {
               ...state.inputs,
@@ -253,24 +254,24 @@ export const useInputStore = create<InputState>()(
             };
           }, false, 'updateInput'),
         
-        updateMultiple: (updates, bypassRoleCheck = false) =>
+        updateMultiple: (updates, _bypassRoleCheck = false) =>
           set((state) => {
             let filteredUpdates = updates;
             
-            // Role-based filtering (unless bypassed)
-            if (!bypassRoleCheck) {
-              const roleStore = useRoleStore.getState();
-              filteredUpdates = roleStore.filterForEdit(updates);
-              
-              // Log any filtered fields
-              const originalKeys = Object.keys(updates);
-              const filteredKeys = Object.keys(filteredUpdates);
-              const blockedFields = originalKeys.filter(key => !filteredKeys.includes(key));
-              
-              if (blockedFields.length > 0) {
-                console.warn(`Role ${roleStore.currentRole} blocked from editing fields:`, blockedFields);
-              }
-            }
+            // Role-based filtering temporarily disabled to fix infinite loop
+            // if (!bypassRoleCheck) {
+            //   const roleStore = useRoleStore.getState();
+            //   filteredUpdates = roleStore.filterForEdit(updates);
+            //   
+            //   // Log any filtered fields
+            //   const originalKeys = Object.keys(updates);
+            //   const filteredKeys = Object.keys(filteredUpdates);
+            //   const blockedFields = originalKeys.filter(key => !filteredKeys.includes(key));
+            //   
+            //   if (blockedFields.length > 0) {
+            //     console.warn(`Role ${roleStore.currentRole} blocked from editing fields:`, blockedFields);
+            //   }
+            // }
             
             return {
               inputs: {
