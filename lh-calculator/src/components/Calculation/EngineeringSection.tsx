@@ -81,9 +81,9 @@ export const EngineeringSection: React.FC<EngineeringSectionProps> = ({
 
     // Engineering type options
     const boltTypes = [
-      { value: 'hex-bolt', label: t('engineering.boltType.hexBolt') },
-      { value: 'socket-head', label: t('engineering.boltType.socketHead') },
-      { value: 'stud-bolt', label: t('engineering.boltType.studBolt') }
+      { value: 'hex-bolt', label: t('engineering.boltTypeOptions.hexBolt') },
+      { value: 'socket-head', label: t('engineering.boltTypeOptions.socketHead') },
+      { value: 'stud-bolt', label: t('engineering.boltTypeOptions.studBolt') }
     ];
 
     const weldingMethods = [

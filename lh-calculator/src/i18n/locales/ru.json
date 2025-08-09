@@ -674,6 +674,41 @@
     "flangeColdPressure2": "Давление холодной стороны 2",
     "flangeColdDiameter2": "Диаметр холодной стороны 2",
     "mountingPanelsCount": "Количество монтажных панелей",
+    "operatingPressureA": "Рабочее давление A",
+    "operatingPressureB": "Рабочее давление B",
+    "designTemperatureA": "Расчетная температура A",
+    "designTemperatureB": "Расчетная температура B",
+    "flowRateA": "Расход A",
+    "flowRateB": "Расход B",
+    "pressureDropA": "Падение давления A",
+    "pressureDropB": "Падение давления B",
+    "channelHeight": "Высота канала",
+    "channelWidth": "Ширина канала",
+    "frameThickness": "Толщина рамы",
+    "frameMaterial": "Материал рамы",
+    "insulationThickness": "Толщина изоляции",
+    "insulationType": "Тип изоляции",
+    "boltType": "Тип болта",
+    "boltTypeOptions": {
+      "hexBolt": "Шестигранный болт",
+      "socketHead": "Под шестигранник",
+      "studBolt": "Шпильковый болт"
+    },
+    "boltMaterial": "Материал болта",
+    "boltQuantity": "Количество болтов",
+    "nutType": "Тип гайки",
+    "nutMaterial": "Материал гайки",
+    "nutQuantity": "Количество гаек",
+    "washerType": "Тип шайбы",
+    "washerQuantity": "Количество шайб",
+    "weldingMethod": "Метод сварки",
+    "weldingMaterial": "Сварочный материал",
+    "surfaceTreatment": "Обработка поверхности",
+    "paintType": "Тип краски",
+    "paintThickness": "Толщина краски",
+    "qualityControl": "Контроль качества",
+    "certificationRequired": "Требуется сертификация",
+    "inspectionLevel": "Уровень контроля",
     "selectPressure": "Выберите номинальное давление",
     "selectDiameter": "Выберите диаметр",
     "selectType": "Выберите тип",
@@ -683,15 +718,10 @@
       "stainlessSteel304": "Нержавеющая сталь 304",
       "carbonSteel": "Углеродистая сталь"
     },
-    "boltType": {
-      "hexBolt": "Шестигранный болт",
-      "socketHead": "Под шестигранник",
-      "studBolt": "Шпильковый болт"
-    },
     "welding": {
       "manualArc": "Ручная дуговая сварка"
     },
-    "selectMaterial": "Select material (RU)"
+    "selectMaterial": "Выберите материал"
   },
   "executive": {
     "costAdjustments": "Управленческие корректировки затрат",
