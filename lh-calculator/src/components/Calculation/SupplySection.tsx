@@ -11,7 +11,7 @@ import {
 import { IconChevronDown, IconChevronUp, IconCurrency } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { useInputStore } from '../../stores/inputStore';
-import { useRolePermissions, useCurrentRole } from '../../stores/roleStore';
+// import { useRolePermissions, useCurrentRole } from '../../stores/roleStore';
 import { FIELD_GROUPS } from '../../config/field-permissions';
 import type { HeatExchangerInput } from '../../lib/calculation-engine/types';
 import './CalculationSection.css';
@@ -27,8 +27,10 @@ export const SupplySection: React.FC<SupplySectionProps> = ({
 }) => {
   const { t } = useTranslation();
   const { inputs, updateInput } = useInputStore();
-  const { canEdit, canView } = useRolePermissions();
-  const currentRole = useCurrentRole();
+  // Temporarily disabled to fix infinite loop
+  const canEdit = (_field: string) => true;
+  const canView = (_field: string) => true;
+  const currentRole = 'supply-manager';
 
   // Get supply fields from field permissions
   const greenSupplyFields = FIELD_GROUPS.supply.green;

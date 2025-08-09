@@ -25,7 +25,7 @@
   - paragraph: "400"
   - img
   - paragraph: Last Calculated
-  - paragraph: 2:46:53 AM
+  - paragraph: 7:29:20 AM
   - img
   - alert:
     - img
@@ -353,7 +353,7 @@
   - button "Calculate"
   - heading "Calculation Results (Результат)" [level=3]
   - text: Calculated
-  - paragraph: 2:46:53 AM
+  - paragraph: 7:29:20 AM
   - paragraph: Total Cost
   - paragraph: 904 643 ₽
   - paragraph: Pressure Test A
