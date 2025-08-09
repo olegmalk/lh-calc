@@ -203,6 +203,12 @@ export interface CalculationResponse {
   results: CalculationResults;
   request_id: string;
   processing_time_ms: number;
+  metadata?: {
+    excelVersion?: string;
+    timestamp?: string;
+    tempFileUsed?: boolean;
+    [key: string]: any;
+  };
 }
 
 /**
@@ -324,13 +330,15 @@ export function createErrorResponse(
 export function createSuccessResponse(
   results: CalculationResults,
   requestId: string,
-  processingTimeMs: number
+  processingTimeMs: number,
+  metadata?: { [key: string]: any }
 ): CalculationResponse {
   return {
     success: true,
     results,
     request_id: requestId,
-    processing_time_ms: processingTimeMs
+    processing_time_ms: processingTimeMs,
+    metadata
   };
 }
 
