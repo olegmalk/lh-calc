@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LH Calculator API</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            color: #2d3748;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        
+        .header p {
+            color: #718096;
+            font-size: 14px;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .card h2 {
+            color: #2d3748;
+            font-size: 18px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        
+        .status-healthy { background: #48bb78; }
+        .status-warning { background: #ed8936; }
+        .status-error { background: #f56565; }
+        
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .metric:last-child {
+            border-bottom: none;
+        }
+        
+        .metric-label {
+            color: #718096;
+            font-size: 14px;
+        }
+        
+        .metric-value {
+            color: #2d3748;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .demo-section {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 24px;
+        }
+        
+        .demo-section h2 {
+            color: #2d3748;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-section {
+            margin-bottom: 24px;
+        }
+        
+        .form-section h3 {
+            color: #4a5568;
+            font-size: 16px;
+            margin-bottom: 12px;
+            padding: 8px;
+            background: #f7fafc;
+            border-radius: 6px;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            color: #4a5568;
+            font-size: 12px;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+        
+        .form-group input, .form-group select {
+            padding: 8px 12px;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+        }
+        
+        .form-group select {
+            cursor: pointer;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5a67d8;
+        }
+        
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+        
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+        
+        .btn-success {
+            background: #48bb78;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #38a169;
+        }
+        
+        .response-area {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 16px;
+            min-height: 200px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: #718096;
+        }
+        
+        .loading.active {
+            display: block;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #48bb78;
+            transition: width 0.3s ease;
+        }
+        
+        .error-message {
+            background: #fff5f5;
+            border: 1px solid #feb2b2;
+            color: #c53030;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 12px;
+            display: none;
+        }
+        
+        .error-message.active {
+            display: block;
+        }
+        
+        .file-list {
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            border-bottom: 1px solid #e2e8f0;
+            transition: background 0.2s;
+        }
+        
+        .file-item:hover {
+            background: #f7fafc;
+        }
+        
+        .file-item:last-child {
+            border-bottom: none;
+        }
+        
+        .file-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .file-name {
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 14px;
+            margin-bottom: 4px;
+            word-break: break-all;
+        }
+        
+        .file-meta {
+            font-size: 12px;
+            color: #718096;
+        }
+        
+        .file-actions {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        
+        .download-btn {
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            white-space: nowrap;
+        }
+        
+        .download-btn:hover {
+            background: #5a67d8;
+        }
+        
+        .download-section {
+            position: sticky;
+            bottom: 0;
+            background: white;
+            padding: 16px;
+            border-top: 2px solid #e2e8f0;
+            margin: -24px;
+            margin-top: 20px;
+            border-radius: 0 0 12px 12px;
+            display: none;
+        }
+        
+        .download-section.active {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .download-section {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                margin: 0;
+                z-index: 1000;
+                box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+                border-radius: 12px 12px 0 0;
+            }
+            
+            .container {
+                padding-bottom: 100px;
+            }
+            
+            .file-name {
+                font-size: 12px;
+            }
+            
+            .download-btn {
+                padding: 10px 20px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔧 LH Calculator API</h1>
+            <p>Heat Exchanger Cost Calculation System with Excel Processing</p>
+        </div>
+        
+        <div class="grid">
+            <div class="card">
+                <h2><span class="status-indicator status-healthy" id="healthStatus"></span> Health Status</h2>
+                <div id="healthMetrics">
+                    <div class="metric">
+                        <span class="metric-label">Loading...</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>📊 System Metrics</h2>
+                <div id="systemMetrics">
+                    <div class="metric">
+                        <span class="metric-label">Loading...</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>📁 Recent Files</h2>
+                <div id="recentFiles">
+                    <div class="metric">
+                        <span class="metric-label">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>🚀 Calculate Heat Exchanger Cost</h2>
+            
+            <div class="form-section">
+                <h3>🔧 Technical Parameters</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Equipment Type</label>
+                        <input type="number" id="tech_D27_type" value="750" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Equipment Code</label>
+                        <select id="tech_E27_weightType">
+                            <option value="К4-750" selected>К4-750</option>
+                            <option value="К4-500">К4-500</option>
+                            <option value="К4-1000">К4-1000</option>
+                            <option value="Е-113">Е-113</option>
+                            <option value="Е-250">Е-250</option>
+                            <option value="К2-450">К2-450</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Delivery Type</label>
+                        <select id="tech_F27_quantityType">
+                            <option value="Целый ТА" selected>Целый ТА (Complete)</option>
+                            <option value="ШОТ-БЛОК">ШОТ-БЛОК (Shot Block)</option>
+                            <option value="РЕИНЖ">РЕИНЖ (Re-engineering)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Equipment Size</label>
+                        <input type="text" id="tech_G27_quantityType" value="К4-750" placeholder="e.g., К4-750">
+                    </div>
+                    <div class="form-group">
+                        <label>Process Specification</label>
+                        <select id="tech_H27_quantityType">
+                            <option value="1/6" selected>1/6</option>
+                            <option value="1/3">1/3</option>
+                            <option value="1/2">1/2</option>
+                            <option value="2/3">2/3</option>
+                            <option value="3/4">3/4</option>
+                            <option value="1/1">1/1</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Plate Count</label>
+                        <input type="number" id="tech_I27_quantityType" value="400" min="0" max="2000">
+                    </div>
+                    <div class="form-group">
+                        <label>Diameter (Ду)</label>
+                        <select id="tech_J27_quantityType">
+                            <option value="25">Ду25</option>
+                            <option value="50">Ду50</option>
+                            <option value="80">Ду80</option>
+                            <option value="100" selected>Ду100</option>
+                            <option value="150">Ду150</option>
+                            <option value="200">Ду200</option>
+                            <option value="250">Ду250</option>
+                            <option value="300">Ду300</option>
+                            <option value="400">Ду400</option>
+                            <option value="500">Ду500</option>
+                            <option value="600">Ду600</option>
+                            <option value="800">Ду800</option>
+                            <option value="1000">Ду1000</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Pressure (Ру)</label>
+                        <select id="tech_K27_quantity">
+                            <option value="6">Ру6</option>
+                            <option value="10" selected>Ру10</option>
+                            <option value="16">Ру16</option>
+                            <option value="25">Ру25</option>
+                            <option value="40">Ру40</option>
+                            <option value="63">Ру63</option>
+                            <option value="100">Ру100</option>
+                            <option value="160">Ру160</option>
+                            <option value="250">Ру250</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Length</label>
+                        <input type="number" id="tech_L27_quantity" value="160" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Material Type</label>
+                        <select id="tech_M27_material">
+                            <option value="1" selected>Standard</option>
+                            <option value="2">Reinforced</option>
+                            <option value="3">Special</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Primary Material</label>
+                        <select id="tech_P27_materialType">
+                            <option value="AISI 304">AISI 304</option>
+                            <option value="AISI 316" selected>AISI 316</option>
+                            <option value="AISI 316L">AISI 316L</option>
+                            <option value="AISI 316Ti">AISI 316Ti</option>
+                            <option value="AISI 321">AISI 321</option>
+                            <option value="Hastelloy">Hastelloy</option>
+                            <option value="Titanium">Titanium</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Frame Material</label>
+                        <select id="tech_R27_materialThicknessType">
+                            <option value="09Г2С" selected>09Г2С</option>
+                            <option value="12Х18Н10Т">12Х18Н10Т</option>
+                            <option value="10Х17Н13М2Т">10Х17Н13М2Т</option>
+                            <option value="06ХН28МДТ">06ХН28МДТ</option>
+                            <option value="20ХН3А">20ХН3А</option>
+                            <option value="30ХМА">30ХМА</option>
+                            <option value="40Х">40Х</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Plate Type</label>
+                        <select id="tech_S27_materialThicknessType">
+                            <option value="гофра" selected>Гофрированная</option>
+                            <option value="плоская">Плоская</option>
+                            <option value="спираль">Спиральная</option>
+                            <option value="трубчатая">Трубчатая</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Groove Depth (mm)</label>
+                        <input type="number" id="tech_T27_materialThicknessType" value="5" min="0" max="20">
+                    </div>
+                    <div class="form-group">
+                        <label>Plate Thickness (mm)</label>
+                        <select id="tech_U27_materialThicknessType">
+                            <option value="0.8">0.8</option>
+                            <option value="1" selected>1</option>
+                            <option value="1.2">1.2</option>
+                            <option value="1.5">1.5</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Cladding Thickness (mm)</label>
+                        <select id="tech_V27_thicknessType">
+                            <option value="0.8">0.8</option>
+                            <option value="1">1</option>
+                            <option value="1.2">1.2</option>
+                            <option value="1.5">1.5</option>
+                            <option value="2">2</option>
+                            <option value="3" selected>3</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>💰 Supply & Pricing Parameters</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Base Material</label>
+                        <select id="sup_F2_parameter">
+                            <option value="09Г2С" selected>09Г2С</option>
+                            <option value="12Х18Н10Т">12Х18Н10Т</option>
+                            <option value="06ХН28МДТ">06ХН28МДТ</option>
+                            <option value="20ХН3А">20ХН3А</option>
+                            <option value="30ХМА">30ХМА</option>
+                            <option value="40Х">40Х</option>
+                            <option value="0000">None</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Material Price (₽/kg)</label>
+                        <input type="number" id="sup_D8_priceMaterial" value="700" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Processing Price (₽/kg)</label>
+                        <input type="number" id="sup_E8_priceMaterial" value="700" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Total Norm Cost (₽)</label>
+                        <input type="number" id="sup_K13_costQuantityNormTotal" value="8000" min="0" max="10000">
+                    </div>
+                    <div class="form-group">
+                        <label>Material Norm Cost (₽)</label>
+                        <input type="number" id="sup_P13_costQuantityMaterialNorm" value="120000" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Mass Thickness (mm)</label>
+                        <input type="number" id="sup_D78_massThickness" value="3" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Total Price Component</label>
+                        <input type="number" id="sup_D43_priceTotal" value="100" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Price Component 1</label>
+                        <input type="number" id="sup_D44_price" value="200" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Price Component 2</label>
+                        <input type="number" id="sup_D45_price" value="300" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Price Component 3</label>
+                        <input type="number" id="sup_D46_price" value="400" min="0">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn-primary" onclick="calculateCost()">🧮 Calculate Cost</button>
+                <button class="btn-secondary" onclick="fillRealisticValues()">📝 Load Example Values</button>
+                <button class="btn-secondary" onclick="clearForm()">🗑️ Clear Form</button>
+            </div>
+            
+            <div class="loading" id="loading">
+                <p>Processing calculation with LibreOffice...</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+            </div>
+            
+            <div class="error-message" id="errorMessage"></div>
+            
+            <div id="responseArea" class="response-area">Click "Calculate Cost" to see results here...</div>
+            
+            <div class="download-section" id="downloadSection">
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+                    <div style="flex: 1;">
+                        <div style="font-weight: 600; color: #2d3748; margin-bottom: 4px;">Excel File Ready!</div>
+                        <div style="font-size: 12px; color: #718096;">Your calculation has been saved</div>
+                    </div>
+                    <a id="downloadLink" href="#" class="download-btn" download>
+                        📥 Download Excel
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>📂 Generated Excel Files</h2>
+            <div id="fileList" class="file-list">
+                <div style="padding: 20px; text-align: center; color: #718096;">
+                    Loading files...
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Initialize dashboard
+        let updateInterval;
+        
+        async function updateMetrics() {
+            try {
+                // Update health status
+                const healthResponse = await fetch('/health');
+                const healthData = await healthResponse.json();
+                
+                document.getElementById('healthStatus').className = 'status-indicator status-healthy';
+                document.getElementById('healthMetrics').innerHTML = `
+                    <div class="metric">
+                        <span class="metric-label">Status</span>
+                        <span class="metric-value">${healthData.status}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Version</span>
+                        <span class="metric-value">${healthData.version}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Uptime</span>
+                        <span class="metric-value">${formatUptime(healthData.uptime)}</span>
+                    </div>
+                `;
+                
+                // Update system metrics
+                const metricsResponse = await fetch('/api/metrics');
+                const metricsData = await metricsResponse.json();
+                
+                document.getElementById('systemMetrics').innerHTML = `
+                    <div class="metric">
+                        <span class="metric-label">Active Workers</span>
+                        <span class="metric-value">${metricsData.queue.activeWorkers}/${metricsData.queue.totalWorkers}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Queue Size</span>
+                        <span class="metric-value">${metricsData.queue.queuedRequests}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Avg Response</span>
+                        <span class="metric-value">${metricsData.requests.averageResponseTime}ms</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Success Rate</span>
+                        <span class="metric-value">${metricsData.requests.successRate}%</span>
+                    </div>
+                `;
+                
+                // Update file count
+                const filesResponse = await fetch('/api/excel-files');
+                const filesData = await filesResponse.json();
+                
+                document.getElementById('recentFiles').innerHTML = `
+                    <div class="metric">
+                        <span class="metric-label">Total Files</span>
+                        <span class="metric-value">${filesData.count}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Latest</span>
+                        <span class="metric-value">${filesData.count > 0 ? new Date(filesData.files[0].created).toLocaleTimeString() : 'None'}</span>
+                    </div>
+                `;
+                
+                updateFileList(filesData.files);
+                
+            } catch (error) {
+                console.error('Failed to update metrics:', error);
+            }
+        }
+        
+        function formatUptime(seconds) {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            
+            if (hours > 0) {
+                return `${hours}h ${minutes}m`;
+            } else if (minutes > 0) {
+                return `${minutes}m ${secs}s`;
+            } else {
+                return `${secs}s`;
+            }
+        }
+        
+        async function calculateCost() {
+            const loading = document.getElementById('loading');
+            const errorMessage = document.getElementById('errorMessage');
+            const responseArea = document.getElementById('responseArea');
+            const downloadSection = document.getElementById('downloadSection');
+            const progressFill = document.getElementById('progressFill');
+            
+            loading.classList.add('active');
+            errorMessage.classList.remove('active');
+            downloadSection.classList.remove('active');
+            progressFill.style.width = '0%';
+            
+            // Animate progress bar
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += 5;
+                if (progress <= 90) {
+                    progressFill.style.width = progress + '%';
+                }
+            }, 200);
+            
+            try {
+                const requestData = {
+                    // Technical parameters - matching contract types
+                    tech_D27_type: parseInt(document.getElementById('tech_D27_type').value),
+                    tech_E27_weightType: document.getElementById('tech_E27_weightType').value,  // string
+                    tech_F27_quantityType: document.getElementById('tech_F27_quantityType').value,  // string (DeliveryType)
+                    tech_G27_quantityType: document.getElementById('tech_G27_quantityType').value,  // string
+                    tech_H27_quantityType: document.getElementById('tech_H27_quantityType').value,  // string (fraction)
+                    tech_I27_quantityType: parseInt(document.getElementById('tech_I27_quantityType').value),  // number
+                    tech_J27_quantityType: parseInt(document.getElementById('tech_J27_quantityType').value),  // number
+                    tech_K27_quantity: parseInt(document.getElementById('tech_K27_quantity').value),  // number
+                    tech_L27_quantity: parseInt(document.getElementById('tech_L27_quantity').value),  // number
+                    tech_M27_material: parseInt(document.getElementById('tech_M27_material').value),  // number
+                    tech_P27_materialType: document.getElementById('tech_P27_materialType').value,  // string (PlateMaterial)
+                    tech_R27_materialThicknessType: document.getElementById('tech_R27_materialThicknessType').value,  // string (FrameMaterial)
+                    tech_S27_materialThicknessType: document.getElementById('tech_S27_materialThicknessType').value,  // string (GrooveType)
+                    tech_T27_materialThicknessType: parseInt(document.getElementById('tech_T27_materialThicknessType').value),  // number
+                    tech_U27_materialThicknessType: parseFloat(document.getElementById('tech_U27_materialThicknessType').value),  // number
+                    tech_V27_thicknessType: parseFloat(document.getElementById('tech_V27_thicknessType').value),  // number
+                    
+                    // Supply parameters - matching contract types
+                    sup_F2_parameter: document.getElementById('sup_F2_parameter').value,  // string
+                    sup_D8_priceMaterial: parseInt(document.getElementById('sup_D8_priceMaterial').value),  // number
+                    sup_E8_priceMaterial: parseInt(document.getElementById('sup_E8_priceMaterial').value),  // number
+                    sup_K13_costQuantityNormTotal: parseInt(document.getElementById('sup_K13_costQuantityNormTotal').value),  // number
+                    sup_P13_costQuantityMaterialNorm: parseInt(document.getElementById('sup_P13_costQuantityMaterialNorm').value),  // number
+                    sup_D78_massThickness: parseInt(document.getElementById('sup_D78_massThickness').value),  // number
+                    sup_D43_priceTotal: parseInt(document.getElementById('sup_D43_priceTotal').value),  // number
+                    sup_D44_price: parseInt(document.getElementById('sup_D44_price').value),  // number
+                    sup_D45_price: parseInt(document.getElementById('sup_D45_price').value),  // number
+                    sup_D46_price: parseInt(document.getElementById('sup_D46_price').value)  // number
+                };
+                
+                const response = await fetch('/api/calculate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                });
+                
+                const data = await response.json();
+                
+                clearInterval(progressInterval);
+                progressFill.style.width = '100%';
+                
+                setTimeout(() => {
+                    loading.classList.remove('active');
+                    
+                    if (data.success) {
+                        let responseText = `✅ CALCULATION SUCCESSFUL\n\n`;
+                        responseText += `Total Cost: ${data.results.total_cost.toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}\n\n`;
+                        responseText += `Component Breakdown:\n`;
+                        responseText += `  • Materials: ${data.results.component_costs.materials.toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}\n`;
+                        responseText += `  • Processing: ${data.results.component_costs.processing.toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}\n`;
+                        responseText += `  • Hardware: ${data.results.component_costs.hardware.toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}\n`;
+                        responseText += `  • Other: ${data.results.component_costs.other.toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}\n\n`;
+                        responseText += `Processing Time: ${data.processing_time_ms}ms\n`;
+                        responseText += `Request ID: ${data.request_id}\n\n`;
+                        responseText += `Full Response:\n${JSON.stringify(data, null, 2)}`;
+                        
+                        responseArea.textContent = responseText;
+                        
+                        if (data.downloadUrl) {
+                            const downloadLink = document.getElementById('downloadLink');
+                            downloadLink.href = data.downloadUrl;
+                            downloadSection.classList.add('active');
+                        }
+                    } else {
+                        responseArea.textContent = JSON.stringify(data, null, 2);
+                        errorMessage.textContent = data.error?.message || 'Calculation failed';
+                        errorMessage.classList.add('active');
+                    }
+                    
+                    // Refresh file list
+                    updateMetrics();
+                }, 500);
+                
+            } catch (error) {
+                clearInterval(progressInterval);
+                loading.classList.remove('active');
+                errorMessage.textContent = 'Failed to connect to API: ' + error.message;
+                errorMessage.classList.add('active');
+                responseArea.textContent = 'Error: ' + error.message;
+            }
+        }
+        
+        function fillRealisticValues() {
+            // Technical parameters
+            document.getElementById('tech_D27_type').value = '750';
+            document.getElementById('tech_E27_weightType').value = 'К4-750';
+            document.getElementById('tech_F27_quantityType').value = 'Целый ТА';
+            document.getElementById('tech_G27_quantityType').value = 'К4-750';
+            document.getElementById('tech_H27_quantityType').value = '1/6';
+            document.getElementById('tech_I27_quantityType').value = '400';
+            document.getElementById('tech_J27_quantityType').value = '100';
+            document.getElementById('tech_K27_quantity').value = '10';
+            document.getElementById('tech_L27_quantity').value = '160';
+            document.getElementById('tech_M27_material').value = '1';
+            document.getElementById('tech_P27_materialType').value = 'AISI 316L';
+            document.getElementById('tech_R27_materialThicknessType').value = '09Г2С';
+            document.getElementById('tech_S27_materialThicknessType').value = 'гофра';
+            document.getElementById('tech_T27_materialThicknessType').value = '5';
+            document.getElementById('tech_U27_materialThicknessType').value = '1';
+            document.getElementById('tech_V27_thicknessType').value = '3';
+            
+            // Supply parameters
+            document.getElementById('sup_F2_parameter').value = '09Г2С';
+            document.getElementById('sup_D8_priceMaterial').value = '700';
+            document.getElementById('sup_E8_priceMaterial').value = '700';
+            document.getElementById('sup_K13_costQuantityNormTotal').value = '8000';
+            document.getElementById('sup_P13_costQuantityMaterialNorm').value = '120000';
+            document.getElementById('sup_D78_massThickness').value = '3';
+            document.getElementById('sup_D43_priceTotal').value = '100';
+            document.getElementById('sup_D44_price').value = '200';
+            document.getElementById('sup_D45_price').value = '300';
+            document.getElementById('sup_D46_price').value = '400';
+        }
+        
+        function clearForm() {
+            document.querySelectorAll('input[type="number"], input[type="text"]').forEach(input => {
+                input.value = '';
+            });
+            document.querySelectorAll('select').forEach(select => {
+                select.selectedIndex = 0;
+            });
+            document.getElementById('responseArea').textContent = 'Form cleared. Enter new values...';
+            document.getElementById('downloadSection').classList.remove('active');
+        }
+        
+        function updateFileList(files) {
+            const fileList = document.getElementById('fileList');
+            
+            if (!files || files.length === 0) {
+                fileList.innerHTML = `
+                    <div style="padding: 20px; text-align: center; color: #718096;">
+                        No files generated yet
+                    </div>
+                `;
+                return;
+            }
+            
+            fileList.innerHTML = files.slice(0, 10).map(file => `
+                <div class="file-item">
+                    <div class="file-info">
+                        <div class="file-name">${file.name}</div>
+                        <div class="file-meta">
+                            ${new Date(file.created).toLocaleString()} • ${formatFileSize(file.size)}
+                        </div>
+                    </div>
+                    <div class="file-actions">
+                        <a href="${file.downloadUrl}" class="download-btn" download>Download</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+        }
+        
+        // Start monitoring
+        updateMetrics();
+        updateInterval = setInterval(updateMetrics, 5000);
+        
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (updateInterval) {
+                clearInterval(updateInterval);
+            }
+        });
+    </script>
+</body>
+</html>
