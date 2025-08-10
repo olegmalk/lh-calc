@@ -18,7 +18,7 @@ describe('Excel API Edge Cases Tests', () => {
     tech_L27_quantity: 100,
     tech_M27_material: 100,
     tech_T27_materialThicknessType: 5,
-    sup_F2_parameter: "09Г2С",
+    sup_F2_projectNumber: "TEST-PROJECT-001",
     sup_D8_priceMaterial: 700,
     sup_E8_priceMaterial: 700,
     sup_K13_costQuantityNormTotal: 1,
@@ -171,7 +171,7 @@ describe('Excel API Edge Cases Tests', () => {
     test('should reject completely invalid material code', async () => {
       const invalidMaterialRequest = {
         ...baseValidRequest,
-        sup_F2_parameter: "TOTALLY_INVALID_CODE" as any
+        sup_F2_projectNumber: "TOTALLY_INVALID_CODE" as any
       };
 
       const response = await request(app)
@@ -190,7 +190,7 @@ describe('Excel API Edge Cases Tests', () => {
     test('should reject case-sensitive material code variations', async () => {
       const caseSensitiveRequest = {
         ...baseValidRequest,
-        sup_F2_parameter: "09г2с" as any // lowercase version
+        sup_F2_projectNumber: "09г2с" as any // lowercase version
       };
 
       const response = await request(app)
@@ -203,7 +203,7 @@ describe('Excel API Edge Cases Tests', () => {
     test('should reject material code with whitespace', async () => {
       const whitespaceRequest = {
         ...baseValidRequest,
-        sup_F2_parameter: " 09Г2С " as any
+        sup_F2_projectNumber: "TEST-PROJECT-002" as any
       };
 
       const response = await request(app)
@@ -217,7 +217,7 @@ describe('Excel API Edge Cases Tests', () => {
       for (const materialCode of MATERIAL_CODES) {
         const materialRequest = {
           ...baseValidRequest,
-          sup_F2_parameter: materialCode
+          sup_F2_projectNumber: materialCode
         };
 
         const response = await request(app)
@@ -228,7 +228,7 @@ describe('Excel API Edge Cases Tests', () => {
         
         if (response.status === 422) {
           // If validation fails, it should be for other reasons, not material code
-          expect(response.body.error?.details?.field_errors?.sup_F2_parameter).toBeUndefined();
+          expect(response.body.error?.details?.field_errors?.sup_F2_projectNumber).toBeUndefined();
         }
       }
     }, 30000);
@@ -390,7 +390,7 @@ describe('Excel API Edge Cases Tests', () => {
     test('should reject request with undefined required field', async () => {
       const undefinedFieldRequest = {
         ...baseValidRequest,
-        sup_F2_parameter: undefined as any
+        sup_F2_projectNumber: undefined as any
       };
 
       const response = await request(app)
@@ -847,7 +847,7 @@ describe('Excel API Edge Cases Tests', () => {
     test('should validate incompatible material and thickness combinations', async () => {
       const incompatibleMaterialRequest = {
         ...baseValidRequest,
-        sup_F2_parameter: "0000" as any, // Basic material
+        sup_F2_projectNumber: "TEST-PROJECT-003" as any, // Basic material
         tech_V27_thicknessType: 50 // Very thick for basic material
       };
 
@@ -863,7 +863,7 @@ describe('Excel API Edge Cases Tests', () => {
       const extremeTemperatureRequest = {
         ...baseValidRequest,
         tech_L27_quantity: 1000, // Very high temperature
-        sup_F2_parameter: "09Г2С" as any // Standard steel
+        sup_F2_projectNumber: "TEST-PROJECT-001" as any // Standard steel
       };
 
       const response = await request(app)
@@ -925,7 +925,7 @@ describe('Excel API Edge Cases Tests', () => {
         'tech_E27_weightType',
         'tech_H27_quantityType',
         'tech_I27_quantityType',
-        'sup_F2_parameter',
+        'sup_F2_projectNumber',
         'sup_D8_priceMaterial'
       ];
 

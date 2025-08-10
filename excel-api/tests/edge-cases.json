@@ -157,7 +157,7 @@
           {
             "scenario": "Number in enum field",
             "input_values": {
-              "sup_F2_parameter": 12345
+              "sup_F2_projectNumber": "EDGE-TEST-001"
             },
             "expected_behavior": "Should return enum validation error",
             "risk_level": "high",
@@ -360,7 +360,7 @@
           {
             "scenario": "Case sensitivity in material codes",
             "input_values": {
-              "sup_F2_parameter": "09г2с"
+              "sup_F2_projectNumber": "edge-test-002"
             },
             "expected_behavior": "Should handle case sensitivity appropriately",
             "risk_level": "medium",
@@ -468,7 +468,7 @@
         {
           "scenario": "Incompatible material and thickness combination",
           "input_values": {
-            "sup_F2_parameter": "0000",
+            "sup_F2_projectNumber": "EDGE-TEST-003",
             "tech_V27_thicknessType": 10
           },
           "expected_behavior": "Should validate business logic constraints",
@@ -489,7 +489,7 @@
           "scenario": "Temperature values exceeding material limits",
           "input_values": {
             "tech_L27_quantity": 500,
-            "sup_F2_parameter": "09Г2С"
+            "sup_F2_projectNumber": "EDGE-TEST-004"
           },
           "expected_behavior": "Should validate material temperature limits",
           "risk_level": "high",
@@ -528,7 +528,7 @@
           "scenario": "Missing required fields in request",
           "input_values": {
             "incomplete_request": true,
-            "missing_fields": ["tech_D27_type", "sup_F2_parameter"]
+            "missing_fields": ["tech_D27_type", "sup_F2_projectNumber"]
           },
           "expected_behavior": "Should return 422 with detailed field errors",
           "risk_level": "high",

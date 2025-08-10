@@ -14,7 +14,7 @@ describe('Excel API Concurrent Processing Tests', () => {
     tech_L27_quantity: 100,
     tech_M27_material: 100,
     tech_T27_materialThicknessType: 5,
-    sup_F2_parameter: "09Г2С",
+    sup_F2_projectNumber: "TEST-PROJECT-001",
     sup_D8_priceMaterial: 700,
     sup_E8_priceMaterial: 700,
     sup_K13_costQuantityNormTotal: 1,
@@ -299,7 +299,7 @@ describe('Excel API Concurrent Processing Tests', () => {
       const invalidRequests = Array.from({ length: 5 }, (_, i) => ({
         ...baseValidRequest,
         tech_I27_quantityType: -100 - i, // Invalid negative values
-        sup_F2_parameter: `INVALID_${i}` as any
+        sup_F2_projectNumber: `INVALID_${i}` as any
       }));
 
       const allRequests = [...validRequests, ...invalidRequests];
@@ -520,7 +520,7 @@ describe('Excel API Concurrent Processing Tests', () => {
         ...Array.from({ length: 5 }, (_, i) => createVariantRequest(i)),
         ...Array.from({ length: 5 }, (_, i) => ({
           ...baseValidRequest,
-          sup_F2_parameter: `INVALID_${i}` as any
+          sup_F2_projectNumber: `INVALID_${i}` as any
         }))
       ];
 

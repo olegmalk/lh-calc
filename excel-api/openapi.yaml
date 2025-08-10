@@ -42,7 +42,7 @@ paths:
                   tech_T27_materialThicknessType: 20
                   tech_U27_materialThicknessType: 1.2
                   tech_V27_thicknessType: 1.5
-                  sup_F2_parameter: "09Г2С"
+                  sup_F2_projectNumber: "PROJ-2024-001"
                   sup_D8_priceMaterial: 50000
                   sup_E8_priceMaterial: 55000
                   sup_K13_costQuantityNormTotal: 10
@@ -197,7 +197,7 @@ components:
         - tech_U27_materialThicknessType
         - tech_V27_thicknessType
         # Supply fields (снабжение sheet) - Required
-        - sup_F2_parameter
+        - sup_F2_projectNumber
         - sup_D8_priceMaterial
         - sup_E8_priceMaterial
         - sup_K13_costQuantityNormTotal
@@ -277,11 +277,11 @@ components:
           enum: [0.8, 1, 1.2, 1.5, 2, 3, 5]
           description: Additional thickness specification
 
-        # Supply fields - Material codes and specifications
-        sup_F2_parameter:
+        # Project identification
+        sup_F2_projectNumber:
           type: string
-          enum: ['0000', '06ХН28МДТ', '09Г2С', '12Х18Н10Т', '20ХН3А', '30ХМА', '40Х']
-          description: Primary material code
+          description: Project number/identifier
+          example: "PROJ-2024-001"
         sup_D9_priceMaterial:
           type: string
           enum: ['ст3', 'ст20', '09Г2С', '12Х18Н10Т', 'AISI 304', 'AISI 316L', 'AISI 321', 'AISI 316Ti']

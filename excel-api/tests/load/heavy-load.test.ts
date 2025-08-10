@@ -14,7 +14,7 @@ describe('Heavy Load Tests', () => {
     tech_L27_quantity: 100,
     tech_M27_material: 100,
     tech_T27_materialThicknessType: 5,
-    sup_F2_parameter: "09Г2С",
+    sup_F2_projectNumber: "TEST-PROJECT-001",
     sup_D8_priceMaterial: 700,
     sup_E8_priceMaterial: 700,
     sup_K13_costQuantityNormTotal: 1,

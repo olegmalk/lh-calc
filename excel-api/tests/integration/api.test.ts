@@ -16,7 +16,7 @@ describe('Excel API Integration Tests', () => {
     tech_L27_quantity: 100,
     tech_M27_material: 100,
     tech_T27_materialThicknessType: 5,
-    sup_F2_parameter: "0000",
+    sup_F2_projectNumber: "TEST-PROJECT-003",
     sup_D8_priceMaterial: 700,
     sup_E8_priceMaterial: 700,
     sup_K13_costQuantityNormTotal: 1,
@@ -257,7 +257,7 @@ describe('Excel API Integration Tests', () => {
     test('should validate enum values', async () => {
       const invalidEnumRequest = {
         ...validRequest,
-        sup_F2_parameter: "INVALID_MATERIAL_CODE"
+        sup_F2_projectNumber: "INVALID_MATERIAL_CODE"
       };
 
       const response = await request(app)

@@ -19,7 +19,7 @@
   "tech_T27_viscosityMPa": 10,
   "tech_U27_materialThicknessType": 1,
   "tech_V27_quantityType": 150,
-  "sup_F2_parameter": "092!",
+  "sup_F2_projectNumber": "TEST-2024-001",
   "sup_D8_priceMaterial": 700,
   "sup_E8_priceMaterial": 700,
   "sup_K13_costQuantityNormTotal": 8000,
