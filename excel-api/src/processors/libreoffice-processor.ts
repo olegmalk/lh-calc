@@ -43,6 +43,8 @@ export class LibreOfficeProcessor {
     const processId = requestId || uuidv4();
     const warnings: string[] = [];
     
+    console.log(`[LibreOffice] START processing request ${processId} at ${new Date().toISOString()}`);
+    
     // Create temp files with unique names
     const tempDir = os.tmpdir();
     const timestamp = Date.now();
@@ -52,32 +54,45 @@ export class LibreOfficeProcessor {
     const inputPath = path.join(tempDir, inputFileName);
     const outputPath = path.join(tempDir, outputFileName);
 
-    try {
-      console.log(`[LibreOffice] Processing request ${processId}`);
+    console.log(`[LibreOffice] Temp files: input=${inputFileName}, output=${outputFileName}`);
 
+    try {
       // Step 1: Copy template and set values using ExcelJS
+      console.log(`[LibreOffice] Step 1: Preparing input file...`);
+      const prepStart = Date.now();
       await this.prepareInputFile(inputPath, inputData, warnings);
+      console.log(`[LibreOffice] Step 1 completed in ${Date.now() - prepStart}ms`);
 
       // Step 2: Use LibreOffice to recalculate formulas
+      console.log(`[LibreOffice] Step 2: Starting LibreOffice recalculation...`);
+      const recalcStart = Date.now();
       await this.recalculateWithLibreOffice(inputPath, outputPath, warnings);
+      console.log(`[LibreOffice] Step 2 completed in ${Date.now() - recalcStart}ms`);
 
       // Step 3: Extract results from recalculated file
+      console.log(`[LibreOffice] Step 3: Extracting results...`);
+      const extractStart = Date.now();
       const results = await this.extractResults(outputPath, inputData, warnings);
+      console.log(`[LibreOffice] Step 3 completed in ${Date.now() - extractStart}ms`);
 
       // Step 4: Save file for download
       let downloadUrl: string | undefined;
       if (requestId) {
+        console.log(`[LibreOffice] Step 4: Saving file for download...`);
+        const saveStart = Date.now();
         const savedPath = await this.saveExcelFile(outputPath, requestId);
         if (savedPath) {
           downloadUrl = `/excel-files/${path.basename(savedPath)}`;
         }
+        console.log(`[LibreOffice] Step 4 completed in ${Date.now() - saveStart}ms`);
       }
 
       // Cleanup temp files
+      console.log(`[LibreOffice] Cleaning up temp files...`);
       await this.cleanupFiles([inputPath, outputPath]);
 
       const processingTime = Date.now() - startTime;
-      console.log(`[LibreOffice] Request ${processId} completed in ${processingTime}ms`);
+      console.log(`[LibreOffice] SUCCESS: Request ${processId} completed in ${processingTime}ms`);
 
       return {
         success: true,
@@ -89,16 +104,20 @@ export class LibreOfficeProcessor {
       };
 
     } catch (error: any) {
-      // Cleanup on error
-      await this.cleanupFiles([inputPath, outputPath]);
+      const processingTime = Date.now() - startTime;
+      console.error(`[LibreOffice] ERROR: Request ${processId} failed after ${processingTime}ms:`, error.message);
+      console.error(`[LibreOffice] Stack trace:`, error.stack);
       
-      console.error(`[LibreOffice] Error processing request ${processId}:`, error);
+      // Cleanup on error
+      console.log(`[LibreOffice] Cleaning up after error...`);
+      await this.cleanupFiles([inputPath, outputPath]);
       
       return {
         success: false,
         error: error.message || 'LibreOffice processing failed',
         requestId: processId,
-        warnings
+        warnings,
+        processingTimeMs: processingTime
       };
     }
   }
@@ -153,66 +172,95 @@ export class LibreOfficeProcessor {
    */
   private async recalculateWithLibreOffice(inputPath: string, outputPath: string, warnings: string[]): Promise<void> {
     try {
-      console.log('[LibreOffice] Starting formula recalculation...');
-      
-      // LibreOffice command to:
-      // 1. Open the file in headless mode
-      // 2. Recalculate all formulas
-      // 3. Save as new Excel file
-      // 4. Exit
+      console.log('[LibreOffice] Recalculation: Starting...');
       
       // First, convert to ODS (LibreOffice native format) to ensure proper recalculation
       const tempOdsPath = inputPath.replace('.xlsx', '.ods');
+      console.log(`[LibreOffice] Recalculation: ODS path will be ${tempOdsPath}`);
       
-      // Convert XLSX to ODS with timeout
-      const convertToOdsCmd = `timeout 30 soffice --headless --convert-to ods --outdir "${path.dirname(inputPath)}" "${inputPath}"`;
-      console.log('[LibreOffice] Converting to ODS format...');
+      // Convert XLSX to ODS with timeout of 10 seconds
+      const convertToOdsCmd = `timeout 10 soffice --headless --convert-to ods --outdir "${path.dirname(inputPath)}" "${inputPath}"`;
+      console.log(`[LibreOffice] Recalculation: Executing ODS conversion command...`);
+      console.log(`[LibreOffice] Command: ${convertToOdsCmd}`);
       
+      const odsStartTime = Date.now();
       try {
-        const { stderr: convertErr } = await execAsync(convertToOdsCmd);
-        if (convertErr && !convertErr.includes('Warning')) {
-          warnings.push(`ODS conversion warning: ${convertErr}`);
+        const { stdout: odsOut, stderr: odsErr } = await execAsync(convertToOdsCmd);
+        console.log(`[LibreOffice] ODS conversion took ${Date.now() - odsStartTime}ms`);
+        if (odsOut) console.log(`[LibreOffice] ODS stdout: ${odsOut}`);
+        if (odsErr && !odsErr.includes('Warning')) {
+          console.log(`[LibreOffice] ODS stderr: ${odsErr}`);
+          warnings.push(`ODS conversion warning: ${odsErr}`);
         }
       } catch (error: any) {
+        console.error(`[LibreOffice] ODS conversion failed after ${Date.now() - odsStartTime}ms`);
         if (error.code === 124) {
-          throw new Error('LibreOffice conversion timed out after 30 seconds');
+          throw new Error('LibreOffice ODS conversion timed out after 10 seconds');
         }
-        throw error;
+        throw new Error(`ODS conversion failed: ${error.message}`);
+      }
+
+      // Check if ODS file was created
+      try {
+        await fs.access(tempOdsPath);
+        console.log(`[LibreOffice] ODS file created successfully: ${tempOdsPath}`);
+      } catch {
+        throw new Error(`ODS file was not created at ${tempOdsPath}`);
       }
 
       // Now convert back to XLSX with recalculated formulas
-      const convertToXlsxCmd = `timeout 30 soffice --headless --convert-to xlsx:"Calc MS Excel 2007 XML" --outdir "${path.dirname(outputPath)}" "${tempOdsPath}"`;
-      console.log('[LibreOffice] Converting back to XLSX with recalculated formulas...');
+      const convertToXlsxCmd = `timeout 10 soffice --headless --convert-to xlsx:"Calc MS Excel 2007 XML" --outdir "${path.dirname(outputPath)}" "${tempOdsPath}"`;
+      console.log(`[LibreOffice] Recalculation: Executing XLSX conversion command...`);
+      console.log(`[LibreOffice] Command: ${convertToXlsxCmd}`);
       
+      const xlsxStartTime = Date.now();
       try {
-        const { stderr: convertBackErr } = await execAsync(convertToXlsxCmd);
-        if (convertBackErr && !convertBackErr.includes('Warning')) {
-          warnings.push(`XLSX conversion warning: ${convertBackErr}`);
+        const { stdout: xlsxOut, stderr: xlsxErr } = await execAsync(convertToXlsxCmd);
+        console.log(`[LibreOffice] XLSX conversion took ${Date.now() - xlsxStartTime}ms`);
+        if (xlsxOut) console.log(`[LibreOffice] XLSX stdout: ${xlsxOut}`);
+        if (xlsxErr && !xlsxErr.includes('Warning')) {
+          console.log(`[LibreOffice] XLSX stderr: ${xlsxErr}`);
+          warnings.push(`XLSX conversion warning: ${xlsxErr}`);
         }
       } catch (error: any) {
+        console.error(`[LibreOffice] XLSX conversion failed after ${Date.now() - xlsxStartTime}ms`);
         if (error.code === 124) {
-          throw new Error('LibreOffice conversion timed out after 30 seconds');
+          throw new Error('LibreOffice XLSX conversion timed out after 10 seconds');
         }
-        throw error;
+        throw new Error(`XLSX conversion failed: ${error.message}`);
       }
 
       // Move the converted file to the expected output path
       const convertedPath = tempOdsPath.replace('.ods', '.xlsx');
+      console.log(`[LibreOffice] Looking for converted file at ${convertedPath}`);
+      
       if (convertedPath !== outputPath) {
+        console.log(`[LibreOffice] Moving ${convertedPath} to ${outputPath}`);
         await fs.rename(convertedPath, outputPath);
+      }
+
+      // Check if output file exists
+      try {
+        await fs.access(outputPath);
+        console.log(`[LibreOffice] Output file created successfully: ${outputPath}`);
+      } catch {
+        throw new Error(`Output file was not created at ${outputPath}`);
       }
 
       // Clean up ODS file
       try {
         await fs.unlink(tempOdsPath);
+        console.log(`[LibreOffice] Cleaned up ODS file`);
       } catch {}
 
-      console.log('[LibreOffice] Formula recalculation completed');
+      console.log('[LibreOffice] Recalculation: Completed successfully');
 
     } catch (error: any) {
+      console.error(`[LibreOffice] Recalculation error: ${error.message}`);
       // Kill any hanging LibreOffice processes
       try {
         await execAsync('pkill -f soffice || true');
+        console.log('[LibreOffice] Killed any hanging soffice processes');
       } catch {}
       throw new Error(`LibreOffice recalculation failed: ${error.message}`);
     }

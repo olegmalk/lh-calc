@@ -61,12 +61,12 @@ const excelProcessor = new ExcelProcessor({
 });
 
 // Use ProcessorWrapper to enable LibreOffice with ExcelJS fallback
-const processorWrapper = new ProcessorWrapper(excelProcessor, false); // false = use ExcelJS only
+const processorWrapper = new ProcessorWrapper(excelProcessor, true); // true = use LibreOffice with fallback
 
 const queueManager = new QueueManager(processorWrapper, {
   maxWorkers: process.env.NODE_ENV === 'test' ? 10 : 5,
   maxQueueSize: process.env.NODE_ENV === 'test' ? 500 : 200,
-  requestTimeoutMs: process.env.NODE_ENV === 'test' ? 120000 : 60000 // 60 seconds for LibreOffice processing
+  requestTimeoutMs: process.env.NODE_ENV === 'test' ? 120000 : 25000 // 25 seconds total (20s for LibreOffice + 5s buffer)
 });
 
 // Circuit breaker for critical operations

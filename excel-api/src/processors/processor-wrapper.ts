@@ -19,39 +19,70 @@ export class ProcessorWrapper {
    * Process calculation using selected processor
    */
   async processCalculation(inputData: CalculationRequest, requestId?: string): Promise<ProcessingResult> {
+    const startTime = Date.now();
+    
     // Try LibreOffice first if enabled
     if (this.useLibreOffice) {
       try {
-        console.log(`[ProcessorWrapper] Using LibreOffice for request ${requestId}`);
+        console.log(`[ProcessorWrapper] Request ${requestId}: Checking LibreOffice availability...`);
         
         // Check if LibreOffice is available
+        const availStart = Date.now();
         const availability = await libreOfficeProcessor.checkAvailability();
+        console.log(`[ProcessorWrapper] LibreOffice availability check took ${Date.now() - availStart}ms: ${availability.available ? 'Available' : 'Not available'}`);
+        
         if (!availability.available) {
-          throw new Error('LibreOffice not available');
+          throw new Error(`LibreOffice not available: ${availability.error}`);
         }
         
-        // Process with LibreOffice
-        const result = await libreOfficeProcessor.processCalculation(inputData, requestId);
+        // Create a timeout promise
+        const timeoutPromise = new Promise<never>((_, reject) => {
+          setTimeout(() => reject(new Error('LibreOffice processing timeout after 20 seconds')), 20000);
+        });
+        
+        // Process with LibreOffice with 20 second timeout
+        console.log(`[ProcessorWrapper] Request ${requestId}: Starting LibreOffice processing with 20s timeout...`);
+        const processStart = Date.now();
+        
+        const result = await Promise.race([
+          libreOfficeProcessor.processCalculation(inputData, requestId),
+          timeoutPromise
+        ]);
+        
+        console.log(`[ProcessorWrapper] Request ${requestId}: LibreOffice processing completed in ${Date.now() - processStart}ms`);
         
         // Convert LibreOfficeProcessingResult to ProcessingResult
         return {
           success: result.success,
           results: result.results,
           error: result.error,
-          processingTimeMs: result.processingTimeMs || 0,
+          processingTimeMs: result.processingTimeMs || (Date.now() - startTime),
           downloadUrl: result.downloadUrl,
           warnings: result.warnings
         };
         
       } catch (error: any) {
-        console.warn(`[ProcessorWrapper] LibreOffice failed, falling back to ExcelJS: ${error.message}`);
+        const elapsed = Date.now() - startTime;
+        console.error(`[ProcessorWrapper] Request ${requestId}: LibreOffice failed after ${elapsed}ms: ${error.message}`);
+        console.log(`[ProcessorWrapper] Request ${requestId}: Falling back to ExcelJS...`);
+        
+        // Kill any hanging LibreOffice processes
+        try {
+          const { exec } = require('child_process');
+          exec('pkill -f soffice || true');
+        } catch {}
+        
+        // TODO: Fix LibreOffice integration - currently timing out
         // Fall back to ExcelJS if LibreOffice fails
       }
     }
     
     // Use ExcelJS (with fallback calculation)
-    console.log(`[ProcessorWrapper] Using ExcelJS for request ${requestId}`);
-    return await this.excelProcessor.processCalculation(inputData, requestId);
+    console.log(`[ProcessorWrapper] Request ${requestId}: Using ExcelJS processor`);
+    const excelStart = Date.now();
+    const result = await this.excelProcessor.processCalculation(inputData, requestId);
+    console.log(`[ProcessorWrapper] Request ${requestId}: ExcelJS processing completed in ${Date.now() - excelStart}ms`);
+    return result;
   }
   
   /**
