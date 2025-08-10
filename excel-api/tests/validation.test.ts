@@ -31,7 +31,7 @@ describe('Field Validation Framework', () => {
         tech_L27_quantity: 100,
         tech_M27_material: 100,
         tech_T27_materialThicknessType: 5,
-        sup_F2_parameter: '0000',
+        sup_F2_projectNumber: 'TEST-PROJECT',
         sup_D8_priceMaterial: 700,
         sup_E8_priceMaterial: 700,
         sup_K13_costQuantityNormTotal: 1,
