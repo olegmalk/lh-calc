@@ -373,7 +373,7 @@ async function createBackup(suffix?: string): Promise<string> {
   const backupName = `calc_backup_${timestamp}${suffix ? '_' + suffix : ''}.xlsx`;
   const backupPath = path.join(backupDir, backupName);
 
-  const templatePath = path.join(process.cwd(), 'calc.xlsx');
+  const templatePath = TEMPLATE_PATH; // Use the constant we defined
   await fs.copyFile(templatePath, backupPath);
 
   // Keep only last 10 backups
@@ -419,6 +419,8 @@ async function getBackupList(): Promise<any[]> {
   }
 }
 
+// TODO: Fix this function to handle sheet names with trailing spaces
+/*
 async function testNewTemplate(): Promise<{
   success: boolean;
   error?: string;
@@ -466,6 +468,7 @@ async function testNewTemplate(): Promise<{
     };
   }
 }
+*/
 
 function formatBytes(bytes: number): string {
   if (bytes === 0) return '0 Bytes';
