@@ -591,7 +591,10 @@ describe('Excel API Edge Cases Tests', () => {
         
         if (response.status === 422) {
           // If validation fails, it shouldn't be because of fraction format
-          expect(response.body.error?.details?.field_errors?.tech_H27_quantityType).not.toMatch(/fraction|format/i);
+          const errorMessage = response.body.error?.details?.field_errors?.tech_H27_quantityType;
+          if (errorMessage) {
+            expect(errorMessage).not.toMatch(/fraction|format/i);
+          }
         }
       }
     }, 20000);
