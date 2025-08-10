@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LH Calculator API Documentation</title>
+    <title>LH Калькулятор API Документация</title>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui.css">
     <style>
         body {
@@ -137,69 +137,69 @@
 <body>
     <div class="header">
         <div class="header-content">
-            <h1>🚀 LH Calculator API Documentation</h1>
+            <h1>🚀 LH Калькулятор API Документация</h1>
             <div class="nav-links">
-                <a href="/">Dashboard</a>
-                <a href="/template-upload.html">Template Manager</a>
-                <a href="/health">Health Check</a>
-                <a href="/api/metrics">Metrics</a>
+                <a href="/">Панель управления</a>
+                <a href="/template-upload.html">Управление шаблонами</a>
+                <a href="/health">Проверка состояния</a>
+                <a href="/api/metrics">Метрики</a>
             </div>
         </div>
     </div>
 
     <div class="api-info">
-        <h2>API Overview</h2>
+        <h2>Обзор API</h2>
         <div class="stats">
             <div class="stat">
                 <span class="stat-value">141</span>
-                <span class="stat-label">Total Fields</span>
+                <span class="stat-label">Всего полей</span>
             </div>
             <div class="stat">
                 <span class="stat-value">26</span>
-                <span class="stat-label">Required Fields</span>
+                <span class="stat-label">Обязательные поля</span>
             </div>
             <div class="stat">
                 <span class="stat-value">5</span>
-                <span class="stat-label">Worker Threads</span>
+                <span class="stat-label">Рабочие потоки</span>
             </div>
             <div class="stat">
                 <span class="stat-value">45s</span>
-                <span class="stat-label">Timeout</span>
+                <span class="stat-label">Тайм-аут</span>
             </div>
         </div>
         
         <div class="info-grid">
             <div class="info-card">
-                <h3>Base URL</h3>
+                <h3>Базовый URL</h3>
                 <p><code>http://localhost:3000</code></p>
             </div>
             <div class="info-card">
-                <h3>Main Endpoint</h3>
+                <h3>Основная конечная точка</h3>
                 <p><code>POST /api/calculate</code></p>
             </div>
             <div class="info-card">
-                <h3>Content Type</h3>
+                <h3>Тип содержимого</h3>
                 <p><code>application/json</code></p>
             </div>
             <div class="info-card">
-                <h3>Rate Limit</h3>
-                <p>100 requests/minute per IP</p>
+                <h3>Ограничение скорости</h3>
+                <p>100 запросов в минуту на IP</p>
             </div>
             <div class="info-card">
-                <h3>Max Request Size</h3>
-                <p>10MB JSON payload</p>
+                <h3>Максимальный размер запроса</h3>
+                <p>10МБ JSON полезная нагрузка</p>
             </div>
             <div class="info-card">
-                <h3>CORS Support</h3>
-                <p>Enabled for all origins</p>
+                <h3>Поддержка CORS</h3>
+                <p>Включена для всех источников</p>
             </div>
         </div>
     </div>
 
     <div class="download-links">
-        <a href="/api/openapi.yaml" download>📄 Download OpenAPI (YAML)</a>
-        <a href="/api/openapi.json" download>📋 Download OpenAPI (JSON)</a>
-        <a href="/api/fields/required">📝 Required Fields List</a>
+        <a href="/api/openapi.yaml" download>📄 Скачать OpenAPI (YAML)</a>
+        <a href="/api/openapi.json" download>📋 Скачать OpenAPI (JSON)</a>
+        <a href="/api/fields/required">📝 Список обязательных полей</a>
     </div>
 
     <div id="swagger-ui"></div>

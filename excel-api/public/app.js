@@ -1,92 +1,92 @@
 // Field configuration - single source of truth
 const FIELD_CONFIG = {
     tech: {
-        title: '🔧 Technical Parameters (технолог)',
+        title: '🔧 Технические параметры (технолог)',
         fields: [
-            { id: 'tech_D27_type', label: 'D27 Equipment Type', type: 'number', default: 1001 },
-            { id: 'tech_E27_weightType', label: 'E27 Equipment Code', type: 'text', default: 'Е-113' },
-            { id: 'tech_F27_quantityType', label: 'F27 Delivery Type', type: 'select', 
+            { id: 'tech_D27_type', label: 'D27 Тип оборудования', type: 'number', default: 1001 },
+            { id: 'tech_E27_weightType', label: 'E27 Код оборудования', type: 'text', default: 'Е-113' },
+            { id: 'tech_F27_quantityType', label: 'F27 Тип поставки', type: 'select', 
               options: ['Целый ТА', 'ШОТ-БЛОК', 'РЕИНЖ'], default: 'Целый ТА' },
-            { id: 'tech_G27_quantityType', label: 'G27 Equipment Size', type: 'text', default: 'К4-750' },
-            { id: 'tech_H27_quantityType', label: 'H27 Process Spec', type: 'text', default: '1/6' },
-            { id: 'tech_I27_quantityType', label: 'I27 Plate Count', type: 'number', default: 401 },
-            { id: 'tech_J27_quantityType', label: 'J27 Pressure Bar', type: 'number', default: 22 },
-            { id: 'tech_K27_quantity', label: 'K27 Pressure Bar', type: 'number', default: 23 },
-            { id: 'tech_L27_quantity', label: 'L27 Temperature °C', type: 'number', default: 101 },
-            { id: 'tech_M27_material', label: 'M27 Temperature °C', type: 'number', default: 102 },
-            { id: 'tech_P27_materialType', label: 'P27 Plate Material', type: 'select',
+            { id: 'tech_G27_quantityType', label: 'G27 Размер оборудования', type: 'text', default: 'К4-750' },
+            { id: 'tech_H27_quantityType', label: 'H27 Спецификация процесса', type: 'text', default: '1/6' },
+            { id: 'tech_I27_quantityType', label: 'I27 Количество плит', type: 'number', default: 401 },
+            { id: 'tech_J27_quantityType', label: 'J27 Давление бар', type: 'number', default: 22 },
+            { id: 'tech_K27_quantity', label: 'K27 Давление бар', type: 'number', default: 23 },
+            { id: 'tech_L27_quantity', label: 'L27 Температура °C', type: 'number', default: 101 },
+            { id: 'tech_M27_material', label: 'M27 Температура °C', type: 'number', default: 102 },
+            { id: 'tech_P27_materialType', label: 'P27 Материал плиты', type: 'select',
               options: ['AISI 316L', 'SMO 254', 'Hast-C276', 'Titanium', 'AISI 304', 'AISI316Ti', '904L'], 
               default: 'AISI 316L' },
-            { id: 'tech_R27_materialThicknessType', label: 'R27 Frame Material', type: 'select',
+            { id: 'tech_R27_materialThicknessType', label: 'R27 Материал рамы', type: 'select',
               options: ['ст3', 'ст20', '09Г2С', '12Х18Н10Т', 'AISI 304', 'AISI 316L', 'AISI 321', 'AISI 316Ti'],
               default: '09Г2С' },
-            { id: 'tech_S27_materialThicknessType', label: 'S27 Groove Type', type: 'select',
+            { id: 'tech_S27_materialThicknessType', label: 'S27 Тип канавки', type: 'select',
               options: ['гофра', 'дв. лунка', 'од. лунка', 'шпилька', 'шпилька-лунка'], default: 'гофра' },
-            { id: 'tech_T27_materialThicknessType', label: 'T27 Groove Depth mm', type: 'number', default: 5 },
-            { id: 'tech_U27_materialThicknessType', label: 'U27 Plate Thickness', type: 'select',
+            { id: 'tech_T27_materialThicknessType', label: 'T27 Глубина канавки мм', type: 'number', default: 5 },
+            { id: 'tech_U27_materialThicknessType', label: 'U27 Толщина плиты', type: 'select',
               options: ['0.8', '1', '1.2', '1.5', '2', '3', '5'], default: '1' },
-            { id: 'tech_V27_thicknessType', label: 'V27 Cladding mm', type: 'select',
+            { id: 'tech_V27_thicknessType', label: 'V27 Облицовка мм', type: 'select',
               options: ['0.8', '1', '1.2', '1.5', '2', '3', '5'], default: '3' }
         ]
     },
     supMain: {
-        title: '💰 Supply Main Parameters',
+        title: '💰 Основные параметры поставки',
         fields: [
-            { id: 'sup_F2_parameter', label: 'F2 Base Material', type: 'text', default: '0000' },
-            { id: 'sup_D8_priceMaterial', label: 'D8 Price/kg', type: 'number', default: 701 },
-            { id: 'sup_E8_priceMaterial', label: 'E8 Price/kg', type: 'number', default: 702 },
-            { id: 'sup_D9_priceMaterial', label: 'D9 Material', type: 'select',
+            { id: 'sup_F2_parameter', label: 'F2 Базовый материал', type: 'text', default: '0000' },
+            { id: 'sup_D8_priceMaterial', label: 'D8 Цена/кг', type: 'number', default: 701 },
+            { id: 'sup_E8_priceMaterial', label: 'E8 Цена/кг', type: 'number', default: 702 },
+            { id: 'sup_D9_priceMaterial', label: 'D9 Материал', type: 'select',
               options: ['ст3', 'ст20', '09Г2С', '12Х18Н10Т', 'AISI 304', 'AISI 316L', 'AISI 321', 'AISI 316Ti'],
               default: '09Г2С' },
-            { id: 'sup_D10_priceCostMaterial', label: 'D10 Cost', type: 'number', default: 1010 },
-            { id: 'sup_D11_priceCostMaterial', label: 'D11 Cost', type: 'number', default: 1011 },
-            { id: 'sup_K13_costQuantityNormTotal', label: 'K13 Norm Cost', type: 'number', default: 1 },
-            { id: 'sup_P13_costQuantityMaterialNorm', label: 'P13 Material Norm', type: 'number', default: 120013 },
-            { id: 'sup_D17_priceWeightThickness', label: 'D17 Weight', type: 'number', default: 1017 },
-            { id: 'sup_D78_massThickness', label: 'D78 Mass mm', type: 'number', default: 3 }
+            { id: 'sup_D10_priceCostMaterial', label: 'D10 Стоимость', type: 'number', default: 1010 },
+            { id: 'sup_D11_priceCostMaterial', label: 'D11 Стоимость', type: 'number', default: 1011 },
+            { id: 'sup_K13_costQuantityNormTotal', label: 'K13 Нормативная стоимость', type: 'number', default: 1 },
+            { id: 'sup_P13_costQuantityMaterialNorm', label: 'P13 Норма материала', type: 'number', default: 120013 },
+            { id: 'sup_D17_priceWeightThickness', label: 'D17 Вес', type: 'number', default: 1017 },
+            { id: 'sup_D78_massThickness', label: 'D78 Масса мм', type: 'number', default: 3 }
         ]
     },
     supE: {
-        title: '📦 Supply E Column',
+        title: '📦 Поставка Колонка E',
         fields: Array.from([19,20,21,25,26,27,101,105], n => ({
             id: `sup_E${n}_price${n>100?'Mass':'Weight'}${n<28?'ThicknessTotal':'Thickness'}${n>100?'PipeTotal':''}`,
-            label: `E${n} ${n>100?'Mass Pipe':'Weight'} ${n<28?'Total':''}`,
+            label: `E${n} ${n>100?'Масса трубы':'Вес'} ${n<28?'Итого':''}`,
             type: 'number',
             default: 1000 + n
         }))
     },
     supF: {
-        title: '📊 Supply F Column',
+        title: '📊 Поставка Колонка F',
         fields: [
-            { id: 'sup_F28_priceWeightThicknessTotal', label: 'F28 Total', type: 'number', default: 1028 },
-            { id: 'sup_F29_priceWeightPipeTotal', label: 'F29 Pipe Total', type: 'number', default: 1029 },
-            { id: 'sup_F30_priceWeightPipeTotal', label: 'F30 Pipe Total', type: 'number', default: 1030 },
-            { id: 'sup_F31_priceWeightPipeTotal', label: 'F31 Pipe Total', type: 'number', default: 1031 },
-            { id: 'sup_F32_priceWeightPipeTotal', label: 'F32 Pipe Total', type: 'number', default: 1032 },
-            { id: 'sup_F33_priceWeightPipeTotal', label: 'F33 Pipe Total', type: 'number', default: 1033 },
-            { id: 'sup_F39_priceQuantityWeightMaterialInsulationTotal', label: 'F39 Insulation', type: 'number', default: 2 }
+            { id: 'sup_F28_priceWeightThicknessTotal', label: 'F28 Итого', type: 'number', default: 1028 },
+            { id: 'sup_F29_priceWeightPipeTotal', label: 'F29 Итого трубы', type: 'number', default: 1029 },
+            { id: 'sup_F30_priceWeightPipeTotal', label: 'F30 Итого трубы', type: 'number', default: 1030 },
+            { id: 'sup_F31_priceWeightPipeTotal', label: 'F31 Итого трубы', type: 'number', default: 1031 },
+            { id: 'sup_F32_priceWeightPipeTotal', label: 'F32 Итого трубы', type: 'number', default: 1032 },
+            { id: 'sup_F33_priceWeightPipeTotal', label: 'F33 Итого трубы', type: 'number', default: 1033 },
+            { id: 'sup_F39_priceQuantityWeightMaterialInsulationTotal', label: 'F39 Изоляция', type: 'number', default: 2 }
         ]
     },
     supD_prices: {
-        title: '💵 Price Components D',
+        title: '💵 Компоненты цен D',
         fields: [
-            { id: 'sup_D38_priceQuantityTotal', label: 'D38 Quantity Total', type: 'number', default: 1038 },
-            { id: 'sup_D43_priceTotal', label: 'D43 Price Total', type: 'number', default: 3301 },
-            { id: 'sup_D44_price', label: 'D44 Price', type: 'number', default: 1751 },
-            { id: 'sup_D45_price', label: 'D45 Price', type: 'number', default: 2801 },
-            { id: 'sup_D46_price', label: 'D46 Price', type: 'number', default: 1201 }
+            { id: 'sup_D38_priceQuantityTotal', label: 'D38 Общее количество', type: 'number', default: 1038 },
+            { id: 'sup_D43_priceTotal', label: 'D43 Общая цена', type: 'number', default: 3301 },
+            { id: 'sup_D44_price', label: 'D44 Цена', type: 'number', default: 1751 },
+            { id: 'sup_D45_price', label: 'D45 Цена', type: 'number', default: 2801 },
+            { id: 'sup_D46_price', label: 'D46 Цена', type: 'number', default: 1201 }
         ]
     },
     supG: {
-        title: '💸 Price Components G/H',
+        title: '💸 Компоненты цен G/H',
         fields: [
-            { id: 'sup_G43_priceMaterialInsulationTotal', label: 'G43 Insulation', type: 'number', default: 2043 },
-            { id: 'sup_G44_priceMaterialInsulation', label: 'G44 Insulation', type: 'number', default: 2044 },
-            { id: 'sup_G45_priceMaterialInsulation', label: 'G45 Insulation', type: 'number', default: 2045 },
-            { id: 'sup_H54_priceTotal', label: 'H54 Total', type: 'number', default: 2054 },
-            { id: 'sup_H55_priceTotal', label: 'H55 Total', type: 'number', default: 2055 },
-            { id: 'sup_H56_priceTotal', label: 'H56 Total', type: 'number', default: 2056 },
-            { id: 'sup_H57_priceTotal', label: 'H57 Total', type: 'number', default: 2057 }
+            { id: 'sup_G43_priceMaterialInsulationTotal', label: 'G43 Изоляция', type: 'number', default: 2043 },
+            { id: 'sup_G44_priceMaterialInsulation', label: 'G44 Изоляция', type: 'number', default: 2044 },
+            { id: 'sup_G45_priceMaterialInsulation', label: 'G45 Изоляция', type: 'number', default: 2045 },
+            { id: 'sup_H54_priceTotal', label: 'H54 Итого', type: 'number', default: 2054 },
+            { id: 'sup_H55_priceTotal', label: 'H55 Итого', type: 'number', default: 2055 },
+            { id: 'sup_H56_priceTotal', label: 'H56 Итого', type: 'number', default: 2056 },
+            { id: 'sup_H57_priceTotal', label: 'H57 Итого', type: 'number', default: 2057 }
         ]
     },
     supI: {
@@ -231,15 +231,15 @@ const FIELD_CONFIG = {
 
 // Dashboard cards configuration
 const DASHBOARD_CARDS = [
-    { id: 'health', title: '🟢 Health Status', metrics: 'healthMetrics' },
-    { id: 'system', title: '📊 System Metrics', metrics: 'systemMetrics' },
-    { id: 'admin', title: '🔧 Admin Tools', content: `
+    { id: 'health', title: '🟢 Состояние системы', metrics: 'healthMetrics' },
+    { id: 'system', title: '📊 Метрики системы', metrics: 'systemMetrics' },
+    { id: 'admin', title: '🔧 Инструменты администратора', content: `
         <a href="/template-upload.html" style="display:block;padding:12px 20px;background:#667eea;color:white;text-decoration:none;border-radius:8px;font-weight:600;text-align:center;">
-            📋 Template Management →
+            📋 Управление шаблонами →
         </a>
-        <p style="font-size:12px;color:#718096;margin:8px 0 0;">Upload, download, and manage Excel calculation templates</p>
+        <p style="font-size:12px;color:#718096;margin:8px 0 0;">Загружайте, скачивайте и управляйте Excel шаблонами для расчетов</p>
     `},
-    { id: 'files', title: '📁 Recent Files', metrics: 'recentFiles' }
+    { id: 'files', title: '📁 Последние файлы', metrics: 'recentFiles' }
 ];
 
 // Initialize the application
@@ -254,7 +254,7 @@ function renderDashboard() {
     container.innerHTML = DASHBOARD_CARDS.map(card => `
         <div class="card">
             <h2>${card.title}</h2>
-            ${card.content || `<div id="${card.metrics}"><div class="metric"><span class="metric-label">Loading...</span></div></div>`}
+            ${card.content || `<div id="${card.metrics}"><div class="metric"><span class="metric-label">Загрузка...</span></div></div>`}
         </div>
     `).join('');
 }
@@ -312,32 +312,32 @@ async function updateMetrics() {
 
 function updateHealthMetrics(data) {
     document.getElementById('healthMetrics').innerHTML = `
-        <div class="metric"><span class="metric-label">Status</span><span class="metric-value">${data.status}</span></div>
-        <div class="metric"><span class="metric-label">Version</span><span class="metric-value">${data.version}</span></div>
-        <div class="metric"><span class="metric-label">Uptime</span><span class="metric-value">${formatUptime(data.uptime)}</span></div>
+        <div class="metric"><span class="metric-label">Статус</span><span class="metric-value">${data.status}</span></div>
+        <div class="metric"><span class="metric-label">Версия</span><span class="metric-value">${data.version}</span></div>
+        <div class="metric"><span class="metric-label">Время работы</span><span class="metric-value">${formatUptime(data.uptime)}</span></div>
     `;
 }
 
 function updateSystemMetrics(data) {
     document.getElementById('systemMetrics').innerHTML = `
-        <div class="metric"><span class="metric-label">Active Workers</span><span class="metric-value">${data.queue.activeWorkers}/${data.queue.totalWorkers}</span></div>
-        <div class="metric"><span class="metric-label">Queue Size</span><span class="metric-value">${data.queue.queuedRequests}</span></div>
-        <div class="metric"><span class="metric-label">Avg Response</span><span class="metric-value">${data.requests.averageResponseTime}ms</span></div>
-        <div class="metric"><span class="metric-label">Success Rate</span><span class="metric-value">${data.requests.successRate}%</span></div>
+        <div class="metric"><span class="metric-label">Активные рабочие процессы</span><span class="metric-value">${data.queue.activeWorkers}/${data.queue.totalWorkers}</span></div>
+        <div class="metric"><span class="metric-label">Размер очереди</span><span class="metric-value">${data.queue.queuedRequests}</span></div>
+        <div class="metric"><span class="metric-label">Ср. время ответа</span><span class="metric-value">${data.requests.averageResponseTime}ms</span></div>
+        <div class="metric"><span class="metric-label">Успешность</span><span class="metric-value">${data.requests.successRate}%</span></div>
     `;
 }
 
 function updateRecentFiles(data) {
     document.getElementById('recentFiles').innerHTML = `
-        <div class="metric"><span class="metric-label">Total Files</span><span class="metric-value">${data.count}</span></div>
-        <div class="metric"><span class="metric-label">Latest</span><span class="metric-value">${data.count > 0 ? new Date(data.files[0].created).toLocaleTimeString() : 'None'}</span></div>
+        <div class="metric"><span class="metric-label">Всего файлов</span><span class="metric-value">${data.count}</span></div>
+        <div class="metric"><span class="metric-label">Последний</span><span class="metric-value">${data.count > 0 ? new Date(data.files[0].created).toLocaleTimeString() : 'Отсутствует'}</span></div>
     `;
 }
 
 function updateFileList(files) {
     const fileList = document.getElementById('fileList');
     if (!files || files.length === 0) {
-        fileList.innerHTML = '<div style="padding:20px;text-align:center;color:#718096;">No files generated yet</div>';
+        fileList.innerHTML = '<div style="padding:20px;text-align:center;color:#718096;">Файлы еще не сгенерированы</div>';
         return;
     }
     
@@ -348,7 +348,7 @@ function updateFileList(files) {
                 <div class="file-meta">${new Date(file.created).toLocaleString()} • ${formatFileSize(file.size)}</div>
             </div>
             <div class="file-actions">
-                <a href="${file.downloadUrl}" class="download-btn" download>Download</a>
+                <a href="${file.downloadUrl}" class="download-btn" download>Скачать</a>
             </div>
         </div>
     `).join('');
@@ -421,20 +421,20 @@ async function calculateCost() {
 
 function formatResponse(data) {
     const fmt = n => n.toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' });
-    return `✅ CALCULATION SUCCESSFUL
+    return `✅ РАСЧЕТ УСПЕШНО ВЫПОЛНЕН
 
-Total Cost: ${fmt(data.results.total_cost)}
+Общая стоимость: ${fmt(data.results.total_cost)}
 
-Component Breakdown:
-  • Materials: ${fmt(data.results.component_costs.materials)}
-  • Processing: ${fmt(data.results.component_costs.processing)}
-  • Hardware: ${fmt(data.results.component_costs.hardware)}
-  • Other: ${fmt(data.results.component_costs.other)}
+Состав по компонентам:
+  • Материалы: ${fmt(data.results.component_costs.materials)}
+  • Обработка: ${fmt(data.results.component_costs.processing)}
+  • Оборудование: ${fmt(data.results.component_costs.hardware)}
+  • Прочее: ${fmt(data.results.component_costs.other)}
 
-Processing Time: ${data.processing_time_ms}ms
-Request ID: ${data.request_id}
+Время обработки: ${data.processing_time_ms}ms
+ID запроса: ${data.request_id}
 
-Full Response:
+Полный ответ:
 ${JSON.stringify(data, null, 2)}`;
 }
 
@@ -454,7 +454,7 @@ function clearForm() {
         if (el.tagName === 'SELECT') el.selectedIndex = 0;
         else el.value = '';
     });
-    document.getElementById('responseArea').textContent = 'Form cleared. Enter new values...';
+    document.getElementById('responseArea').textContent = 'Форма очищена. Введите новые значения...';
     document.getElementById('downloadSection').classList.remove('active');
 }
 

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Template Management - LH Calculator</title>
+    <title>Управление шаблонами - LH Калькулятор</title>
     <style>
         * {
             margin: 0;
@@ -274,49 +274,49 @@
 <body>
     <div class="container">
         <div class="header">
-            <a href="/" class="back-link">← Back to Dashboard</a>
-            <h1>📋 Template Management</h1>
-            <p>Upload, download, and manage Excel calculation templates</p>
+            <a href="/" class="back-link">← Назад к панели управления</a>
+            <h1>📋 Управление шаблонами</h1>
+            <p>Загружайте, скачивайте и управляйте Excel шаблонами для расчетов</p>
         </div>
         
         <div class="card">
-            <h2>Current Template Information</h2>
+            <h2>Информация о текущем шаблоне</h2>
             <div class="info-grid" id="templateInfo">
                 <div class="info-item">
-                    <div class="info-label">Version</div>
+                    <div class="info-label">Версия</div>
                     <div class="info-value" id="templateVersion">Loading...</div>
                 </div>
                 <div class="info-item">
-                    <div class="info-label">File Size</div>
+                    <div class="info-label">Размер файла</div>
                     <div class="info-value" id="templateSize">Loading...</div>
                 </div>
                 <div class="info-item">
-                    <div class="info-label">Last Modified</div>
+                    <div class="info-label">Последнее изменение</div>
                     <div class="info-value" id="templateModified">Loading...</div>
                 </div>
                 <div class="info-item">
-                    <div class="info-label">Available Backups</div>
+                    <div class="info-label">Доступные резервные копии</div>
                     <div class="info-value" id="backupCount">Loading...</div>
                 </div>
             </div>
             
             <div class="button-group">
                 <button class="btn-secondary" onclick="downloadTemplate()">
-                    📥 Download Current Template
+                    📥 Скачать текущий шаблон
                 </button>
                 <button class="btn-secondary" onclick="refreshInfo()">
-                    🔄 Refresh Info
+                    🔄 Обновить информацию
                 </button>
             </div>
         </div>
         
         <div class="card">
-            <h2>Upload New Template</h2>
+            <h2>Загрузить новый шаблон</h2>
             
             <div class="upload-area" id="uploadArea" onclick="selectFile()">
                 <div class="upload-icon">📤</div>
-                <div class="upload-text">Click to select or drag and drop</div>
-                <div class="upload-hint">Excel files only (.xlsx, .xls) - Max 50MB</div>
+                <div class="upload-text">Кликните для выбора или перетащите файл</div>
+                <div class="upload-hint">Только Excel файлы (.xlsx, .xls) - Максимум 50МБ</div>
             </div>
             
             <input type="file" id="fileInput" accept=".xlsx,.xls" style="display: none;">
@@ -325,7 +325,7 @@
                 <div class="progress-bar">
                     <div class="progress-fill" id="progressFill"></div>
                 </div>
-                <div class="progress-text" id="progressText">Uploading...</div>
+                <div class="progress-text" id="progressText">Загрузка...</div>
             </div>
             
             <div class="message success" id="successMessage"></div>
@@ -334,10 +334,10 @@
         </div>
         
         <div class="card">
-            <h2>Template Backups</h2>
+            <h2>Резервные копии шаблонов</h2>
             <div class="backup-list" id="backupList">
                 <div style="padding: 20px; text-align: center; color: #718096;">
-                    Loading backups...
+                    Загрузка резервных копий...
                 </div>
             </div>
         </div>
@@ -374,16 +374,16 @@
                     } else {
                         document.getElementById('backupList').innerHTML = `
                             <div style="padding: 20px; text-align: center; color: #718096;">
-                                No backups available
+                                Резервные копии недоступны
                             </div>
                         `;
                     }
                 } else {
-                    showError('Failed to load template information');
+                    showError('Не удалось загрузить информацию о шаблоне');
                 }
             } catch (error) {
                 console.error('Error loading template info:', error);
-                showError('Failed to connect to server');
+                showError('Не удалось подключиться к серверу');
             }
         }
         
@@ -400,7 +400,7 @@
                     </div>
                     <div class="backup-actions">
                         <button class="btn-secondary btn-small" onclick="restoreBackup('${backup.name}')">
-                            Restore
+                            Восстановить
                         </button>
                     </div>
                 </div>
@@ -453,13 +453,13 @@
             const ext = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
             
             if (!validTypes.includes(ext)) {
-                showError('Invalid file type. Please select an Excel file (.xlsx or .xls)');
+                showError('Неверный тип файла. Пожалуйста, выберите файл Excel (.xlsx или .xls)');
                 return;
             }
             
             // Validate file size (50MB max)
             if (file.size > 50 * 1024 * 1024) {
-                showError('File too large. Maximum size is 50MB');
+                showError('Файл слишком большой. Максимальный размер 50МБ');
                 return;
             }
             
@@ -478,7 +478,7 @@
             // Show progress
             progressContainer.style.display = 'block';
             progressFill.style.width = '0%';
-            progressText.textContent = 'Uploading template...';
+            progressText.textContent = 'Загрузка шаблона...';
             hideMessages();
             
             // Simulate progress
@@ -503,8 +503,8 @@
                 const data = await response.json();
                 
                 if (data.success) {
-                    progressText.textContent = 'Upload complete!';
-                    showSuccess('Template uploaded successfully! Workers will use the new template on next request.');
+                    progressText.textContent = 'Загрузка завершена!';
+                    showSuccess('Шаблон успешно загружен! Рабочие процессы будут использовать новый шаблон в следующем запросе.');
                     
                     // Reload template info
                     setTimeout(() => {
@@ -516,15 +516,15 @@
                     progressContainer.style.display = 'none';
                     
                     // Show detailed error information
-                    let errorMsg = data.error?.message || 'Upload failed';
+                    let errorMsg = data.error?.message || 'Ошибка загрузки';
                     
                     if (data.error?.errors && data.error.errors.length > 0) {
-                        errorMsg += '\n\nValidation Errors:\n' + data.error.errors.join('\n');
+                        errorMsg += '\n\nОшибки валидации:\n' + data.error.errors.join('\n');
                     }
                     
                     if (data.error?.details) {
                         console.log('Validation Details:', data.error.details);
-                        errorMsg += '\n\nCheck console for detailed validation information.';
+                        errorMsg += '\n\nПроверьте консоль для получения подробной информации о валидации.';
                     }
                     
                     showError(errorMsg);
@@ -533,7 +533,7 @@
                 clearInterval(progressInterval);
                 progressContainer.style.display = 'none';
                 console.error('Upload error:', error);
-                showError('Failed to upload template: ' + error.message);
+                showError('Не удалось загрузить шаблон: ' + error.message);
             }
         }
         
@@ -544,7 +544,7 @@
         
         // Restore backup
         async function restoreBackup(backupFile) {
-            if (!confirm(`Are you sure you want to restore backup ${backupFile}?`)) {
+            if (!confirm(`Вы уверены, что хотите восстановить резервную копию ${backupFile}?`)) {
                 return;
             }
             
@@ -562,21 +562,21 @@
                 const data = await response.json();
                 
                 if (data.success) {
-                    showSuccess('Template restored successfully from backup');
+                    showSuccess('Шаблон успешно восстановлен из резервной копии');
                     loadTemplateInfo();
                 } else {
-                    showError(data.error?.message || 'Restore failed');
+                    showError(data.error?.message || 'Ошибка восстановления');
                 }
             } catch (error) {
                 console.error('Restore error:', error);
-                showError('Failed to restore backup: ' + error.message);
+                showError('Не удалось восстановить резервную копию: ' + error.message);
             }
         }
         
         // Refresh info
         function refreshInfo() {
             loadTemplateInfo();
-            showSuccess('Information refreshed');
+            showSuccess('Информация обновлена');
         }
         
         // Message functions
