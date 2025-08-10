@@ -9,6 +9,7 @@ import dotenv from 'dotenv';
 import basicAuth from 'express-basic-auth';
 import { FieldValidator } from './validators/field-validator';
 import { ExcelProcessor } from './processors/excel-processor';
+import { ProcessorWrapper } from './processors/processor-wrapper';
 import { rateLimiter } from './middleware/rate-limiter';
 import { QueueManager } from './services/queue-manager';
 import { ErrorHandler, GlobalErrorHandler, CircuitBreaker } from './middleware/error-handler';
@@ -59,10 +60,13 @@ const excelProcessor = new ExcelProcessor({
   enableFileIntegrityCheck: true
 });
 
-const queueManager = new QueueManager(excelProcessor, {
+// Use ProcessorWrapper to enable LibreOffice with ExcelJS fallback
+const processorWrapper = new ProcessorWrapper(excelProcessor, false); // false = use ExcelJS only
+
+const queueManager = new QueueManager(processorWrapper, {
   maxWorkers: process.env.NODE_ENV === 'test' ? 10 : 5,
   maxQueueSize: process.env.NODE_ENV === 'test' ? 500 : 200,
-  requestTimeoutMs: process.env.NODE_ENV === 'test' ? 120000 : 45000 // Extended timeout for tests
+  requestTimeoutMs: process.env.NODE_ENV === 'test' ? 120000 : 60000 // 60 seconds for LibreOffice processing
 });
 
 // Circuit breaker for critical operations
