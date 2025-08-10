@@ -1,12 +1,9 @@
 openapi: 3.0.3
 info:
-  title: Excel Processor API for Bitrix24
-  description: |
-    API for processing cost calculations from Bitrix24 using Excel templates.
-    Accepts engineering and supply parameters, returns calculated costs.
-  version: 1.0.0
-  contact:
-    name: Excel Processor Service
+  title: LH Calculator Excel API
+  version: 2.0.0
+  description: Excel-based calculation service with 141 fields for engineering and supply chain calculations
+
 servers:
   - url: http://localhost:3000
     description: Development server
@@ -14,636 +11,449 @@ servers:
 paths:
   /api/calculate:
     post:
-      summary: Process cost calculation
-      description: |
-        Accepts engineering and supply parameters from Bitrix24,
-        processes them through Excel calculations, returns results.
-      operationId: calculateCosts
+      summary: Process calculation request
+      description: Processes 141 fields through Excel formulas and returns calculated values
+      operationId: calculateValues
+      tags:
+        - Calculations
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/CalculationRequest'
-            example:
-              # Engineering parameters (required)
-              tech_D27_type: 1
-              tech_E27_weightType: "Е-113"
-              tech_H27_quantityType: "1/6"
-              tech_I27_quantityType: 400
-              tech_J27_quantityType: 22
-              tech_K27_quantity: 22
-              tech_L27_quantity: 100
-              tech_M27_material: 100
-              tech_T27_materialThicknessType: 5
-              tech_V27_thicknessType: 3
-              
-              # Supply parameters (required)
-              sup_F2_parameter: "0000"
-              sup_D8_priceMaterial: 700
-              sup_E8_priceMaterial: 700
-              sup_K13_costQuantityNormTotal: 1
-              sup_P13_costQuantityMaterialNorm: 120000
-              sup_D78_massThickness: 3
-              
-              # Supply inputs (string fields)
-              sup_D10_priceCostMaterial: "material_cost_value"
-              sup_D11_priceCostMaterial: "panel_cost_value"
-              sup_D17_priceWeightThickness: "panel_cutting_correction"
-              
-              # Price totals (number fields)
-              sup_D43_priceTotal: 3300
-              sup_D44_price: 1750
-              sup_D45_price: 2800
-              sup_D46_price: 1200
+            examples:
+              minimal:
+                summary: Minimal valid request
+                value:
+                  tech_D27_type: 100
+                  tech_E27_weightType: "E-113"
+                  tech_F27_quantityType: "Целый ТА"
+                  tech_G27_quantityType: "К4-750"
+                  tech_H27_quantityType: "1/6"
+                  tech_I27_quantityType: 5
+                  tech_J27_quantityType: 10
+                  tech_K27_quantity: 1
+                  tech_L27_quantity: 2
+                  tech_M27_material: 250
+                  tech_P27_materialType: "AISI 316L"
+                  tech_R27_materialThicknessType: "12Х18Н10Т"
+                  tech_S27_materialThicknessType: "гофра"
+                  tech_T27_materialThicknessType: 20
+                  tech_U27_materialThicknessType: 1.2
+                  tech_V27_thicknessType: 1.5
+                  sup_F2_parameter: "09Г2С"
+                  sup_D8_priceMaterial: 50000
+                  sup_E8_priceMaterial: 55000
+                  sup_K13_costQuantityNormTotal: 10
+                  sup_P13_costQuantityMaterialNorm: 100000
+                  sup_D78_massThickness: 25
+                  sup_D43_priceTotal: 1000
+                  sup_D44_price: 2000
+                  sup_D45_price: 3000
+                  sup_D46_price: 4000
       responses:
         '200':
-          description: Calculation completed successfully
+          description: Successful calculation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CalculationResponse'
-              example:
-                success: true
-                results:
-                  calculated_values:
-                    tech_F27_quantityType: "calculated_quantity"
-                    tech_G27_quantityType: "calculated_quantity_2" 
-                    tech_P27_materialType: "calculated_material"
-                    tech_Q27_materialType: "calculated_material_2"
-                    tech_R27_materialThicknessType: "calculated_thickness"
-                    tech_S27_materialThicknessType: "calculated_thickness_2"
-                    tech_U27_materialThicknessType: 123.45
-                  total_cost: 245680.50
-                  component_costs:
-                    materials: 156780.25
-                    processing: 45890.15
-                    hardware: 23010.10
-                    other: 20000.00
-                request_id: "req_20250809_12345"
-                processing_time_ms: 1250
-        '400':
-          description: Invalid request data
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                success: false
-                error: "Validation failed"
-                details:
-                  field_errors:
-                    tech_D27_type: "This field is required"
-                    sup_D8_priceMaterial: "Must be a valid number"
-                    sup_F2_parameter: "Must be one of: 0000, 06ХН28МДТ, 09Г2С, 12Х18Н10Т, 20ХН3А, 30ХМА, 40Х"
-                  missing_required_fields: ["tech_E27_weightType", "tech_I27_quantityType"]
-                request_id: "req_20250809_12346"
         '422':
-          description: Excel processing error
+          description: Validation or processing error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-              example:
-                success: false
-                error: "Excel calculation failed"
-                details:
-                  excel_errors: ["Division by zero in cell D45", "Invalid reference in formula"]
-                  failed_cells: ["снабжение!D45", "технолог!F27"]
-                request_id: "req_20250809_12347"
-        '500':
-          description: Internal server error
+        '503':
+          description: Service unavailable
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-              example:
-                success: false
-                error: "Internal server error"
-                details:
-                  error_type: "ExcelFileNotFound"
-                  message: "Cannot locate Excel template file"
-                request_id: "req_20250809_12348"
 
+  /health:
+    get:
+      summary: Health check
       tags:
-        - Calculation
+        - Monitoring
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [healthy]
+                  timestamp:
+                    type: string
+                    format: date-time
+
+  /api/metrics:
+    get:
+      summary: System metrics
+      tags:
+        - Monitoring
+      responses:
+        '200':
+          description: Current metrics
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  memory:
+                    type: object
+                    properties:
+                      heapUsed:
+                        type: number
+                      heapTotal:
+                        type: number
+                      rss:
+                        type: number
+                  queue:
+                    type: object
+                    properties:
+                      size:
+                        type: integer
+                      pending:
+                        type: integer
+                      processing:
+                        type: integer
+                  workers:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                      busy:
+                        type: integer
+                      available:
+                        type: integer
+
+  /api/fields/required:
+    get:
+      summary: Get required fields list
+      tags:
+        - Metadata
+      responses:
+        '200':
+          description: List of required field names
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+
+  /api/openapi.yaml:
+    get:
+      summary: Get OpenAPI specification
+      tags:
+        - Metadata
+      responses:
+        '200':
+          description: OpenAPI specification in YAML format
+          content:
+            text/yaml:
+              schema:
+                type: string
+
+  /api/openapi.json:
+    get:
+      summary: Get OpenAPI specification as JSON
+      tags:
+        - Metadata
+      responses:
+        '200':
+          description: OpenAPI specification in JSON format
+          content:
+            application/json:
+              schema:
+                type: object
 
 components:
   schemas:
     CalculationRequest:
       type: object
       required:
-        # Engineering parameters (Green cells - required)
+        # Engineering fields (технолог sheet) - Required
         - tech_D27_type
-        - tech_E27_weightType  
+        - tech_E27_weightType
+        - tech_F27_quantityType
+        - tech_G27_quantityType
         - tech_H27_quantityType
         - tech_I27_quantityType
         - tech_J27_quantityType
         - tech_K27_quantity
         - tech_L27_quantity
         - tech_M27_material
+        - tech_P27_materialType
+        - tech_R27_materialThicknessType
+        - tech_S27_materialThicknessType
         - tech_T27_materialThicknessType
-        
-        # Supply parameters (Green cells - required)
+        - tech_U27_materialThicknessType
+        - tech_V27_thicknessType
+        # Supply fields (снабжение sheet) - Required
         - sup_F2_parameter
         - sup_D8_priceMaterial
         - sup_E8_priceMaterial
         - sup_K13_costQuantityNormTotal
         - sup_P13_costQuantityMaterialNorm
         - sup_D78_massThickness
-        
-        # Required string fields
-        - sup_D10_priceCostMaterial
-        - sup_D11_priceCostMaterial
-        - sup_D17_priceWeightThickness
-        - sup_E20_priceWeightThicknessTotal
-        - sup_K20_priceWeightThicknessTotal
-        - sup_E21_priceWeightThicknessTotal
-        - sup_K21_priceWeightThicknessTotal
-        - sup_E26_priceWeightThickness
-        - sup_K26_priceWeightThickness
-        - sup_E27_priceWeightThickness
-        - sup_K27_priceWeightThickness
-        
-        # Required price fields
         - sup_D43_priceTotal
         - sup_D44_price
         - sup_D45_price
         - sup_D46_price
-        
       properties:
-        # Engineering parameters (технолог sheet)
+        # Engineering fields (технолог sheet)
         tech_D27_type:
           type: number
           minimum: 0
-          description: "Equipment type number"
+          description: Equipment type identifier
         tech_E27_weightType:
           type: string
-          pattern: "^[ЕК][-0-9А-Я*]*$"
-          description: "Equipment position code (e.g., Е-113)"
+          pattern: '^[ЕК][-0-9А-Я*]*$'
+          description: Equipment code (e.g., "Е-113", "К4-750")
+        tech_F27_quantityType:
+          type: string
+          enum: ['Целый ТА', 'ШОТ-БЛОК', 'РЕИНЖ']
+          description: Delivery type
+        tech_G27_quantityType:
+          type: string
+          description: Equipment size specification
         tech_H27_quantityType:
           type: string
-          pattern: "^\\d+\\/\\d+$"
-          description: "Process specification (e.g., 1/6)"
+          pattern: '^\d+\/\d+$'
+          description: Fraction specification (e.g., "1/6")
         tech_I27_quantityType:
           type: number
           minimum: 0
-          description: "Quantity of plates"
         tech_J27_quantityType:
           type: number
           minimum: 0
-          description: "Calculated pressure hot side (bar)"
         tech_K27_quantity:
           type: number
           minimum: 0
-          description: "Calculated pressure cold side (bar)"
         tech_L27_quantity:
           type: number
           minimum: 0
-          description: "Calculated temperature hot side (°C)"
         tech_M27_material:
           type: number
           minimum: 0
-          description: "Calculated temperature cold side (°C)"
+          description: Material temperature rating
+        tech_N27_pressureTestHot:
+          type: number
+          description: Hot pressure test value (computed)
+        tech_O27_pressureTestCold:
+          type: number
+          description: Cold pressure test value (computed)
+        tech_P27_materialType:
+          type: string
+          enum: ['AISI 316L', 'SMO 254', 'Hast-C276', 'Titanium', 'AISI 304', 'AISI316Ti', '904L']
+          description: Primary material type
+        tech_Q27_materialType:
+          type: string
+          description: Secondary material type (computed from P27)
+        tech_R27_materialThicknessType:
+          type: string
+          enum: ['ст3', 'ст20', '09Г2С', '12Х18Н10Т', 'AISI 304', 'AISI 316L', 'AISI 321', 'AISI 316Ti']
+          description: Material thickness type
+        tech_S27_materialThicknessType:
+          type: string
+          enum: ['гофра', 'дв. лунка', 'од. лунка', 'шпилька', 'шпилька-лунка']
+          description: Surface pattern type
         tech_T27_materialThicknessType:
           type: number
           minimum: 0
-          description: "Drawing depth (mm)"
+        tech_U27_materialThicknessType:
+          type: number
+          enum: [0.8, 1, 1.2, 1.5, 2, 3, 5]
+          description: Material thickness in mm
         tech_V27_thicknessType:
           type: number
-          minimum: 0
-          description: "Cladding thickness (mm)"
-          
-        # Supply parameters (снабжение sheet)
+          enum: [0.8, 1, 1.2, 1.5, 2, 3, 5]
+          description: Additional thickness specification
+
+        # Supply fields - Material codes and specifications
         sup_F2_parameter:
           type: string
-          enum: ["0000", "06ХН28МДТ", "09Г2С", "12Х18Н10Т", "20ХН3А", "30ХМА", "40Х"]
-          description: "Material code selection"
+          enum: ['0000', '06ХН28МДТ', '09Г2С', '12Х18Н10Т', '20ХН3А', '30ХМА', '40Х']
+          description: Primary material code
+        sup_D9_priceMaterial:
+          type: string
+          enum: ['ст3', 'ст20', '09Г2С', '12Х18Н10Т', 'AISI 304', 'AISI 316L', 'AISI 321', 'AISI 316Ti']
+          description: Price material specification
+
+        # Supply fields - Required prices
         sup_D8_priceMaterial:
           type: number
           minimum: 0
-          description: "Accepted price of flow part material per kg (rubles)"
+          maximum: 1000000
+          description: Material price per unit
         sup_E8_priceMaterial:
           type: number
           minimum: 0
-          description: "Cladding material price per kg (rubles)"
+          maximum: 1000000
+          description: Alternative material price
         sup_K13_costQuantityNormTotal:
           type: number
           minimum: 0
-          description: "Number of standard hours"
+          maximum: 10000
+          description: Total normalized quantity cost
         sup_P13_costQuantityMaterialNorm:
           type: number
           minimum: 0
-          description: "Internal logistics cost"
+          maximum: 10000000
+          description: Normalized material quantity cost
         sup_D78_massThickness:
           type: number
           minimum: 0
-          description: "Stainless steel thickness"
-          
-        # String input fields (Green cells)
-        sup_D10_priceCostMaterial:
-          type: string
-          description: "Accepted price of column, cover material per kg (rubles)"
-        sup_D11_priceCostMaterial:
-          type: string
-          description: "Accepted price of panel material per kg (rubles)"
-        sup_D17_priceWeightThickness:
-          type: string
-          description: "Panel cutting correction factor"
-        sup_D38_priceQuantityTotal:
-          type: string
-          description: "Price per unit"
-        sup_E101_priceMassPipeTotal:
-          type: string
-          description: "Total pipe mass price calculation"
-        sup_E105_priceMassPipeTotal:
-          type: string
-          description: "Total pipe mass price calculation 2"
-        sup_E20_priceWeightThicknessTotal:
-          type: string
-          description: "Cutting price calculation"
-        sup_E21_priceWeightThicknessTotal:
-          type: string
-          description: "Processing per unit calculation"
-        sup_E26_priceWeightThickness:
-          type: string
-          description: "Cutting price per unit"
-        sup_E27_priceWeightThickness:
-          type: string
-          description: "Processing price per unit"
-        sup_F28_priceWeightThicknessTotal:
-          type: string
-          description: "Flange price calculation"
-        sup_F29_priceWeightPipeTotal:
-          type: string
-          description: "Pipe blank price per unit"
-        sup_F30_priceWeightPipeTotal:
-          type: string
-          description: "Pipe blank price calculation 2"
-        sup_F31_priceWeightPipeTotal:
-          type: string
-          description: "Pipe blank price calculation 3"
-        sup_F32_priceWeightPipeTotal:
-          type: string
-          description: "Pipe blank price calculation 4"
-        sup_F33_priceWeightPipeTotal:
-          type: string
-          description: "Pipe blank price calculation 5"
-        sup_K20_priceWeightThicknessTotal:
-          type: string
-          description: "Cutting price total"
-        sup_K21_priceWeightThicknessTotal:
-          type: string
-          description: "Processing price total"
-        sup_K26_priceWeightThickness:
-          type: string
-          description: "Cutting price per unit 2"
-        sup_K27_priceWeightThickness:
-          type: string
-          description: "Processing price per unit 2"
-        sup_L28_priceWeightThicknessTotalType:
-          type: string
-          description: "Flange price calculation type"
-        sup_L29_priceWeightPipeTotalType:
-          type: string
-          description: "Pipe total price type"
-        sup_L30_priceWeightPipeTotalType:
-          type: string
-          description: "Pipe total price type 2"
-        sup_L31_priceWeightPipeTotalType:
-          type: string
-          description: "Pipe total price type 3"
-        sup_L32_priceWeightPipeTotalType:
-          type: string
-          description: "Pipe total price type 4"
-        sup_L33_priceWeightPipeTotalType:
-          type: string
-          description: "Pipe total price type 5"
-        sup_Q22_priceQuantityMaterialThicknessTotal:
-          type: string
-          description: "Stud price per unit"
-        sup_Q23_priceMaterialThicknessTotal:
-          type: string
-          description: "Nut price per unit"
-        sup_Q24_priceThicknessTotal:
-          type: string
-          description: "Washer price per unit"
-        sup_T29_priceMaterial:
-          type: string
-          description: "Hardware kit price"
-        sup_T30_priceMaterial:
-          type: string
-          description: "Gasket price per unit"
-        sup_T31_priceMaterial:
-          type: string
-          description: "Obturator price"
-        sup_T33_priceMaterialPipe:
-          type: string
-          description: "Hardware kit price 2"
-        sup_T34_priceMaterialTotal:
-          type: string
-          description: "Gasket price per unit 2"
-        sup_T35_priceMaterialTotal:
-          type: string
-          description: "Obturator price 2"
-        sup_T37_price:
-          type: string
-          description: "Hardware kit price 3"
-        sup_T38_price:
-          type: string
-          description: "Gasket price per unit 3"
-        sup_T39_priceQuantity:
-          type: string
-          description: "Obturator price 3"
-        sup_T41_priceTotal:
-          type: string
-          description: "Hardware kit price 4"
-        sup_T42_priceMaterialInsulationTotal:
-          type: string
-          description: "Gasket price per unit 4"
-        sup_T43_priceTotal:
-          type: string
-          description: "Obturator price 4"
-          
-        # Number fields (Green cells)
+          maximum: 100
+          description: Mass thickness parameter
+
+        # Supply fields - Component costs
         sup_D43_priceTotal:
           type: number
           minimum: 0
-          description: "Price of M24x2000 stud per unit"
         sup_D44_price:
           type: number
           minimum: 0
-          description: "Price of M24x1000 stud per unit"
         sup_D45_price:
           type: number
           minimum: 0
-          description: "Price of M20x2000 stud per unit"
         sup_D46_price:
           type: number
           minimum: 0
-          description: "Price of M20/M16x1000 stud per unit"
+
+        # Additional required numeric fields
         sup_G43_priceMaterialInsulationTotal:
           type: number
           minimum: 0
-          description: "Price of high nut M24 DIN6330 per unit"
         sup_G44_priceMaterialInsulation:
           type: number
           minimum: 0
-          description: "Price of nut M24 DIN933 per unit"
         sup_G45_priceMaterialInsulation:
           type: number
           minimum: 0
-          description: "Price of nut M20/M16 DIN933 per unit"
         sup_H54_priceTotal:
           type: number
           minimum: 0
-          description: "Hardware price total 1"
         sup_H55_priceTotal:
           type: number
           minimum: 0
-          description: "Hardware price total 2"
         sup_H56_priceTotal:
           type: number
           minimum: 0
-          description: "Hardware price total 3"
         sup_H57_priceTotal:
           type: number
           minimum: 0
-          description: "Hardware price total 4"
         sup_I38_priceThicknessTotalType:
           type: number
           minimum: 0
-          description: "Metal thickness total price type"
         sup_I39_priceQuantityMaterialThicknessInsulationTotalType:
           type: number
           minimum: 0
-          description: "Processing quantity material thickness insulation total type"
-        sup_I44_priceMaterialThicknessInsulationTotalType:
-          type: string
-          description: "Insulation sleeve description"
-        sup_I45_priceMaterialThicknessInsulationTotalType:
-          type: string
-          description: "Additional material description"
-        sup_I46_priceQuantityMaterialThicknessInsulationTotalSumType:
-          type: string
-          description: "Additional material description 2"
         sup_I50_priceQuantityMaterialThicknessInsulationTotalSumType:
           type: number
           minimum: 0
-          description: "Hardware quantity 1"
         sup_I51_priceQuantityMaterialThicknessInsulationTotalSumType:
           type: number
           minimum: 0
-          description: "Hardware quantity 2"
         sup_I52_priceQuantityMaterialThicknessInsulationTotalSumType:
           type: number
           minimum: 0
-          description: "Hardware quantity 3"
         sup_I54_priceQuantityMaterialThicknessInsulationTotalType:
           type: number
           minimum: 0
-          description: "Hardware total quantity 1"
         sup_I55_priceQuantityMaterialThicknessInsulationTotalType:
           type: number
           minimum: 0
-          description: "Hardware total quantity 2"
         sup_I56_priceQuantityMaterialThicknessInsulationTotalType:
           type: number
           minimum: 0
-          description: "Hardware total quantity 3"
         sup_I57_priceQuantityMaterialThicknessInsulationTotalType:
           type: number
           minimum: 0
-          description: "Hardware total quantity 4"
         sup_K38_pricePipeTotal:
           type: number
           minimum: 0
-          description: "Metal pipe total price"
         sup_K39_priceQuantityMaterialPipeInsulationTotal:
           type: number
           minimum: 0
-          description: "Processing pipe insulation total"
         sup_M38_priceMaterialTotal:
           type: number
           minimum: 0
-          description: "Metal material total price"
         sup_M39_quantityMaterialTotal:
           type: number
           minimum: 0
-          description: "Processing material total quantity"
         sup_M44_priceMaterial:
           type: number
           minimum: 0
-          description: "Insulation material price"
         sup_M45_priceMaterial:
           type: number
           minimum: 0
-          description: "Additional material price"
         sup_M46_priceQuantityMaterialSum:
           type: number
           minimum: 0
-          description: "Additional material price 2"
         sup_M51_priceQuantityMaterialTotalSum:
           type: number
           minimum: 0
-          description: "Foundation anchor bolt price"
         sup_M52_priceQuantityMaterialTotalSum:
           type: number
           minimum: 0
-          description: "Other material price"
         sup_N50_priceQuantityWeightThicknessTotalSum:
           type: number
           minimum: 0
-          description: "Panel gasket quantity"
         sup_N51_priceQuantityWeightThicknessTotalSum:
           type: number
           minimum: 0
-          description: "Foundation anchor bolt quantity"
         sup_N52_priceQuantityWeightThicknessTotalSum:
           type: number
           minimum: 0
-          description: "Other material quantity"
         sup_N54_quantityWeightThicknessTotal:
           type: number
           minimum: 0
-          description: "Flange gasket total quantity 1"
         sup_N55_quantityWeightThicknessTotal:
           type: number
           minimum: 0
-          description: "Flange gasket total quantity 2"
         sup_N56_quantityWeightThicknessTotal:
           type: number
           minimum: 0
-          description: "Flange gasket total quantity 3"
         sup_N57_quantityWeightThicknessTotal:
           type: number
           minimum: 0
-          description: "Flange gasket total quantity 4"
         sup_P45_priceMaterialTotal:
           type: number
           minimum: 0
-          description: "Unaccounted material price"
-          
-        # Orange cells (Engineering parameters - calculated/optional)
-        sup_C28_priceWeightThickness:
-          type: string
-          enum: ["Ру6", "Ру10", "Ру16", "Ру25", "Ру40", "Ру63", "Ру100", "Ру160"]
-          description: "Pressure rating flange 1"
-        sup_C29_priceWeightPipeThickness:
-          type: string
-          enum: ["Ру6", "Ру10", "Ру16", "Ру25", "Ру40", "Ру63", "Ру100", "Ру160"]
-          description: "Pressure rating flange 2"
-        sup_D28_priceWeightThickness:
-          type: string
-          enum: ["Ду25", "Ду32", "Ду40", "Ду50", "Ду65", "Ду80", "Ду100", "Ду125", "Ду150", "Ду200", "Ду250", "Ду300", "Ду350", "Ду400", "Ду450", "Ду600", "Ду800", "Ду1000"]
-          description: "Diameter code flange 1"
-        sup_D29_priceWeightPipe:
-          type: string
-          enum: ["Ду25", "Ду32", "Ду40", "Ду50", "Ду65", "Ду80", "Ду100", "Ду125", "Ду150", "Ду200", "Ду250", "Ду300", "Ду350", "Ду400", "Ду450", "Ду600", "Ду800", "Ду1000"]
-          description: "Diameter code flange 2"
-        sup_D9_priceMaterial:
-          type: string
-          enum: ["0000", "06ХН28МДТ", "09Г2С", "12Х18Н10Т", "20ХН3А", "30ХМА", "40Х"]
-          description: "Housing material code"
-        sup_E19_priceWeightThicknessTotal:
-          type: string
-          description: "Metal thickness calculation"
-        sup_E25_priceWeightThicknessTotal:
-          type: string
-          description: "Metal per unit thickness"
         sup_F39_priceQuantityWeightMaterialInsulationTotal:
           type: number
           minimum: 0
-          description: "Insulation weight material total"
-        sup_I28_priceWeightThicknessType:
+
+        # Optional fields - Pressure ratings
+        sup_C28_priceWeightThickness:
           type: string
-          enum: ["Ру6", "Ру10", "Ру16", "Ру25", "Ру40", "Ру63", "Ру100", "Ру160"]
-          description: "Pressure rating flange 3"
-        sup_I29_priceWeightPipeThicknessType:
+          enum: ['Ру6', 'Ру10', 'Ру16', 'Ру25', 'Ру40', 'Ру63', 'Ру100', 'Ру160']
+          description: Pressure rating
+        sup_C29_priceWeightPipeThickness:
           type: string
-          enum: ["Ру6", "Ру10", "Ру16", "Ру25", "Ру40", "Ру63", "Ру100", "Ру160"]
-          description: "Pressure rating flange 4"
-        sup_J28_priceQuantityWeightThicknessNormTotal:
+          enum: ['Ру6', 'Ру10', 'Ру16', 'Ру25', 'Ру40', 'Ру63', 'Ру100', 'Ру160']
+          description: Pipe pressure rating
+
+        # Optional fields - Diameter codes
+        sup_D28_priceWeightThickness:
           type: string
-          enum: ["Ду25", "Ду32", "Ду40", "Ду50", "Ду65", "Ду80", "Ду100", "Ду125", "Ду150", "Ду200", "Ду250", "Ду300", "Ду350", "Ду400", "Ду450", "Ду600", "Ду800", "Ду1000"]
-          description: "Diameter code flange 3"
-        sup_J29_priceQuantityWeightPipeNormTotal:
+          enum: ['Ду25', 'Ду32', 'Ду40', 'Ду50', 'Ду65', 'Ду80', 'Ду100', 'Ду125', 'Ду150', 'Ду200', 'Ду250', 'Ду300', 'Ду350', 'Ду400', 'Ду450', 'Ду600', 'Ду800', 'Ду1000']
+          description: Diameter code
+        sup_D29_priceWeightPipe:
           type: string
-          enum: ["Ду25", "Ду32", "Ду40", "Ду50", "Ду65", "Ду80", "Ду100", "Ду125", "Ду150", "Ду200", "Ду250", "Ду300", "Ду350", "Ду400", "Ду450", "Ду600", "Ду800", "Ду1000"]
-          description: "Diameter code flange 4"
-        sup_K19_priceWeightThicknessTotal:
-          type: string
-          description: "Metal thickness calculation 2"
-        sup_K25_priceWeightThicknessTotal:
-          type: string
-          description: "Metal per unit thickness 2"
-        sup_P19_priceQuantityMaterialThickness:
-          type: number
-          minimum: 0
-          description: "Material quantity calculation"
-        sup_P20_priceQuantityWeightMaterial:
-          type: string
-          enum: ["0000", "06ХН28МДТ", "09Г2С", "12Х18Н10Т", "20ХН3А", "30ХМА", "40Х"]
-          description: "Weight material code"
-        sup_P21_priceQuantityMaterial:
-          type: string
-          enum: ["Zn-Cr 9мкм", "ст40Х"]
-          description: "Surface treatment specification"
-        sup_P22_priceQuantityMaterialTotal:
-          type: string
-          enum: ["М16", "М18", "М20", "М22", "М24", "М27", "М30", "М33", "М36", "М39", "М42", "М48"]
-          description: "Thread specification stud"
-        sup_P29_priceMaterialTotal:
-          type: string
-          enum: ["М16", "М18", "М20", "М22", "М24", "М27", "М30", "М33", "М36", "М39", "М42", "М48"]
-          description: "Thread specification hardware 1"
-        sup_P33_priceMaterialPipeTotal:
-          type: string
-          enum: ["М16", "М18", "М20", "М22", "М24", "М27", "М30", "М33", "М36", "М39", "М42", "М48"]
-          description: "Thread specification hardware 2"
-        sup_P37_priceMaterialTotal:
-          type: string
-          enum: ["М16", "М18", "М20", "М22", "М24", "М27", "М30", "М33", "М36", "М39", "М42", "М48"]
-          description: "Thread specification hardware 3"
-        sup_P41_priceMaterialTotal:
-          type: string
-          enum: ["М16", "М18", "М20", "М22", "М24", "М27", "М30", "М33", "М36", "М39", "М42", "М48"]
-          description: "Thread specification hardware 4"
-        sup_Q29_priceThickness:
-          type: string
-          enum: ["Zn-Cr 9мкм", "ст40Х"]
-          description: "Surface treatment hardware 1"
-        sup_Q33_pricePipeThickness:
-          type: string
-          enum: ["Zn-Cr 9мкм", "ст40Х"]
-          description: "Surface treatment hardware 2"
-        sup_Q37_priceThickness:
-          type: string
-          enum: ["Zn-Cr 9мкм", "ст40Х"]
-          description: "Surface treatment hardware 3"
-        sup_Q41_priceThicknessTotal:
-          type: string
-          enum: ["Zn-Cr 9мкм", "ст40Х"]
-          description: "Surface treatment hardware 4"
-        sup_R29_price:
-          type: string
-          enum: ["Zn-Cr 9мкм", "ст40Х"]
-          description: "Surface coating hardware 1"
-        sup_R33_pricePipe:
-          type: string
-          enum: ["Zn-Cr 9мкм", "ст40Х"]
-          description: "Surface coating hardware 2"
-        sup_R37_price:
-          type: string
-          enum: ["Zn-Cr 9мкм", "ст40Х"]
-          description: "Surface coating hardware 3"
-        sup_R41_priceTotal:
-          type: string
-          enum: ["Zn-Cr 9мкм", "ст40Х"]
-          description: "Surface coating hardware 4"
-          
-      additionalProperties: false
-      
+          enum: ['Ду25', 'Ду32', 'Ду40', 'Ду50', 'Ду65', 'Ду80', 'Ду100', 'Ду125', 'Ду150', 'Ду200', 'Ду250', 'Ду300', 'Ду350', 'Ду400', 'Ду450', 'Ду600', 'Ду800', 'Ду1000']
+          description: Pipe diameter code
+
+      additionalProperties: true
+
     CalculationResponse:
       type: object
       required:
@@ -654,63 +464,53 @@ components:
       properties:
         success:
           type: boolean
-          description: "Indicates if calculation completed successfully"
+          enum: [true]
         results:
           type: object
           required:
             - calculated_values
             - total_cost
+            - component_costs
           properties:
             calculated_values:
               type: object
-              description: "Yellow cells - computed results from Excel"
               properties:
                 tech_F27_quantityType:
                   type: string
-                  description: "Calculated quantity type F27"
                 tech_G27_quantityType:
                   type: string
-                  description: "Calculated quantity type G27"
                 tech_P27_materialType:
                   type: string
-                  description: "Calculated material type P27"
                 tech_Q27_materialType:
                   type: string
-                  description: "Calculated material type Q27"
                 tech_R27_materialThicknessType:
                   type: string
-                  description: "Calculated material thickness type R27"
                 tech_S27_materialThicknessType:
                   type: string
-                  description: "Calculated material thickness type S27"
                 tech_U27_materialThicknessType:
                   type: number
-                  description: "Calculated material thickness numeric value"
             total_cost:
               type: number
-              description: "Total calculated cost in rubles"
+              description: Total calculated cost
             component_costs:
               type: object
-              description: "Breakdown of costs by component"
               properties:
                 materials:
                   type: number
-                  description: "Total materials cost"
                 processing:
                   type: number
-                  description: "Total processing cost"
                 hardware:
                   type: number
-                  description: "Total hardware cost"
                 other:
                   type: number
-                  description: "Other costs (insulation, etc.)"
         request_id:
           type: string
-          description: "Unique identifier for this calculation request"
+          pattern: '^req_\d{8}T\d{6}_[a-z0-9]{6}$'
         processing_time_ms:
-          type: integer
-          description: "Time taken to process the calculation in milliseconds"
+          type: number
+        metadata:
+          type: object
+          additionalProperties: true
 
     ErrorResponse:
       type: object
@@ -722,72 +522,42 @@ components:
         success:
           type: boolean
           enum: [false]
-          description: "Always false for error responses"
         error:
           type: string
-          description: "Error message describing what went wrong"
+          description: Error message
         details:
           type: object
-          description: "Additional error details"
           properties:
             field_errors:
               type: object
               additionalProperties:
                 type: string
-              description: "Field-specific validation errors"
             missing_required_fields:
               type: array
               items:
                 type: string
-              description: "List of missing required fields"
             excel_errors:
               type: array
               items:
                 type: string
-              description: "Excel calculation errors"
-            failed_cells:
+            processing_errors:
               type: array
               items:
                 type: string
-              description: "Excel cells that failed to calculate"
             error_type:
               type: string
-              description: "Type of internal error"
-            message:
+              enum: ['VALIDATION_FAILED', 'EXCEL_CALCULATION_FAILED', 'EXCEL_FILE_NOT_FOUND', 'INTERNAL_ERROR', 'INVALID_REQUEST', 'INVALID_INPUT_DATA', 'MISSING_REQUIRED_FIELDS']
+            queue_full:
+              type: boolean
+            retry_after:
               type: string
-              description: "Detailed error message"
         request_id:
           type: string
-          description: "Unique identifier for the failed request"
-
-  securitySchemes:
-    BearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-      description: "JWT token for API authentication"
-
-# CORS Configuration
-x-cors:
-  enabled: true
-  allow_origins:
-    - "https://your-bitrix24-domain.bitrix24.com"
-    - "https://*.bitrix24.com"
-    - "http://localhost:3000"
-    - "http://localhost:8080"
-  allow_methods:
-    - GET
-    - POST
-    - OPTIONS
-  allow_headers:
-    - Content-Type
-    - Authorization
-    - X-Requested-With
-    - Accept
-    - Origin
-  allow_credentials: true
-  max_age: 3600
 
 tags:
-  - name: Calculation
-    description: "Excel cost calculation operations"
+  - name: Calculations
+    description: Main calculation endpoints
+  - name: Monitoring
+    description: Health and metrics endpoints
+  - name: Metadata
+    description: API metadata and specifications

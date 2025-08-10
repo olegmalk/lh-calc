@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LH Calculator API Documentation</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        h1 {
+            margin: 0;
+            color: #333;
+            font-size: 24px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        .nav-links a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .nav-links a:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+        .api-info {
+            background: white;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 1200px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .info-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        .info-card h3 {
+            margin: 0 0 10px 0;
+            color: #495057;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .info-card p {
+            margin: 0;
+            color: #6c757d;
+            font-size: 14px;
+        }
+        .info-card code {
+            background: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        #swagger-ui {
+            background: white;
+            margin: 20px auto;
+            max-width: 1200px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        .download-links {
+            margin: 20px auto;
+            max-width: 1200px;
+            text-align: center;
+        }
+        .download-links a {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 10px 20px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: transform 0.2s;
+        }
+        .download-links a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .stat-label {
+            color: #6c757d;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h1>🚀 LH Calculator API Documentation</h1>
+            <div class="nav-links">
+                <a href="/">Dashboard</a>
+                <a href="/template-upload.html">Template Manager</a>
+                <a href="/health">Health Check</a>
+                <a href="/api/metrics">Metrics</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="api-info">
+        <h2>API Overview</h2>
+        <div class="stats">
+            <div class="stat">
+                <span class="stat-value">141</span>
+                <span class="stat-label">Total Fields</span>
+            </div>
+            <div class="stat">
+                <span class="stat-value">26</span>
+                <span class="stat-label">Required Fields</span>
+            </div>
+            <div class="stat">
+                <span class="stat-value">5</span>
+                <span class="stat-label">Worker Threads</span>
+            </div>
+            <div class="stat">
+                <span class="stat-value">45s</span>
+                <span class="stat-label">Timeout</span>
+            </div>
+        </div>
+        
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>Base URL</h3>
+                <p><code>http://localhost:3000</code></p>
+            </div>
+            <div class="info-card">
+                <h3>Main Endpoint</h3>
+                <p><code>POST /api/calculate</code></p>
+            </div>
+            <div class="info-card">
+                <h3>Content Type</h3>
+                <p><code>application/json</code></p>
+            </div>
+            <div class="info-card">
+                <h3>Rate Limit</h3>
+                <p>100 requests/minute per IP</p>
+            </div>
+            <div class="info-card">
+                <h3>Max Request Size</h3>
+                <p>10MB JSON payload</p>
+            </div>
+            <div class="info-card">
+                <h3>CORS Support</h3>
+                <p>Enabled for Bitrix24 domains</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="download-links">
+        <a href="/api/openapi.yaml" download>📄 Download OpenAPI (YAML)</a>
+        <a href="/api/openapi.json" download>📋 Download OpenAPI (JSON)</a>
+        <a href="/api/fields/required">📝 Required Fields List</a>
+    </div>
+
+    <div id="swagger-ui"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-standalone-preset.js"></script>
+    <script>
+        window.onload = function() {
+            const ui = SwaggerUIBundle({
+                url: "/api/openapi.yaml",
+                dom_id: '#swagger-ui',
+                deepLinking: true,
+                presets: [
+                    SwaggerUIBundle.presets.apis,
+                    SwaggerUIStandalonePreset
+                ],
+                plugins: [
+                    SwaggerUIBundle.plugins.DownloadUrl
+                ],
+                layout: "StandaloneLayout",
+                defaultModelsExpandDepth: 1,
+                defaultModelExpandDepth: 1,
+                docExpansion: "list",
+                filter: true,
+                showExtensions: true,
+                showCommonExtensions: true,
+                tryItOutEnabled: true,
+                supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
+                onComplete: function() {
+                    console.log("Swagger UI loaded successfully");
+                }
+            });
+            window.ui = ui;
+        };
+    </script>
+</body>
+</html>
