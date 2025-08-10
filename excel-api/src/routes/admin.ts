@@ -9,6 +9,9 @@ import crypto from 'crypto';
 
 const router = Router();
 
+// Template path constant
+const TEMPLATE_PATH = '/home/vmuser/dev/lh_calc/calc.xlsx';
+
 // Configure multer for file uploads
 const storage = multer.memoryStorage();
 const upload = multer({
@@ -32,7 +35,7 @@ const upload = multer({
  */
 router.get('/template/info', async (_req: Request, res: Response) => {
   try {
-    const templatePath = path.join(process.cwd(), 'calc.xlsx');
+    const templatePath = TEMPLATE_PATH;
     const stats = await fs.stat(templatePath);
     
     // Get template metadata
@@ -114,7 +117,7 @@ router.post('/template/upload', upload.single('template'), async (req: Request, 
     logger.info(`Created backup: ${backupPath}`);
 
     // Step 3: Save new template
-    const templatePath = path.join(process.cwd(), 'calc.xlsx');
+    const templatePath = TEMPLATE_PATH;
     await fs.writeFile(templatePath, req.file.buffer);
     logger.info(`Template saved: ${templatePath}`);
 
@@ -181,7 +184,7 @@ router.post('/template/restore', async (req: Request, res: Response): Promise<Re
 
   try {
     const backupPath = path.join(process.cwd(), 'backups', backupFile);
-    const templatePath = path.join(process.cwd(), 'calc.xlsx');
+    const templatePath = TEMPLATE_PATH;
 
     // Verify backup exists
     await fs.access(backupPath);
@@ -221,7 +224,7 @@ router.post('/template/restore', async (req: Request, res: Response): Promise<Re
  */
 router.get('/template/download', async (_req: Request, res: Response) => {
   try {
-    const templatePath = path.join(process.cwd(), 'calc.xlsx');
+    const templatePath = TEMPLATE_PATH;
     const stats = await fs.stat(templatePath);
     
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -257,7 +260,7 @@ async function validateTemplate(buffer: Buffer): Promise<{
     const processor = new ExcelProcessor();
     
     // Write to temp file for validation
-    const tempPath = path.join(process.cwd(), `temp_validate_${Date.now()}.xlsx`);
+    const tempPath = `/tmp/temp_validate_${Date.now()}.xlsx`;
     await fs.writeFile(tempPath, buffer);
 
     try {
