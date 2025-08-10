@@ -10,8 +10,10 @@
     "dev": "nodemon --exec ts-node src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "test": "jest --coverage",
-    "test:watch": "jest --watch",
+    "test": "jest --coverage --testPathIgnorePatterns=\"<rootDir>/tests/load/\"",
+    "test:watch": "jest --watch --testPathIgnorePatterns=\"<rootDir>/tests/load/\"",
+    "test:load": "jest --testMatch=\"**/tests/load/**/*.test.ts\" --runInBand",
+    "test:all": "jest --coverage",
     "lint": "tsc --noEmit"
   },
   "keywords": [],
