@@ -61,6 +61,8 @@ performance-test-results.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+debug-*.js
+debug-*.ts
 
 # OS files
 .DS_Store
