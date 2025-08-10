@@ -360,6 +360,29 @@
             </div>
         </div>
         
+        <div class="demo-section" style="margin-bottom: 24px;">
+            <h2>📚 API Documentation</h2>
+            <p style="color: #718096; margin-bottom: 16px;">
+                Download the OpenAPI specification to integrate with your tools or generate client SDKs.
+            </p>
+            <div class="button-group">
+                <a href="/api/openapi.yaml" class="btn-primary" download="lh-calculator-api.yaml" style="text-decoration: none; display: inline-block;">
+                    📄 Download OpenAPI (YAML)
+                </a>
+                <a href="/api/openapi.json" class="btn-primary" download="lh-calculator-api.json" style="text-decoration: none; display: inline-block;">
+                    📋 Download OpenAPI (JSON)
+                </a>
+                <button class="btn-secondary" onclick="viewOpenAPISpec()">
+                    👁️ View Specification
+                </button>
+            </div>
+            <div id="openApiPreview" style="display: none; margin-top: 16px;">
+                <div style="background: #f7fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; max-height: 400px; overflow-y: auto;">
+                    <pre id="openApiContent" style="margin: 0; font-family: 'Courier New', monospace; font-size: 12px;"></pre>
+                </div>
+            </div>
+        </div>
+        
         <div class="demo-section">
             <h2>🚀 API Demo - Calculate Heat Exchanger Cost</h2>
             
@@ -662,6 +685,29 @@
                     document.getElementById('excelFilesList').innerHTML = 
                         '<div style="color: #f56565; font-size: 14px;">Failed to load Excel files</div>';
                 });
+        }
+        
+        // View OpenAPI specification
+        function viewOpenAPISpec() {
+            const preview = document.getElementById('openApiPreview');
+            const content = document.getElementById('openApiContent');
+            
+            if (preview.style.display === 'none') {
+                // Show preview
+                fetch('/api/openapi.yaml')
+                    .then(res => res.text())
+                    .then(spec => {
+                        content.textContent = spec;
+                        preview.style.display = 'block';
+                    })
+                    .catch(err => {
+                        content.textContent = 'Failed to load OpenAPI specification: ' + err.message;
+                        preview.style.display = 'block';
+                    });
+            } else {
+                // Hide preview
+                preview.style.display = 'none';
+            }
         }
         
         // Cleanup old Excel files
