@@ -1,144 +1,209 @@
 export interface ContractFieldNames {
   // Green cells - Supply inputs (user provided values)
-  sup_D10_priceCostMaterial: string;
-  sup_D11_priceCostMaterial: string;
-  sup_D17_priceWeightThickness: string;
-  sup_D38_priceQuantityTotal: string;
-  sup_D43_priceTotal: number;
-  sup_D44_price: number;
-  sup_D45_price: number;
-  sup_D46_price: number;
-  sup_D78_massThickness: number;
-  sup_D8_priceMaterial: number;
-  sup_E101_priceMassPipeTotal: string;
-  sup_E105_priceMassPipeTotal: string;
-  sup_E20_priceWeightThicknessTotal: string;
-  sup_E21_priceWeightThicknessTotal: string;
-  sup_E26_priceWeightThickness: string;
-  sup_E27_priceWeightThickness: string;
-  sup_E8_priceMaterial: number;
-  sup_F28_priceWeightThicknessTotal: string;
-  sup_F29_priceWeightPipeTotal: string;
-  sup_F2_parameter: number;
-  sup_F30_priceWeightPipeTotal: string;
-  sup_F31_priceWeightPipeTotal: string;
-  sup_F32_priceWeightPipeTotal: string;
-  sup_F33_priceWeightPipeTotal: string;
-  sup_G43_priceMaterialInsulationTotal: number;
-  sup_G44_priceMaterialInsulation: number;
-  sup_G45_priceMaterialInsulation: number;
-  sup_H54_priceTotal: number;
-  sup_H55_priceTotal: number;
-  sup_H56_priceTotal: number;
-  sup_H57_priceTotal: number;
-  sup_I38_priceThicknessTotalType: number;
-  sup_I39_priceQuantityMaterialThicknessInsulationTotalType: number;
-  sup_I44_priceMaterialThicknessInsulationTotalType: string;
-  sup_I45_priceMaterialThicknessInsulationTotalType: string;
-  sup_I46_priceQuantityMaterialThicknessInsulationTotalSumType: string;
-  sup_I50_priceQuantityMaterialThicknessInsulationTotalSumType: number;
-  sup_I51_priceQuantityMaterialThicknessInsulationTotalSumType: number;
-  sup_I52_priceQuantityMaterialThicknessInsulationTotalSumType: number;
-  sup_I54_priceQuantityMaterialThicknessInsulationTotalType: number;
-  sup_I55_priceQuantityMaterialThicknessInsulationTotalType: number;
-  sup_I56_priceQuantityMaterialThicknessInsulationTotalType: number;
-  sup_I57_priceQuantityMaterialThicknessInsulationTotalType: number;
-  sup_K13_costQuantityNormTotal: number;
-  sup_K20_priceWeightThicknessTotal: string;
-  sup_K21_priceWeightThicknessTotal: string;
-  sup_K26_priceWeightThickness: string;
-  sup_K27_priceWeightThickness: string;
-  sup_K38_pricePipeTotal: number;
-  sup_K39_priceQuantityMaterialPipeInsulationTotal: number;
-  sup_L28_priceWeightThicknessTotalType: string;
-  sup_L29_priceWeightPipeTotalType: string;
-  sup_L30_priceWeightPipeTotalType: string;
-  sup_L31_priceWeightPipeTotalType: string;
-  sup_L32_priceWeightPipeTotalType: string;
-  sup_L33_priceWeightPipeTotalType: string;
-  sup_M38_priceMaterialTotal: number;
-  sup_M39_quantityMaterialTotal: number;
-  sup_M44_priceMaterial: number;
-  sup_M45_priceMaterial: number;
-  sup_M46_priceQuantityMaterialSum: number;
-  sup_M51_priceQuantityMaterialTotalSum: number;
-  sup_M52_priceQuantityMaterialTotalSum: number;
-  sup_N50_priceQuantityWeightThicknessTotalSum: number;
-  sup_N51_priceQuantityWeightThicknessTotalSum: number;
-  sup_N52_priceQuantityWeightThicknessTotalSum: number;
-  sup_N54_quantityWeightThicknessTotal: number;
-  sup_N55_quantityWeightThicknessTotal: number;
-  sup_N56_quantityWeightThicknessTotal: number;
-  sup_N57_quantityWeightThicknessTotal: number;
-  sup_P13_costQuantityMaterialNorm: number;
-  sup_P45_priceMaterialTotal: number;
-  sup_Q22_priceQuantityMaterialThicknessTotal: string;
-  sup_Q23_priceMaterialThicknessTotal: string;
-  sup_Q24_priceThicknessTotal: string;
-  sup_T29_priceMaterial: string;
-  sup_T30_priceMaterial: string;
-  sup_T31_priceMaterial: string;
-  sup_T33_priceMaterialPipe: string;
-  sup_T34_priceMaterialTotal: string;
-  sup_T35_priceMaterialTotal: string;
-  sup_T37_price: string;
-  sup_T38_price: string;
-  sup_T39_priceQuantity: string;
-  sup_T41_priceTotal: string;
-  sup_T42_priceMaterialInsulationTotal: string;
-  sup_T43_priceTotal: string;
-  tech_D27_type: number;
-  tech_E27_weightType: string;
-  tech_H27_quantityType: string;
-  tech_I27_quantityType: number;
-  tech_J27_quantityType: number;
-  tech_K27_quantity: number;
-  tech_L27_quantity: number;
-  tech_M27_material: number;
-  tech_T27_materialThicknessType: number;
+  sup_D10_priceCostMaterial: number | null;  // Numeric price input, can be empty
+  sup_D11_priceCostMaterial: number | null;  // Numeric price input, can be empty
+  sup_D17_priceWeightThickness: number | null;  // Numeric price input, can be empty
+  sup_D38_priceQuantityTotal: number | null;  // Numeric price input, can be empty
+  sup_D43_priceTotal: number;  // Numeric price (e.g., 3300)
+  sup_D44_price: number;  // Numeric price (e.g., 1750)
+  sup_D45_price: number;  // Numeric price (e.g., 2800)
+  sup_D46_price: number;  // Numeric price (e.g., 1200)
+  sup_D78_massThickness: number;  // Numeric thickness in mm (e.g., 3)
+  sup_D8_priceMaterial: number;  // Numeric price per kg (e.g., 700)
+  sup_E101_priceMassPipeTotal: number | null;  // Numeric price, can be empty
+  sup_E105_priceMassPipeTotal: number | null;  // Numeric price, can be empty
+  sup_E20_priceWeightThicknessTotal: number | null;  // Numeric price, can be empty
+  sup_E21_priceWeightThicknessTotal: number | null;  // Numeric price, can be empty
+  sup_E26_priceWeightThickness: number | null;  // Numeric price, can be empty
+  sup_E27_priceWeightThickness: number | null;  // Numeric price, can be empty
+  sup_E8_priceMaterial: number;  // Numeric price per kg (e.g., 700)
+  sup_F28_priceWeightThicknessTotal: number | null;  // Numeric price, can be empty
+  sup_F29_priceWeightPipeTotal: number | null;  // Numeric price, can be empty
+  sup_F2_parameter: string;  // Material code or "0000" for none
+  sup_F30_priceWeightPipeTotal: number | null;  // Numeric price, can be empty
+  sup_F31_priceWeightPipeTotal: number | null;  // Numeric price, can be empty
+  sup_F32_priceWeightPipeTotal: number | null;  // Numeric price, can be empty
+  sup_F33_priceWeightPipeTotal: number | null;  // Numeric price, can be empty
+  sup_G43_priceMaterialInsulationTotal: number;  // Numeric price
+  sup_G44_priceMaterialInsulation: number;  // Numeric price
+  sup_G45_priceMaterialInsulation: number;  // Numeric price
+  sup_H54_priceTotal: number;  // Numeric total price
+  sup_H55_priceTotal: number;  // Numeric total price
+  sup_H56_priceTotal: number;  // Numeric total price
+  sup_H57_priceTotal: number;  // Numeric total price
+  sup_I38_priceThicknessTotalType: number;  // Numeric price
+  sup_I39_priceQuantityMaterialThicknessInsulationTotalType: number;  // Numeric price
+  sup_I44_priceMaterialThicknessInsulationTotalType: number | null;  // Numeric price, can be empty
+  sup_I45_priceMaterialThicknessInsulationTotalType: number | null;  // Numeric price, can be empty
+  sup_I46_priceQuantityMaterialThicknessInsulationTotalSumType: number | null;  // Numeric price, can be empty
+  sup_I50_priceQuantityMaterialThicknessInsulationTotalSumType: number;  // Numeric price
+  sup_I51_priceQuantityMaterialThicknessInsulationTotalSumType: number;  // Numeric price
+  sup_I52_priceQuantityMaterialThicknessInsulationTotalSumType: number;  // Numeric price
+  sup_I54_priceQuantityMaterialThicknessInsulationTotalType: number;  // Numeric price
+  sup_I55_priceQuantityMaterialThicknessInsulationTotalType: number;  // Numeric price
+  sup_I56_priceQuantityMaterialThicknessInsulationTotalType: number;  // Numeric price
+  sup_I57_priceQuantityMaterialThicknessInsulationTotalType: number;  // Numeric price
+  sup_K13_costQuantityNormTotal: number;  // Numeric cost (e.g., 1)
+  sup_K20_priceWeightThicknessTotal: number | null;  // Numeric price, can be empty
+  sup_K21_priceWeightThicknessTotal: number | null;  // Numeric price, can be empty
+  sup_K26_priceWeightThickness: number | null;  // Numeric price, can be empty
+  sup_K27_priceWeightThickness: number | null;  // Numeric price, can be empty
+  sup_K38_pricePipeTotal: number;  // Numeric price
+  sup_K39_priceQuantityMaterialPipeInsulationTotal: number;  // Numeric price
+  sup_L28_priceWeightThicknessTotalType: number | null;  // Numeric price, can be empty
+  sup_L29_priceWeightPipeTotalType: number | null;  // Numeric price, can be empty
+  sup_L30_priceWeightPipeTotalType: number | null;  // Numeric price, can be empty
+  sup_L31_priceWeightPipeTotalType: number | null;  // Numeric price, can be empty
+  sup_L32_priceWeightPipeTotalType: number | null;  // Numeric price, can be empty
+  sup_L33_priceWeightPipeTotalType: number | null;  // Numeric price, can be empty
+  sup_M38_priceMaterialTotal: number;  // Numeric price
+  sup_M39_quantityMaterialTotal: number;  // Numeric quantity
+  sup_M44_priceMaterial: number;  // Numeric price
+  sup_M45_priceMaterial: number;  // Numeric price
+  sup_M46_priceQuantityMaterialSum: number;  // Numeric price
+  sup_M51_priceQuantityMaterialTotalSum: number;  // Numeric price
+  sup_M52_priceQuantityMaterialTotalSum: number;  // Numeric price
+  sup_N50_priceQuantityWeightThicknessTotalSum: number;  // Numeric price
+  sup_N51_priceQuantityWeightThicknessTotalSum: number;  // Numeric price
+  sup_N52_priceQuantityWeightThicknessTotalSum: number;  // Numeric price
+  sup_N54_quantityWeightThicknessTotal: number;  // Numeric quantity
+  sup_N55_quantityWeightThicknessTotal: number;  // Numeric quantity
+  sup_N56_quantityWeightThicknessTotal: number;  // Numeric quantity
+  sup_N57_quantityWeightThicknessTotal: number;  // Numeric quantity
+  sup_P13_costQuantityMaterialNorm: number;  // Numeric cost (e.g., 120000)
+  sup_P45_priceMaterialTotal: number;  // Numeric price
+  sup_Q22_priceQuantityMaterialThicknessTotal: number | null;  // Numeric price, can be empty
+  sup_Q23_priceMaterialThicknessTotal: number | null;  // Numeric price, can be empty
+  sup_Q24_priceThicknessTotal: number | null;  // Numeric price, can be empty
+  sup_T29_priceMaterial: number | null;  // Numeric price, can be empty
+  sup_T30_priceMaterial: number | null;  // Numeric price, can be empty
+  sup_T31_priceMaterial: number | null;  // Numeric price, can be empty
+  sup_T33_priceMaterialPipe: number | null;  // Numeric price, can be empty
+  sup_T34_priceMaterialTotal: number | null;  // Numeric price, can be empty
+  sup_T35_priceMaterialTotal: number | null;  // Numeric price, can be empty
+  sup_T37_price: number | null;  // Numeric price, can be empty
+  sup_T38_price: number | null;  // Numeric price, can be empty
+  sup_T39_priceQuantity: number | null;  // Numeric price, can be empty
+  sup_T41_priceTotal: number | null;  // Numeric price, can be empty
+  sup_T42_priceMaterialInsulationTotal: number | null;  // Numeric price, can be empty
+  sup_T43_priceTotal: number | null;  // Numeric price, can be empty
+  tech_D27_type: number;  // Equipment type number (e.g., 1, 750)
+  tech_E27_weightType: string;  // Equipment code (e.g., "Е-113", "К4-750")
+  tech_H27_quantityType: string;  // Fraction string (e.g., "1/6", "1/3")
+  tech_I27_quantityType: number;  // Plate count (e.g., 400)
+  tech_J27_quantityType: number;  // Pressure in bar (e.g., 22)
+  tech_K27_quantity: number;  // Pressure in bar (e.g., 22)
+  tech_L27_quantity: number;  // Temperature in °C (e.g., 100)
+  tech_M27_material: number;  // Temperature in °C (e.g., 100)
+  tech_T27_materialThicknessType: number;  // Groove depth in mm (e.g., 5)
 
   // Orange cells - Engineering parameters
-  sup_C28_priceWeightThickness: string;
-  sup_C29_priceWeightPipeThickness: string;
-  sup_D28_priceWeightThickness: string;
-  sup_D29_priceWeightPipe: string;
-  sup_D9_priceMaterial: string;
-  sup_E19_priceWeightThicknessTotal: string;
-  sup_E25_priceWeightThicknessTotal: string;
-  sup_F39_priceQuantityWeightMaterialInsulationTotal: number;
-  sup_I28_priceWeightThicknessType: string;
-  sup_I29_priceWeightPipeThicknessType: string;
-  sup_J28_priceQuantityWeightThicknessNormTotal: string;
-  sup_J29_priceQuantityWeightPipeNormTotal: string;
-  sup_K19_priceWeightThicknessTotal: string;
-  sup_K25_priceWeightThicknessTotal: string;
-  sup_P19_priceQuantityMaterialThickness: number;
-  sup_P20_priceQuantityWeightMaterial: string;
-  sup_P21_priceQuantityMaterial: string;
-  sup_P22_priceQuantityMaterialTotal: string;
-  sup_P29_priceMaterialTotal: string;
-  sup_P33_priceMaterialPipeTotal: string;
-  sup_P37_priceMaterialTotal: string;
-  sup_P41_priceMaterialTotal: string;
-  sup_Q29_priceThickness: string;
-  sup_Q33_pricePipeThickness: string;
-  sup_Q37_priceThickness: string;
-  sup_Q41_priceThicknessTotal: string;
-  sup_R29_price: string;
-  sup_R33_pricePipe: string;
-  sup_R37_price: string;
-  sup_R41_priceTotal: string;
-  tech_V27_thicknessType: number;
+  sup_C28_priceWeightThickness: string;  // Flange type, enum: Ду values
+  sup_C29_priceWeightPipeThickness: string;  // Flange type, enum: Ду values
+  sup_D28_priceWeightThickness: string;  // Flange type, enum: Ду values (e.g., "Ду600")
+  sup_D29_priceWeightPipe: string;  // Flange type, enum: Ду values (e.g., "Ду600")
+  sup_D9_priceMaterial: MaterialCode;  // Material dropdown, validated enum
+  sup_E19_priceWeightThicknessTotal: number | null;  // Numeric price, can be empty
+  sup_E25_priceWeightThicknessTotal: number | null;  // Numeric price, can be empty
+  sup_F39_priceQuantityWeightMaterialInsulationTotal: number;  // Numeric price
+  sup_I28_priceWeightThicknessType: number | null;  // Numeric price, can be empty
+  sup_I29_priceWeightPipeThicknessType: number | null;  // Numeric price, can be empty
+  sup_J28_priceQuantityWeightThicknessNormTotal: number | null;  // Numeric price, can be empty
+  sup_J29_priceQuantityWeightPipeNormTotal: number | null;  // Numeric price, can be empty
+  sup_K19_priceWeightThicknessTotal: number | null;  // Numeric price, can be empty
+  sup_K25_priceWeightThicknessTotal: number | null;  // Numeric price, can be empty
+  sup_P19_priceQuantityMaterialThickness: number;  // Numeric price
+  sup_P20_priceQuantityWeightMaterial: number | null;  // Numeric price, can be empty
+  sup_P21_priceQuantityMaterial: number | null;  // Numeric price, can be empty
+  sup_P22_priceQuantityMaterialTotal: number | null;  // Numeric price, can be empty
+  sup_P29_priceMaterialTotal: number | null;  // Numeric price, can be empty
+  sup_P33_priceMaterialPipeTotal: number | null;  // Numeric price, can be empty
+  sup_P37_priceMaterialTotal: number | null;  // Numeric price, can be empty
+  sup_P41_priceMaterialTotal: number | null;  // Numeric price, can be empty
+  sup_Q29_priceThickness: number | null;  // Numeric price, can be empty
+  sup_Q33_pricePipeThickness: number | null;  // Numeric price, can be empty
+  sup_Q37_priceThickness: number | null;  // Numeric price, can be empty
+  sup_Q41_priceThicknessTotal: number | null;  // Numeric price, can be empty
+  sup_R29_price: number | null;  // Numeric price, can be empty
+  sup_R33_pricePipe: number | null;  // Numeric price, can be empty
+  sup_R37_price: number | null;  // Numeric price, can be empty
+  sup_R41_priceTotal: number | null;  // Numeric price, can be empty
+  tech_V27_thicknessType: number;  // Cladding thickness in mm, dropdown enum: 0.8, 1, 1.2, 1.5, 2, 3, 5
 
   // Yellow cells - Computed results
-  tech_F27_quantityType: string;
-  tech_G27_quantityType: string;
-  tech_P27_materialType: string;
-  tech_Q27_materialType: string;
-  tech_R27_materialThicknessType: string;
-  tech_S27_materialThicknessType: string;
-  tech_U27_materialThicknessType: number;
+  tech_F27_quantityType: DeliveryType;  // Delivery type dropdown, validated enum
+  tech_G27_quantityType: string;  // Equipment size (e.g., "К4-750")
+  tech_N27_pressureTestHot: number;  // Computed pressure test value for hot side (formula: =AI73)
+  tech_O27_pressureTestCold: number;  // Computed pressure test value for cold side (formula: =AJ73)
+  tech_P27_materialType: PlateMaterial;  // Plate material dropdown, validated enum
+  tech_Q27_materialType: PlateMaterial;  // Cladding material (formula: =P27, copies from P27)
+  tech_R27_materialThicknessType: FrameMaterial;  // Frame material dropdown, validated enum
+  tech_S27_materialThicknessType: GrooveType;  // Groove type dropdown, validated enum
+  tech_U27_materialThicknessType: number;  // Plate thickness in mm, dropdown enum: 0.8, 1, 1.2, 1.5, 2, 3, 5
 }
+
+// Type definitions for enums extracted from Excel validation lists
+
+// Material codes from снабжение!D9 validation
+export type MaterialCode = 
+  | 'ст3' 
+  | 'ст20' 
+  | '09Г2С' 
+  | '12Х18Н10Т' 
+  | 'AISI 304' 
+  | 'AISI 316L' 
+  | 'AISI 321' 
+  | 'AISI 316Ti';
+
+// Delivery types from технолог!F27 validation
+export type DeliveryType = 
+  | 'Целый ТА'     // Complete heat exchanger
+  | 'ШОТ-БЛОК'     // Shot block
+  | 'РЕИНЖ';       // Re-engineering
+
+// Plate materials from технолог!P27 validation
+export type PlateMaterial = 
+  | 'AISI 316L' 
+  | 'SMO 254' 
+  | 'Hast-C276' 
+  | 'Titanium' 
+  | 'AISI 304' 
+  | 'AISI316Ti' 
+  | '904L';
+
+// Frame materials from технолог!R27 validation
+export type FrameMaterial = 
+  | 'ст3' 
+  | 'ст20' 
+  | '09Г2С' 
+  | '12Х18Н10Т' 
+  | 'AISI 304' 
+  | 'AISI 316L' 
+  | 'AISI 321' 
+  | 'AISI 316Ti';
+
+// Groove types from технолог!S27 validation
+export type GrooveType = 
+  | 'гофра'           // Corrugated
+  | 'дв. лунка'       // Double dimple
+  | 'од. лунка'       // Single dimple
+  | 'шпилька'         // Stud
+  | 'шпилька-лунка';  // Stud-dimple
+
+// Thickness values from технолог!U27 and V27 validations
+export type ThicknessValue = 0.8 | 1 | 1.2 | 1.5 | 2 | 3 | 5;
+
+// Flange diameter values found in Excel
+export type FlangeDiameter = 
+  | 'Ду25' | 'Ду32' | 'Ду40' | 'Ду50' | 'Ду65' | 'Ду80' 
+  | 'Ду100' | 'Ду125' | 'Ду150' | 'Ду200' | 'Ду250' 
+  | 'Ду300' | 'Ду350' | 'Ду400' | 'Ду450' | 'Ду500' 
+  | 'Ду600' | 'Ду800' | 'Ду1000';
+
+// Pressure rating values found in Excel
+export type PressureRating = 
+  | 'Ру6' | 'Ру10' | 'Ру16' | 'Ру25' 
+  | 'Ру40' | 'Ру63' | 'Ру100' | 'Ру160';
 
 export const FIELD_MAPPING = {
   // Maps field names to Excel cell addresses
