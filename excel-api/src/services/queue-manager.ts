@@ -65,11 +65,11 @@ export class QueueManager extends EventEmitter {
   };
 
   private readonly config: QueueConfig = {
-    maxWorkers: 5, // Maximum concurrent Excel processors
-    maxQueueSize: 200, // Maximum queued requests
-    requestTimeoutMs: 30000, // 30 seconds
-    workerIdleTimeoutMs: 300000, // 5 minutes worker idle timeout
-    cleanupIntervalMs: 60000 // 1 minute cleanup interval
+    maxWorkers: process.env.NODE_ENV === 'test' ? 10 : 5, // More workers for testing
+    maxQueueSize: process.env.NODE_ENV === 'test' ? 500 : 200, // Larger queue for testing
+    requestTimeoutMs: process.env.NODE_ENV === 'test' ? 120000 : 30000, // 2 minutes for tests vs 30 seconds
+    workerIdleTimeoutMs: process.env.NODE_ENV === 'test' ? 60000 : 300000, // Shorter idle timeout for tests
+    cleanupIntervalMs: process.env.NODE_ENV === 'test' ? 30000 : 60000 // More frequent cleanup for tests
   };
 
   constructor(

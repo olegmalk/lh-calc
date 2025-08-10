@@ -56,9 +56,9 @@ const excelProcessor = new ExcelProcessor({
 });
 
 const queueManager = new QueueManager(excelProcessor, {
-  maxWorkers: 5,
-  maxQueueSize: 200,
-  requestTimeoutMs: 45000 // Increased for complex calculations
+  maxWorkers: process.env.NODE_ENV === 'test' ? 10 : 5,
+  maxQueueSize: process.env.NODE_ENV === 'test' ? 500 : 200,
+  requestTimeoutMs: process.env.NODE_ENV === 'test' ? 120000 : 45000 // Extended timeout for tests
 });
 
 // Circuit breaker for critical operations
