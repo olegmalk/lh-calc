@@ -184,7 +184,7 @@ export class FieldValidator {
           field: detail.path.join('.'),
           value: detail.context?.value,
           message: detail.message,
-          code: 'VALIDATION_ERROR'
+          code: detail.type  // Preserve original Joi error type
         });
       });
     }
