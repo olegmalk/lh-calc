@@ -1,226 +1,230 @@
 // Field configuration - single source of truth
 const FIELD_CONFIG = {
     tech: {
-        title: '🔧 Технические параметры (технолог)',
+        title: '🔧 Технические параметры теплообменника',
         fields: [
-            { id: 'tech_D27_type', label: 'D27 Тип оборудования', type: 'number', default: 1001 },
-            { id: 'tech_E27_weightType', label: 'E27 Код оборудования', type: 'text', default: 'Е-113' },
-            { id: 'tech_F27_quantityType', label: 'F27 Тип поставки', type: 'select', 
+            { id: 'tech_D27_type', label: 'Артикул/номер модели теплообменника', type: 'number', default: 1001 },
+            { id: 'tech_E27_weightType', label: 'Код оборудования (Е-XXX)', type: 'text', default: 'Е-113' },
+            { id: 'tech_F27_quantityType', label: 'Комплектация поставки', type: 'select', 
               options: ['Целый ТА', 'ШОТ-БЛОК', 'РЕИНЖ'], default: 'Целый ТА' },
-            { id: 'tech_G27_quantityType', label: 'G27 Размер оборудования', type: 'text', default: 'К4-750' },
-            { id: 'tech_H27_quantityType', label: 'H27 Спецификация процесса', type: 'text', default: '1/6' },
-            { id: 'tech_I27_quantityType', label: 'I27 Количество плит', type: 'number', default: 401 },
-            { id: 'tech_J27_quantityType', label: 'J27 Давление бар', type: 'number', default: 22 },
-            { id: 'tech_K27_quantity', label: 'K27 Давление бар', type: 'number', default: 23 },
-            { id: 'tech_L27_quantity', label: 'L27 Температура °C', type: 'number', default: 101 },
-            { id: 'tech_M27_material', label: 'M27 Температура °C', type: 'number', default: 102 },
-            { id: 'tech_P27_materialType', label: 'P27 Материал плиты', type: 'select',
+            { id: 'tech_G27_quantityType', label: 'Типоразмер теплообменника', type: 'text', default: 'К4-750' },
+            { id: 'tech_H27_quantityType', label: 'Схема каналов (потоки)', type: 'text', default: '1/6' },
+            { id: 'tech_I27_quantityType', label: 'Количество теплообменных пластин', type: 'number', default: 401 },
+            { id: 'tech_J27_quantityType', label: 'Рабочее давление горячего контура (бар)', type: 'number', default: 22 },
+            { id: 'tech_K27_quantity', label: 'Рабочее давление холодного контура (бар)', type: 'number', default: 23 },
+            { id: 'tech_L27_quantity', label: 'Температура горячего контура (°C)', type: 'number', default: 101 },
+            { id: 'tech_M27_material', label: 'Температура холодного контура (°C)', type: 'number', default: 102 },
+            { id: 'tech_P27_materialType', label: 'Материал теплообменных пластин', type: 'select',
               options: ['AISI 316L', 'SMO 254', 'Hast-C276', 'Titanium', 'AISI 304', 'AISI316Ti', '904L'], 
               default: 'AISI 316L' },
-            { id: 'tech_R27_materialThicknessType', label: 'R27 Материал рамы', type: 'select',
+            { id: 'tech_R27_materialThicknessType', label: 'Материал опорной рамы', type: 'select',
               options: ['ст3', 'ст20', '09Г2С', '12Х18Н10Т', 'AISI 304', 'AISI 316L', 'AISI 321', 'AISI 316Ti'],
               default: '09Г2С' },
-            { id: 'tech_S27_materialThicknessType', label: 'S27 Тип канавки', type: 'select',
+            { id: 'tech_S27_materialThicknessType', label: 'Тип уплотнительной канавки', type: 'select',
               options: ['гофра', 'дв. лунка', 'од. лунка', 'шпилька', 'шпилька-лунка'], default: 'гофра' },
-            { id: 'tech_T27_materialThicknessType', label: 'T27 Глубина канавки мм', type: 'number', default: 5 },
-            { id: 'tech_U27_materialThicknessType', label: 'U27 Толщина плиты', type: 'select',
+            { id: 'tech_T27_materialThicknessType', label: 'Глубина уплотнительной канавки (мм)', type: 'number', default: 5 },
+            { id: 'tech_U27_materialThicknessType', label: 'Толщина теплообменных пластин (мм)', type: 'select',
               options: ['0.8', '1', '1.2', '1.5', '2', '3', '5'], default: '1' },
-            { id: 'tech_V27_thicknessType', label: 'V27 Облицовка мм', type: 'select',
+            { id: 'tech_V27_thicknessType', label: 'Толщина защитной облицовки (мм)', type: 'select',
               options: ['0.8', '1', '1.2', '1.5', '2', '3', '5'], default: '3' }
         ]
     },
     supMain: {
-        title: '💰 Основные параметры поставки',
+        title: '💰 Базовые цены и материалы',
         fields: [
-            { id: 'sup_F2_parameter', label: 'F2 Базовый материал', type: 'text', default: '0000' },
-            { id: 'sup_D8_priceMaterial', label: 'D8 Цена/кг', type: 'number', default: 701 },
-            { id: 'sup_E8_priceMaterial', label: 'E8 Цена/кг', type: 'number', default: 702 },
-            { id: 'sup_D9_priceMaterial', label: 'D9 Материал', type: 'select',
+            { id: 'sup_F2_parameter', label: 'Код базового материала', type: 'text', default: '0000' },
+            { id: 'sup_D8_priceMaterial', label: 'Цена основного металла (руб/кг)', type: 'number', default: 701 },
+            { id: 'sup_E8_priceMaterial', label: 'Цена дополнительного металла (руб/кг)', type: 'number', default: 702 },
+            { id: 'sup_D9_priceMaterial', label: 'Марка стали для корпуса', type: 'select',
               options: ['ст3', 'ст20', '09Г2С', '12Х18Н10Т', 'AISI 304', 'AISI 316L', 'AISI 321', 'AISI 316Ti'],
               default: '09Г2С' },
-            { id: 'sup_D10_priceCostMaterial', label: 'D10 Стоимость', type: 'number', default: 1010 },
-            { id: 'sup_D11_priceCostMaterial', label: 'D11 Стоимость', type: 'number', default: 1011 },
-            { id: 'sup_K13_costQuantityNormTotal', label: 'K13 Нормативная стоимость', type: 'number', default: 1 },
-            { id: 'sup_P13_costQuantityMaterialNorm', label: 'P13 Норма материала', type: 'number', default: 120013 },
-            { id: 'sup_D17_priceWeightThickness', label: 'D17 Вес', type: 'number', default: 1017 },
-            { id: 'sup_D78_massThickness', label: 'D78 Масса мм', type: 'number', default: 3 }
+            { id: 'sup_D10_priceCostMaterial', label: 'Стоимость базовых материалов (руб)', type: 'number', default: 1010 },
+            { id: 'sup_D11_priceCostMaterial', label: 'Стоимость специальных материалов (руб)', type: 'number', default: 1011 },
+            { id: 'sup_K13_costQuantityNormTotal', label: 'Нормативный коэффициент расхода', type: 'number', default: 1 },
+            { id: 'sup_P13_costQuantityMaterialNorm', label: 'Нормативная стоимость материалов (руб)', type: 'number', default: 120013 },
+            { id: 'sup_D17_priceWeightThickness', label: 'Вес заготовки (кг)', type: 'number', default: 1017 },
+            { id: 'sup_D78_massThickness', label: 'Толщина листового металла (мм)', type: 'number', default: 3 }
         ]
     },
     supE: {
-        title: '📦 Поставка Колонка E',
-        fields: Array.from([19,20,21,25,26,27,101,105], n => ({
-            id: `sup_E${n}_price${n>100?'Mass':'Weight'}${n<28?'ThicknessTotal':'Thickness'}${n>100?'PipeTotal':''}`,
-            label: `E${n} ${n>100?'Масса трубы':'Вес'} ${n<28?'Итого':''}`,
-            type: 'number',
-            default: 1000 + n
-        }))
+        title: '📦 Весовые характеристики компонентов',
+        fields: [
+            { id: 'sup_E19_priceWeightThicknessTotal', label: 'Общий вес листового проката (кг)', type: 'number', default: 1019 },
+            { id: 'sup_E20_priceWeightThicknessTotal', label: 'Вес профилей и балок (кг)', type: 'number', default: 1020 },
+            { id: 'sup_E21_priceWeightThicknessTotal', label: 'Вес крепежных элементов (кг)', type: 'number', default: 1021 },
+            { id: 'sup_E25_priceWeightThicknessTotal', label: 'Вес опорной конструкции (кг)', type: 'number', default: 1025 },
+            { id: 'sup_E26_priceWeightThickness', label: 'Вес прижимной плиты (кг)', type: 'number', default: 1026 },
+            { id: 'sup_E27_priceWeightThickness', label: 'Вес неподвижной плиты (кг)', type: 'number', default: 1027 },
+            { id: 'sup_E101_priceMassPipeTotal', label: 'Общая масса трубопроводов (кг)', type: 'number', default: 1101 },
+            { id: 'sup_E105_priceMassPipeTotal', label: 'Масса коллекторов (кг)', type: 'number', default: 1105 }
+        ]
     },
     supF: {
-        title: '📊 Поставка Колонка F',
+        title: '📊 Стоимость трубопроводной обвязки',
         fields: [
-            { id: 'sup_F28_priceWeightThicknessTotal', label: 'F28 Итого', type: 'number', default: 1028 },
-            { id: 'sup_F29_priceWeightPipeTotal', label: 'F29 Итого трубы', type: 'number', default: 1029 },
-            { id: 'sup_F30_priceWeightPipeTotal', label: 'F30 Итого трубы', type: 'number', default: 1030 },
-            { id: 'sup_F31_priceWeightPipeTotal', label: 'F31 Итого трубы', type: 'number', default: 1031 },
-            { id: 'sup_F32_priceWeightPipeTotal', label: 'F32 Итого трубы', type: 'number', default: 1032 },
-            { id: 'sup_F33_priceWeightPipeTotal', label: 'F33 Итого трубы', type: 'number', default: 1033 },
-            { id: 'sup_F39_priceQuantityWeightMaterialInsulationTotal', label: 'F39 Изоляция', type: 'number', default: 2 }
+            { id: 'sup_F28_priceWeightThicknessTotal', label: 'Общая стоимость фланцев (руб)', type: 'number', default: 1028 },
+            { id: 'sup_F29_priceWeightPipeTotal', label: 'Стоимость входных патрубков (руб)', type: 'number', default: 1029 },
+            { id: 'sup_F30_priceWeightPipeTotal', label: 'Стоимость выходных патрубков (руб)', type: 'number', default: 1030 },
+            { id: 'sup_F31_priceWeightPipeTotal', label: 'Стоимость переходников (руб)', type: 'number', default: 1031 },
+            { id: 'sup_F32_priceWeightPipeTotal', label: 'Стоимость отводов и тройников (руб)', type: 'number', default: 1032 },
+            { id: 'sup_F33_priceWeightPipeTotal', label: 'Стоимость запорной арматуры (руб)', type: 'number', default: 1033 },
+            { id: 'sup_F39_priceQuantityWeightMaterialInsulationTotal', label: 'Стоимость теплоизоляции (руб)', type: 'number', default: 2 }
         ]
     },
     supD_prices: {
-        title: '💵 Компоненты цен D',
+        title: '💵 Дополнительные расходы',
         fields: [
-            { id: 'sup_D38_priceQuantityTotal', label: 'D38 Общее количество', type: 'number', default: 1038 },
-            { id: 'sup_D43_priceTotal', label: 'D43 Общая цена', type: 'number', default: 3301 },
-            { id: 'sup_D44_price', label: 'D44 Цена', type: 'number', default: 1751 },
-            { id: 'sup_D45_price', label: 'D45 Цена', type: 'number', default: 2801 },
-            { id: 'sup_D46_price', label: 'D46 Цена', type: 'number', default: 1201 }
+            { id: 'sup_D38_priceQuantityTotal', label: 'Количество комплектующих (шт)', type: 'number', default: 1038 },
+            { id: 'sup_D43_priceTotal', label: 'Стоимость механической обработки (руб)', type: 'number', default: 3301 },
+            { id: 'sup_D44_price', label: 'Стоимость сварочных работ (руб)', type: 'number', default: 1751 },
+            { id: 'sup_D45_price', label: 'Стоимость сборки и монтажа (руб)', type: 'number', default: 2801 },
+            { id: 'sup_D46_price', label: 'Стоимость испытаний (руб)', type: 'number', default: 1201 }
         ]
     },
     supG: {
-        title: '💸 Компоненты цен G/H',
+        title: '💸 Изоляция и дополнительные услуги',
         fields: [
-            { id: 'sup_G43_priceMaterialInsulationTotal', label: 'G43 Изоляция', type: 'number', default: 2043 },
-            { id: 'sup_G44_priceMaterialInsulation', label: 'G44 Изоляция', type: 'number', default: 2044 },
-            { id: 'sup_G45_priceMaterialInsulation', label: 'G45 Изоляция', type: 'number', default: 2045 },
-            { id: 'sup_H54_priceTotal', label: 'H54 Итого', type: 'number', default: 2054 },
-            { id: 'sup_H55_priceTotal', label: 'H55 Итого', type: 'number', default: 2055 },
-            { id: 'sup_H56_priceTotal', label: 'H56 Итого', type: 'number', default: 2056 },
-            { id: 'sup_H57_priceTotal', label: 'H57 Итого', type: 'number', default: 2057 }
+            { id: 'sup_G43_priceMaterialInsulationTotal', label: 'Общая стоимость изоляционных материалов (руб)', type: 'number', default: 2043 },
+            { id: 'sup_G44_priceMaterialInsulation', label: 'Стоимость минеральной ваты (руб)', type: 'number', default: 2044 },
+            { id: 'sup_G45_priceMaterialInsulation', label: 'Стоимость защитного кожуха (руб)', type: 'number', default: 2045 },
+            { id: 'sup_H54_priceTotal', label: 'Стоимость упаковки (руб)', type: 'number', default: 2054 },
+            { id: 'sup_H55_priceTotal', label: 'Стоимость доставки (руб)', type: 'number', default: 2055 },
+            { id: 'sup_H56_priceTotal', label: 'Стоимость пусконаладки (руб)', type: 'number', default: 2056 },
+            { id: 'sup_H57_priceTotal', label: 'Стоимость технической документации (руб)', type: 'number', default: 2057 }
         ]
     },
     supI: {
-        title: '📈 Supply I Column',
+        title: '📈 Коэффициенты и множители',
         fields: [
-            { id: 'sup_I28_priceWeightThicknessType', label: 'I28 Weight Type', type: 'number', default: 2028 },
-            { id: 'sup_I29_priceWeightPipeThicknessType', label: 'I29 Pipe Type', type: 'number', default: 2029 },
-            { id: 'sup_I38_priceThicknessTotalType', label: 'I38 Thickness', type: 'number', default: 2038 },
-            { id: 'sup_I39_priceQuantityMaterialThicknessInsulationTotalType', label: 'I39 Material', type: 'number', default: 2039 },
-            { id: 'sup_I44_priceMaterialThicknessInsulationTotalType', label: 'I44 Material', type: 'number', default: 2044 },
-            { id: 'sup_I45_priceMaterialThicknessInsulationTotalType', label: 'I45 Material', type: 'number', default: 2045 },
-            { id: 'sup_I46_priceQuantityMaterialThicknessInsulationTotalSumType', label: 'I46 Sum', type: 'number', default: 2046 },
-            { id: 'sup_I50_priceQuantityMaterialThicknessInsulationTotalSumType', label: 'I50 Sum', type: 'number', default: 2050 },
-            { id: 'sup_I51_priceQuantityMaterialThicknessInsulationTotalSumType', label: 'I51 Sum', type: 'number', default: 2051 },
-            { id: 'sup_I52_priceQuantityMaterialThicknessInsulationTotalSumType', label: 'I52 Sum', type: 'number', default: 2052 },
-            { id: 'sup_I54_priceQuantityMaterialThicknessInsulationTotalType', label: 'I54 Type', type: 'number', default: 2054 },
-            { id: 'sup_I55_priceQuantityMaterialThicknessInsulationTotalType', label: 'I55 Type', type: 'number', default: 2055 },
-            { id: 'sup_I56_priceQuantityMaterialThicknessInsulationTotalType', label: 'I56 Type', type: 'number', default: 2056 },
-            { id: 'sup_I57_priceQuantityMaterialThicknessInsulationTotalType', label: 'I57 Type', type: 'number', default: 2057 }
+            { id: 'sup_I28_priceWeightThicknessType', label: 'Коэффициент веса фланцев', type: 'number', default: 2028 },
+            { id: 'sup_I29_priceWeightPipeThicknessType', label: 'Коэффициент веса трубопроводов', type: 'number', default: 2029 },
+            { id: 'sup_I38_priceThicknessTotalType', label: 'Коэффициент толщины', type: 'number', default: 2038 },
+            { id: 'sup_I39_priceQuantityMaterialThicknessInsulationTotalType', label: 'Множитель стоимости изоляции', type: 'number', default: 2039 },
+            { id: 'sup_I44_priceMaterialThicknessInsulationTotalType', label: 'Множитель материалов изоляции', type: 'number', default: 2044 },
+            { id: 'sup_I45_priceMaterialThicknessInsulationTotalType', label: 'Множитель толщины изоляции', type: 'number', default: 2045 },
+            { id: 'sup_I46_priceQuantityMaterialThicknessInsulationTotalSumType', label: 'Суммарный коэффициент затрат', type: 'number', default: 2046 },
+            { id: 'sup_I50_priceQuantityMaterialThicknessInsulationTotalSumType', label: 'Сумма коэффициентов обработки', type: 'number', default: 2050 },
+            { id: 'sup_I51_priceQuantityMaterialThicknessInsulationTotalSumType', label: 'Сумма коэффициентов сборки', type: 'number', default: 2051 },
+            { id: 'sup_I52_priceQuantityMaterialThicknessInsulationTotalSumType', label: 'Сумма коэффициентов монтажа', type: 'number', default: 2052 },
+            { id: 'sup_I54_priceQuantityMaterialThicknessInsulationTotalType', label: 'Коэффициент упаковки', type: 'number', default: 2054 },
+            { id: 'sup_I55_priceQuantityMaterialThicknessInsulationTotalType', label: 'Коэффициент доставки', type: 'number', default: 2055 },
+            { id: 'sup_I56_priceQuantityMaterialThicknessInsulationTotalType', label: 'Коэффициент пусконаладки', type: 'number', default: 2056 },
+            { id: 'sup_I57_priceQuantityMaterialThicknessInsulationTotalType', label: 'Коэффициент документации', type: 'number', default: 2057 }
         ]
     },
     supJK: {
-        title: '📉 Supply J/K Columns',
+        title: '📉 Нормативы и весовые показатели',
         fields: [
-            { id: 'sup_J28_priceQuantityWeightThicknessNormTotal', label: 'J28 Norm Total', type: 'number', default: 3028 },
-            { id: 'sup_J29_priceQuantityWeightPipeNormTotal', label: 'J29 Pipe Norm', type: 'number', default: 3029 },
-            { id: 'sup_K19_priceWeightThicknessTotal', label: 'K19 Weight Total', type: 'number', default: 3019 },
-            { id: 'sup_K20_priceWeightThicknessTotal', label: 'K20 Weight Total', type: 'number', default: 3020 },
-            { id: 'sup_K21_priceWeightThicknessTotal', label: 'K21 Weight Total', type: 'number', default: 3021 },
-            { id: 'sup_K25_priceWeightThicknessTotal', label: 'K25 Weight Total', type: 'number', default: 3025 },
-            { id: 'sup_K26_priceWeightThickness', label: 'K26 Weight', type: 'number', default: 3026 },
-            { id: 'sup_K27_priceWeightThickness', label: 'K27 Weight', type: 'number', default: 3027 },
-            { id: 'sup_K38_pricePipeTotal', label: 'K38 Pipe Total', type: 'number', default: 3038 },
-            { id: 'sup_K39_priceQuantityMaterialPipeInsulationTotal', label: 'K39 Insulation', type: 'number', default: 3039 }
+            { id: 'sup_J28_priceQuantityWeightThicknessNormTotal', label: 'Норматив расхода на фланцы (кг)', type: 'number', default: 3028 },
+            { id: 'sup_J29_priceQuantityWeightPipeNormTotal', label: 'Норматив расхода на трубы (кг)', type: 'number', default: 3029 },
+            { id: 'sup_K19_priceWeightThicknessTotal', label: 'Общий вес листов (кг)', type: 'number', default: 3019 },
+            { id: 'sup_K20_priceWeightThicknessTotal', label: 'Общий вес профилей (кг)', type: 'number', default: 3020 },
+            { id: 'sup_K21_priceWeightThicknessTotal', label: 'Общий вес крепежа (кг)', type: 'number', default: 3021 },
+            { id: 'sup_K25_priceWeightThicknessTotal', label: 'Общий вес каркаса (кг)', type: 'number', default: 3025 },
+            { id: 'sup_K26_priceWeightThickness', label: 'Вес прижимной части (кг)', type: 'number', default: 3026 },
+            { id: 'sup_K27_priceWeightThickness', label: 'Вес неподвижной части (кг)', type: 'number', default: 3027 },
+            { id: 'sup_K38_pricePipeTotal', label: 'Общий вес труб (кг)', type: 'number', default: 3038 },
+            { id: 'sup_K39_priceQuantityMaterialPipeInsulationTotal', label: 'Вес изоляционных материалов (кг)', type: 'number', default: 3039 }
         ]
     },
     supL: {
-        title: '📦 Supply L Column',
+        title: '📦 Типы соединений и фитингов',
         fields: [
-            { id: 'sup_L28_priceWeightThicknessTotalType', label: 'L28 Type', type: 'number', default: 4028 },
-            { id: 'sup_L29_priceWeightPipeTotalType', label: 'L29 Pipe Type', type: 'number', default: 4029 },
-            { id: 'sup_L30_priceWeightPipeTotalType', label: 'L30 Pipe Type', type: 'number', default: 4030 },
-            { id: 'sup_L31_priceWeightPipeTotalType', label: 'L31 Pipe Type', type: 'number', default: 4031 },
-            { id: 'sup_L32_priceWeightPipeTotalType', label: 'L32 Pipe Type', type: 'number', default: 4032 },
-            { id: 'sup_L33_priceWeightPipeTotalType', label: 'L33 Pipe Type', type: 'number', default: 4033 }
+            { id: 'sup_L28_priceWeightThicknessTotalType', label: 'Тип фланцевого соединения', type: 'number', default: 4028 },
+            { id: 'sup_L29_priceWeightPipeTotalType', label: 'Тип входного патрубка', type: 'number', default: 4029 },
+            { id: 'sup_L30_priceWeightPipeTotalType', label: 'Тип выходного патрубка', type: 'number', default: 4030 },
+            { id: 'sup_L31_priceWeightPipeTotalType', label: 'Тип переходника', type: 'number', default: 4031 },
+            { id: 'sup_L32_priceWeightPipeTotalType', label: 'Тип отвода/тройника', type: 'number', default: 4032 },
+            { id: 'sup_L33_priceWeightPipeTotalType', label: 'Тип запорной арматуры', type: 'number', default: 4033 }
         ]
     },
     supM: {
-        title: '💰 Supply M Column',
+        title: '💰 Материальные затраты',
         fields: [
-            { id: 'sup_M38_priceMaterialTotal', label: 'M38 Material Total', type: 'number', default: 5038 },
-            { id: 'sup_M39_quantityMaterialTotal', label: 'M39 Quantity', type: 'number', default: 5039 },
-            { id: 'sup_M44_priceMaterial', label: 'M44 Material', type: 'number', default: 5044 },
-            { id: 'sup_M45_priceMaterial', label: 'M45 Material', type: 'number', default: 5045 },
-            { id: 'sup_M46_priceQuantityMaterialSum', label: 'M46 Sum', type: 'number', default: 5046 },
-            { id: 'sup_M51_priceQuantityMaterialTotalSum', label: 'M51 Total Sum', type: 'number', default: 5051 },
-            { id: 'sup_M52_priceQuantityMaterialTotalSum', label: 'M52 Total Sum', type: 'number', default: 5052 }
+            { id: 'sup_M38_priceMaterialTotal', label: 'Общая стоимость материалов (руб)', type: 'number', default: 5038 },
+            { id: 'sup_M39_quantityMaterialTotal', label: 'Количество материалов (ед)', type: 'number', default: 5039 },
+            { id: 'sup_M44_priceMaterial', label: 'Стоимость основного материала (руб)', type: 'number', default: 5044 },
+            { id: 'sup_M45_priceMaterial', label: 'Стоимость вспомогательного материала (руб)', type: 'number', default: 5045 },
+            { id: 'sup_M46_priceQuantityMaterialSum', label: 'Суммарная стоимость материалов (руб)', type: 'number', default: 5046 },
+            { id: 'sup_M51_priceQuantityMaterialTotalSum', label: 'Итоговая сумма по материалам (руб)', type: 'number', default: 5051 },
+            { id: 'sup_M52_priceQuantityMaterialTotalSum', label: 'Итоговая сумма с наценкой (руб)', type: 'number', default: 5052 }
         ]
     },
     supN: {
-        title: '📊 Supply N Column',
+        title: '📊 Сводные показатели',
         fields: [
-            { id: 'sup_N50_priceQuantityWeightThicknessTotalSum', label: 'N50 Sum', type: 'number', default: 6050 },
-            { id: 'sup_N51_priceQuantityWeightThicknessTotalSum', label: 'N51 Sum', type: 'number', default: 6051 },
-            { id: 'sup_N52_priceQuantityWeightThicknessTotalSum', label: 'N52 Sum', type: 'number', default: 6052 },
-            { id: 'sup_N54_quantityWeightThicknessTotal', label: 'N54 Total', type: 'number', default: 6054 },
-            { id: 'sup_N55_quantityWeightThicknessTotal', label: 'N55 Total', type: 'number', default: 6055 },
-            { id: 'sup_N56_quantityWeightThicknessTotal', label: 'N56 Total', type: 'number', default: 6056 },
-            { id: 'sup_N57_quantityWeightThicknessTotal', label: 'N57 Total', type: 'number', default: 6057 }
+            { id: 'sup_N50_priceQuantityWeightThicknessTotalSum', label: 'Сумма затрат на обработку (руб)', type: 'number', default: 6050 },
+            { id: 'sup_N51_priceQuantityWeightThicknessTotalSum', label: 'Сумма затрат на сборку (руб)', type: 'number', default: 6051 },
+            { id: 'sup_N52_priceQuantityWeightThicknessTotalSum', label: 'Сумма затрат на монтаж (руб)', type: 'number', default: 6052 },
+            { id: 'sup_N54_quantityWeightThicknessTotal', label: 'Общий вес конструкции (кг)', type: 'number', default: 6054 },
+            { id: 'sup_N55_quantityWeightThicknessTotal', label: 'Общий объем материалов (м³)', type: 'number', default: 6055 },
+            { id: 'sup_N56_quantityWeightThicknessTotal', label: 'Общая площадь поверхности (м²)', type: 'number', default: 6056 },
+            { id: 'sup_N57_quantityWeightThicknessTotal', label: 'Общая трудоемкость (чел-час)', type: 'number', default: 6057 }
         ]
     },
     supP: {
-        title: '💵 Supply P Column',
+        title: '💵 Крепежные элементы',
         fields: [
-            { id: 'sup_P19_priceQuantityMaterialThickness', label: 'P19 Thickness', type: 'number', default: 7019 },
-            { id: 'sup_P20_priceQuantityWeightMaterial', label: 'P20 Weight', type: 'number', default: 7020 },
-            { id: 'sup_P21_priceQuantityMaterial', label: 'P21 Material', type: 'number', default: 7021 },
-            { id: 'sup_P22_priceQuantityMaterialTotal', label: 'P22 Total', type: 'number', default: 7022 },
-            { id: 'sup_P29_priceMaterialTotal', label: 'P29 Material', type: 'number', default: 7029 },
-            { id: 'sup_P33_priceMaterialPipeTotal', label: 'P33 Pipe', type: 'number', default: 7033 },
-            { id: 'sup_P37_priceMaterialTotal', label: 'P37 Material', type: 'number', default: 7037 },
-            { id: 'sup_P41_priceMaterialTotal', label: 'P41 Material', type: 'number', default: 7041 },
-            { id: 'sup_P45_priceMaterialTotal', label: 'P45 Material', type: 'number', default: 7045 }
+            { id: 'sup_P19_priceQuantityMaterialThickness', label: 'Толщина крепежных элементов (мм)', type: 'number', default: 7019 },
+            { id: 'sup_P20_priceQuantityWeightMaterial', label: 'Вес крепежных элементов (кг)', type: 'number', default: 7020 },
+            { id: 'sup_P21_priceQuantityMaterial', label: 'Материал крепежа', type: 'number', default: 7021 },
+            { id: 'sup_P22_priceQuantityMaterialTotal', label: 'Общая стоимость крепежа (руб)', type: 'number', default: 7022 },
+            { id: 'sup_P29_priceMaterialTotal', label: 'Стоимость шпилек (руб)', type: 'number', default: 7029 },
+            { id: 'sup_P33_priceMaterialPipeTotal', label: 'Стоимость гаек (руб)', type: 'number', default: 7033 },
+            { id: 'sup_P37_priceMaterialTotal', label: 'Стоимость болтов (руб)', type: 'number', default: 7037 },
+            { id: 'sup_P41_priceMaterialTotal', label: 'Стоимость шайб (руб)', type: 'number', default: 7041 },
+            { id: 'sup_P45_priceMaterialTotal', label: 'Общая стоимость крепежа (руб)', type: 'number', default: 7045 }
         ]
     },
     supQ: {
-        title: '📈 Supply Q Column',
+        title: '📈 Покрытия и обработка',
         fields: [
-            { id: 'sup_Q22_priceQuantityMaterialThicknessTotal', label: 'Q22 Total', type: 'number', default: 8022 },
-            { id: 'sup_Q23_priceMaterialThicknessTotal', label: 'Q23 Total', type: 'number', default: 8023 },
-            { id: 'sup_Q24_priceThicknessTotal', label: 'Q24 Total', type: 'number', default: 8024 },
-            { id: 'sup_Q29_priceThickness', label: 'Q29 Thickness', type: 'number', default: 8029 },
-            { id: 'sup_Q33_pricePipeThickness', label: 'Q33 Pipe', type: 'number', default: 8033 },
-            { id: 'sup_Q37_priceThickness', label: 'Q37 Thickness', type: 'number', default: 8037 },
-            { id: 'sup_Q41_priceThicknessTotal', label: 'Q41 Total', type: 'number', default: 8041 }
+            { id: 'sup_Q22_priceQuantityMaterialThicknessTotal', label: 'Общая стоимость покрытия (руб)', type: 'number', default: 8022 },
+            { id: 'sup_Q23_priceMaterialThicknessTotal', label: 'Стоимость цинкования (руб)', type: 'number', default: 8023 },
+            { id: 'sup_Q24_priceThicknessTotal', label: 'Стоимость окраски (руб)', type: 'number', default: 8024 },
+            { id: 'sup_Q29_priceThickness', label: 'Толщина покрытия шпилек (мкм)', type: 'number', default: 8029 },
+            { id: 'sup_Q33_pricePipeThickness', label: 'Толщина покрытия гаек (мкм)', type: 'number', default: 8033 },
+            { id: 'sup_Q37_priceThickness', label: 'Толщина покрытия болтов (мкм)', type: 'number', default: 8037 },
+            { id: 'sup_Q41_priceThicknessTotal', label: 'Общая толщина покрытия (мкм)', type: 'number', default: 8041 }
         ]
     },
     supR: {
-        title: '💸 Supply R Column',
+        title: '💸 Цены на обработку',
         fields: [
-            { id: 'sup_R29_price', label: 'R29 Price', type: 'number', default: 9029 },
-            { id: 'sup_R33_pricePipe', label: 'R33 Pipe', type: 'number', default: 9033 },
-            { id: 'sup_R37_price', label: 'R37 Price', type: 'number', default: 9037 },
-            { id: 'sup_R41_priceTotal', label: 'R41 Total', type: 'number', default: 9041 }
+            { id: 'sup_R29_price', label: 'Цена обработки шпилек (руб/шт)', type: 'number', default: 9029 },
+            { id: 'sup_R33_pricePipe', label: 'Цена обработки гаек (руб/шт)', type: 'number', default: 9033 },
+            { id: 'sup_R37_price', label: 'Цена обработки болтов (руб/шт)', type: 'number', default: 9037 },
+            { id: 'sup_R41_priceTotal', label: 'Общая цена обработки (руб)', type: 'number', default: 9041 }
         ]
     },
     supT: {
-        title: '💰 Supply T Column',
+        title: '💰 Итоговые расчеты',
         fields: [
-            { id: 'sup_T29_priceMaterial', label: 'T29 Material', type: 'number', default: 10029 },
-            { id: 'sup_T30_priceMaterial', label: 'T30 Material', type: 'number', default: 10030 },
-            { id: 'sup_T31_priceMaterial', label: 'T31 Material', type: 'number', default: 10031 },
-            { id: 'sup_T33_priceMaterialPipe', label: 'T33 Pipe', type: 'number', default: 10033 },
-            { id: 'sup_T34_priceMaterialTotal', label: 'T34 Total', type: 'number', default: 10034 },
-            { id: 'sup_T35_priceMaterialTotal', label: 'T35 Total', type: 'number', default: 10035 },
-            { id: 'sup_T37_price', label: 'T37 Price', type: 'number', default: 10037 },
-            { id: 'sup_T38_price', label: 'T38 Price', type: 'number', default: 10038 },
-            { id: 'sup_T39_priceQuantity', label: 'T39 Quantity', type: 'number', default: 10039 },
-            { id: 'sup_T41_priceTotal', label: 'T41 Total', type: 'number', default: 10041 },
-            { id: 'sup_T42_priceMaterialInsulationTotal', label: 'T42 Insulation', type: 'number', default: 10042 },
-            { id: 'sup_T43_priceTotal', label: 'T43 Total', type: 'number', default: 10043 }
+            { id: 'sup_T29_priceMaterial', label: 'Цена материала шпилек (руб)', type: 'number', default: 10029 },
+            { id: 'sup_T30_priceMaterial', label: 'Цена материала гаек (руб)', type: 'number', default: 10030 },
+            { id: 'sup_T31_priceMaterial', label: 'Цена материала болтов (руб)', type: 'number', default: 10031 },
+            { id: 'sup_T33_priceMaterialPipe', label: 'Цена материала труб (руб)', type: 'number', default: 10033 },
+            { id: 'sup_T34_priceMaterialTotal', label: 'Общая стоимость материалов (руб)', type: 'number', default: 10034 },
+            { id: 'sup_T35_priceMaterialTotal', label: 'Общая стоимость работ (руб)', type: 'number', default: 10035 },
+            { id: 'sup_T37_price', label: 'Цена дополнительных услуг (руб)', type: 'number', default: 10037 },
+            { id: 'sup_T38_price', label: 'Цена сертификации (руб)', type: 'number', default: 10038 },
+            { id: 'sup_T39_priceQuantity', label: 'Количество дополнительных услуг', type: 'number', default: 10039 },
+            { id: 'sup_T41_priceTotal', label: 'Итоговая стоимость без НДС (руб)', type: 'number', default: 10041 },
+            { id: 'sup_T42_priceMaterialInsulationTotal', label: 'Стоимость теплоизоляции (руб)', type: 'number', default: 10042 },
+            { id: 'sup_T43_priceTotal', label: 'Итоговая стоимость с НДС (руб)', type: 'number', default: 10043 }
         ]
     },
     flange: {
-        title: '🔩 Flange Parameters',
+        title: '🔩 Параметры фланцевых соединений',
         fields: [
-            { id: 'sup_C28_priceWeightThickness', label: 'C28 Pressure', type: 'select',
+            { id: 'sup_C28_priceWeightThickness', label: 'Давление входного фланца', type: 'select',
               options: ['Ру6', 'Ру10', 'Ру16', 'Ру25', 'Ру40', 'Ру63', 'Ру100', 'Ру160'], default: 'Ру10' },
-            { id: 'sup_C29_priceWeightPipeThickness', label: 'C29 Pressure', type: 'select',
+            { id: 'sup_C29_priceWeightPipeThickness', label: 'Давление выходного фланца', type: 'select',
               options: ['Ру6', 'Ру10', 'Ру16', 'Ру25', 'Ру40', 'Ру63', 'Ру100', 'Ру160'], default: 'Ру40' },
-            { id: 'sup_D28_priceWeightThickness', label: 'D28 Diameter', type: 'select',
+            { id: 'sup_D28_priceWeightThickness', label: 'Диаметр входного патрубка', type: 'select',
               options: ['Ду25','Ду32','Ду40','Ду50','Ду65','Ду80','Ду100','Ду125','Ду150','Ду200','Ду250','Ду300','Ду350','Ду400','Ду450','Ду500','Ду600','Ду800','Ду1000'],
               default: 'Ду600' },
-            { id: 'sup_D29_priceWeightPipe', label: 'D29 Diameter', type: 'select',
+            { id: 'sup_D29_priceWeightPipe', label: 'Диаметр выходного патрубка', type: 'select',
               options: ['Ду25','Ду32','Ду40','Ду50','Ду65','Ду80','Ду100','Ду125','Ду150','Ду200','Ду250','Ду300','Ду350','Ду400','Ду450','Ду500','Ду600','Ду800','Ду1000'],
               default: 'Ду600' }
         ]
