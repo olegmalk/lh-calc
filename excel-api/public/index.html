@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LH Calculator API Monitor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            color: #2d3748;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        
+        .header p {
+            color: #718096;
+            font-size: 14px;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .card h2 {
+            color: #2d3748;
+            font-size: 18px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        
+        .status-healthy { background: #48bb78; }
+        .status-warning { background: #ed8936; }
+        .status-error { background: #f56565; }
+        
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .metric:last-child {
+            border-bottom: none;
+        }
+        
+        .metric-label {
+            color: #718096;
+            font-size: 14px;
+        }
+        
+        .metric-value {
+            color: #2d3748;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .demo-section {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .demo-section h2 {
+            color: #2d3748;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            color: #4a5568;
+            font-size: 12px;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+        
+        .form-group input, .form-group select {
+            padding: 8px 12px;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5a67d8;
+        }
+        
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+        
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+        
+        .response-area {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 16px;
+            min-height: 200px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: #718096;
+        }
+        
+        .loading.active {
+            display: block;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #48bb78;
+            transition: width 0.3s ease;
+        }
+        
+        .error-message {
+            background: #fff5f5;
+            border: 1px solid #feb2b2;
+            color: #c53030;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 12px;
+            display: none;
+        }
+        
+        .error-message.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔧 LH Calculator API Monitor</h1>
+            <p>Real-time monitoring and testing interface for Excel Processing API</p>
+        </div>
+        
+        <div class="grid">
+            <div class="card">
+                <h2><span class="status-indicator status-healthy" id="healthStatus"></span> Health Status</h2>
+                <div id="healthMetrics">
+                    <div class="metric">
+                        <span class="metric-label">Status</span>
+                        <span class="metric-value" id="apiStatus">Checking...</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Version</span>
+                        <span class="metric-value">1.0.0</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Uptime</span>
+                        <span class="metric-value" id="uptime">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Last Check</span>
+                        <span class="metric-value" id="lastCheck">-</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>📊 System Metrics</h2>
+                <div id="systemMetrics">
+                    <div class="metric">
+                        <span class="metric-label">Memory Usage</span>
+                        <span class="metric-value" id="memoryUsage">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">CPU Load</span>
+                        <span class="metric-value" id="cpuLoad">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Active Workers</span>
+                        <span class="metric-value" id="activeWorkers">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Queue Size</span>
+                        <span class="metric-value" id="queueSize">-</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>⚡ Performance</h2>
+                <div id="performanceMetrics">
+                    <div class="metric">
+                        <span class="metric-label">Requests/min</span>
+                        <span class="metric-value" id="requestRate">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Avg Response Time</span>
+                        <span class="metric-value" id="avgResponse">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Success Rate</span>
+                        <span class="metric-value" id="successRate">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Total Processed</span>
+                        <span class="metric-value" id="totalProcessed">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>🚀 API Demo - Calculate Heat Exchanger Cost</h2>
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Equipment Type (tech_D27_type)</label>
+                    <input type="number" id="tech_D27_type" value="1" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Position (tech_E27_weightType)</label>
+                    <input type="text" id="tech_E27_weightType" value="Е-113">
+                </div>
+                <div class="form-group">
+                    <label>Process Spec (tech_H27_quantityType)</label>
+                    <input type="text" id="tech_H27_quantityType" value="1/6">
+                </div>
+                <div class="form-group">
+                    <label>Plate Count (tech_I27_quantityType)</label>
+                    <input type="number" id="tech_I27_quantityType" value="400" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Pressure Hot (bar)</label>
+                    <input type="number" id="tech_J27_quantityType" value="22" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Pressure Cold (bar)</label>
+                    <input type="number" id="tech_K27_quantity" value="22" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Temp Hot (°C)</label>
+                    <input type="number" id="tech_L27_quantity" value="100" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Temp Cold (°C)</label>
+                    <input type="number" id="tech_M27_material" value="100" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Drawing Depth (mm)</label>
+                    <input type="number" id="tech_T27_materialThicknessType" value="5" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Material Code</label>
+                    <select id="sup_F2_parameter">
+                        <option value="0000">0000</option>
+                        <option value="09Г2С">09Г2С</option>
+                        <option value="12Х18Н10Т">12Х18Н10Т</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Flow Material Price</label>
+                    <input type="number" id="sup_D8_priceMaterial" value="700" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Cladding Price</label>
+                    <input type="number" id="sup_E8_priceMaterial" value="700" min="0">
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn-primary" onclick="sendRequest()">Calculate Cost</button>
+                <button class="btn-secondary" onclick="fillSampleData()">Load Sample Data</button>
+                <button class="btn-secondary" onclick="clearResponse()">Clear</button>
+            </div>
+            
+            <div class="loading" id="loading">
+                Processing request...
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+                </div>
+            </div>
+            
+            <div class="error-message" id="errorMessage"></div>
+            
+            <div class="response-area" id="responseArea">
+                Click "Calculate Cost" to send a request to the API...
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Update health status every 5 seconds
+        function updateHealth() {
+            fetch('/health')
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('apiStatus').textContent = data.status || 'Healthy';
+                    document.getElementById('healthStatus').className = 'status-indicator status-healthy';
+                    document.getElementById('lastCheck').textContent = new Date().toLocaleTimeString();
+                    
+                    if (data.uptime) {
+                        const hours = Math.floor(data.uptime / 3600);
+                        const minutes = Math.floor((data.uptime % 3600) / 60);
+                        document.getElementById('uptime').textContent = `${hours}h ${minutes}m`;
+                    }
+                })
+                .catch(err => {
+                    document.getElementById('apiStatus').textContent = 'Offline';
+                    document.getElementById('healthStatus').className = 'status-indicator status-error';
+                });
+        }
+        
+        // Update metrics every 10 seconds
+        function updateMetrics() {
+            fetch('/api/metrics')
+                .then(res => res.json())
+                .then(data => {
+                    // System metrics
+                    if (data.memory) {
+                        const usedMB = Math.round(data.memory.used / 1024 / 1024);
+                        const totalMB = Math.round(data.memory.total / 1024 / 1024);
+                        document.getElementById('memoryUsage').textContent = `${usedMB}/${totalMB} MB`;
+                    }
+                    
+                    if (data.cpu) {
+                        document.getElementById('cpuLoad').textContent = `${data.cpu.loadAverage[0].toFixed(2)}`;
+                    }
+                    
+                    if (data.queue) {
+                        document.getElementById('activeWorkers').textContent = `${data.queue.activeWorkers}/${data.queue.totalWorkers}`;
+                        document.getElementById('queueSize').textContent = data.queue.queuedRequests;
+                    }
+                    
+                    // Performance metrics
+                    if (data.requests) {
+                        document.getElementById('requestRate').textContent = data.requests.ratePerMinute || '0';
+                        document.getElementById('avgResponse').textContent = data.requests.averageResponseTime 
+                            ? `${data.requests.averageResponseTime}ms` : '-';
+                        document.getElementById('successRate').textContent = data.requests.successRate 
+                            ? `${data.requests.successRate}%` : '-';
+                        document.getElementById('totalProcessed').textContent = data.requests.totalProcessed || '0';
+                    }
+                })
+                .catch(err => {
+                    console.error('Failed to fetch metrics:', err);
+                });
+        }
+        
+        // Send calculation request
+        function sendRequest() {
+            const loading = document.getElementById('loading');
+            const errorMsg = document.getElementById('errorMessage');
+            const responseArea = document.getElementById('responseArea');
+            const progressBar = document.getElementById('progressBar');
+            
+            loading.classList.add('active');
+            errorMsg.classList.remove('active');
+            responseArea.textContent = 'Processing...';
+            
+            // Animate progress bar
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += 10;
+                progressBar.style.width = Math.min(progress, 90) + '%';
+            }, 200);
+            
+            // Build request payload
+            const payload = {
+                tech_D27_type: parseInt(document.getElementById('tech_D27_type').value),
+                tech_E27_weightType: document.getElementById('tech_E27_weightType').value,
+                tech_H27_quantityType: document.getElementById('tech_H27_quantityType').value,
+                tech_I27_quantityType: parseInt(document.getElementById('tech_I27_quantityType').value),
+                tech_J27_quantityType: parseInt(document.getElementById('tech_J27_quantityType').value),
+                tech_K27_quantity: parseInt(document.getElementById('tech_K27_quantity').value),
+                tech_L27_quantity: parseInt(document.getElementById('tech_L27_quantity').value),
+                tech_M27_material: parseInt(document.getElementById('tech_M27_material').value),
+                tech_T27_materialThicknessType: parseInt(document.getElementById('tech_T27_materialThicknessType').value),
+                sup_F2_parameter: document.getElementById('sup_F2_parameter').value,
+                sup_D8_priceMaterial: parseInt(document.getElementById('sup_D8_priceMaterial').value),
+                sup_E8_priceMaterial: parseInt(document.getElementById('sup_E8_priceMaterial').value),
+                sup_K13_costQuantityNormTotal: 1,
+                sup_P13_costQuantityMaterialNorm: 120000,
+                sup_D78_massThickness: 3,
+                // Add some sample price fields
+                sup_D43_priceTotal: 3300,
+                sup_D44_price: 1750,
+                sup_D45_price: 2800,
+                sup_D46_price: 1200
+            };
+            
+            fetch('/api/calculate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(data => {
+                clearInterval(progressInterval);
+                progressBar.style.width = '100%';
+                
+                setTimeout(() => {
+                    loading.classList.remove('active');
+                    progressBar.style.width = '0%';
+                    
+                    if (data.success) {
+                        responseArea.textContent = JSON.stringify(data, null, 2);
+                    } else {
+                        errorMsg.textContent = data.error || 'Request failed';
+                        errorMsg.classList.add('active');
+                        responseArea.textContent = JSON.stringify(data, null, 2);
+                    }
+                }, 500);
+            })
+            .catch(err => {
+                clearInterval(progressInterval);
+                loading.classList.remove('active');
+                errorMsg.textContent = 'Network error: ' + err.message;
+                errorMsg.classList.add('active');
+                responseArea.textContent = 'Failed to connect to API';
+            });
+        }
+        
+        // Load sample data
+        function fillSampleData() {
+            const sampleData = {
+                tech_D27_type: 2,
+                tech_E27_weightType: 'К4-750',
+                tech_H27_quantityType: '2/8',
+                tech_I27_quantityType: 500,
+                tech_J27_quantityType: 25,
+                tech_K27_quantity: 16,
+                tech_L27_quantity: 150,
+                tech_M27_material: 80,
+                tech_T27_materialThicknessType: 8,
+                sup_F2_parameter: '12Х18Н10Т',
+                sup_D8_priceMaterial: 850,
+                sup_E8_priceMaterial: 900
+            };
+            
+            Object.keys(sampleData).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.value = sampleData[key];
+                }
+            });
+        }
+        
+        // Clear response
+        function clearResponse() {
+            document.getElementById('responseArea').textContent = 'Click "Calculate Cost" to send a request to the API...';
+            document.getElementById('errorMessage').classList.remove('active');
+        }
+        
+        // Initialize
+        updateHealth();
+        updateMetrics();
+        setInterval(updateHealth, 5000);
+        setInterval(updateMetrics, 10000);
+    </script>
+</body>
+</html>

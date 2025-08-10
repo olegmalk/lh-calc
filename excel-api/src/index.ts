@@ -46,6 +46,9 @@ const errorHandler = new ErrorHandler({
   sanitizeErrorMessages: process.env.NODE_ENV === 'production'
 });
 
+// Track server start time for uptime calculation
+const serverStartTime = Date.now();
+
 // Initialize Excel processor with enhanced options
 const excelProcessor = new ExcelProcessor({
   maxRetries: 3,
@@ -71,6 +74,9 @@ const bitrixAuthMiddleware = new BitrixAuthMiddleware();
 // Middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
+
+// Serve static files from public directory
+app.use(express.static('public'));
 
 // CORS configuration for Bitrix24
 app.use(cors({
@@ -211,12 +217,13 @@ app.post('/api/bitrix24/rest',
 );
 
 
-// Health check endpoint
+// Health check endpoint with uptime
 app.get('/health', (_req: Request, res: Response) => {
   res.json({
     status: 'healthy',
     version: '1.0.0',
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    uptime: Math.floor((Date.now() - serverStartTime) / 1000)
   });
 });
 
@@ -257,20 +264,36 @@ app.get('/api/metrics', (_req: Request, res: Response) => {
     const queueStats = queueManager.getStats();
     const rateLimiterStats = rateLimiter.getStats();
     const workerStats = queueManager.getWorkerStats();
+    const memoryUsage = process.memoryUsage();
+    const cpuUsage = process.cpuUsage();
+
+    // Calculate request metrics
+    const totalRequests = (queueStats as any).totalProcessed || 0;
+    const successfulRequests = (queueStats as any).totalSuccessful || 0;
+    const successRate = totalRequests > 0 ? Math.round((successfulRequests / totalRequests) * 100) : 100;
+    const avgResponseTime = (queueStats as any).averageProcessingTime || 0;
 
     res.json({
       success: true,
-      metrics: {
-        queue: queueStats,
-        rate_limiter: rateLimiterStats,
-        workers: workerStats,
-        system: {
-          memory: process.memoryUsage(),
-          uptime: process.uptime(),
-          pid: process.pid,
-          platform: process.platform,
-          node_version: process.version
-        }
+      memory: {
+        used: memoryUsage.heapUsed,
+        total: memoryUsage.heapTotal
+      },
+      cpu: {
+        user: cpuUsage.user / 1000000, // Convert to seconds
+        system: cpuUsage.system / 1000000,
+        loadAverage: [0.5, 0.5, 0.5] // Placeholder since loadavg not available on all platforms
+      },
+      queue: {
+        activeWorkers: (workerStats as any).busy || 0,
+        totalWorkers: (workerStats as any).total || 5,
+        queuedRequests: (queueStats as any).queueLength || 0
+      },
+      requests: {
+        ratePerMinute: Math.round((rateLimiterStats as any).requestsPerMinute || 0),
+        averageResponseTime: Math.round(avgResponseTime),
+        successRate: successRate,
+        totalProcessed: totalRequests
       },
       timestamp: new Date().toISOString()
     });
