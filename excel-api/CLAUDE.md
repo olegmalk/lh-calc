@@ -149,3 +149,27 @@ The system maps API fields to Excel cells across three sheets:
 - `GET /api/admin/queue/stats` - Detailed queue statistics
 - `GET /api/admin/errors/recent` - Recent error log (last 100)
 - `GET /api/admin/errors/security` - Security incidents
+
+## Email Capabilities
+
+### Configuration
+- **Gmail**: olegmalkov2023@gmail.com
+- **App Password**: Configured in `.env` file
+- **Script**: `send_email.py`
+
+### Usage
+```bash
+# Send email using .env configuration
+python3 send_email.py
+
+# Send to specific recipient
+python3 send_email.py "" recipient@email.com
+
+# Override app password
+python3 send_email.py "new-app-password"
+```
+
+### Security
+- App Password stored in `.env` (gitignored)
+- Never commit credentials
+- Revoke at: https://myaccount.google.com/apppasswords
