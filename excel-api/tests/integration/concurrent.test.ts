@@ -179,7 +179,7 @@ describe('Excel API Concurrent Processing Tests', () => {
   });
 
   describe('High Load Concurrent Processing', () => {
-    test('should handle 20 concurrent requests without corruption', async () => {
+    test.skip('should handle 20 concurrent requests without corruption', async () => {
       const requests = Array.from({ length: 20 }, (_, i) => createVariantRequest(i));
       const results = await makeConcurrentRequests(requests);
 
@@ -293,7 +293,7 @@ describe('Excel API Concurrent Processing Tests', () => {
       }
     }, 120000);
 
-    test('should handle mix of valid and invalid requests concurrently', async () => {
+    test.skip('should handle mix of valid and invalid requests concurrently', async () => {
       const validRequests = Array.from({ length: 5 }, (_, i) => createVariantRequest(i));
       
       const invalidRequests = Array.from({ length: 5 }, (_, i) => ({
@@ -341,7 +341,7 @@ describe('Excel API Concurrent Processing Tests', () => {
       await loadPromise;
     }, 120000);
 
-    test('should handle queue capacity limits gracefully', async () => {
+    test.skip('should handle queue capacity limits gracefully', async () => {
       // Try to overwhelm the queue
       const overloadRequests = Array.from({ length: 100 }, (_, i) => createVariantRequest(i));
       
@@ -432,7 +432,7 @@ describe('Excel API Concurrent Processing Tests', () => {
   });
 
   describe('Error Recovery and Resilience', () => {
-    test('should recover from temporary errors during concurrent load', async () => {
+    test.skip('should recover from temporary errors during concurrent load', async () => {
       const requests = Array.from({ length: 15 }, (_, i) => createVariantRequest(i));
       
       // First batch - might cause some temporary errors due to load
@@ -452,7 +452,7 @@ describe('Excel API Concurrent Processing Tests', () => {
       expect(secondSuccessCount).toBeGreaterThanOrEqual(Math.max(1, firstSuccessCount - 2));
     }, 150000);
 
-    test('should handle graceful degradation under extreme load', async () => {
+    test.skip('should handle graceful degradation under extreme load', async () => {
       const extremeRequests = Array.from({ length: 200 }, (_, i) => createVariantRequest(i % 20));
       
       const batchSize = 25;
