@@ -102,12 +102,18 @@ router.post('/template/upload', upload.single('template'), async (req: Request, 
     // Step 1: Validate the uploaded file
     const validation = await validateTemplate(req.file.buffer);
     if (!validation.isValid) {
+      logger.error('Template validation failed', {
+        errors: validation.errors,
+        details: validation.details
+      });
+      
       return res.status(400).json({
         success: false,
         error: {
           message: 'Invalid template file',
           code: 'INVALID_TEMPLATE',
-          details: validation.errors,
+          errors: validation.errors,
+          details: validation.details,
         },
       });
     }
@@ -256,70 +262,97 @@ async function validateTemplate(buffer: Buffer): Promise<{
   const details: any = {};
 
   try {
-    // Create temporary processor to validate
-    const processor = new ExcelProcessor();
-    
     // Write to temp file for validation
     const tempPath = `/tmp/temp_validate_${Date.now()}.xlsx`;
-    await fs.writeFile(tempPath, buffer);
+    details.tempPath = tempPath;
+    
+    try {
+      await fs.writeFile(tempPath, buffer);
+      details.fileWritten = true;
+      details.fileSize = buffer.length;
+    } catch (writeError: any) {
+      errors.push(`Failed to write temp file: ${writeError.message}`);
+      details.writeError = writeError.message;
+      return { isValid: false, errors, details };
+    }
 
     try {
-      // Load and check structure
-      await processor.loadTemplate(tempPath);
+      // Create temporary processor to validate
+      const processor = new ExcelProcessor();
+      
+      // Try to load the template
+      try {
+        await processor.loadTemplate(tempPath);
+        details.templateLoaded = true;
+      } catch (loadError: any) {
+        errors.push(`Failed to load template: ${loadError.message}`);
+        details.loadError = loadError.message;
+        return { isValid: false, errors, details };
+      }
+      
+      // Get sheet names
+      let sheets: string[] = [];
+      try {
+        sheets = await processor.getSheetNames();
+        details.sheets = sheets;
+        details.sheetCount = sheets.length;
+      } catch (sheetError: any) {
+        errors.push(`Failed to get sheet names: ${sheetError.message}`);
+        details.sheetError = sheetError.message;
+      }
       
       // Check required sheets
       const requiredSheets = ['технолог', 'снабжение', 'результат'];
-      const sheets = await processor.getSheetNames();
-      details.sheets = sheets;
-
+      details.requiredSheets = requiredSheets;
+      
       for (const sheet of requiredSheets) {
         if (!sheets.includes(sheet)) {
-          errors.push(`Missing required sheet: ${sheet}`);
+          errors.push(`Missing required sheet: '${sheet}'. Found sheets: ${sheets.join(', ')}`);
         }
       }
 
-      // Check key cells exist
-      const keyCells = [
-        { sheet: 'технолог', cell: 'D27', name: 'tech_D27_type' },
-        { sheet: 'снабжение', cell: 'D8', name: 'sup_D8_priceMaterial' },
-        { sheet: 'результат', cell: 'B3', name: 'total_cost' },
-      ];
-
-      for (const { sheet, cell, name } of keyCells) {
-        try {
-          const value = await processor.getCellValue(sheet, cell);
-          details[name] = { exists: true, value };
-        } catch (error) {
-          errors.push(`Missing key cell: ${sheet}!${cell} (${name})`);
-          details[name] = { exists: false };
-        }
-      }
-
-      // Check formulas in результат sheet
-      const formulaCells = ['B3', 'B4', 'B5', 'B6', 'B7'];
-      details.formulas = {};
-      
-      for (const cell of formulaCells) {
-        try {
-          const formula = await processor.getCellFormula('результат', cell);
-          if (!formula) {
-            errors.push(`Missing formula in результат!${cell}`);
+      // Only check cells if all sheets exist
+      if (errors.length === 0) {
+        // Check key cells exist
+        const keyCells = [
+          { sheet: 'технолог', cell: 'D27', name: 'tech_D27_type' },
+          { sheet: 'снабжение', cell: 'D8', name: 'sup_D8_priceMaterial' },
+          { sheet: 'результат', cell: 'B3', name: 'total_cost' },
+        ];
+        
+        details.cellChecks = {};
+        for (const { sheet, cell, name } of keyCells) {
+          try {
+            const value = await processor.getCellValue(sheet, cell);
+            details.cellChecks[name] = { exists: true, value, location: `${sheet}!${cell}` };
+          } catch (cellError: any) {
+            errors.push(`Failed to read cell ${sheet}!${cell}: ${cellError.message}`);
+            details.cellChecks[name] = { exists: false, error: cellError.message };
           }
-          details.formulas[cell] = formula || 'No formula';
-        } catch (error) {
-          errors.push(`Cannot read результат!${cell}`);
         }
       }
 
     } finally {
       // Clean up temp file
-      await fs.unlink(tempPath).catch(() => {});
+      try {
+        await fs.unlink(tempPath);
+        details.tempFileDeleted = true;
+      } catch (deleteError) {
+        details.tempFileDeleted = false;
+        details.deleteError = deleteError;
+      }
     }
 
   } catch (error: any) {
     errors.push(`Failed to parse Excel file: ${error.message}`);
+    details.parseError = error.message;
+    details.stack = error.stack;
   }
 
+  // Add debug info
+  details.totalErrors = errors.length;
+  details.tempPath = `/tmp/temp_validate_${Date.now()}.xlsx`;
+  
   return {
     isValid: errors.length === 0,
     errors,

@@ -514,7 +514,20 @@
                     }, 2000);
                 } else {
                     progressContainer.style.display = 'none';
-                    showError(data.error?.message || 'Upload failed');
+                    
+                    // Show detailed error information
+                    let errorMsg = data.error?.message || 'Upload failed';
+                    
+                    if (data.error?.errors && data.error.errors.length > 0) {
+                        errorMsg += '\n\nValidation Errors:\n' + data.error.errors.join('\n');
+                    }
+                    
+                    if (data.error?.details) {
+                        console.log('Validation Details:', data.error.details);
+                        errorMsg += '\n\nCheck console for detailed validation information.';
+                    }
+                    
+                    showError(errorMsg);
                 }
             } catch (error) {
                 clearInterval(progressInterval);
@@ -576,9 +589,11 @@
         
         function showError(message) {
             const el = document.getElementById('errorMessage');
-            el.textContent = '❌ ' + message;
+            el.innerHTML = '❌ ' + message.replace(/\n/g, '<br>');
             el.style.display = 'block';
-            setTimeout(() => el.style.display = 'none', 5000);
+            el.style.whiteSpace = 'pre-wrap';
+            // Don't auto-hide error messages - let user read them
+            // setTimeout(() => el.style.display = 'none', 5000);
         }
         
         function showWarning(message) {
