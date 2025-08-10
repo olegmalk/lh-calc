@@ -205,8 +205,8 @@ async function executeCalculation(data: CalculationRequest, requestId: string): 
       ) as any;
     }
 
-    // Success response
-    return createSuccessResponse(
+    // Success response with download URL
+    const response = createSuccessResponse(
       processingResult.results!,
       requestId,
       processingResult.processingTimeMs,
@@ -217,6 +217,13 @@ async function executeCalculation(data: CalculationRequest, requestId: string): 
         totalTimeMs: Date.now() - startTime
       }
     );
+    
+    // Add download URL to response if available
+    if (processingResult.downloadUrl) {
+      (response as any).downloadUrl = processingResult.downloadUrl;
+    }
+    
+    return response;
 
   } catch (error) {
     return createErrorResponse(
@@ -453,6 +460,93 @@ app.get('/api/admin/circuit-breaker/status', (_req: Request, res: Response) => {
     circuit_breaker: status,
     timestamp: new Date().toISOString()
   });
+});
+
+// Excel file management endpoints
+app.get('/api/excel-files', async (_req: Request, res: Response) => {
+  try {
+    const fs = await import('fs/promises');
+    const path = await import('path');
+    const excelDir = path.join('/home/vmuser/dev/lh_calc/excel-api/public/excel-files');
+    
+    try {
+      const files = await fs.readdir(excelDir);
+      const fileStats = await Promise.all(
+        files.filter(f => f.endsWith('.xlsx')).map(async (file) => {
+          const filePath = path.join(excelDir, file);
+          const stats = await fs.stat(filePath);
+          return {
+            name: file,
+            size: stats.size,
+            created: stats.birthtime,
+            modified: stats.mtime,
+            downloadUrl: `/excel-files/${file}`
+          };
+        })
+      );
+      
+      // Sort by creation date, newest first
+      fileStats.sort((a, b) => b.created.getTime() - a.created.getTime());
+      
+      res.json({
+        success: true,
+        files: fileStats,
+        count: fileStats.length,
+        timestamp: new Date().toISOString()
+      });
+    } catch (err) {
+      // Directory doesn't exist yet
+      res.json({
+        success: true,
+        files: [],
+        count: 0,
+        timestamp: new Date().toISOString()
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: `Failed to list Excel files: ${error instanceof Error ? error.message : String(error)}`,
+      timestamp: new Date().toISOString()
+    });
+  }
+});
+
+// Delete old Excel files (cleanup)
+app.delete('/api/admin/excel-files/cleanup', async (_req: Request, res: Response) => {
+  try {
+    const fs = await import('fs/promises');
+    const path = await import('path');
+    const excelDir = path.join('/home/vmuser/dev/lh_calc/excel-api/public/excel-files');
+    
+    const files = await fs.readdir(excelDir);
+    const now = Date.now();
+    const maxAge = 24 * 60 * 60 * 1000; // 24 hours
+    let deletedCount = 0;
+    
+    for (const file of files) {
+      if (file.endsWith('.xlsx')) {
+        const filePath = path.join(excelDir, file);
+        const stats = await fs.stat(filePath);
+        if (now - stats.mtime.getTime() > maxAge) {
+          await fs.unlink(filePath);
+          deletedCount++;
+        }
+      }
+    }
+    
+    res.json({
+      success: true,
+      message: `Deleted ${deletedCount} old Excel files`,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: `Failed to cleanup Excel files: ${error instanceof Error ? error.message : String(error)}`,
+      timestamp: new Date().toISOString()
+    });
+  }
 });
 
 

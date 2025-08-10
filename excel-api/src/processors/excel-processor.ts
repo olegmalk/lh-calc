@@ -49,6 +49,8 @@ export interface ProcessingResult {
   error?: string;
   processingTimeMs: number;
   tempFilePath?: string;
+  savedFilePath?: string;
+  downloadUrl?: string;
   warnings?: string[];
   errorDetails?: {
     type: ErrorType;
@@ -94,7 +96,7 @@ export class ExcelProcessor {
    * Main processing method with comprehensive error handling
    * Handles all edge cases from Excel formula calculations
    */
-  async processCalculation(inputData: CalculationRequest): Promise<ProcessingResult> {
+  async processCalculation(inputData: CalculationRequest, requestId?: string): Promise<ProcessingResult> {
     const processId = `proc_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
     const maxRetries = this.options.maxRetries || 2;
     const retryDelay = this.options.retryDelayMs || 100;
@@ -138,7 +140,7 @@ export class ExcelProcessor {
           }
 
           // Process with timeout protection
-          const processingPromise = this.performCalculation(inputData, processId, warnings);
+          const processingPromise = this.performCalculation(inputData, processId, warnings, requestId);
           const result = await Promise.race([processingPromise, timeoutPromise]);
 
           // Clear timeout
@@ -153,6 +155,8 @@ export class ExcelProcessor {
             results: result.results!,
             processingTimeMs: processingTime,
             tempFilePath: this.options.keepTempFiles ? result.tempFilePath : undefined,
+            savedFilePath: result.savedFilePath,
+            downloadUrl: result.downloadUrl,
             warnings: warnings.length > 0 ? warnings : undefined
           };
 
@@ -219,8 +223,9 @@ export class ExcelProcessor {
   private async performCalculation(
     inputData: CalculationRequest, 
     _processId: string, 
-    warnings: string[]
-  ): Promise<{ results: CalculationResults; tempFilePath?: string }> {
+    warnings: string[],
+    requestId?: string
+  ): Promise<{ results: CalculationResults; tempFilePath?: string; savedFilePath?: string; downloadUrl?: string }> {
     let tempFilePath: string | undefined;
 
     try {
@@ -253,6 +258,17 @@ export class ExcelProcessor {
       // Final validation of results
       this.validateCalculationResults(results, warnings);
 
+      // Save the Excel file for download
+      let savedFilePath: string | undefined;
+      let downloadUrl: string | undefined;
+      if (requestId && tempFilePath) {
+        const savedPath = await this.saveExcelFile(tempFilePath, requestId);
+        if (savedPath) {
+          savedFilePath = savedPath;
+          downloadUrl = `/excel-files/${path.basename(savedPath)}`;
+        }
+      }
+
       // Cleanup temp file unless keepTempFiles is set
       if (!this.options.keepTempFiles && tempFilePath) {
         await this.cleanupTempFile(tempFilePath);
@@ -261,7 +277,9 @@ export class ExcelProcessor {
 
       return {
         results,
-        tempFilePath: this.options.keepTempFiles ? tempFilePath : undefined
+        tempFilePath: this.options.keepTempFiles ? tempFilePath : undefined,
+        savedFilePath,
+        downloadUrl
       };
 
     } catch (error) {
@@ -1589,6 +1607,25 @@ export class ExcelProcessor {
     } catch (error) {
       warnings.push('Fallback calculation failed, using default minimum cost');
       return 5000; // Default reasonable cost
+    }
+  }
+
+  /**
+   * Save Excel file for download
+   */
+  private async saveExcelFile(tempFilePath: string, requestId: string): Promise<string | undefined> {
+    try {
+      const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+      const fileName = `calculation_${requestId}_${timestamp}.xlsx`;
+      const publicPath = path.join('/home/vmuser/dev/lh_calc/excel-api/public/excel-files', fileName);
+      
+      // Copy the file to public directory
+      await fs.copyFile(tempFilePath, publicPath);
+      
+      return publicPath;
+    } catch (error) {
+      console.error('Failed to save Excel file for download:', error);
+      return undefined;
     }
   }
 }

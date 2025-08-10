@@ -21,6 +21,7 @@ export interface ProcessingResult {
   error?: string;
   processingTimeMs: number;
   queueTimeMs: number;
+  downloadUrl?: string;
 }
 
 export interface WorkerStats {
@@ -217,7 +218,7 @@ export class QueueManager extends EventEmitter {
 
     try {
       // Process with Excel processor
-      const result = await this.excelProcessor.processCalculation(request.data);
+      const result = await this.excelProcessor.processCalculation(request.data, request.id);
       const processingTime = Date.now() - startTime;
 
       // Update worker stats
@@ -239,7 +240,8 @@ export class QueueManager extends EventEmitter {
         results: result.results,
         error: result.error,
         processingTimeMs: processingTime,
-        queueTimeMs: queueTime
+        queueTimeMs: queueTime,
+        downloadUrl: result.downloadUrl
       };
 
       request.resolve(processingResult);
