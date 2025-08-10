@@ -1733,11 +1733,36 @@ export class ExcelProcessor {
     const workbook = new Excel.Workbook();
     await workbook.xlsx.readFile(templatePath);
     
-    // Validate required sheets exist
+    // Get all sheet names for debugging
+    const availableSheets: string[] = [];
+    workbook.eachSheet((worksheet) => {
+      availableSheets.push(worksheet.name);
+    });
+    
+    // Validate required sheets exist (check with and without trailing spaces)
     const requiredSheets = ['снабжение', 'технолог', this.RESULTS_SHEET];
     for (const sheet of requiredSheets) {
-      if (!workbook.getWorksheet(sheet)) {
-        throw new Error(`Required sheet '${sheet}' not found in template`);
+      // Try exact match first
+      let worksheet = workbook.getWorksheet(sheet);
+      
+      // If not found, try with trimmed names
+      if (!worksheet) {
+        worksheet = workbook.getWorksheet(sheet.trim());
+      }
+      
+      // If still not found, try to find a sheet that matches when both are trimmed
+      if (!worksheet) {
+        const trimmedRequired = sheet.trim().toLowerCase();
+        for (const availableSheet of availableSheets) {
+          if (availableSheet.trim().toLowerCase() === trimmedRequired) {
+            worksheet = workbook.getWorksheet(availableSheet);
+            break;
+          }
+        }
+      }
+      
+      if (!worksheet) {
+        throw new Error(`Required sheet '${sheet}' not found in template. Available sheets: [${availableSheets.map(s => `'${s}'`).join(', ')}]`);
       }
     }
   }
