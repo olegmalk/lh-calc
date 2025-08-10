@@ -426,16 +426,12 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Delivery Type</label>
-                        <select id="tech_F27_quantityType">
-                            <option value="Целый ТА" selected>Целый ТА (Complete)</option>
-                            <option value="ШОТ-БЛОК">ШОТ-БЛОК (Shot Block)</option>
-                            <option value="РЕИНЖ">РЕИНЖ (Re-engineering)</option>
-                        </select>
+                        <label>Type F Quantity</label>
+                        <input type="number" id="tech_F27_quantityType" value="100" min="0">
                     </div>
                     <div class="form-group">
-                        <label>Equipment Size</label>
-                        <input type="text" id="tech_G27_quantityType" value="К4-750" placeholder="e.g., К4-750">
+                        <label>Type G Quantity</label>
+                        <input type="number" id="tech_G27_quantityType" value="150" min="0">
                     </div>
                     <div class="form-group">
                         <label>Process Specification</label>
@@ -497,8 +493,28 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label>Temperature Input (°C)</label>
+                        <input type="number" id="tech_N27_quantityType" value="100" min="-50" max="500">
+                    </div>
+                    <div class="form-group">
+                        <label>Temperature Output (°C)</label>
+                        <input type="number" id="tech_O27_quantityType" value="80" min="-50" max="500">
+                    </div>
+                    <div class="form-group">
                         <label>Primary Material</label>
                         <select id="tech_P27_materialType">
+                            <option value="AISI 304">AISI 304</option>
+                            <option value="AISI 316" selected>AISI 316</option>
+                            <option value="AISI 316L">AISI 316L</option>
+                            <option value="AISI 316Ti">AISI 316Ti</option>
+                            <option value="AISI 321">AISI 321</option>
+                            <option value="Hastelloy">Hastelloy</option>
+                            <option value="Titanium">Titanium</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Secondary Material</label>
+                        <select id="tech_Q27_materialType">
                             <option value="AISI 304">AISI 304</option>
                             <option value="AISI 316" selected>AISI 316</option>
                             <option value="AISI 316L">AISI 316L</option>
@@ -530,32 +546,20 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Groove Depth (mm)</label>
-                        <input type="number" id="tech_T27_materialThicknessType" value="5" min="0" max="20">
+                        <label>Thickness Type</label>
+                        <input type="number" id="tech_T27_materialThicknessType" value="1" min="0.5" max="10" step="0.5">
                     </div>
                     <div class="form-group">
-                        <label>Plate Thickness (mm)</label>
-                        <select id="tech_U27_materialThicknessType">
-                            <option value="0.8">0.8</option>
-                            <option value="1" selected>1</option>
-                            <option value="1.2">1.2</option>
-                            <option value="1.5">1.5</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="5">5</option>
-                        </select>
+                        <label>Viscosity (mPa·s)</label>
+                        <input type="number" id="tech_T27_viscosityMPa" value="10" min="0" max="1000">
                     </div>
                     <div class="form-group">
-                        <label>Cladding Thickness (mm)</label>
-                        <select id="tech_V27_thicknessType">
-                            <option value="0.8">0.8</option>
-                            <option value="1">1</option>
-                            <option value="1.2">1.2</option>
-                            <option value="1.5">1.5</option>
-                            <option value="2">2</option>
-                            <option value="3" selected>3</option>
-                            <option value="5">5</option>
-                        </select>
+                        <label>Additional Thickness</label>
+                        <input type="number" id="tech_U27_materialThicknessType" value="1" min="0" max="10" step="0.5">
+                    </div>
+                    <div class="form-group">
+                        <label>Flow Rate (m³/h)</label>
+                        <input type="number" id="tech_V27_quantityType" value="150" min="0" max="5000">
                     </div>
                 </div>
             </div>
@@ -589,11 +593,19 @@
                     </div>
                     <div class="form-group">
                         <label>Material Norm Cost (₽)</label>
-                        <input type="number" id="sup_P13_costQuantityMaterialNorm" value="120000" min="0">
+                        <input type="number" id="sup_P13_costQuantityNormTotal" value="6000" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Material Norm Quantity</label>
+                        <input type="number" id="sup_P13_costQuantityMaterialNorm" value="1000" min="0">
                     </div>
                     <div class="form-group">
                         <label>Mass Thickness (mm)</label>
-                        <input type="number" id="sup_D78_massThickness" value="3" min="0">
+                        <input type="number" id="sup_D78_massThickness" value="50" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Price Type</label>
+                        <input type="number" id="sup_D78_priceType" value="50" min="0">
                     </div>
                     <div class="form-group">
                         <label>Total Price Component</label>
@@ -762,35 +774,38 @@
             
             try {
                 const requestData = {
-                    // Technical parameters - matching contract types
                     tech_D27_type: parseInt(document.getElementById('tech_D27_type').value),
-                    tech_E27_weightType: document.getElementById('tech_E27_weightType').value,  // string
-                    tech_F27_quantityType: document.getElementById('tech_F27_quantityType').value,  // string (DeliveryType)
-                    tech_G27_quantityType: document.getElementById('tech_G27_quantityType').value,  // string
-                    tech_H27_quantityType: document.getElementById('tech_H27_quantityType').value,  // string (fraction)
-                    tech_I27_quantityType: parseInt(document.getElementById('tech_I27_quantityType').value),  // number
-                    tech_J27_quantityType: parseInt(document.getElementById('tech_J27_quantityType').value),  // number
-                    tech_K27_quantity: parseInt(document.getElementById('tech_K27_quantity').value),  // number
-                    tech_L27_quantity: parseInt(document.getElementById('tech_L27_quantity').value),  // number
-                    tech_M27_material: parseInt(document.getElementById('tech_M27_material').value),  // number
-                    tech_P27_materialType: document.getElementById('tech_P27_materialType').value,  // string (PlateMaterial)
-                    tech_R27_materialThicknessType: document.getElementById('tech_R27_materialThicknessType').value,  // string (FrameMaterial)
-                    tech_S27_materialThicknessType: document.getElementById('tech_S27_materialThicknessType').value,  // string (GrooveType)
-                    tech_T27_materialThicknessType: parseInt(document.getElementById('tech_T27_materialThicknessType').value),  // number
-                    tech_U27_materialThicknessType: parseFloat(document.getElementById('tech_U27_materialThicknessType').value),  // number
-                    tech_V27_thicknessType: parseFloat(document.getElementById('tech_V27_thicknessType').value),  // number
-                    
-                    // Supply parameters - matching contract types
-                    sup_F2_parameter: document.getElementById('sup_F2_parameter').value,  // string
-                    sup_D8_priceMaterial: parseInt(document.getElementById('sup_D8_priceMaterial').value),  // number
-                    sup_E8_priceMaterial: parseInt(document.getElementById('sup_E8_priceMaterial').value),  // number
-                    sup_K13_costQuantityNormTotal: parseInt(document.getElementById('sup_K13_costQuantityNormTotal').value),  // number
-                    sup_P13_costQuantityMaterialNorm: parseInt(document.getElementById('sup_P13_costQuantityMaterialNorm').value),  // number
-                    sup_D78_massThickness: parseInt(document.getElementById('sup_D78_massThickness').value),  // number
-                    sup_D43_priceTotal: parseInt(document.getElementById('sup_D43_priceTotal').value),  // number
-                    sup_D44_price: parseInt(document.getElementById('sup_D44_price').value),  // number
-                    sup_D45_price: parseInt(document.getElementById('sup_D45_price').value),  // number
-                    sup_D46_price: parseInt(document.getElementById('sup_D46_price').value)  // number
+                    tech_E27_weightType: document.getElementById('tech_E27_weightType').value,
+                    tech_F27_quantityType: parseInt(document.getElementById('tech_F27_quantityType').value),
+                    tech_G27_quantityType: parseInt(document.getElementById('tech_G27_quantityType').value),
+                    tech_H27_quantityType: document.getElementById('tech_H27_quantityType').value,
+                    tech_I27_quantityType: parseInt(document.getElementById('tech_I27_quantityType').value),
+                    tech_J27_quantityType: parseInt(document.getElementById('tech_J27_quantityType').value),
+                    tech_K27_quantity: parseInt(document.getElementById('tech_K27_quantity').value),
+                    tech_L27_quantity: parseInt(document.getElementById('tech_L27_quantity').value),
+                    tech_M27_material: parseInt(document.getElementById('tech_M27_material').value),
+                    tech_N27_quantityType: parseInt(document.getElementById('tech_N27_quantityType').value),
+                    tech_O27_quantityType: parseInt(document.getElementById('tech_O27_quantityType').value),
+                    tech_P27_materialType: document.getElementById('tech_P27_materialType').value,
+                    tech_Q27_materialType: document.getElementById('tech_Q27_materialType').value,
+                    tech_R27_materialThicknessType: document.getElementById('tech_R27_materialThicknessType').value,
+                    tech_S27_materialThicknessType: document.getElementById('tech_S27_materialThicknessType').value,
+                    tech_T27_materialThicknessType: parseFloat(document.getElementById('tech_T27_materialThicknessType').value),
+                    tech_T27_viscosityMPa: parseInt(document.getElementById('tech_T27_viscosityMPa').value),
+                    tech_U27_materialThicknessType: parseFloat(document.getElementById('tech_U27_materialThicknessType').value),
+                    tech_V27_quantityType: parseInt(document.getElementById('tech_V27_quantityType').value),
+                    sup_F2_parameter: document.getElementById('sup_F2_parameter').value,
+                    sup_D8_priceMaterial: parseInt(document.getElementById('sup_D8_priceMaterial').value),
+                    sup_E8_priceMaterial: parseInt(document.getElementById('sup_E8_priceMaterial').value),
+                    sup_K13_costQuantityNormTotal: parseInt(document.getElementById('sup_K13_costQuantityNormTotal').value),
+                    sup_P13_costQuantityNormTotal: parseInt(document.getElementById('sup_P13_costQuantityNormTotal').value),
+                    sup_P13_costQuantityMaterialNorm: parseInt(document.getElementById('sup_P13_costQuantityMaterialNorm').value),
+                    sup_D78_massThickness: parseInt(document.getElementById('sup_D78_massThickness').value),
+                    sup_D78_priceType: parseInt(document.getElementById('sup_D78_priceType').value),
+                    sup_D43_priceTotal: parseInt(document.getElementById('sup_D43_priceTotal').value),
+                    sup_D44_price: parseInt(document.getElementById('sup_D44_price').value),
+                    sup_D45_price: parseInt(document.getElementById('sup_D45_price').value),
+                    sup_D46_price: parseInt(document.getElementById('sup_D46_price').value)
                 };
                 
                 const response = await fetch('/api/calculate', {
@@ -851,28 +866,34 @@
             // Technical parameters
             document.getElementById('tech_D27_type').value = '750';
             document.getElementById('tech_E27_weightType').value = 'К4-750';
-            document.getElementById('tech_F27_quantityType').value = 'Целый ТА';
-            document.getElementById('tech_G27_quantityType').value = 'К4-750';
+            document.getElementById('tech_F27_quantityType').value = '100';
+            document.getElementById('tech_G27_quantityType').value = '150';
             document.getElementById('tech_H27_quantityType').value = '1/6';
             document.getElementById('tech_I27_quantityType').value = '400';
             document.getElementById('tech_J27_quantityType').value = '100';
             document.getElementById('tech_K27_quantity').value = '10';
             document.getElementById('tech_L27_quantity').value = '160';
             document.getElementById('tech_M27_material').value = '1';
+            document.getElementById('tech_N27_quantityType').value = '100';
+            document.getElementById('tech_O27_quantityType').value = '80';
             document.getElementById('tech_P27_materialType').value = 'AISI 316L';
+            document.getElementById('tech_Q27_materialType').value = 'AISI 316L';
             document.getElementById('tech_R27_materialThicknessType').value = '09Г2С';
             document.getElementById('tech_S27_materialThicknessType').value = 'гофра';
-            document.getElementById('tech_T27_materialThicknessType').value = '5';
+            document.getElementById('tech_T27_materialThicknessType').value = '1';
+            document.getElementById('tech_T27_viscosityMPa').value = '10';
             document.getElementById('tech_U27_materialThicknessType').value = '1';
-            document.getElementById('tech_V27_thicknessType').value = '3';
+            document.getElementById('tech_V27_quantityType').value = '150';
             
             // Supply parameters
             document.getElementById('sup_F2_parameter').value = '09Г2С';
             document.getElementById('sup_D8_priceMaterial').value = '700';
             document.getElementById('sup_E8_priceMaterial').value = '700';
             document.getElementById('sup_K13_costQuantityNormTotal').value = '8000';
-            document.getElementById('sup_P13_costQuantityMaterialNorm').value = '120000';
-            document.getElementById('sup_D78_massThickness').value = '3';
+            document.getElementById('sup_P13_costQuantityNormTotal').value = '6000';
+            document.getElementById('sup_P13_costQuantityMaterialNorm').value = '1000';
+            document.getElementById('sup_D78_massThickness').value = '50';
+            document.getElementById('sup_D78_priceType').value = '50';
             document.getElementById('sup_D43_priceTotal').value = '100';
             document.getElementById('sup_D44_price').value = '200';
             document.getElementById('sup_D45_price').value = '300';
