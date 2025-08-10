@@ -102,6 +102,7 @@ app.use('/', (req: Request, res: Response, next: NextFunction) => {
   // Apply basic auth to dashboard and admin endpoints
   if (req.path === '/' || 
       req.path === '/index.html' ||
+      req.path === '/template-upload.html' ||
       req.path.startsWith('/api/admin') ||
       req.path === '/health' ||
       req.path === '/api/metrics' ||

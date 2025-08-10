@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template Management - LH Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            color: #2d3748;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        
+        .header p {
+            color: #718096;
+            font-size: 14px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 8px;
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .card h2 {
+            color: #2d3748;
+            font-size: 20px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 12px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .info-item {
+            padding: 12px;
+            background: #f7fafc;
+            border-radius: 8px;
+        }
+        
+        .info-label {
+            color: #718096;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        
+        .info-value {
+            color: #2d3748;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .upload-area {
+            border: 2px dashed #cbd5e0;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            margin: 24px 0;
+            background: #f7fafc;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-area:hover {
+            border-color: #667eea;
+            background: #edf2f7;
+        }
+        
+        .upload-area.dragging {
+            border-color: #667eea;
+            background: #e9d8fd;
+        }
+        
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        
+        .upload-text {
+            color: #4a5568;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+        
+        .upload-hint {
+            color: #a0aec0;
+            font-size: 14px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5a67d8;
+        }
+        
+        .btn-secondary {
+            background: #edf2f7;
+            color: #4a5568;
+        }
+        
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+        
+        .btn-danger {
+            background: #fc8181;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #f56565;
+        }
+        
+        .progress-container {
+            display: none;
+            margin: 24px 0;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #667eea;
+            transition: width 0.3s ease;
+        }
+        
+        .progress-text {
+            margin-top: 12px;
+            color: #4a5568;
+            font-size: 14px;
+        }
+        
+        .message {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+            display: none;
+        }
+        
+        .message.success {
+            background: #c6f6d5;
+            color: #22543d;
+            border: 1px solid #9ae6b4;
+        }
+        
+        .message.error {
+            background: #fed7d7;
+            color: #742a2a;
+            border: 1px solid #fc8181;
+        }
+        
+        .message.warning {
+            background: #feebc8;
+            color: #744210;
+            border: 1px solid #f6ad55;
+        }
+        
+        .backup-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .backup-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .backup-item:last-child {
+            border-bottom: none;
+        }
+        
+        .backup-info {
+            flex: 1;
+        }
+        
+        .backup-name {
+            color: #2d3748;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .backup-meta {
+            color: #718096;
+            font-size: 12px;
+            margin-top: 2px;
+        }
+        
+        .backup-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="/" class="back-link">← Back to Dashboard</a>
+            <h1>📋 Template Management</h1>
+            <p>Upload, download, and manage Excel calculation templates</p>
+        </div>
+        
+        <div class="card">
+            <h2>Current Template Information</h2>
+            <div class="info-grid" id="templateInfo">
+                <div class="info-item">
+                    <div class="info-label">Version</div>
+                    <div class="info-value" id="templateVersion">Loading...</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">File Size</div>
+                    <div class="info-value" id="templateSize">Loading...</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Last Modified</div>
+                    <div class="info-value" id="templateModified">Loading...</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Available Backups</div>
+                    <div class="info-value" id="backupCount">Loading...</div>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn-secondary" onclick="downloadTemplate()">
+                    📥 Download Current Template
+                </button>
+                <button class="btn-secondary" onclick="refreshInfo()">
+                    🔄 Refresh Info
+                </button>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>Upload New Template</h2>
+            
+            <div class="upload-area" id="uploadArea" onclick="selectFile()">
+                <div class="upload-icon">📤</div>
+                <div class="upload-text">Click to select or drag and drop</div>
+                <div class="upload-hint">Excel files only (.xlsx, .xls) - Max 50MB</div>
+            </div>
+            
+            <input type="file" id="fileInput" accept=".xlsx,.xls" style="display: none;">
+            
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">Uploading...</div>
+            </div>
+            
+            <div class="message success" id="successMessage"></div>
+            <div class="message error" id="errorMessage"></div>
+            <div class="message warning" id="warningMessage"></div>
+        </div>
+        
+        <div class="card">
+            <h2>Template Backups</h2>
+            <div class="backup-list" id="backupList">
+                <div style="padding: 20px; text-align: center; color: #718096;">
+                    Loading backups...
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let selectedFile = null;
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTemplateInfo();
+            setupDragAndDrop();
+            setupFileInput();
+        });
+        
+        // Load template information
+        async function loadTemplateInfo() {
+            try {
+                const response = await fetch('/api/admin/template/info');
+                const data = await response.json();
+                
+                if (data.success && data.template) {
+                    const template = data.template;
+                    document.getElementById('templateVersion').textContent = template.version || 'Unknown';
+                    document.getElementById('templateSize').textContent = template.sizeFormatted || 'Unknown';
+                    document.getElementById('templateModified').textContent = 
+                        new Date(template.modified).toLocaleString();
+                    document.getElementById('backupCount').textContent = 
+                        template.backups ? `${template.backups.length} backups` : '0 backups';
+                    
+                    // Load backup list
+                    if (template.backups && template.backups.length > 0) {
+                        displayBackups(template.backups);
+                    } else {
+                        document.getElementById('backupList').innerHTML = `
+                            <div style="padding: 20px; text-align: center; color: #718096;">
+                                No backups available
+                            </div>
+                        `;
+                    }
+                } else {
+                    showError('Failed to load template information');
+                }
+            } catch (error) {
+                console.error('Error loading template info:', error);
+                showError('Failed to connect to server');
+            }
+        }
+        
+        // Display backups
+        function displayBackups(backups) {
+            const backupList = document.getElementById('backupList');
+            backupList.innerHTML = backups.map(backup => `
+                <div class="backup-item">
+                    <div class="backup-info">
+                        <div class="backup-name">${backup.name}</div>
+                        <div class="backup-meta">
+                            ${new Date(backup.modified).toLocaleString()} • ${backup.sizeFormatted}
+                        </div>
+                    </div>
+                    <div class="backup-actions">
+                        <button class="btn-secondary btn-small" onclick="restoreBackup('${backup.name}')">
+                            Restore
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Setup drag and drop
+        function setupDragAndDrop() {
+            const uploadArea = document.getElementById('uploadArea');
+            
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragging');
+            });
+            
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('dragging');
+            });
+            
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragging');
+                
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handleFileSelect(files[0]);
+                }
+            });
+        }
+        
+        // Setup file input
+        function setupFileInput() {
+            const fileInput = document.getElementById('fileInput');
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handleFileSelect(e.target.files[0]);
+                }
+            });
+        }
+        
+        // Select file
+        function selectFile() {
+            document.getElementById('fileInput').click();
+        }
+        
+        // Handle file selection
+        function handleFileSelect(file) {
+            // Validate file type
+            const validTypes = ['.xlsx', '.xls'];
+            const ext = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
+            
+            if (!validTypes.includes(ext)) {
+                showError('Invalid file type. Please select an Excel file (.xlsx or .xls)');
+                return;
+            }
+            
+            // Validate file size (50MB max)
+            if (file.size > 50 * 1024 * 1024) {
+                showError('File too large. Maximum size is 50MB');
+                return;
+            }
+            
+            selectedFile = file;
+            uploadFile();
+        }
+        
+        // Upload file
+        async function uploadFile() {
+            if (!selectedFile) return;
+            
+            const progressContainer = document.getElementById('progressContainer');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            
+            // Show progress
+            progressContainer.style.display = 'block';
+            progressFill.style.width = '0%';
+            progressText.textContent = 'Uploading template...';
+            hideMessages();
+            
+            // Simulate progress
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress = Math.min(progress + 10, 90);
+                progressFill.style.width = progress + '%';
+            }, 200);
+            
+            const formData = new FormData();
+            formData.append('template', selectedFile);
+            
+            try {
+                const response = await fetch('/api/admin/template/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                clearInterval(progressInterval);
+                progressFill.style.width = '100%';
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    progressText.textContent = 'Upload complete!';
+                    showSuccess('Template uploaded successfully! Workers will use the new template on next request.');
+                    
+                    // Reload template info
+                    setTimeout(() => {
+                        loadTemplateInfo();
+                        progressContainer.style.display = 'none';
+                        selectedFile = null;
+                    }, 2000);
+                } else {
+                    progressContainer.style.display = 'none';
+                    showError(data.error?.message || 'Upload failed');
+                }
+            } catch (error) {
+                clearInterval(progressInterval);
+                progressContainer.style.display = 'none';
+                console.error('Upload error:', error);
+                showError('Failed to upload template: ' + error.message);
+            }
+        }
+        
+        // Download template
+        function downloadTemplate() {
+            window.location.href = '/api/admin/template/download';
+        }
+        
+        // Restore backup
+        async function restoreBackup(backupFile) {
+            if (!confirm(`Are you sure you want to restore backup ${backupFile}?`)) {
+                return;
+            }
+            
+            hideMessages();
+            
+            try {
+                const response = await fetch('/api/admin/template/restore', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ backupFile })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showSuccess('Template restored successfully from backup');
+                    loadTemplateInfo();
+                } else {
+                    showError(data.error?.message || 'Restore failed');
+                }
+            } catch (error) {
+                console.error('Restore error:', error);
+                showError('Failed to restore backup: ' + error.message);
+            }
+        }
+        
+        // Refresh info
+        function refreshInfo() {
+            loadTemplateInfo();
+            showSuccess('Information refreshed');
+        }
+        
+        // Message functions
+        function showSuccess(message) {
+            const el = document.getElementById('successMessage');
+            el.textContent = '✅ ' + message;
+            el.style.display = 'block';
+            setTimeout(() => el.style.display = 'none', 5000);
+        }
+        
+        function showError(message) {
+            const el = document.getElementById('errorMessage');
+            el.textContent = '❌ ' + message;
+            el.style.display = 'block';
+            setTimeout(() => el.style.display = 'none', 5000);
+        }
+        
+        function showWarning(message) {
+            const el = document.getElementById('warningMessage');
+            el.textContent = '⚠️ ' + message;
+            el.style.display = 'block';
+            setTimeout(() => el.style.display = 'none', 5000);
+        }
+        
+        function hideMessages() {
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('warningMessage').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
