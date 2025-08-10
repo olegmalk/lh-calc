@@ -282,23 +282,6 @@ app.get('/api/openapi.yaml', async (_req: Request, res: Response) => {
   }
 });
 
-// Serve OpenAPI specification in JSON format
-app.get('/api/openapi.json', async (_req: Request, res: Response) => {
-  try {
-    const fs = await import('fs/promises');
-    const path = await import('path');
-    const yaml = await import('js-yaml');
-    const specPath = path.join('/home/vmuser/dev/lh_calc/excel-api', 'openapi.yaml');
-    const specYaml = await fs.readFile(specPath, 'utf-8');
-    const specJson = yaml.load(specYaml);
-    res.json(specJson);
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: 'Failed to load OpenAPI specification'
-    });
-  }
-});
 
 // Get required fields
 app.get('/api/fields/required', (_req: Request, res: Response) => {

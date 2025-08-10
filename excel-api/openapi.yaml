@@ -161,18 +161,6 @@ paths:
               schema:
                 type: string
 
-  /api/openapi.json:
-    get:
-      summary: Get OpenAPI specification as JSON
-      tags:
-        - Metadata
-      responses:
-        '200':
-          description: OpenAPI specification in JSON format
-          content:
-            application/json:
-              schema:
-                type: object
 
 components:
   schemas:
