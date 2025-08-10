@@ -115,16 +115,11 @@ app.use('/', (req: Request, res: Response, next: NextFunction) => {
 // Serve static files from public directory
 app.use(express.static('public'));
 
-// CORS configuration for Bitrix24
+// CORS configuration - allow all origins
 app.use(cors({
-  origin: [
-    /^https:\/\/.*\.bitrix24\.com$/,
-    /^https:\/\/.*\.bitrix24\.ru$/,
-    'http://localhost:3000',
-    'http://localhost:3001'
-  ],
+  origin: true, // Allow all origins
   credentials: true,
-  methods: ['GET', 'POST', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 

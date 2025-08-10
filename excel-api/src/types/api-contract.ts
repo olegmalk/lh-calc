@@ -1,7 +1,6 @@
 /**
  * API Contract Types for Excel Processor Service
  * Generated from OpenAPI specification
- * Compatible with Bitrix24 integration
  */
 
 // Enums for validation
@@ -267,7 +266,7 @@ export interface ValidationRule {
 }
 
 /**
- * CORS configuration for Bitrix24 integration
+ * CORS configuration
  */
 export interface CorsConfig {
   enabled: boolean;
