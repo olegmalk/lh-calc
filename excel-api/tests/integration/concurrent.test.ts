@@ -113,7 +113,7 @@ describe('Excel API Concurrent Processing Tests', () => {
   });
 
   // Utility function to make concurrent requests
-  const makeConcurrentRequests = async (count: number, requestData: CalculationRequest[]) => {
+  const makeConcurrentRequests = async (requestData: CalculationRequest[]) => {
     const promises = requestData.map((data, index) =>
       request(app)
         .post('/api/calculate')
@@ -128,41 +128,48 @@ describe('Excel API Concurrent Processing Tests', () => {
   describe('Basic Concurrent Processing', () => {
     test('should handle 5 identical concurrent requests', async () => {
       const requests = Array(5).fill(baseValidRequest);
-      const results = await makeConcurrentRequests(5, requests);
+      const results = await makeConcurrentRequests(requests);
 
       // All requests should be processed
       expect(results).toHaveLength(5);
 
       // Check each result
-      results.forEach(({ index, response, error }) => {
-        expect(error).toBeUndefined();
-        expect(response.status).toBe(200);
-        expect(response.body.success).toBe(true);
-        expect(response.body.request_id).toBeDefined();
-        expect(response.body.results.total_cost).toBeGreaterThan(0);
+      results.forEach((result) => {
+        expect('error' in result ? result.error : undefined).toBeUndefined();
+        if ('response' in result) {
+          expect(result.response.status).toBe(200);
+          expect(result.response.body.success).toBe(true);
+          expect(result.response.body.request_id).toBeDefined();
+          expect(result.response.body.results.total_cost).toBeGreaterThan(0);
+        }
       });
 
       // All requests should have unique request IDs
-      const requestIds = results.map(r => r.response.body.request_id);
+      const requestIds = results
+        .filter(r => 'response' in r)
+        .map(r => 'response' in r ? r.response.body.request_id : undefined)
+        .filter(id => id !== undefined);
       const uniqueIds = new Set(requestIds);
       expect(uniqueIds.size).toBe(5);
     }, 60000);
 
     test('should handle 10 different concurrent requests', async () => {
       const requests = Array.from({ length: 10 }, (_, i) => createVariantRequest(i));
-      const results = await makeConcurrentRequests(10, requests);
+      const results = await makeConcurrentRequests(requests);
 
       expect(results).toHaveLength(10);
 
       let successfulRequests = 0;
-      results.forEach(({ index, response, error }) => {
-        expect(error).toBeUndefined();
-        expect([200, 422]).toContain(response.status);
-        
-        if (response.status === 200) {
-          successfulRequests++;
-          expect(response.body.success).toBe(true);
-          expect(response.body.request_id).toBeDefined();
+      results.forEach((result) => {
+        expect('error' in result ? result.error : undefined).toBeUndefined();
+        if ('response' in result) {
+          expect([200, 422]).toContain(result.response.status);
+          
+          if (result.response.status === 200) {
+            successfulRequests++;
+            expect(result.response.body.success).toBe(true);
+            expect(result.response.body.request_id).toBeDefined();
+          }
         }
       });
 
@@ -174,7 +181,7 @@ describe('Excel API Concurrent Processing Tests', () => {
   describe('High Load Concurrent Processing', () => {
     test('should handle 20 concurrent requests without corruption', async () => {
       const requests = Array.from({ length: 20 }, (_, i) => createVariantRequest(i));
-      const results = await makeConcurrentRequests(20, requests);
+      const results = await makeConcurrentRequests(requests);
 
       expect(results).toHaveLength(20);
 
@@ -182,19 +189,21 @@ describe('Excel API Concurrent Processing Tests', () => {
       let queueFullCount = 0;
       const processingTimes: number[] = [];
 
-      results.forEach(({ index, response, error }) => {
-        expect(error).toBeUndefined();
-        expect([200, 422, 503]).toContain(response.status);
+      results.forEach((result) => {
+        expect('error' in result ? result.error : undefined).toBeUndefined();
+        if ('response' in result) {
+          expect([200, 422, 503]).toContain(result.response.status);
 
-        if (response.status === 200) {
-          successCount++;
-          expect(response.body.success).toBe(true);
-          expect(response.body.processing_time_ms).toBeGreaterThan(0);
-          processingTimes.push(response.body.processing_time_ms);
-        } else if (response.status === 503) {
-          queueFullCount++;
-          expect(response.body.success).toBe(false);
-          expect(response.body.error).toMatch(/queue|busy|capacity/i);
+          if (result.response.status === 200) {
+            successCount++;
+            expect(result.response.body.success).toBe(true);
+            expect(result.response.body.processing_time_ms).toBeGreaterThan(0);
+            processingTimes.push(result.response.body.processing_time_ms);
+          } else if (result.response.status === 503) {
+            queueFullCount++;
+            expect(result.response.body.success).toBe(false);
+            expect(result.response.body.error).toMatch(/queue|busy|capacity/i);
+          }
         }
       });
 
@@ -213,7 +222,7 @@ describe('Excel API Concurrent Processing Tests', () => {
       const requests = Array.from({ length: 50 }, (_, i) => createVariantRequest(i % 10));
       const startTime = Date.now();
       
-      const results = await makeConcurrentRequests(50, requests);
+      const results = await makeConcurrentRequests(requests);
       const totalTime = Date.now() - startTime;
 
       expect(results).toHaveLength(50);
@@ -222,20 +231,22 @@ describe('Excel API Concurrent Processing Tests', () => {
       let rejectedCount = 0;
       let errorCount = 0;
 
-      results.forEach(({ index, response, error }) => {
-        if (error) {
+      results.forEach((result) => {
+        if ('error' in result) {
           errorCount++;
           return;
         }
 
-        if (response.status === 200) {
-          successCount++;
-          expect(response.body.success).toBe(true);
-        } else if ([422, 503].includes(response.status)) {
-          rejectedCount++;
-          expect(response.body.success).toBe(false);
-        } else {
-          errorCount++;
+        if ('response' in result) {
+          if (result.response.status === 200) {
+            successCount++;
+            expect(result.response.body.success).toBe(true);
+          } else if ([422, 503].includes(result.response.status)) {
+            rejectedCount++;
+            expect(result.response.body.success).toBe(false);
+          } else {
+            errorCount++;
+          }
         }
       });
 
@@ -261,7 +272,7 @@ describe('Excel API Concurrent Processing Tests', () => {
       }));
 
       const allRequests = [...simpleRequests, ...complexRequests];
-      const results = await makeConcurrentRequests(10, allRequests);
+      const results = await makeConcurrentRequests(allRequests);
 
       expect(results).toHaveLength(10);
 
@@ -269,15 +280,13 @@ describe('Excel API Concurrent Processing Tests', () => {
       const complexResults = results.slice(5, 10);
 
       // Simple requests should generally complete faster
-      const simpleAvgTime = simpleResults
-        .filter(r => r.response.status === 200)
-        .reduce((sum, r) => sum + r.response.body.processing_time_ms, 0) / 
-        simpleResults.filter(r => r.response.status === 200).length;
+      const simpleValidResults = simpleResults.filter(r => 'response' in r && r.response.status === 200);
+      const simpleAvgTime = simpleValidResults.length > 0 ?
+        simpleValidResults.reduce((sum, r) => sum + ('response' in r ? r.response.body.processing_time_ms : 0), 0) / simpleValidResults.length : 0;
 
-      const complexAvgTime = complexResults
-        .filter(r => r.response.status === 200)
-        .reduce((sum, r) => sum + r.response.body.processing_time_ms, 0) / 
-        complexResults.filter(r => r.response.status === 200).length;
+      const complexValidResults = complexResults.filter(r => 'response' in r && r.response.status === 200);
+      const complexAvgTime = complexValidResults.length > 0 ?
+        complexValidResults.reduce((sum, r) => sum + ('response' in r ? r.response.body.processing_time_ms : 0), 0) / complexValidResults.length : 0;
 
       if (!isNaN(simpleAvgTime) && !isNaN(complexAvgTime)) {
         console.log(`Simple avg: ${simpleAvgTime}ms, Complex avg: ${complexAvgTime}ms`);
@@ -294,7 +303,7 @@ describe('Excel API Concurrent Processing Tests', () => {
       }));
 
       const allRequests = [...validRequests, ...invalidRequests];
-      const results = await makeConcurrentRequests(10, allRequests);
+      const results = await makeConcurrentRequests(allRequests);
 
       expect(results).toHaveLength(10);
 
@@ -302,11 +311,11 @@ describe('Excel API Concurrent Processing Tests', () => {
       const invalidResults = results.slice(5, 10);
 
       // Valid requests should mostly succeed
-      const validSuccessCount = validResults.filter(r => r.response.status === 200).length;
+      const validSuccessCount = validResults.filter(r => 'response' in r && r.response.status === 200).length;
       expect(validSuccessCount).toBeGreaterThanOrEqual(3);
 
       // Invalid requests should mostly fail validation
-      const invalidFailCount = invalidResults.filter(r => r.response.status === 422).length;
+      const invalidFailCount = invalidResults.filter(r => 'response' in r && r.response.status === 422).length;
       expect(invalidFailCount).toBeGreaterThanOrEqual(3);
     }, 90000);
   });
@@ -315,7 +324,7 @@ describe('Excel API Concurrent Processing Tests', () => {
     test('should provide queue status during high load', async () => {
       // Start concurrent processing load
       const loadRequests = Array.from({ length: 20 }, (_, i) => createVariantRequest(i));
-      const loadPromise = makeConcurrentRequests(20, loadRequests);
+      const loadPromise = makeConcurrentRequests(loadRequests);
 
       // Check queue status during load
       await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for requests to start
@@ -379,11 +388,12 @@ describe('Excel API Concurrent Processing Tests', () => {
     test('should prevent request ID collision', async () => {
       // Generate many requests quickly to test ID uniqueness
       const quickRequests = Array.from({ length: 50 }, (_, i) => baseValidRequest);
-      const results = await makeConcurrentRequests(50, quickRequests);
+      const results = await makeConcurrentRequests(quickRequests);
 
       const requestIds = results
-        .filter(r => r.response.status === 200)
-        .map(r => r.response.body.request_id);
+        .filter(r => 'response' in r && r.response.status === 200)
+        .map(r => 'response' in r ? r.response.body.request_id : undefined)
+        .filter(id => id !== undefined);
 
       // All successful request IDs should be unique
       const uniqueIds = new Set(requestIds);
@@ -405,18 +415,18 @@ describe('Excel API Concurrent Processing Tests', () => {
         tech_I27_quantityType: input
       }));
 
-      const results = await makeConcurrentRequests(testData.length, requests);
+      const results = await makeConcurrentRequests(requests);
 
-      results.forEach(({ index, response }) => {
-        if (response.status === 200) {
+      results.forEach((result, index) => {
+        if ('response' in result && result.response.status === 200) {
           const inputValue = testData[index].input;
           const expectedMin = testData[index].expectedMin;
           
-          expect(response.body.success).toBe(true);
-          expect(response.body.results.total_cost).toBeGreaterThanOrEqual(expectedMin);
+          expect(result.response.body.success).toBe(true);
+          expect(result.response.body.results.total_cost).toBeGreaterThanOrEqual(expectedMin);
           
           // Verify the calculation didn't get mixed up with other requests
-          expect(response.body.results.total_cost).toBeLessThan(1000000);
+          expect(result.response.body.results.total_cost).toBeLessThan(1000000);
         }
       });
     }, 90000);
@@ -427,17 +437,17 @@ describe('Excel API Concurrent Processing Tests', () => {
       const requests = Array.from({ length: 15 }, (_, i) => createVariantRequest(i));
       
       // First batch - might cause some temporary errors due to load
-      const firstBatch = await makeConcurrentRequests(15, requests);
+      const firstBatch = await makeConcurrentRequests(requests);
       
       // Wait a moment for recovery
       await new Promise(resolve => setTimeout(resolve, 2000));
       
       // Second batch - should work better after recovery
-      const secondBatch = await makeConcurrentRequests(15, requests);
+      const secondBatch = await makeConcurrentRequests(requests);
 
       // System should recover and handle subsequent requests
-      const firstSuccessCount = firstBatch.filter(r => r.response.status === 200).length;
-      const secondSuccessCount = secondBatch.filter(r => r.response.status === 200).length;
+      const firstSuccessCount = firstBatch.filter(r => 'response' in r && r.response.status === 200).length;
+      const secondSuccessCount = secondBatch.filter(r => 'response' in r && r.response.status === 200).length;
 
       // Second batch should have equal or better success rate
       expect(secondSuccessCount).toBeGreaterThanOrEqual(Math.max(1, firstSuccessCount - 2));
@@ -456,10 +466,10 @@ describe('Excel API Concurrent Processing Tests', () => {
       let totalRejected = 0;
 
       for (const batch of batches) {
-        const results = await makeConcurrentRequests(batch.length, batch);
+        const results = await makeConcurrentRequests(batch);
         
-        const successCount = results.filter(r => r.response.status === 200).length;
-        const rejectedCount = results.filter(r => [422, 503].includes(r.response.status)).length;
+        const successCount = results.filter(r => 'response' in r && r.response.status === 200).length;
+        const rejectedCount = results.filter(r => 'response' in r && [422, 503].includes(r.response.status)).length;
         
         totalSuccess += successCount;
         totalRejected += rejectedCount;
@@ -480,7 +490,7 @@ describe('Excel API Concurrent Processing Tests', () => {
     test('should provide accurate metrics during concurrent processing', async () => {
       // Start background load
       const backgroundLoad = Array.from({ length: 10 }, (_, i) => createVariantRequest(i));
-      const loadPromise = makeConcurrentRequests(10, backgroundLoad);
+      const loadPromise = makeConcurrentRequests(backgroundLoad);
 
       await new Promise(resolve => setTimeout(resolve, 1000));
 
@@ -515,7 +525,7 @@ describe('Excel API Concurrent Processing Tests', () => {
         }))
       ];
 
-      await makeConcurrentRequests(10, mixedRequests);
+      await makeConcurrentRequests(mixedRequests);
 
       const errorsResponse = await request(app)
         .get('/api/admin/errors/recent')
