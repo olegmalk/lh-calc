@@ -130,13 +130,10 @@ export interface ContractFieldNames {
   sup_R41_priceTotal: number | null;  // Numeric price, can be empty
   tech_V27_thicknessType: number;  // Cladding thickness in mm, dropdown enum: 0.8, 1, 1.2, 1.5, 2, 3, 5
 
-  // Yellow cells - Computed results
+  // Yellow cells - Additional user inputs (not computed, despite yellow background)
   tech_F27_quantityType: DeliveryType;  // Delivery type dropdown, validated enum
   tech_G27_quantityType: string;  // Equipment size (e.g., "К4-750")
-  tech_N27_pressureTestHot: number;  // Computed pressure test value for hot side (formula: =AI73)
-  tech_O27_pressureTestCold: number;  // Computed pressure test value for cold side (formula: =AJ73)
   tech_P27_materialType: PlateMaterial;  // Plate material dropdown, validated enum
-  tech_Q27_materialType: PlateMaterial;  // Cladding material (formula: =P27, copies from P27)
   tech_R27_materialThicknessType: FrameMaterial;  // Frame material dropdown, validated enum
   tech_S27_materialThicknessType: GrooveType;  // Groove type dropdown, validated enum
   tech_U27_materialThicknessType: number;  // Plate thickness in mm, dropdown enum: 0.8, 1, 1.2, 1.5, 2, 3, 5

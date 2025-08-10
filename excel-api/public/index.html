@@ -497,28 +497,8 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Pressure Test Hot Side (bar) - Computed</label>
-                        <input type="number" id="tech_N27_pressureTestHot" value="31.46" min="0" max="500" readonly style="background: #f7f7f7;">
-                    </div>
-                    <div class="form-group">
-                        <label>Pressure Test Cold Side (bar) - Computed</label>
-                        <input type="number" id="tech_O27_pressureTestCold" value="31.46" min="0" max="500" readonly style="background: #f7f7f7;">
-                    </div>
-                    <div class="form-group">
                         <label>Primary Material</label>
                         <select id="tech_P27_materialType">
-                            <option value="AISI 304">AISI 304</option>
-                            <option value="AISI 316" selected>AISI 316</option>
-                            <option value="AISI 316L">AISI 316L</option>
-                            <option value="AISI 316Ti">AISI 316Ti</option>
-                            <option value="AISI 321">AISI 321</option>
-                            <option value="Hastelloy">Hastelloy</option>
-                            <option value="Titanium">Titanium</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Secondary Material</label>
-                        <select id="tech_Q27_materialType">
                             <option value="AISI 304">AISI 304</option>
                             <option value="AISI 316" selected>AISI 316</option>
                             <option value="AISI 316L">AISI 316L</option>
@@ -793,10 +773,7 @@
                     tech_K27_quantity: parseInt(document.getElementById('tech_K27_quantity').value),  // number
                     tech_L27_quantity: parseInt(document.getElementById('tech_L27_quantity').value),  // number
                     tech_M27_material: parseInt(document.getElementById('tech_M27_material').value),  // number
-                    tech_N27_pressureTestHot: parseFloat(document.getElementById('tech_N27_pressureTestHot').value),  // number (computed)
-                    tech_O27_pressureTestCold: parseFloat(document.getElementById('tech_O27_pressureTestCold').value),  // number (computed)
                     tech_P27_materialType: document.getElementById('tech_P27_materialType').value,  // string (PlateMaterial)
-                    tech_Q27_materialType: document.getElementById('tech_Q27_materialType').value,  // string (PlateMaterial)
                     tech_R27_materialThicknessType: document.getElementById('tech_R27_materialThicknessType').value,  // string (FrameMaterial)
                     tech_S27_materialThicknessType: document.getElementById('tech_S27_materialThicknessType').value,  // string (GrooveType)
                     tech_T27_materialThicknessType: parseInt(document.getElementById('tech_T27_materialThicknessType').value),  // number
@@ -882,10 +859,7 @@
             document.getElementById('tech_K27_quantity').value = '10';
             document.getElementById('tech_L27_quantity').value = '160';
             document.getElementById('tech_M27_material').value = '1';
-            document.getElementById('tech_N27_pressureTestHot').value = '31.46';
-            document.getElementById('tech_O27_pressureTestCold').value = '31.46';
             document.getElementById('tech_P27_materialType').value = 'AISI 316L';
-            document.getElementById('tech_Q27_materialType').value = 'AISI 316L';
             document.getElementById('tech_R27_materialThicknessType').value = '09Г2С';
             document.getElementById('tech_S27_materialThicknessType').value = 'гофра';
             document.getElementById('tech_T27_materialThicknessType').value = '5';

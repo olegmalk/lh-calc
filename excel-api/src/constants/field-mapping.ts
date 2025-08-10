@@ -100,8 +100,6 @@ export const FIELD_MAPPING = {
   tech_K27_quantity: 'технолог!K27',
   tech_L27_quantity: 'технолог!L27',
   tech_M27_material: 'технолог!M27',
-  tech_N27_pressureTestHot: 'технолог!N27',
-  tech_O27_pressureTestCold: 'технолог!O27',
   tech_T27_materialThicknessType: 'технолог!T27',
 
   // Orange cells - Engineering parameters
@@ -141,7 +139,6 @@ export const FIELD_MAPPING = {
   tech_F27_quantityType: 'технолог!F27',
   tech_G27_quantityType: 'технолог!G27',
   tech_P27_materialType: 'технолог!P27',
-  tech_Q27_materialType: 'технолог!Q27',
   tech_R27_materialThicknessType: 'технолог!R27',
   tech_S27_materialThicknessType: 'технолог!S27',
   tech_U27_materialThicknessType: 'технолог!U27'
