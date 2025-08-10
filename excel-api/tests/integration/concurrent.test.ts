@@ -359,7 +359,7 @@ describe('Excel API Concurrent Processing Tests', () => {
       let timeoutCount = 0;
       let otherErrors = 0;
 
-      results.forEach((result, index) => {
+      results.forEach((result) => {
         if (result.status === 'fulfilled') {
           const response = result.value;
           if (response.status === 200) {
@@ -387,7 +387,7 @@ describe('Excel API Concurrent Processing Tests', () => {
   describe('Race Condition Prevention', () => {
     test('should prevent request ID collision', async () => {
       // Generate many requests quickly to test ID uniqueness
-      const quickRequests = Array.from({ length: 50 }, (_, i) => baseValidRequest);
+      const quickRequests = Array.from({ length: 50 }, () => baseValidRequest);
       const results = await makeConcurrentRequests(quickRequests);
 
       const requestIds = results
@@ -419,7 +419,6 @@ describe('Excel API Concurrent Processing Tests', () => {
 
       results.forEach((result, index) => {
         if ('response' in result && result.response.status === 200) {
-          const inputValue = testData[index].input;
           const expectedMin = testData[index].expectedMin;
           
           expect(result.response.body.success).toBe(true);

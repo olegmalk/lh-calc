@@ -1,12 +1,7 @@
 import request from 'supertest';
 import app from '../../src/index';
 import {
-  CalculationRequest,
-  CalculationResponse,
-  ErrorResponse,
-  MATERIAL_CODES,
-  PRESSURE_RATINGS,
-  DIAMETER_CODES
+  CalculationRequest
 } from '../../src/types/api-contract';
 
 describe('Excel API Integration Tests', () => {
@@ -322,7 +317,7 @@ describe('Excel API Integration Tests', () => {
         large_field: 'x'.repeat(100000) // 100KB of data
       };
 
-      const response = await request(app)
+      await request(app)
         .post('/api/calculate')
         .send(largeRequest)
         .expect((res) => {
@@ -585,13 +580,13 @@ describe('Excel API Integration Tests', () => {
 
   describe('Error Handling', () => {
     test('should handle 404 for non-existent endpoints', async () => {
-      const response = await request(app)
+      await request(app)
         .get('/non-existent-endpoint')
         .expect(404);
     });
 
     test('should handle malformed JSON', async () => {
-      const response = await request(app)
+      await request(app)
         .post('/api/calculate')
         .set('Content-Type', 'application/json')
         .send('{"invalid": json}')
