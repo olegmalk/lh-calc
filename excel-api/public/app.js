@@ -343,11 +343,13 @@ function updateFileList(files) {
     
     fileList.innerHTML = files.slice(0, 10).map(file => `
         <div class="file-item">
-            <div>
-                <div class="file-name">${file.name}</div>
+            <div class="file-info">
+                <div class="file-name" title="${file.name}">${file.name}</div>
                 <div class="file-meta">${new Date(file.created).toLocaleString()} • ${formatFileSize(file.size)}</div>
             </div>
-            <a href="${file.downloadUrl}" class="download-btn" download>Download</a>
+            <div class="file-actions">
+                <a href="${file.downloadUrl}" class="download-btn" download>Download</a>
+            </div>
         </div>
     `).join('');
 }
