@@ -142,8 +142,12 @@ router.post('/template/upload', upload.single('template'), async (req: Request, 
       uploadId,
       message: 'Template successfully uploaded and activated',
       backup: backupPath,
-      validation: validation.details,
-      test: testResult.details,
+      // Simplified response to avoid timeouts
+      validationSummary: {
+        isValid: validation.isValid,
+        errorCount: validation.errors.length,
+        sheetCount: validation.details?.sheetCount || 0
+      }
     });
 
   } catch (error: any) {
