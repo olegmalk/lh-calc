@@ -174,12 +174,22 @@ export class LibreOfficeProcessor {
     try {
       console.log('[LibreOffice] Recalculation: Starting...');
       
+      // Try UNO API method first (most reliable)
+      const unoSuccess = await this.recalculateWithUnoApi(inputPath, outputPath, warnings);
+      if (unoSuccess) {
+        console.log('[LibreOffice] Recalculation: UNO API method succeeded');
+        return;
+      }
+      
+      // Fallback to conversion method
+      console.log('[LibreOffice] Recalculation: Falling back to conversion method');
+      
       // First, convert to ODS (LibreOffice native format) to ensure proper recalculation
       const tempOdsPath = inputPath.replace('.xlsx', '.ods');
       console.log(`[LibreOffice] Recalculation: ODS path will be ${tempOdsPath}`);
       
-      // Convert XLSX to ODS with timeout of 10 seconds
-      const convertToOdsCmd = `timeout 10 soffice --headless --convert-to ods --outdir "${path.dirname(inputPath)}" "${inputPath}"`;
+      // Convert XLSX to ODS with recalculation flags
+      const convertToOdsCmd = `timeout 15 soffice --headless --infilter="MS Excel 2007 XML:CalcRecalcAlways" --convert-to ods --outdir "${path.dirname(inputPath)}" "${inputPath}"`;
       console.log(`[LibreOffice] Recalculation: Executing ODS conversion command...`);
       console.log(`[LibreOffice] Command: ${convertToOdsCmd}`);
       
@@ -195,7 +205,7 @@ export class LibreOfficeProcessor {
       } catch (error: any) {
         console.error(`[LibreOffice] ODS conversion failed after ${Date.now() - odsStartTime}ms`);
         if (error.code === 124) {
-          throw new Error('LibreOffice ODS conversion timed out after 10 seconds');
+          throw new Error('LibreOffice ODS conversion timed out after 15 seconds');
         }
         throw new Error(`ODS conversion failed: ${error.message}`);
       }
@@ -209,7 +219,7 @@ export class LibreOfficeProcessor {
       }
 
       // Now convert back to XLSX with recalculated formulas
-      const convertToXlsxCmd = `timeout 10 soffice --headless --convert-to xlsx:"Calc MS Excel 2007 XML" --outdir "${path.dirname(outputPath)}" "${tempOdsPath}"`;
+      const convertToXlsxCmd = `timeout 15 soffice --headless --convert-to xlsx:"Calc MS Excel 2007 XML" --outdir "${path.dirname(outputPath)}" "${tempOdsPath}"`;
       console.log(`[LibreOffice] Recalculation: Executing XLSX conversion command...`);
       console.log(`[LibreOffice] Command: ${convertToXlsxCmd}`);
       
@@ -225,7 +235,7 @@ export class LibreOfficeProcessor {
       } catch (error: any) {
         console.error(`[LibreOffice] XLSX conversion failed after ${Date.now() - xlsxStartTime}ms`);
         if (error.code === 124) {
-          throw new Error('LibreOffice XLSX conversion timed out after 10 seconds');
+          throw new Error('LibreOffice XLSX conversion timed out after 15 seconds');
         }
         throw new Error(`XLSX conversion failed: ${error.message}`);
       }
@@ -263,6 +273,153 @@ export class LibreOfficeProcessor {
         console.log('[LibreOffice] Killed any hanging soffice processes');
       } catch {}
       throw new Error(`LibreOffice recalculation failed: ${error.message}`);
+    }
+  }
+
+  /**
+   * Use Python UNO API for guaranteed recalculation
+   * This is the most reliable method according to research
+   */
+  private async recalculateWithUnoApi(inputPath: string, outputPath: string, warnings: string[]): Promise<boolean> {
+    try {
+      console.log('[LibreOffice] UNO API: Starting recalculation via Python UNO...');
+      
+      // Create Python script for UNO API recalculation
+      const scriptContent = `#!/usr/bin/env python3
+import sys
+import os
+import uno
+import time
+from com.sun.star.beans import PropertyValue
+
+def recalculate_and_save():
+    try:
+        # Start LibreOffice in listening mode if not already running
+        os.system('soffice --accept="socket,host=localhost,port=2002;urp;" --headless --nofirststartwizard &')
+        time.sleep(2)  # Give it time to start
+        
+        # Get the desktop
+        local_context = uno.getComponentContext()
+        resolver = local_context.ServiceManager.createInstanceWithContext(
+            "com.sun.star.bridge.UnoUrlResolver", local_context)
+        
+        # Connect to LibreOffice
+        try:
+            context = resolver.resolve("uno:socket,host=localhost,port=2002;urp;StarOffice.ComponentContext")
+        except:
+            # If connection fails, try to start LibreOffice again
+            os.system('pkill -f "soffice.*port=2002" || true')
+            time.sleep(1)
+            os.system('soffice --accept="socket,host=localhost,port=2002;urp;" --headless --nofirststartwizard &')
+            time.sleep(3)
+            context = resolver.resolve("uno:socket,host=localhost,port=2002;urp;StarOffice.ComponentContext")
+        
+        desktop = context.ServiceManager.createInstanceWithContext(
+            "com.sun.star.frame.Desktop", context)
+        
+        # Load the document
+        url = uno.systemPathToFileUrl("${inputPath}")
+        props = []
+        doc = desktop.loadComponentFromURL(url, "_blank", 0, props)
+        
+        if doc:
+            # Force full recalculation
+            print("[UNO] Forcing recalculation...")
+            doc.calculateAll()
+            doc.calculate()  # Additional call for good measure
+            
+            # Wait a bit for calculation to complete
+            time.sleep(0.5)
+            
+            # Save as XLSX with recalculated values
+            save_url = uno.systemPathToFileUrl("${outputPath}")
+            save_props = [
+                PropertyValue("FilterName", 0, "Calc MS Excel 2007 XML", 0),
+                PropertyValue("Overwrite", 0, True, 0)
+            ]
+            
+            print("[UNO] Saving with recalculated values...")
+            doc.storeAsURL(save_url, save_props)
+            
+            # Close the document
+            doc.close(True)
+            print("[UNO] Success")
+            return 0
+        else:
+            print("[UNO] Failed to load document")
+            return 1
+            
+    except Exception as e:
+        print(f"[UNO] Error: {e}")
+        return 1
+    finally:
+        # Clean up LibreOffice process
+        os.system('pkill -f "soffice.*port=2002" || true')
+
+if __name__ == "__main__":
+    sys.exit(recalculate_and_save())
+`;
+      
+      const scriptPath = path.join(os.tmpdir(), `recalc_uno_${Date.now()}.py`);
+      await fs.writeFile(scriptPath, scriptContent, 'utf8');
+      await fs.chmod(scriptPath, 0o755);
+      
+      // Execute the Python script
+      const pythonCmd = `timeout 20 python3 "${scriptPath}" 2>&1`;
+      console.log('[LibreOffice] UNO API: Executing Python script...');
+      
+      const unoStartTime = Date.now();
+      try {
+        const { stdout, stderr } = await execAsync(pythonCmd);
+        console.log(`[LibreOffice] UNO API: Execution took ${Date.now() - unoStartTime}ms`);
+        
+        if (stdout) {
+          console.log(`[LibreOffice] UNO API stdout: ${stdout}`);
+          if (stdout.includes('[UNO] Success')) {
+            console.log('[LibreOffice] UNO API: Recalculation successful');
+            
+            // Clean up script
+            try {
+              await fs.unlink(scriptPath);
+            } catch {}
+            
+            return true;
+          }
+        }
+        
+        if (stderr) {
+          console.log(`[LibreOffice] UNO API stderr: ${stderr}`);
+          warnings.push(`UNO API warning: ${stderr}`);
+        }
+        
+        // If we get here, the script ran but didn't succeed
+        warnings.push('UNO API recalculation did not complete successfully');
+        
+      } catch (error: any) {
+        console.error(`[LibreOffice] UNO API failed after ${Date.now() - unoStartTime}ms: ${error.message}`);
+        if (error.code === 124) {
+          warnings.push('UNO API recalculation timed out after 20 seconds');
+        } else {
+          warnings.push(`UNO API error: ${error.message}`);
+        }
+      }
+      
+      // Clean up script
+      try {
+        await fs.unlink(scriptPath);
+      } catch {}
+      
+      // Kill any hanging LibreOffice processes
+      try {
+        await execAsync('pkill -f "soffice.*port=2002" || true');
+      } catch {}
+      
+      return false;
+      
+    } catch (error: any) {
+      console.error(`[LibreOffice] UNO API setup error: ${error.message}`);
+      warnings.push(`UNO API setup failed: ${error.message}`);
+      return false;
     }
   }
 
@@ -363,6 +520,11 @@ if __name__ == "__main__":
       // Check if we got real values
       if (totalCost === 0) {
         warnings.push('Total cost is zero - formulas may not have recalculated properly');
+        // Try to force a basic recalculation check
+        const checkCell = resultsSheet.getCell('J30');
+        if (checkCell.formula) {
+          warnings.push(`Cell J30 has formula but returned 0: ${checkCell.formula}`);
+        }
         // Use fallback calculation
         return this.getFallbackResults(inputData, warnings);
       }
