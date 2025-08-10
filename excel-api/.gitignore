@@ -66,3 +66,6 @@ debug-*.ts
 # OS files
 .DS_Store
 Thumbs.db
+
+# Generated Excel files
+public/excel-files/
