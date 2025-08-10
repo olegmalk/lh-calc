@@ -6,6 +6,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import basicAuth from 'express-basic-auth';
 import { FieldValidator } from './validators/field-validator';
 import { ExcelProcessor } from './processors/excel-processor';
 import { rateLimiter } from './middleware/rate-limiter';
@@ -74,6 +75,36 @@ const bitrixAuthMiddleware = new BitrixAuthMiddleware();
 // Middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
+
+// Basic authentication for monitoring interface
+// Only apply to dashboard and admin endpoints
+const basicAuthMiddleware = basicAuth({
+  users: { 
+    'admin': process.env.BASIC_AUTH_PASSWORD || 'lhcalc2024',
+    'monitor': process.env.MONITOR_PASSWORD || 'metrics2024'
+  },
+  challenge: true,
+  realm: 'LH Calculator Monitoring'
+});
+
+// Apply basic auth to monitoring routes
+app.use('/', (req: Request, res: Response, next: NextFunction) => {
+  // Skip auth for API endpoints (they have their own auth)
+  if (req.path.startsWith('/api/calculate') || 
+      req.path.startsWith('/api/bitrix24')) {
+    return next();
+  }
+  // Apply basic auth to dashboard and admin endpoints
+  if (req.path === '/' || 
+      req.path === '/index.html' ||
+      req.path.startsWith('/api/admin') ||
+      req.path === '/health' ||
+      req.path === '/api/metrics' ||
+      req.path === '/api/diagnostics') {
+    return basicAuthMiddleware(req, res, next);
+  }
+  return next();
+});
 
 // Serve static files from public directory
 app.use(express.static('public'));

@@ -1,0 +1,21 @@
+[Unit]
+Description=LH Calculator API Server
+After=network.target
+
+[Service]
+Type=simple
+User=vmuser
+WorkingDirectory=/home/vmuser/dev/lh_calc/excel-api
+Environment="NODE_ENV=production"
+Environment="PORT=3000"
+Environment="BASIC_AUTH_PASSWORD=lhcalc2024"
+Environment="MONITOR_PASSWORD=metrics2024"
+ExecStart=/home/vmuser/.nvm/versions/node/v22.18.0/bin/node /home/vmuser/dev/lh_calc/excel-api/dist/index.js
+Restart=always
+RestartSec=10
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=lh-calculator
+
+[Install]
+WantedBy=multi-user.target

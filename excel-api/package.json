@@ -24,6 +24,7 @@
     "dotenv": "^17.2.1",
     "exceljs": "^4.4.0",
     "express": "^5.1.0",
+    "express-basic-auth": "^1.2.1",
     "joi": "^18.0.0"
   },
   "devDependencies": {
