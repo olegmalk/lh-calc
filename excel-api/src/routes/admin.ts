@@ -123,9 +123,8 @@ router.post('/template/upload', upload.single('template'), async (req: Request, 
     logger.info(`Created backup: ${backupPath}`);
 
     // Step 3: Save new template
-    const templatePath = TEMPLATE_PATH;
-    await fs.writeFile(templatePath, req.file.buffer);
-    logger.info(`Template saved: ${templatePath}`);
+    await fs.writeFile(TEMPLATE_PATH, req.file.buffer);
+    logger.info(`Template saved: ${TEMPLATE_PATH}`);
 
     // Step 4: Workers will use new template on next request
     // Note: In production, you may want to restart the service
@@ -373,8 +372,16 @@ async function createBackup(suffix?: string): Promise<string> {
   const backupName = `calc_backup_${timestamp}${suffix ? '_' + suffix : ''}.xlsx`;
   const backupPath = path.join(backupDir, backupName);
 
-  const templatePath = TEMPLATE_PATH; // Use the constant we defined
-  await fs.copyFile(templatePath, backupPath);
+  // Check if template exists before trying to backup
+  try {
+    await fs.access(TEMPLATE_PATH);
+    await fs.copyFile(TEMPLATE_PATH, backupPath);
+    logger.info(`Backup created from ${TEMPLATE_PATH} to ${backupPath}`);
+  } catch (error: any) {
+    logger.warn(`No existing template to backup at ${TEMPLATE_PATH}: ${error.message}`);
+    // Return a dummy path since there's nothing to backup
+    return 'no-backup-needed';
+  }
 
   // Keep only last 10 backups
   const files = await fs.readdir(backupDir);
