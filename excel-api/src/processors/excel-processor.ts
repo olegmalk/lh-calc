@@ -82,7 +82,7 @@ export class ExcelProcessingError extends ExcelApiError {
 
 export class ExcelProcessor {
   private readonly DEFAULT_TEMPLATE_PATH = '/home/vmuser/dev/lh_calc/calc.xlsx';
-  private readonly RESULTS_SHEET = 'результат ';
+  private readonly RESULTS_SHEET = 'результат';
   private readonly RESULTS_RANGE = ['J30', 'J31', 'J32', 'J33', 'J34', 'J35', 'J36'];
   private readonly errorLogger: ErrorLogger;
   private readonly activeProcesses = new Set<string>();
