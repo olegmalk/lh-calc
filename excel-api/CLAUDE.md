@@ -3,6 +3,7 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Critical Rules
+- **ALWAYS READ FILES IN FULL BEFORE MODIFYING** - Read the entire file content before making any edits
 - **NEVER LEAVE FALLBACKS** - Always fix the root cause, don't settle for workarounds
 - **NO BACKWARDS COMPATIBILITY** - Breaking changes are the default
 - **Every fallback must be temporary** - Mark with TODO and fix immediately

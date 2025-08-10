@@ -1628,6 +1628,128 @@ export class ExcelProcessor {
       return undefined;
     }
   }
+
+  /**
+   * Initialize processor (for admin template operations)
+   */
+  async initialize(): Promise<void> {
+    // Validate template exists
+    const templatePath = this.options.templatePath || this.DEFAULT_TEMPLATE_PATH;
+    await fs.access(templatePath);
+  }
+
+  /**
+   * Get template version
+   */
+  public getTemplateVersion(): string {
+    return 'calc.xlsx v7';
+  }
+
+  /**
+   * Get sheet names from workbook
+   */
+  public async getSheetNames(): Promise<string[]> {
+    const templatePath = this.options.templatePath || this.DEFAULT_TEMPLATE_PATH;
+    const workbook = new Excel.Workbook();
+    await workbook.xlsx.readFile(templatePath);
+    
+    const sheets: string[] = [];
+    workbook.eachSheet((worksheet) => {
+      sheets.push(worksheet.name);
+    });
+    
+    return sheets;
+  }
+
+  /**
+   * Get cell value from specific sheet
+   */
+  public async getCellValue(sheetName: string, cellAddress: string): Promise<any> {
+    const templatePath = this.options.templatePath || this.DEFAULT_TEMPLATE_PATH;
+    const workbook = new Excel.Workbook();
+    await workbook.xlsx.readFile(templatePath);
+    
+    const worksheet = workbook.getWorksheet(sheetName);
+    if (!worksheet) {
+      throw new Error(`Sheet ${sheetName} not found`);
+    }
+    
+    const cell = worksheet.getCell(cellAddress);
+    return this.getCellStringValueSafely(cell, cellAddress);
+  }
+
+  /**
+   * Get cell formula from specific sheet
+   */
+  public async getCellFormula(sheetName: string, cellAddress: string): Promise<string | null> {
+    const templatePath = this.options.templatePath || this.DEFAULT_TEMPLATE_PATH;
+    const workbook = new Excel.Workbook();
+    await workbook.xlsx.readFile(templatePath);
+    
+    const worksheet = workbook.getWorksheet(sheetName);
+    if (!worksheet) {
+      throw new Error(`Sheet ${sheetName} not found`);
+    }
+    
+    const cell = worksheet.getCell(cellAddress);
+    if (cell.formula) {
+      return typeof cell.formula === 'string' ? cell.formula : (cell.formula as any).formula || null;
+    }
+    return null;
+  }
+
+  /**
+   * Set cell value (for template testing)
+   */
+  public async setCellValueForTesting(sheetName: string, cellAddress: string, value: any): Promise<void> {
+    const templatePath = this.options.templatePath || this.DEFAULT_TEMPLATE_PATH;
+    const workbook = new Excel.Workbook();
+    await workbook.xlsx.readFile(templatePath);
+    
+    const worksheet = workbook.getWorksheet(sheetName);
+    if (!worksheet) {
+      throw new Error(`Sheet ${sheetName} not found`);
+    }
+    
+    const cell = worksheet.getCell(cellAddress);
+    cell.value = value;
+  }
+
+  /**
+   * Get field mapping for a field name
+   */
+  public getFieldMapping(fieldName: string): { sheet: string; cell: string } | null {
+    const mapping = (FIELD_MAPPING as any)[fieldName];
+    if (!mapping) return null;
+    
+    const [sheet, cell] = mapping.split('!');
+    return { sheet, cell };
+  }
+
+  /**
+   * Load template from specific path (for validation)
+   */
+  public async loadTemplate(templatePath: string): Promise<void> {
+    const workbook = new Excel.Workbook();
+    await workbook.xlsx.readFile(templatePath);
+    
+    // Validate required sheets exist
+    const requiredSheets = ['снабжение', 'технолог', this.RESULTS_SHEET];
+    for (const sheet of requiredSheets) {
+      if (!workbook.getWorksheet(sheet)) {
+        throw new Error(`Required sheet '${sheet}' not found in template`);
+      }
+    }
+  }
+
+  /**
+   * Calculate formulas (placeholder for template testing)
+   */
+  public async calculateFormulas(): Promise<void> {
+    // In a real implementation, this would trigger LibreOffice or Excel to recalculate
+    // For now, we just mark that calculation is needed
+    return Promise.resolve();
+  }
 }
 
 // Export singleton instance for easy use

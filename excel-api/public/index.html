@@ -395,6 +395,30 @@
             </div>
             
             <div class="card">
+                <h2>📋 Template Management</h2>
+                <div id="templateInfo">
+                    <div class="metric">
+                        <span class="metric-label">Loading template info...</span>
+                    </div>
+                </div>
+                <div class="button-group" style="margin-top: 16px;">
+                    <input type="file" id="templateFile" accept=".xlsx,.xls" style="display: none;" onchange="handleTemplateSelect(event)">
+                    <button class="btn-primary" onclick="document.getElementById('templateFile').click()">
+                        📤 Upload New Template
+                    </button>
+                    <button class="btn-secondary" onclick="downloadCurrentTemplate()">
+                        📥 Download Current
+                    </button>
+                </div>
+                <div id="templateUploadStatus" style="margin-top: 12px; display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="templateUploadProgress" style="width: 0%"></div>
+                    </div>
+                    <div id="templateUploadMessage" style="margin-top: 8px; font-size: 14px; color: #718096;"></div>
+                </div>
+            </div>
+            
+            <div class="card">
                 <h2>📁 Recent Files</h2>
                 <div id="recentFiles">
                     <div class="metric">
@@ -1610,8 +1634,125 @@
             return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
         }
         
+        // Template Management Functions
+        async function updateTemplateInfo() {
+            try {
+                const response = await fetch('/api/admin/template/info');
+                const data = await response.json();
+                
+                if (data.success && data.template) {
+                    const template = data.template;
+                    document.getElementById('templateInfo').innerHTML = `
+                        <div class="metric">
+                            <span class="metric-label">Version</span>
+                            <span class="metric-value">${template.version}</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Size</span>
+                            <span class="metric-value">${template.sizeFormatted}</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Last Modified</span>
+                            <span class="metric-value">${new Date(template.modified).toLocaleDateString()}</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Backups</span>
+                            <span class="metric-value">${template.backups ? template.backups.length : 0} available</span>
+                        </div>
+                    `;
+                } else {
+                    document.getElementById('templateInfo').innerHTML = `
+                        <div class="metric">
+                            <span class="metric-label">Error loading template info</span>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Failed to update template info:', error);
+                document.getElementById('templateInfo').innerHTML = `
+                    <div class="metric">
+                        <span class="metric-label">Failed to load template info</span>
+                    </div>
+                `;
+            }
+        }
+        
+        async function handleTemplateSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const statusDiv = document.getElementById('templateUploadStatus');
+            const progressBar = document.getElementById('templateUploadProgress');
+            const messageDiv = document.getElementById('templateUploadMessage');
+            
+            statusDiv.style.display = 'block';
+            progressBar.style.width = '0%';
+            messageDiv.textContent = 'Uploading template...';
+            
+            const formData = new FormData();
+            formData.append('template', file);
+            
+            // Simulate progress
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress = Math.min(progress + 10, 90);
+                progressBar.style.width = progress + '%';
+            }, 200);
+            
+            try {
+                const response = await fetch('/api/admin/template/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                clearInterval(progressInterval);
+                progressBar.style.width = '100%';
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    messageDiv.textContent = '✅ Template uploaded successfully! Workers restarted.';
+                    messageDiv.style.color = '#48bb78';
+                    
+                    // Update template info
+                    setTimeout(() => {
+                        updateTemplateInfo();
+                        statusDiv.style.display = 'none';
+                        event.target.value = ''; // Reset file input
+                    }, 3000);
+                } else {
+                    messageDiv.textContent = '❌ Upload failed: ' + (data.error?.message || 'Unknown error');
+                    messageDiv.style.color = '#f56565';
+                    
+                    setTimeout(() => {
+                        statusDiv.style.display = 'none';
+                        event.target.value = ''; // Reset file input
+                    }, 5000);
+                }
+            } catch (error) {
+                clearInterval(progressInterval);
+                messageDiv.textContent = '❌ Upload failed: ' + error.message;
+                messageDiv.style.color = '#f56565';
+                
+                setTimeout(() => {
+                    statusDiv.style.display = 'none';
+                    event.target.value = ''; // Reset file input
+                }, 5000);
+            }
+        }
+        
+        async function downloadCurrentTemplate() {
+            try {
+                window.location.href = '/api/admin/template/download';
+            } catch (error) {
+                console.error('Failed to download template:', error);
+                alert('Failed to download template: ' + error.message);
+            }
+        }
+        
         // Start monitoring
         updateMetrics();
+        updateTemplateInfo();
         updateInterval = setInterval(updateMetrics, 5000);
         
         // Cleanup on page unload

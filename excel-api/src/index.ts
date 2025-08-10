@@ -28,6 +28,7 @@ import {
 } from './errors/custom-errors';
 import { Bitrix24Integration } from './integrations/bitrix24';
 import { BitrixAuthMiddleware } from './middleware/bitrix-auth';
+import adminRouter from './routes/admin';
 
 // Load environment variables
 dotenv.config();
@@ -383,6 +384,10 @@ app.get('/api/metrics', (_req: Request, res: Response) => {
 });
 
 // Admin endpoints (for monitoring and management)
+// Template management routes
+app.use('/api/admin', adminRouter);
+
+// Queue management routes
 app.get('/api/admin/queue/stats', (_req: Request, res: Response) => {
   try {
     const stats = queueManager.getStats();
