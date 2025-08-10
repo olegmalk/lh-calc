@@ -301,13 +301,21 @@ async function validateTemplate(buffer: Buffer): Promise<{
         details.sheetError = sheetError.message;
       }
       
-      // Check required sheets
+      // Check required sheets (with flexible matching for trailing spaces)
       const requiredSheets = ['технолог', 'снабжение', 'результат'];
       details.requiredSheets = requiredSheets;
       
-      for (const sheet of requiredSheets) {
-        if (!sheets.includes(sheet)) {
-          errors.push(`Missing required sheet: '${sheet}'. Found sheets: ${sheets.join(', ')}`);
+      for (const requiredSheet of requiredSheets) {
+        // Check if sheet exists (exact match or with trimming)
+        const found = sheets.some(sheet => 
+          sheet === requiredSheet || 
+          sheet.trim() === requiredSheet || 
+          sheet === requiredSheet.trim() ||
+          sheet.trim().toLowerCase() === requiredSheet.trim().toLowerCase()
+        );
+        
+        if (!found) {
+          errors.push(`Missing required sheet: '${requiredSheet}'. Found sheets: ${sheets.map(s => `'${s}'`).join(', ')}`);
         }
       }
 
@@ -321,12 +329,19 @@ async function validateTemplate(buffer: Buffer): Promise<{
         ];
         
         details.cellChecks = {};
-        for (const { sheet, cell, name } of keyCells) {
+        for (const { sheet: requiredSheet, cell, name } of keyCells) {
           try {
-            const value = await processor.getCellValue(sheet, cell);
-            details.cellChecks[name] = { exists: true, value, location: `${sheet}!${cell}` };
+            // Find the actual sheet name (might have trailing spaces)
+            const actualSheetName = sheets.find(s => 
+              s === requiredSheet || 
+              s.trim() === requiredSheet || 
+              s.trim().toLowerCase() === requiredSheet.trim().toLowerCase()
+            ) || requiredSheet;
+            
+            const value = await processor.getCellValue(actualSheetName, cell);
+            details.cellChecks[name] = { exists: true, value, location: `${actualSheetName}!${cell}` };
           } catch (cellError: any) {
-            errors.push(`Failed to read cell ${sheet}!${cell}: ${cellError.message}`);
+            errors.push(`Failed to read cell ${requiredSheet}!${cell}: ${cellError.message}`);
             details.cellChecks[name] = { exists: false, error: cellError.message };
           }
         }
