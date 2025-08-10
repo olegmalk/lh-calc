@@ -1,5 +1,11 @@
 // Field configuration - single source of truth
 const FIELD_CONFIG = {
+    projectInfo: {
+        title: '📋 Информация о проекте',
+        fields: [
+            { id: 'sup_F2_projectNumber', label: 'Номер проекта', type: 'text', default: '' }
+        ]
+    },
     tech: {
         title: '🔧 Технические параметры теплообменника',
         fields: [
@@ -32,7 +38,6 @@ const FIELD_CONFIG = {
     supMain: {
         title: '💰 Базовые цены и материалы',
         fields: [
-            { id: 'sup_F2_parameter', label: 'F2', type: 'text', default: '0000' },
             { id: 'sup_D8_priceMaterial', label: 'D8', type: 'number', default: 701 },
             { id: 'sup_E8_priceMaterial', label: 'E8', type: 'number', default: 702 },
             { id: 'sup_D9_priceMaterial', label: 'D9', type: 'select',

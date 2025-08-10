@@ -21,6 +21,9 @@ export type SurfaceTreatment = typeof SURFACE_TREATMENTS[number];
  * Contains all 134+ fields from Excel template
  */
 export interface CalculationRequest {
+  // Project identification (снабжение sheet)
+  sup_F2_projectNumber: string;
+
   // Required Engineering parameters (технолог sheet)
   tech_D27_type: number;
   tech_E27_weightType: string;
@@ -36,7 +39,6 @@ export interface CalculationRequest {
   tech_V27_thicknessType?: number;
 
   // Required Supply parameters (снабжение sheet)
-  sup_F2_parameter: MaterialCode;
   sup_D8_priceMaterial: number;
   sup_E8_priceMaterial: number;
   sup_K13_costQuantityNormTotal: number;

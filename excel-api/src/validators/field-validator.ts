@@ -77,8 +77,8 @@ export class FieldValidator {
     schemaObj.sup_D45_price = Joi.number().min(0).required();
     schemaObj.sup_D46_price = Joi.number().min(0).required();
 
-    // Material codes
-    schemaObj.sup_F2_parameter = Joi.string().required(); // Can be "0000" or material codes
+    // Project number
+    schemaObj.sup_F2_projectNumber = Joi.string().required(); // Project number - no validation
 
     // Pressure ratings (optional)
     schemaObj.sup_C28_priceWeightThickness = Joi.string()
@@ -432,7 +432,7 @@ export class FieldValidator {
       'tech_T27_materialThicknessType',
       'tech_U27_materialThicknessType',
       'tech_V27_thicknessType',
-      'sup_F2_parameter',
+      'sup_F2_projectNumber',
       'sup_D8_priceMaterial',
       'sup_E8_priceMaterial',
       'sup_K13_costQuantityNormTotal',

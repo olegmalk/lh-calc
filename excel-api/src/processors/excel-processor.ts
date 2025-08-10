@@ -418,27 +418,6 @@ export class ExcelProcessor {
   }
 
   private async validateBusinessLogic(inputData: CalculationRequest, _warnings: string[]): Promise<void> {
-    // Validate material and temperature combinations
-    if (inputData.sup_F2_parameter && inputData.tech_L27_quantity) {
-      const material = inputData.sup_F2_parameter;
-      const temperature = inputData.tech_L27_quantity;
-
-      // Check material temperature limits
-      const materialLimits = {
-        '09Г2С': { min: -40, max: 475 },
-        '12Х18Н10Т': { min: -253, max: 600 },
-        '20ХН3А': { min: -40, max: 400 }
-      };
-
-      const limits = materialLimits[material as keyof typeof materialLimits];
-      if (limits && (temperature < limits.min || temperature > limits.max)) {
-        throw ErrorFactory.create(ErrorType.MATERIAL_PROPERTY_ERROR,
-          `Temperature ${temperature}°C exceeds limits for material ${material}`,
-          { material, property: 'temperature', value: temperature }
-        );
-      }
-    }
-
     // Validate pressure and diameter combinations
     if (inputData.sup_C28_priceWeightThickness && inputData.sup_D28_priceWeightThickness) {
       const pressure = inputData.sup_C28_priceWeightThickness;
