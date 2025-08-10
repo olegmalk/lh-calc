@@ -8,6 +8,27 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **NO BACKWARDS COMPATIBILITY** - Breaking changes are the default
 - **Every fallback must be temporary** - Mark with TODO and fix immediately
 
+## Servers and Access
+
+### Main API Server
+- **Port**: 3000
+- **Start Command**: `npm run dev` (development with hot reload)
+- **Production**: `npm run build && npm run start`
+- **Serves**: API endpoints + static files from `/public` directory
+
+### Web UI Access
+- **Dashboard**: http://localhost:3000/
+- **Template Upload**: http://localhost:3000/template-upload.html
+- **Authentication**: 
+  - Username: `admin`
+  - Password: `lhcalc2024` (from .env BASIC_AUTH_PASSWORD)
+
+### API Endpoints
+- **Health Check**: http://localhost:3000/health
+- **Calculate**: POST http://localhost:3000/api/calculate
+- **Template Info**: GET http://localhost:3000/api/admin/template/info
+- **Template Upload**: POST http://localhost:3000/api/admin/template/upload
+
 ## Commands
 
 ### Development
@@ -16,6 +37,18 @@ npm run dev         # Start development server with hot reload on port 3000
 npm run build       # Compile TypeScript to dist/
 npm run start       # Run production build from dist/
 ```
+
+### Starting the Server
+```bash
+cd /home/vmuser/dev/lh_calc/excel-api
+npm run dev         # Starts on port 3000 with nodemon for auto-restart
+```
+
+### Accessing the UI
+1. Start the server: `npm run dev`
+2. Open browser to http://localhost:3000/
+3. Login with admin/lhcalc2024
+4. Click "Template Management" for upload functionality
 
 ### Testing
 ```bash
@@ -69,6 +102,12 @@ CustomError (base)
 - **Webhook Endpoint**: `/api/bitrix24/webhook` - No auth, processes Bitrix24 form data
 - **REST Endpoint**: `/api/bitrix24/rest` - Token validation, full API integration
 - **CORS**: Configured for `*.bitrix24.com` and `*.bitrix24.ru` domains
+
+### Excel Template Location
+
+- **Template File**: `/home/vmuser/dev/lh_calc/calc.xlsx`
+- **Backup Directory**: `/home/vmuser/dev/lh_calc/excel-api/backups/`
+- **Temp Files**: `/tmp/temp_validate_*.xlsx`
 
 ### Excel Template Mapping
 

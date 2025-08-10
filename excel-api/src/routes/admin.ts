@@ -132,10 +132,6 @@ router.post('/template/upload', upload.single('template'), async (req: Request, 
 
     // Step 5: Skip test for now - validation already passed
     // TODO: Fix test to handle sheet names with trailing spaces
-    const testResult = { 
-      success: true, 
-      details: { skipped: true, reason: 'Test skipped - validation already passed' } 
-    };
 
     return res.json({
       success: true,
