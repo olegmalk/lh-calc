@@ -74,26 +74,26 @@ export class FieldValidator {
 
     // Pressure ratings (optional)
     schemaObj.sup_C28_priceWeightThickness = Joi.string()
-      .pattern(/^Ру[0-9]+$/)
+      .valid('Ру6', 'Ру10', 'Ру16', 'Ру25', 'Ру40', 'Ру63', 'Ру100', 'Ру160')
       .optional();
     schemaObj.sup_C29_priceWeightPipeThickness = Joi.string()
-      .pattern(/^Ру[0-9]+$/)
+      .valid('Ру6', 'Ру10', 'Ру16', 'Ру25', 'Ру40', 'Ру63', 'Ру100', 'Ру160')
       .optional();
 
     // Diameter codes (optional)
     schemaObj.sup_D28_priceWeightThickness = Joi.string()
-      .pattern(/^Ду[0-9]+$/)
+      .valid('Ду25', 'Ду32', 'Ду40', 'Ду50', 'Ду65', 'Ду80', 'Ду100', 'Ду125', 'Ду150', 'Ду200', 'Ду250', 'Ду300', 'Ду350', 'Ду400', 'Ду450', 'Ду600', 'Ду800', 'Ду1000')
       .optional();
     schemaObj.sup_D29_priceWeightPipe = Joi.string()
-      .pattern(/^Ду[0-9]+$/)
+      .valid('Ду25', 'Ду32', 'Ду40', 'Ду50', 'Ду65', 'Ду80', 'Ду100', 'Ду125', 'Ду150', 'Ду200', 'Ду250', 'Ду300', 'Ду350', 'Ду400', 'Ду450', 'Ду600', 'Ду800', 'Ду1000')
       .optional();
 
     // Thread specifications (optional)
     schemaObj.sup_P22_priceQuantityMaterialTotal = Joi.string()
-      .pattern(/^М[0-9]+$/)
+      .valid('М16', 'М18', 'М20', 'М22', 'М24', 'М27', 'М30', 'М33', 'М36', 'М39', 'М42', 'М48')
       .optional();
     schemaObj.sup_P29_priceMaterialTotal = Joi.string()
-      .pattern(/^М[0-9]+$/)
+      .valid('М16', 'М18', 'М20', 'М22', 'М24', 'М27', 'М30', 'М33', 'М36', 'М39', 'М42', 'М48')
       .optional();
 
     // Surface treatments (optional)

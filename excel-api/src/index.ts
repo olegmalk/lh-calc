@@ -127,15 +127,30 @@ async function executeCalculation(data: CalculationRequest, requestId: string): 
     const validationResult = await validator.validate(data);
     
     if (!validationResult.isValid) {
+      // Categorize validation errors
+      const missingRequiredFields = validationResult.errors
+        .filter(err => err.code === 'any.required')
+        .map(err => err.field);
+      
+      const fieldErrors = validationResult.errors
+        .filter(err => err.code !== 'any.required')
+        .reduce((acc, err) => {
+          acc[err.field] = err.message;
+          return acc;
+        }, {} as Record<string, string>);
+      
+      const errorDetails: any = {};
+      if (missingRequiredFields.length > 0) {
+        errorDetails.missing_required_fields = missingRequiredFields;
+      }
+      if (Object.keys(fieldErrors).length > 0) {
+        errorDetails.field_errors = fieldErrors;
+      }
+      
       return createErrorResponse(
         'VALIDATION_FAILED',
         requestId,
-        { 
-          field_errors: validationResult.errors.reduce((acc, err) => {
-            acc[err.field] = err.message;
-            return acc;
-          }, {} as Record<string, string>)
-        }
+        errorDetails
       ) as any;
     }
 
