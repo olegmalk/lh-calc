@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LH Calculator API</title>
+    <title>LH Calculator API Monitor</title>
     <style>
         * {
             margin: 0;
@@ -103,7 +103,6 @@
             border-radius: 12px;
             padding: 24px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            margin-bottom: 24px;
         }
         
         .demo-section h2 {
@@ -112,22 +111,9 @@
             margin-bottom: 20px;
         }
         
-        .form-section {
-            margin-bottom: 24px;
-        }
-        
-        .form-section h3 {
-            color: #4a5568;
-            font-size: 16px;
-            margin-bottom: 12px;
-            padding: 8px;
-            background: #f7fafc;
-            border-radius: 6px;
-        }
-        
         .form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 16px;
             margin-bottom: 20px;
         }
@@ -149,18 +135,12 @@
             border: 1px solid #cbd5e0;
             border-radius: 6px;
             font-size: 14px;
-            background: white;
-        }
-        
-        .form-group select {
-            cursor: pointer;
         }
         
         .button-group {
             display: flex;
             gap: 12px;
             margin-bottom: 20px;
-            flex-wrap: wrap;
         }
         
         button {
@@ -189,15 +169,6 @@
         
         .btn-secondary:hover {
             background: #cbd5e0;
-        }
-        
-        .btn-success {
-            background: #48bb78;
-            color: white;
-        }
-        
-        .btn-success:hover {
-            background: #38a169;
         }
         
         .response-area {
@@ -277,7 +248,6 @@
         
         .file-info {
             flex: 1;
-            min-width: 0;
         }
         
         .file-name {
@@ -285,7 +255,6 @@
             color: #2d3748;
             font-size: 14px;
             margin-bottom: 4px;
-            word-break: break-all;
         }
         
         .file-meta {
@@ -296,83 +265,31 @@
         .file-actions {
             display: flex;
             gap: 8px;
-            flex-shrink: 0;
         }
         
         .download-btn {
-            padding: 8px 16px;
+            padding: 6px 12px;
             background: #667eea;
             color: white;
             border: none;
-            border-radius: 6px;
-            font-size: 14px;
+            border-radius: 4px;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
             text-decoration: none;
             display: inline-block;
-            white-space: nowrap;
         }
         
         .download-btn:hover {
             background: #5a67d8;
-        }
-        
-        .download-section {
-            position: sticky;
-            bottom: 0;
-            background: white;
-            padding: 16px;
-            border-top: 2px solid #e2e8f0;
-            margin: -24px;
-            margin-top: 20px;
-            border-radius: 0 0 12px 12px;
-            display: none;
-        }
-        
-        .download-section.active {
-            display: block;
-        }
-        
-        @media (max-width: 768px) {
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .download-section {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                margin: 0;
-                z-index: 1000;
-                box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
-                border-radius: 12px 12px 0 0;
-            }
-            
-            .container {
-                padding-bottom: 100px;
-            }
-            
-            .file-name {
-                font-size: 12px;
-            }
-            
-            .download-btn {
-                padding: 10px 20px;
-                font-size: 16px;
-            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🔧 LH Calculator API</h1>
-            <p>Heat Exchanger Cost Calculation System with Excel Processing</p>
+            <h1>🔧 LH Calculator API Monitor</h1>
+            <p>Real-time monitoring and testing interface for Excel Processing API</p>
         </div>
         
         <div class="grid">
@@ -380,7 +297,20 @@
                 <h2><span class="status-indicator status-healthy" id="healthStatus"></span> Health Status</h2>
                 <div id="healthMetrics">
                     <div class="metric">
-                        <span class="metric-label">Loading...</span>
+                        <span class="metric-label">Status</span>
+                        <span class="metric-value" id="apiStatus">Checking...</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Version</span>
+                        <span class="metric-value">1.0.0</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Uptime</span>
+                        <span class="metric-value" id="uptime">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Last Check</span>
+                        <span class="metric-value" id="lastCheck">-</span>
                     </div>
                 </div>
             </div>
@@ -389,571 +319,424 @@
                 <h2>📊 System Metrics</h2>
                 <div id="systemMetrics">
                     <div class="metric">
-                        <span class="metric-label">Loading...</span>
+                        <span class="metric-label">Memory Usage</span>
+                        <span class="metric-value" id="memoryUsage">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">CPU Load</span>
+                        <span class="metric-value" id="cpuLoad">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Active Workers</span>
+                        <span class="metric-value" id="activeWorkers">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Queue Size</span>
+                        <span class="metric-value" id="queueSize">-</span>
                     </div>
                 </div>
             </div>
             
             <div class="card">
-                <h2>📁 Recent Files</h2>
-                <div id="recentFiles">
+                <h2>⚡ Performance</h2>
+                <div id="performanceMetrics">
                     <div class="metric">
-                        <span class="metric-label">Loading...</span>
+                        <span class="metric-label">Requests/min</span>
+                        <span class="metric-value" id="requestRate">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Avg Response Time</span>
+                        <span class="metric-value" id="avgResponse">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Success Rate</span>
+                        <span class="metric-value" id="successRate">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Total Processed</span>
+                        <span class="metric-value" id="totalProcessed">-</span>
                     </div>
                 </div>
             </div>
         </div>
         
-        <div class="demo-section">
-            <h2>🚀 Calculate Heat Exchanger Cost</h2>
-            
-            <div class="form-section">
-                <h3>🔧 Technical Parameters</h3>
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label>Equipment Type</label>
-                        <input type="number" id="tech_D27_type" value="750" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Equipment Code</label>
-                        <select id="tech_E27_weightType">
-                            <option value="К4-750" selected>К4-750</option>
-                            <option value="К4-500">К4-500</option>
-                            <option value="К4-1000">К4-1000</option>
-                            <option value="Е-113">Е-113</option>
-                            <option value="Е-250">Е-250</option>
-                            <option value="К2-450">К2-450</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Type F Quantity</label>
-                        <input type="number" id="tech_F27_quantityType" value="100" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Type G Quantity</label>
-                        <input type="number" id="tech_G27_quantityType" value="150" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Process Specification</label>
-                        <select id="tech_H27_quantityType">
-                            <option value="1/6" selected>1/6</option>
-                            <option value="1/3">1/3</option>
-                            <option value="1/2">1/2</option>
-                            <option value="2/3">2/3</option>
-                            <option value="3/4">3/4</option>
-                            <option value="1/1">1/1</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Plate Count</label>
-                        <input type="number" id="tech_I27_quantityType" value="400" min="0" max="2000">
-                    </div>
-                    <div class="form-group">
-                        <label>Diameter (Ду)</label>
-                        <select id="tech_J27_quantityType">
-                            <option value="25">Ду25</option>
-                            <option value="50">Ду50</option>
-                            <option value="80">Ду80</option>
-                            <option value="100" selected>Ду100</option>
-                            <option value="150">Ду150</option>
-                            <option value="200">Ду200</option>
-                            <option value="250">Ду250</option>
-                            <option value="300">Ду300</option>
-                            <option value="400">Ду400</option>
-                            <option value="500">Ду500</option>
-                            <option value="600">Ду600</option>
-                            <option value="800">Ду800</option>
-                            <option value="1000">Ду1000</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Pressure (Ру)</label>
-                        <select id="tech_K27_quantity">
-                            <option value="6">Ру6</option>
-                            <option value="10" selected>Ру10</option>
-                            <option value="16">Ру16</option>
-                            <option value="25">Ру25</option>
-                            <option value="40">Ру40</option>
-                            <option value="63">Ру63</option>
-                            <option value="100">Ру100</option>
-                            <option value="160">Ру160</option>
-                            <option value="250">Ру250</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Length</label>
-                        <input type="number" id="tech_L27_quantity" value="160" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Material Type</label>
-                        <select id="tech_M27_material">
-                            <option value="1" selected>Standard</option>
-                            <option value="2">Reinforced</option>
-                            <option value="3">Special</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Temperature Input (°C)</label>
-                        <input type="number" id="tech_N27_quantityType" value="100" min="-50" max="500">
-                    </div>
-                    <div class="form-group">
-                        <label>Temperature Output (°C)</label>
-                        <input type="number" id="tech_O27_quantityType" value="80" min="-50" max="500">
-                    </div>
-                    <div class="form-group">
-                        <label>Primary Material</label>
-                        <select id="tech_P27_materialType">
-                            <option value="AISI 304">AISI 304</option>
-                            <option value="AISI 316" selected>AISI 316</option>
-                            <option value="AISI 316L">AISI 316L</option>
-                            <option value="AISI 316Ti">AISI 316Ti</option>
-                            <option value="AISI 321">AISI 321</option>
-                            <option value="Hastelloy">Hastelloy</option>
-                            <option value="Titanium">Titanium</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Secondary Material</label>
-                        <select id="tech_Q27_materialType">
-                            <option value="AISI 304">AISI 304</option>
-                            <option value="AISI 316" selected>AISI 316</option>
-                            <option value="AISI 316L">AISI 316L</option>
-                            <option value="AISI 316Ti">AISI 316Ti</option>
-                            <option value="AISI 321">AISI 321</option>
-                            <option value="Hastelloy">Hastelloy</option>
-                            <option value="Titanium">Titanium</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Frame Material</label>
-                        <select id="tech_R27_materialThicknessType">
-                            <option value="09Г2С" selected>09Г2С</option>
-                            <option value="12Х18Н10Т">12Х18Н10Т</option>
-                            <option value="10Х17Н13М2Т">10Х17Н13М2Т</option>
-                            <option value="06ХН28МДТ">06ХН28МДТ</option>
-                            <option value="20ХН3А">20ХН3А</option>
-                            <option value="30ХМА">30ХМА</option>
-                            <option value="40Х">40Х</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Plate Type</label>
-                        <select id="tech_S27_materialThicknessType">
-                            <option value="гофра" selected>Гофрированная</option>
-                            <option value="плоская">Плоская</option>
-                            <option value="спираль">Спиральная</option>
-                            <option value="трубчатая">Трубчатая</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Thickness Type</label>
-                        <input type="number" id="tech_T27_materialThicknessType" value="1" min="0.5" max="10" step="0.5">
-                    </div>
-                    <div class="form-group">
-                        <label>Viscosity (mPa·s)</label>
-                        <input type="number" id="tech_T27_viscosityMPa" value="10" min="0" max="1000">
-                    </div>
-                    <div class="form-group">
-                        <label>Additional Thickness</label>
-                        <input type="number" id="tech_U27_materialThicknessType" value="1" min="0" max="10" step="0.5">
-                    </div>
-                    <div class="form-group">
-                        <label>Flow Rate (m³/h)</label>
-                        <input type="number" id="tech_V27_quantityType" value="150" min="0" max="5000">
-                    </div>
+        <div class="demo-section" style="margin-bottom: 24px;">
+            <h2>📚 API Documentation</h2>
+            <p style="color: #718096; margin-bottom: 16px;">
+                Download the OpenAPI specification to integrate with your tools or generate client SDKs.
+            </p>
+            <div class="button-group">
+                <a href="/api/openapi.yaml" class="btn-primary" download="lh-calculator-api.yaml" style="text-decoration: none; display: inline-block;">
+                    📄 Download OpenAPI (YAML)
+                </a>
+                <a href="/api/openapi.json" class="btn-primary" download="lh-calculator-api.json" style="text-decoration: none; display: inline-block;">
+                    📋 Download OpenAPI (JSON)
+                </a>
+                <button class="btn-secondary" onclick="viewOpenAPISpec()">
+                    👁️ View Specification
+                </button>
+            </div>
+            <div id="openApiPreview" style="display: none; margin-top: 16px;">
+                <div style="background: #f7fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; max-height: 400px; overflow-y: auto;">
+                    <pre id="openApiContent" style="margin: 0; font-family: 'Courier New', monospace; font-size: 12px;"></pre>
                 </div>
             </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>🚀 API Demo - Calculate Heat Exchanger Cost</h2>
             
-            <div class="form-section">
-                <h3>💰 Supply & Pricing Parameters</h3>
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label>Base Material</label>
-                        <select id="sup_F2_parameter">
-                            <option value="09Г2С" selected>09Г2С</option>
-                            <option value="12Х18Н10Т">12Х18Н10Т</option>
-                            <option value="06ХН28МДТ">06ХН28МДТ</option>
-                            <option value="20ХН3А">20ХН3А</option>
-                            <option value="30ХМА">30ХМА</option>
-                            <option value="40Х">40Х</option>
-                            <option value="0000">None</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Material Price (₽/kg)</label>
-                        <input type="number" id="sup_D8_priceMaterial" value="700" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Processing Price (₽/kg)</label>
-                        <input type="number" id="sup_E8_priceMaterial" value="700" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Total Norm Cost (₽)</label>
-                        <input type="number" id="sup_K13_costQuantityNormTotal" value="8000" min="0" max="10000">
-                    </div>
-                    <div class="form-group">
-                        <label>Material Norm Cost (₽)</label>
-                        <input type="number" id="sup_P13_costQuantityNormTotal" value="6000" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Material Norm Quantity</label>
-                        <input type="number" id="sup_P13_costQuantityMaterialNorm" value="1000" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Mass Thickness (mm)</label>
-                        <input type="number" id="sup_D78_massThickness" value="50" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Price Type</label>
-                        <input type="number" id="sup_D78_priceType" value="50" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Total Price Component</label>
-                        <input type="number" id="sup_D43_priceTotal" value="100" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Price Component 1</label>
-                        <input type="number" id="sup_D44_price" value="200" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Price Component 2</label>
-                        <input type="number" id="sup_D45_price" value="300" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Price Component 3</label>
-                        <input type="number" id="sup_D46_price" value="400" min="0">
-                    </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Equipment Type (tech_D27_type)</label>
+                    <input type="number" id="tech_D27_type" value="1" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Position (tech_E27_weightType)</label>
+                    <input type="text" id="tech_E27_weightType" value="Е-113">
+                </div>
+                <div class="form-group">
+                    <label>Process Spec (tech_H27_quantityType)</label>
+                    <input type="text" id="tech_H27_quantityType" value="1/6">
+                </div>
+                <div class="form-group">
+                    <label>Plate Count (tech_I27_quantityType)</label>
+                    <input type="number" id="tech_I27_quantityType" value="400" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Pressure Hot (bar)</label>
+                    <input type="number" id="tech_J27_quantityType" value="22" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Pressure Cold (bar)</label>
+                    <input type="number" id="tech_K27_quantity" value="22" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Temp Hot (°C)</label>
+                    <input type="number" id="tech_L27_quantity" value="100" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Temp Cold (°C)</label>
+                    <input type="number" id="tech_M27_material" value="100" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Drawing Depth (mm)</label>
+                    <input type="number" id="tech_T27_materialThicknessType" value="5" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Material Code</label>
+                    <select id="sup_F2_parameter">
+                        <option value="0000">0000</option>
+                        <option value="09Г2С">09Г2С</option>
+                        <option value="12Х18Н10Т">12Х18Н10Т</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Flow Material Price</label>
+                    <input type="number" id="sup_D8_priceMaterial" value="700" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Cladding Price</label>
+                    <input type="number" id="sup_E8_priceMaterial" value="700" min="0">
                 </div>
             </div>
             
             <div class="button-group">
-                <button class="btn-primary" onclick="calculateCost()">🧮 Calculate Cost</button>
-                <button class="btn-secondary" onclick="fillRealisticValues()">📝 Load Example Values</button>
-                <button class="btn-secondary" onclick="clearForm()">🗑️ Clear Form</button>
+                <button class="btn-primary" onclick="sendRequest()">Calculate Cost</button>
+                <button class="btn-secondary" onclick="fillSampleData()">Load Sample Data</button>
+                <button class="btn-secondary" onclick="clearResponse()">Clear</button>
             </div>
             
             <div class="loading" id="loading">
-                <p>Processing calculation with LibreOffice...</p>
+                Processing request...
                 <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                    <div class="progress-fill" id="progressBar" style="width: 0%"></div>
                 </div>
             </div>
             
             <div class="error-message" id="errorMessage"></div>
             
-            <div id="responseArea" class="response-area">Click "Calculate Cost" to see results here...</div>
-            
-            <div class="download-section" id="downloadSection">
-                <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
-                    <div style="flex: 1;">
-                        <div style="font-weight: 600; color: #2d3748; margin-bottom: 4px;">Excel File Ready!</div>
-                        <div style="font-size: 12px; color: #718096;">Your calculation has been saved</div>
-                    </div>
-                    <a id="downloadLink" href="#" class="download-btn" download>
-                        📥 Download Excel
-                    </a>
-                </div>
+            <div class="response-area" id="responseArea">
+                Click "Calculate Cost" to send a request to the API...
             </div>
         </div>
         
-        <div class="demo-section">
-            <h2>📂 Generated Excel Files</h2>
-            <div id="fileList" class="file-list">
-                <div style="padding: 20px; text-align: center; color: #718096;">
-                    Loading files...
-                </div>
+        <div class="demo-section" style="margin-top: 24px;">
+            <h2>📁 Excel Files History</h2>
+            <div class="button-group">
+                <button class="btn-secondary" onclick="loadExcelFiles()">Refresh List</button>
+                <button class="btn-secondary" onclick="cleanupOldFiles()">Cleanup Old Files (>24h)</button>
+            </div>
+            <div id="excelFilesList" style="margin-top: 16px;">
+                <div style="color: #718096; font-size: 14px;">Loading Excel files...</div>
             </div>
         </div>
     </div>
     
     <script>
-        // Initialize dashboard
-        let updateInterval;
-        
-        async function updateMetrics() {
-            try {
-                // Update health status
-                const healthResponse = await fetch('/health');
-                const healthData = await healthResponse.json();
-                
-                document.getElementById('healthStatus').className = 'status-indicator status-healthy';
-                document.getElementById('healthMetrics').innerHTML = `
-                    <div class="metric">
-                        <span class="metric-label">Status</span>
-                        <span class="metric-value">${healthData.status}</span>
-                    </div>
-                    <div class="metric">
-                        <span class="metric-label">Version</span>
-                        <span class="metric-value">${healthData.version}</span>
-                    </div>
-                    <div class="metric">
-                        <span class="metric-label">Uptime</span>
-                        <span class="metric-value">${formatUptime(healthData.uptime)}</span>
-                    </div>
-                `;
-                
-                // Update system metrics
-                const metricsResponse = await fetch('/api/metrics');
-                const metricsData = await metricsResponse.json();
-                
-                document.getElementById('systemMetrics').innerHTML = `
-                    <div class="metric">
-                        <span class="metric-label">Active Workers</span>
-                        <span class="metric-value">${metricsData.queue.activeWorkers}/${metricsData.queue.totalWorkers}</span>
-                    </div>
-                    <div class="metric">
-                        <span class="metric-label">Queue Size</span>
-                        <span class="metric-value">${metricsData.queue.queuedRequests}</span>
-                    </div>
-                    <div class="metric">
-                        <span class="metric-label">Avg Response</span>
-                        <span class="metric-value">${metricsData.requests.averageResponseTime}ms</span>
-                    </div>
-                    <div class="metric">
-                        <span class="metric-label">Success Rate</span>
-                        <span class="metric-value">${metricsData.requests.successRate}%</span>
-                    </div>
-                `;
-                
-                // Update file count
-                const filesResponse = await fetch('/api/excel-files');
-                const filesData = await filesResponse.json();
-                
-                document.getElementById('recentFiles').innerHTML = `
-                    <div class="metric">
-                        <span class="metric-label">Total Files</span>
-                        <span class="metric-value">${filesData.count}</span>
-                    </div>
-                    <div class="metric">
-                        <span class="metric-label">Latest</span>
-                        <span class="metric-value">${filesData.count > 0 ? new Date(filesData.files[0].created).toLocaleTimeString() : 'None'}</span>
-                    </div>
-                `;
-                
-                updateFileList(filesData.files);
-                
-            } catch (error) {
-                console.error('Failed to update metrics:', error);
-            }
+        // Update health status every 5 seconds
+        function updateHealth() {
+            fetch('/health')
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('apiStatus').textContent = data.status || 'Healthy';
+                    document.getElementById('healthStatus').className = 'status-indicator status-healthy';
+                    document.getElementById('lastCheck').textContent = new Date().toLocaleTimeString();
+                    
+                    if (data.uptime) {
+                        const hours = Math.floor(data.uptime / 3600);
+                        const minutes = Math.floor((data.uptime % 3600) / 60);
+                        document.getElementById('uptime').textContent = `${hours}h ${minutes}m`;
+                    }
+                })
+                .catch(err => {
+                    document.getElementById('apiStatus').textContent = 'Offline';
+                    document.getElementById('healthStatus').className = 'status-indicator status-error';
+                });
         }
         
-        function formatUptime(seconds) {
-            const hours = Math.floor(seconds / 3600);
-            const minutes = Math.floor((seconds % 3600) / 60);
-            const secs = seconds % 60;
-            
-            if (hours > 0) {
-                return `${hours}h ${minutes}m`;
-            } else if (minutes > 0) {
-                return `${minutes}m ${secs}s`;
-            } else {
-                return `${secs}s`;
-            }
+        // Update metrics every 10 seconds
+        function updateMetrics() {
+            fetch('/api/metrics')
+                .then(res => res.json())
+                .then(data => {
+                    // System metrics
+                    if (data.memory) {
+                        const usedMB = Math.round(data.memory.used / 1024 / 1024);
+                        const totalMB = Math.round(data.memory.total / 1024 / 1024);
+                        document.getElementById('memoryUsage').textContent = `${usedMB}/${totalMB} MB`;
+                    }
+                    
+                    if (data.cpu) {
+                        document.getElementById('cpuLoad').textContent = `${data.cpu.loadAverage[0].toFixed(2)}`;
+                    }
+                    
+                    if (data.queue) {
+                        document.getElementById('activeWorkers').textContent = `${data.queue.activeWorkers}/${data.queue.totalWorkers}`;
+                        document.getElementById('queueSize').textContent = data.queue.queuedRequests;
+                    }
+                    
+                    // Performance metrics
+                    if (data.requests) {
+                        document.getElementById('requestRate').textContent = data.requests.ratePerMinute || '0';
+                        document.getElementById('avgResponse').textContent = data.requests.averageResponseTime 
+                            ? `${data.requests.averageResponseTime}ms` : '-';
+                        document.getElementById('successRate').textContent = data.requests.successRate 
+                            ? `${data.requests.successRate}%` : '-';
+                        document.getElementById('totalProcessed').textContent = data.requests.totalProcessed || '0';
+                    }
+                })
+                .catch(err => {
+                    console.error('Failed to fetch metrics:', err);
+                });
         }
         
-        async function calculateCost() {
+        // Send calculation request
+        function sendRequest() {
             const loading = document.getElementById('loading');
-            const errorMessage = document.getElementById('errorMessage');
+            const errorMsg = document.getElementById('errorMessage');
             const responseArea = document.getElementById('responseArea');
-            const downloadSection = document.getElementById('downloadSection');
-            const progressFill = document.getElementById('progressFill');
+            const progressBar = document.getElementById('progressBar');
             
             loading.classList.add('active');
-            errorMessage.classList.remove('active');
-            downloadSection.classList.remove('active');
-            progressFill.style.width = '0%';
+            errorMsg.classList.remove('active');
+            responseArea.textContent = 'Processing...';
             
             // Animate progress bar
             let progress = 0;
             const progressInterval = setInterval(() => {
-                progress += 5;
-                if (progress <= 90) {
-                    progressFill.style.width = progress + '%';
-                }
+                progress += 10;
+                progressBar.style.width = Math.min(progress, 90) + '%';
             }, 200);
             
-            try {
-                const requestData = {
-                    tech_D27_type: parseInt(document.getElementById('tech_D27_type').value),
-                    tech_E27_weightType: document.getElementById('tech_E27_weightType').value,
-                    tech_F27_quantityType: parseInt(document.getElementById('tech_F27_quantityType').value),
-                    tech_G27_quantityType: parseInt(document.getElementById('tech_G27_quantityType').value),
-                    tech_H27_quantityType: document.getElementById('tech_H27_quantityType').value,
-                    tech_I27_quantityType: parseInt(document.getElementById('tech_I27_quantityType').value),
-                    tech_J27_quantityType: parseInt(document.getElementById('tech_J27_quantityType').value),
-                    tech_K27_quantity: parseInt(document.getElementById('tech_K27_quantity').value),
-                    tech_L27_quantity: parseInt(document.getElementById('tech_L27_quantity').value),
-                    tech_M27_material: parseInt(document.getElementById('tech_M27_material').value),
-                    tech_N27_quantityType: parseInt(document.getElementById('tech_N27_quantityType').value),
-                    tech_O27_quantityType: parseInt(document.getElementById('tech_O27_quantityType').value),
-                    tech_P27_materialType: document.getElementById('tech_P27_materialType').value,
-                    tech_Q27_materialType: document.getElementById('tech_Q27_materialType').value,
-                    tech_R27_materialThicknessType: document.getElementById('tech_R27_materialThicknessType').value,
-                    tech_S27_materialThicknessType: document.getElementById('tech_S27_materialThicknessType').value,
-                    tech_T27_materialThicknessType: parseFloat(document.getElementById('tech_T27_materialThicknessType').value),
-                    tech_T27_viscosityMPa: parseInt(document.getElementById('tech_T27_viscosityMPa').value),
-                    tech_U27_materialThicknessType: parseFloat(document.getElementById('tech_U27_materialThicknessType').value),
-                    tech_V27_quantityType: parseInt(document.getElementById('tech_V27_quantityType').value),
-                    sup_F2_parameter: document.getElementById('sup_F2_parameter').value,
-                    sup_D8_priceMaterial: parseInt(document.getElementById('sup_D8_priceMaterial').value),
-                    sup_E8_priceMaterial: parseInt(document.getElementById('sup_E8_priceMaterial').value),
-                    sup_K13_costQuantityNormTotal: parseInt(document.getElementById('sup_K13_costQuantityNormTotal').value),
-                    sup_P13_costQuantityNormTotal: parseInt(document.getElementById('sup_P13_costQuantityNormTotal').value),
-                    sup_P13_costQuantityMaterialNorm: parseInt(document.getElementById('sup_P13_costQuantityMaterialNorm').value),
-                    sup_D78_massThickness: parseInt(document.getElementById('sup_D78_massThickness').value),
-                    sup_D78_priceType: parseInt(document.getElementById('sup_D78_priceType').value),
-                    sup_D43_priceTotal: parseInt(document.getElementById('sup_D43_priceTotal').value),
-                    sup_D44_price: parseInt(document.getElementById('sup_D44_price').value),
-                    sup_D45_price: parseInt(document.getElementById('sup_D45_price').value),
-                    sup_D46_price: parseInt(document.getElementById('sup_D46_price').value)
-                };
-                
-                const response = await fetch('/api/calculate', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(requestData)
-                });
-                
-                const data = await response.json();
-                
+            // Build request payload
+            const payload = {
+                tech_D27_type: parseInt(document.getElementById('tech_D27_type').value),
+                tech_E27_weightType: document.getElementById('tech_E27_weightType').value,
+                tech_H27_quantityType: document.getElementById('tech_H27_quantityType').value,
+                tech_I27_quantityType: parseInt(document.getElementById('tech_I27_quantityType').value),
+                tech_J27_quantityType: parseInt(document.getElementById('tech_J27_quantityType').value),
+                tech_K27_quantity: parseInt(document.getElementById('tech_K27_quantity').value),
+                tech_L27_quantity: parseInt(document.getElementById('tech_L27_quantity').value),
+                tech_M27_material: parseInt(document.getElementById('tech_M27_material').value),
+                tech_T27_materialThicknessType: parseInt(document.getElementById('tech_T27_materialThicknessType').value),
+                sup_F2_parameter: document.getElementById('sup_F2_parameter').value,
+                sup_D8_priceMaterial: parseInt(document.getElementById('sup_D8_priceMaterial').value),
+                sup_E8_priceMaterial: parseInt(document.getElementById('sup_E8_priceMaterial').value),
+                sup_K13_costQuantityNormTotal: 1,
+                sup_P13_costQuantityMaterialNorm: 120000,
+                sup_D78_massThickness: 3,
+                // Add some sample price fields
+                sup_D43_priceTotal: 3300,
+                sup_D44_price: 1750,
+                sup_D45_price: 2800,
+                sup_D46_price: 1200
+            };
+            
+            fetch('/api/calculate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(data => {
                 clearInterval(progressInterval);
-                progressFill.style.width = '100%';
+                progressBar.style.width = '100%';
                 
                 setTimeout(() => {
                     loading.classList.remove('active');
+                    progressBar.style.width = '0%';
                     
                     if (data.success) {
-                        let responseText = `✅ CALCULATION SUCCESSFUL\n\n`;
-                        responseText += `Total Cost: ${data.results.total_cost.toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}\n\n`;
-                        responseText += `Component Breakdown:\n`;
-                        responseText += `  • Materials: ${data.results.component_costs.materials.toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}\n`;
-                        responseText += `  • Processing: ${data.results.component_costs.processing.toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}\n`;
-                        responseText += `  • Hardware: ${data.results.component_costs.hardware.toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}\n`;
-                        responseText += `  • Other: ${data.results.component_costs.other.toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}\n\n`;
-                        responseText += `Processing Time: ${data.processing_time_ms}ms\n`;
-                        responseText += `Request ID: ${data.request_id}\n\n`;
-                        responseText += `Full Response:\n${JSON.stringify(data, null, 2)}`;
-                        
-                        responseArea.textContent = responseText;
-                        
+                        let responseText = JSON.stringify(data, null, 2);
                         if (data.downloadUrl) {
-                            const downloadLink = document.getElementById('downloadLink');
-                            downloadLink.href = data.downloadUrl;
-                            downloadSection.classList.add('active');
+                            responseText += `\n\n📥 Download Excel File: ${window.location.origin}${data.downloadUrl}`;
                         }
+                        responseArea.textContent = responseText;
+                        // Refresh Excel files list
+                        loadExcelFiles();
                     } else {
+                        errorMsg.textContent = data.error || 'Request failed';
+                        errorMsg.classList.add('active');
                         responseArea.textContent = JSON.stringify(data, null, 2);
-                        errorMessage.textContent = data.error?.message || 'Calculation failed';
-                        errorMessage.classList.add('active');
                     }
-                    
-                    // Refresh file list
-                    updateMetrics();
                 }, 500);
-                
-            } catch (error) {
+            })
+            .catch(err => {
                 clearInterval(progressInterval);
                 loading.classList.remove('active');
-                errorMessage.textContent = 'Failed to connect to API: ' + error.message;
-                errorMessage.classList.add('active');
-                responseArea.textContent = 'Error: ' + error.message;
+                errorMsg.textContent = 'Network error: ' + err.message;
+                errorMsg.classList.add('active');
+                responseArea.textContent = 'Failed to connect to API';
+            });
+        }
+        
+        // Load sample data
+        function fillSampleData() {
+            const sampleData = {
+                tech_D27_type: 2,
+                tech_E27_weightType: 'К4-750',
+                tech_H27_quantityType: '2/8',
+                tech_I27_quantityType: 500,
+                tech_J27_quantityType: 25,
+                tech_K27_quantity: 16,
+                tech_L27_quantity: 150,
+                tech_M27_material: 80,
+                tech_T27_materialThicknessType: 8,
+                sup_F2_parameter: '12Х18Н10Т',
+                sup_D8_priceMaterial: 850,
+                sup_E8_priceMaterial: 900
+            };
+            
+            Object.keys(sampleData).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.value = sampleData[key];
+                }
+            });
+        }
+        
+        // Clear response
+        function clearResponse() {
+            document.getElementById('responseArea').textContent = 'Click "Calculate Cost" to send a request to the API...';
+            document.getElementById('errorMessage').classList.remove('active');
+        }
+        
+        // Load Excel files list
+        function loadExcelFiles() {
+            fetch('/api/excel-files')
+                .then(res => res.json())
+                .then(data => {
+                    const listContainer = document.getElementById('excelFilesList');
+                    
+                    if (data.success && data.files.length > 0) {
+                        let html = '<div class="file-list">';
+                        
+                        data.files.forEach(file => {
+                            const size = (file.size / 1024).toFixed(2) + ' KB';
+                            const date = new Date(file.created).toLocaleString();
+                            const requestId = file.name.match(/calculation_(.*?)_/)?.[1] || 'Unknown';
+                            
+                            html += `
+                                <div class="file-item">
+                                    <div class="file-info">
+                                        <div class="file-name">${file.name}</div>
+                                        <div class="file-meta">
+                                            Request ID: ${requestId} | Size: ${size} | Created: ${date}
+                                        </div>
+                                    </div>
+                                    <div class="file-actions">
+                                        <a href="${file.downloadUrl}" class="download-btn" download>Download</a>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        
+                        html += '</div>';
+                        html += `<div style="margin-top: 8px; color: #718096; font-size: 12px;">Total files: ${data.count}</div>`;
+                        listContainer.innerHTML = html;
+                    } else {
+                        listContainer.innerHTML = '<div style="color: #718096; font-size: 14px;">No Excel files found</div>';
+                    }
+                })
+                .catch(err => {
+                    document.getElementById('excelFilesList').innerHTML = 
+                        '<div style="color: #f56565; font-size: 14px;">Failed to load Excel files</div>';
+                });
+        }
+        
+        // View OpenAPI specification
+        function viewOpenAPISpec() {
+            const preview = document.getElementById('openApiPreview');
+            const content = document.getElementById('openApiContent');
+            
+            if (preview.style.display === 'none') {
+                // Show preview
+                fetch('/api/openapi.yaml')
+                    .then(res => res.text())
+                    .then(spec => {
+                        content.textContent = spec;
+                        preview.style.display = 'block';
+                    })
+                    .catch(err => {
+                        content.textContent = 'Failed to load OpenAPI specification: ' + err.message;
+                        preview.style.display = 'block';
+                    });
+            } else {
+                // Hide preview
+                preview.style.display = 'none';
             }
         }
         
-        function fillRealisticValues() {
-            // Technical parameters
-            document.getElementById('tech_D27_type').value = '750';
-            document.getElementById('tech_E27_weightType').value = 'К4-750';
-            document.getElementById('tech_F27_quantityType').value = '100';
-            document.getElementById('tech_G27_quantityType').value = '150';
-            document.getElementById('tech_H27_quantityType').value = '1/6';
-            document.getElementById('tech_I27_quantityType').value = '400';
-            document.getElementById('tech_J27_quantityType').value = '100';
-            document.getElementById('tech_K27_quantity').value = '10';
-            document.getElementById('tech_L27_quantity').value = '160';
-            document.getElementById('tech_M27_material').value = '1';
-            document.getElementById('tech_N27_quantityType').value = '100';
-            document.getElementById('tech_O27_quantityType').value = '80';
-            document.getElementById('tech_P27_materialType').value = 'AISI 316L';
-            document.getElementById('tech_Q27_materialType').value = 'AISI 316L';
-            document.getElementById('tech_R27_materialThicknessType').value = '09Г2С';
-            document.getElementById('tech_S27_materialThicknessType').value = 'гофра';
-            document.getElementById('tech_T27_materialThicknessType').value = '1';
-            document.getElementById('tech_T27_viscosityMPa').value = '10';
-            document.getElementById('tech_U27_materialThicknessType').value = '1';
-            document.getElementById('tech_V27_quantityType').value = '150';
-            
-            // Supply parameters
-            document.getElementById('sup_F2_parameter').value = '09Г2С';
-            document.getElementById('sup_D8_priceMaterial').value = '700';
-            document.getElementById('sup_E8_priceMaterial').value = '700';
-            document.getElementById('sup_K13_costQuantityNormTotal').value = '8000';
-            document.getElementById('sup_P13_costQuantityNormTotal').value = '6000';
-            document.getElementById('sup_P13_costQuantityMaterialNorm').value = '1000';
-            document.getElementById('sup_D78_massThickness').value = '50';
-            document.getElementById('sup_D78_priceType').value = '50';
-            document.getElementById('sup_D43_priceTotal').value = '100';
-            document.getElementById('sup_D44_price').value = '200';
-            document.getElementById('sup_D45_price').value = '300';
-            document.getElementById('sup_D46_price').value = '400';
-        }
-        
-        function clearForm() {
-            document.querySelectorAll('input[type="number"], input[type="text"]').forEach(input => {
-                input.value = '';
-            });
-            document.querySelectorAll('select').forEach(select => {
-                select.selectedIndex = 0;
-            });
-            document.getElementById('responseArea').textContent = 'Form cleared. Enter new values...';
-            document.getElementById('downloadSection').classList.remove('active');
-        }
-        
-        function updateFileList(files) {
-            const fileList = document.getElementById('fileList');
-            
-            if (!files || files.length === 0) {
-                fileList.innerHTML = `
-                    <div style="padding: 20px; text-align: center; color: #718096;">
-                        No files generated yet
-                    </div>
-                `;
-                return;
+        // Cleanup old Excel files
+        function cleanupOldFiles() {
+            if (confirm('This will delete all Excel files older than 24 hours. Continue?')) {
+                fetch('/api/admin/excel-files/cleanup', { method: 'DELETE' })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert(data.message);
+                            loadExcelFiles();
+                        } else {
+                            alert('Cleanup failed: ' + data.error);
+                        }
+                    })
+                    .catch(err => {
+                        alert('Cleanup failed: ' + err.message);
+                    });
             }
-            
-            fileList.innerHTML = files.slice(0, 10).map(file => `
-                <div class="file-item">
-                    <div class="file-info">
-                        <div class="file-name">${file.name}</div>
-                        <div class="file-meta">
-                            ${new Date(file.created).toLocaleString()} • ${formatFileSize(file.size)}
-                        </div>
-                    </div>
-                    <div class="file-actions">
-                        <a href="${file.downloadUrl}" class="download-btn" download>Download</a>
-                    </div>
-                </div>
-            `).join('');
         }
         
-        function formatFileSize(bytes) {
-            if (bytes < 1024) return bytes + ' B';
-            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
-        }
-        
-        // Start monitoring
+        // Initialize
+        updateHealth();
         updateMetrics();
-        updateInterval = setInterval(updateMetrics, 5000);
-        
-        // Cleanup on page unload
-        window.addEventListener('beforeunload', () => {
-            if (updateInterval) {
-                clearInterval(updateInterval);
-            }
-        });
+        loadExcelFiles();
+        setInterval(updateHealth, 5000);
+        setInterval(updateMetrics, 10000);
+        // Refresh Excel files list every 30 seconds
+        setInterval(loadExcelFiles, 30000);
     </script>
 </body>
 </html>
