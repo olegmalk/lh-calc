@@ -15,8 +15,6 @@ export const FIELD_MAPPING = {
   sup_D46_price: 'снабжение!D46',
   sup_D78_massThickness: 'снабжение!D78',
   sup_D8_priceMaterial: 'снабжение!D8',
-  sup_E101_priceMassPipeTotal: 'снабжение!E101',
-  sup_E105_priceMassPipeTotal: 'снабжение!E105',
   sup_E20_priceWeightThicknessTotal: 'снабжение!E20',
   sup_E21_priceWeightThicknessTotal: 'снабжение!E21',
   sup_E26_priceWeightThickness: 'снабжение!E26',

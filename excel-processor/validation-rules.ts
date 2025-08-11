@@ -2123,37 +2123,6 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_E101": {
-    validation: {
-      type: "string",
-      required: true,
-      description: "Auto-detected from string pattern"
-    },
-    context: {
-      address: "E101",
-      sheet: "снабжение",
-      color: "FF92D050",
-      sample_value: '=SUM(E93:E98)',
-      row_headers: ["ИТОГО"],
-      column_headers: ["=VLOOKUP(D104,B110:AE122,30,0)", "=VLOOKUP(D104,B110:AH122,33,0)", "=VLOOKUP(D104,B110:AK122,36,0)"]
-    }
-  },
-
-  "снабжение_E105": {
-    validation: {
-      type: "string",
-      required: true,
-      description: "Auto-detected from string pattern"
-    },
-    context: {
-      address: "E105",
-      sheet: "снабжение",
-      color: "FF92D050",
-      sample_value: '=E104',
-      row_headers: ["ИТОГО"],
-      column_headers: ["=VLOOKUP(D104,B110:H122,7,0)"]
-    }
-  },
 
 };
 

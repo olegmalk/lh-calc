@@ -10,8 +10,6 @@ export interface ContractFieldNames {
   sup_D46_price: number;  // Numeric price (e.g., 1200)
   sup_D78_massThickness: number;  // Numeric thickness in mm (e.g., 3)
   sup_D8_priceMaterial: number;  // Numeric price per kg (e.g., 700)
-  sup_E101_priceMassPipeTotal: number | null;  // Numeric price, can be empty
-  sup_E105_priceMassPipeTotal: number | null;  // Numeric price, can be empty
   sup_E20_priceWeightThicknessTotal: number | null;  // Numeric price, can be empty
   sup_E21_priceWeightThicknessTotal: number | null;  // Numeric price, can be empty
   sup_E26_priceWeightThickness: number | null;  // Numeric price, can be empty
@@ -219,8 +217,6 @@ export const FIELD_MAPPING = {
   sup_D78_massThickness: 'снабжение!D78',
   sup_D8_priceMaterial: 'снабжение!D8',
   sup_D9_priceMaterial: 'снабжение!D9',
-  sup_E101_priceMassPipeTotal: 'снабжение!E101',
-  sup_E105_priceMassPipeTotal: 'снабжение!E105',
   sup_E19_priceWeightThicknessTotal: 'снабжение!E19',
   sup_E20_priceWeightThicknessTotal: 'снабжение!E20',
   sup_E21_priceWeightThicknessTotal: 'снабжение!E21',

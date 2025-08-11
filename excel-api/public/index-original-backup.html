@@ -627,14 +627,6 @@
                         <label title="sup_E27_priceWeightThickness">E27 Weight</label>
                         <input type="number" id="sup_E27_priceWeightThickness" value="1027">
                     </div>
-                    <div class="form-group">
-                        <label title="sup_E101_priceMassPipeTotal">E101 Mass Pipe</label>
-                        <input type="number" id="sup_E101_priceMassPipeTotal" value="1101">
-                    </div>
-                    <div class="form-group">
-                        <label title="sup_E105_priceMassPipeTotal">E105 Mass Pipe</label>
-                        <input type="number" id="sup_E105_priceMassPipeTotal" value="1105">
-                    </div>
                 </div>
             </div>
 
@@ -1366,8 +1358,6 @@
                     sup_E25_priceWeightThicknessTotal: parseInt(document.getElementById('sup_E25_priceWeightThicknessTotal').value) || null,
                     sup_E26_priceWeightThickness: parseInt(document.getElementById('sup_E26_priceWeightThickness').value) || null,
                     sup_E27_priceWeightThickness: parseInt(document.getElementById('sup_E27_priceWeightThickness').value) || null,
-                    sup_E101_priceMassPipeTotal: parseInt(document.getElementById('sup_E101_priceMassPipeTotal').value) || null,
-                    sup_E105_priceMassPipeTotal: parseInt(document.getElementById('sup_E105_priceMassPipeTotal').value) || null,
                     sup_C28_priceWeightThickness: document.getElementById('sup_C28_priceWeightThickness').value,
                     sup_C29_priceWeightPipeThickness: document.getElementById('sup_C29_priceWeightPipeThickness').value,
                     sup_D28_priceWeightThickness: document.getElementById('sup_D28_priceWeightThickness').value,
@@ -1568,8 +1558,6 @@
             fillIfExists('sup_E25_priceWeightThicknessTotal', '1025');
             fillIfExists('sup_E26_priceWeightThickness', '1026');
             fillIfExists('sup_E27_priceWeightThickness', '1027');
-            fillIfExists('sup_E101_priceMassPipeTotal', '1101');
-            fillIfExists('sup_E105_priceMassPipeTotal', '1105');
             fillIfExists('sup_C28_priceWeightThickness', 'Ру10');
             fillIfExists('sup_C29_priceWeightPipeThickness', 'Ру40');
             fillIfExists('sup_D28_priceWeightThickness', 'Ду600');

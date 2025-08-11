@@ -59,9 +59,7 @@ const FIELD_CONFIG = {
             { id: 'sup_E21_priceWeightThicknessTotal', label: 'E21', type: 'number', default: 1021 },
             { id: 'sup_E25_priceWeightThicknessTotal', label: 'E25', type: 'number', default: 1025 },
             { id: 'sup_E26_priceWeightThickness', label: 'E26', type: 'number', default: 1026 },
-            { id: 'sup_E27_priceWeightThickness', label: 'E27', type: 'number', default: 1027 },
-            { id: 'sup_E101_priceMassPipeTotal', label: 'E101', type: 'number', default: 1101 },
-            { id: 'sup_E105_priceMassPipeTotal', label: 'E105', type: 'number', default: 1105 }
+            { id: 'sup_E27_priceWeightThickness', label: 'E27', type: 'number', default: 1027 }
         ]
     },
     supF: {

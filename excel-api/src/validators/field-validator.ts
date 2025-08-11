@@ -161,9 +161,7 @@ export class FieldValidator {
       'sup_T39_priceQuantity',
       'sup_T41_priceTotal',
       'sup_T42_priceMaterialInsulationTotal',
-      'sup_T43_priceTotal',
-      'sup_E101_priceMassPipeTotal',
-      'sup_E105_priceMassPipeTotal'
+      'sup_T43_priceTotal'
     ];
 
     optionalNumberFields.forEach(field => {

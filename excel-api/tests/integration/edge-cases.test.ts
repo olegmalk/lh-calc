@@ -69,8 +69,6 @@ describe('Excel API Edge Cases Tests', () => {
     sup_D11_priceCostMaterial: "cost_material_2",
     sup_D17_priceWeightThickness: "weight_thickness",
     sup_D38_priceQuantityTotal: "quantity_total",
-    sup_E101_priceMassPipeTotal: "mass_pipe_1",
-    sup_E105_priceMassPipeTotal: "mass_pipe_2",
     sup_E20_priceWeightThicknessTotal: "weight_thick_total_1",
     sup_E21_priceWeightThicknessTotal: "weight_thick_total_2",
     sup_E26_priceWeightThickness: "weight_thick_1",

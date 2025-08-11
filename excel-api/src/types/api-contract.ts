@@ -50,8 +50,6 @@ export interface CalculationRequest {
   sup_D11_priceCostMaterial: string;
   sup_D17_priceWeightThickness: string;
   sup_D38_priceQuantityTotal: string;
-  sup_E101_priceMassPipeTotal: string;
-  sup_E105_priceMassPipeTotal: string;
   sup_E20_priceWeightThicknessTotal: string;
   sup_E21_priceWeightThicknessTotal: string;
   sup_E26_priceWeightThickness: string;
