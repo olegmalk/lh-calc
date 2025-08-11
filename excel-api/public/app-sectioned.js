@@ -344,10 +344,15 @@ function renderField(field) {
                 option.textContent = value;
                 input.appendChild(option);
             });
+            
+            // Select first enum value if available
+            if (ENUM_VALUES[field.id].length > 0) {
+                input.value = ENUM_VALUES[field.id][0];
+            }
         }
         
-        // Set default value
-        if (field.default) {
+        // Set default value if specified and not already set
+        if (field.default && !input.value) {
             input.value = field.default;
         }
     } else if (field.type === 'textarea') {
