@@ -30,7 +30,7 @@ const FIELD_CONFIG = {
         title: '💰 Вкладка "Снабжение" - Цены и материалы',
         fields: [
             { id: 'sup_F2_projectNumber', label: 'F2 - Номер проекта', type: 'text', default: '' },
-            { id: 'sup_D8_flowPartMaterialPricePerKg', label: 'D8 - Цена материала проточной части', type: 'number', default: 701 },
+            { id: 'sup_D8_flowPartMaterialPricePerKg', label: 'D8 - Цена материала проточной части', type: 'number', default: 70 },
             { id: 'sup_E8_flowPartMaterialPrice', label: 'E8 - Цена материала проточной части', type: 'number', default: 702 },
             { id: 'sup_D9_bodyMaterial', label: 'D9 - Материал корпуса', type: 'select',
               enumField: true, default: '09Г2С' },
