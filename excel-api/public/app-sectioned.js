@@ -986,44 +986,44 @@ style.textContent = `
     }
     
     .success-icon {
-        font-size: 32px;
+        font-size: 24px;
     }
     
     .success-header h3 {
         margin: 0;
-        font-size: 24px;
+        font-size: 18px;
     }
     
     .total-cost-card {
         background: linear-gradient(135deg, #f0f4ff 0%, #e8efff 100%);
-        margin: 20px;
-        padding: 25px;
+        margin: 15px;
+        padding: 20px;
         border-radius: 10px;
         text-align: center;
     }
     
     .total-label {
-        font-size: 14px;
+        font-size: 12px;
         color: #666;
         text-transform: uppercase;
         letter-spacing: 1px;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
     }
     
     .total-amount {
-        font-size: 36px;
+        font-size: 28px;
         font-weight: bold;
         color: #2c3e50;
     }
     
     .components-breakdown {
-        padding: 20px;
+        padding: 15px;
     }
     
     .components-breakdown h4 {
-        margin: 0 0 15px 0;
+        margin: 0 0 12px 0;
         color: #2c3e50;
-        font-size: 16px;
+        font-size: 14px;
     }
     
     .component-list {
@@ -1035,10 +1035,11 @@ style.textContent = `
     .component-item {
         display: flex;
         justify-content: space-between;
-        padding: 12px;
+        padding: 8px 10px;
         background: #f8f9fa;
         border-radius: 6px;
         transition: background 0.2s;
+        font-size: 13px;
     }
     
     .component-item:hover {
@@ -1048,11 +1049,13 @@ style.textContent = `
     .component-name {
         color: #495057;
         font-weight: 500;
+        font-size: 13px;
     }
     
     .component-value {
         color: #28a745;
         font-weight: bold;
+        font-size: 13px;
     }
     
     .download-section {
@@ -1113,32 +1116,32 @@ style.textContent = `
     }
     
     .error-icon {
-        font-size: 32px;
+        font-size: 24px;
     }
     
     .error-header h3 {
         margin: 0;
-        font-size: 24px;
+        font-size: 18px;
     }
     
     .error-message-main {
-        padding: 20px;
-        font-size: 16px;
+        padding: 15px;
+        font-size: 14px;
         color: #721c24;
         background: #f8d7da;
         border-left: 4px solid #f44336;
-        margin: 20px;
+        margin: 15px;
         border-radius: 4px;
     }
     
     .error-section {
-        padding: 0 20px 20px;
+        padding: 0 15px 15px;
     }
     
     .error-section h4 {
         color: #721c24;
-        margin: 15px 0;
-        font-size: 16px;
+        margin: 12px 0;
+        font-size: 14px;
     }
     
     .error-list {
@@ -1160,11 +1163,12 @@ style.textContent = `
         font-weight: bold;
         color: #721c24;
         margin-bottom: 4px;
+        font-size: 13px;
     }
     
     .error-message {
         color: #666;
-        font-size: 14px;
+        font-size: 12px;
     }
     
     .missing-fields {
@@ -1174,10 +1178,11 @@ style.textContent = `
     }
     
     .missing-field {
-        padding: 8px 12px;
+        padding: 6px 10px;
         background: #fff5f5;
         border-radius: 4px;
         color: #721c24;
+        font-size: 13px;
     }
     
     .error-actions {
