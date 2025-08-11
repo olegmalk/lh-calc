@@ -20,7 +20,7 @@ The system now dynamically extracts dropdown validation rules from the Excel tem
 ### API Endpoints
 - `GET /api/admin/validation-rules` - View current validation rules (requires auth)
 - `POST /api/admin/validation-rules/refresh` - Force refresh rules from template
-- `GET /api/fields/enum` - Get enum fields for API documentation
+- `GET /api/fields/enum` - Get enum fields for API documentation and frontend dropdowns
 
 ### Files
 - `/src/services/excel-validation-extractor.ts` - Extraction logic
@@ -32,6 +32,8 @@ The system now dynamically extracts dropdown validation rules from the Excel tem
 - Rules are refreshed automatically when template is uploaded
 - Validation errors are reported but don't block requests (warnings only)
 - Cache TTL is 5 minutes for the validator, indefinite for extractor
+- Frontend automatically detects enum fields from API response and converts them to dropdowns
+- No manual field type declarations needed - all enum fields are auto-detected
 
 ## Critical Rules
 - **ALWAYS READ FILES IN FULL BEFORE MODIFYING** - Read the entire file content before making any edits
