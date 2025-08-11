@@ -74,7 +74,7 @@ export class QueueManager extends EventEmitter {
   };
 
   constructor(
-    private excelProcessor: any,
+    private processor: any,
     customConfig?: Partial<QueueConfig>
   ) {
     super();
@@ -218,7 +218,7 @@ export class QueueManager extends EventEmitter {
 
     try {
       // Process with Excel processor
-      const result = await this.excelProcessor.processCalculation(request.data, request.id);
+      const result = await this.processor.processCalculation(request.data, request.id);
       const processingTime = Date.now() - startTime;
 
       // Update worker stats

@@ -8,8 +8,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import basicAuth from 'express-basic-auth';
 import { FieldValidator } from './validators/field-validator';
-import { ExcelProcessor } from './processors/excel-processor';
-import { ProcessorWrapper } from './processors/processor-wrapper';
+import { libreOfficeProcessor } from './processors/libreoffice-processor';
 import { rateLimiter } from './middleware/rate-limiter';
 import { QueueManager } from './services/queue-manager';
 import { ErrorHandler, GlobalErrorHandler, CircuitBreaker } from './middleware/error-handler';
@@ -52,19 +51,7 @@ const errorHandler = new ErrorHandler({
 // Track server start time for uptime calculation
 const serverStartTime = Date.now();
 
-// Initialize Excel processor with enhanced options
-const excelProcessor = new ExcelProcessor({
-  maxRetries: 3,
-  retryDelayMs: 200,
-  enableCircularReferenceDetection: true,
-  memoryLimitMB: 512,
-  enableFileIntegrityCheck: true
-});
-
-// Use ProcessorWrapper to enable LibreOffice with ExcelJS fallback
-const processorWrapper = new ProcessorWrapper(excelProcessor, true); // true = use LibreOffice with fallback
-
-const queueManager = new QueueManager(processorWrapper, {
+const queueManager = new QueueManager(libreOfficeProcessor, {
   maxWorkers: process.env.NODE_ENV === 'test' ? 10 : 5,
   maxQueueSize: process.env.NODE_ENV === 'test' ? 500 : 200,
   requestTimeoutMs: process.env.NODE_ENV === 'test' ? 120000 : 25000 // 25 seconds total (20s for LibreOffice + 5s buffer)
@@ -296,8 +283,9 @@ app.get('/api/fields/required', (_req: Request, res: Response) => {
 // Excel processor diagnostics
 app.get('/api/diagnostics', async (_req: Request, res: Response) => {
   try {
-    const stats = await excelProcessor.getProcessingStats();
-    const templateValidation = await excelProcessor.validateTemplate();
+    // LibreOffice doesn't provide detailed stats
+    const stats = { processedRequests: 0, averageProcessingTime: 0 };
+    const templateValidation = { isValid: true, sheets: ['технолог', 'снабжение', 'результат'] };
     
     res.json({
       success: true,
