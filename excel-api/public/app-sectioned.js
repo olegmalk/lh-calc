@@ -3,20 +3,34 @@ let ENUM_VALUES = {};
 let FIELD_METADATA = {};
 
 // Hardcoded values for fields that don't have validation in Excel
+// G27 values are from снабжение!AM45:AM52 (named range типоразмеры_К4)
+// H27 values are standard heat exchanger pass configurations
 const HARDCODED_ENUMS = {
     'tech_G27_sizeTypeK4': [
         'К4-750',
+        'К4-500',
+        'К4-600',
+        'К4-600*300',
         'К4-1000',
-        'К4-1250',
-        'К4-1500',
-        'К4-1750',
-        'К4-2000'
+        'К4-1000*500',
+        'К4-1200',
+        'К4-1200*600'
     ],
     'tech_H27_passes': [
         '1/6',
+        '1/1',
+        '1/2',
+        '1/3',
+        '1/4',
+        '1/5',
+        '2/2',
+        '2/3',
+        '2/4',
         '2/5',
+        '3/3',
         '3/4',
         '4/3',
+        '4/4',
         '5/2',
         '6/1'
     ]
