@@ -243,6 +243,9 @@ async function initializeApp() {
     
     // Setup event handlers
     setupEventHandlers();
+    
+    // Load generated files list
+    loadGeneratedFiles();
 }
 
 // Fetch field metadata from API with fallback
@@ -697,6 +700,50 @@ document.addEventListener('change', function(e) {
         saveValues();
     }
 });
+
+// Load generated files list
+async function loadGeneratedFiles() {
+    try {
+        const response = await fetch('/api/excel-files');
+        if (response.ok) {
+            const data = await response.json();
+            updateFileList(data.files || []);
+        }
+    } catch (error) {
+        console.error('Error loading files:', error);
+        updateFileList([]);
+    }
+}
+
+// Update file list display
+function updateFileList(files) {
+    const fileList = document.getElementById('fileList');
+    if (!fileList) return;
+    
+    if (!files || files.length === 0) {
+        fileList.innerHTML = '<div style="padding:20px;text-align:center;color:#718096;">Файлы еще не сгенерированы</div>';
+        return;
+    }
+    
+    fileList.innerHTML = files.slice(0, 10).map(file => `
+        <div class="file-item">
+            <div class="file-info">
+                <div class="file-name" title="${file.name}">${file.name}</div>
+                <div class="file-meta">${new Date(file.created).toLocaleString('ru-RU')} • ${formatFileSize(file.size)}</div>
+            </div>
+            <div class="file-actions">
+                <a href="${file.downloadUrl}" class="download-btn" download>Скачать</a>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Format file size
+function formatFileSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1048576) return Math.round(bytes / 1024) + ' KB';
+    return (bytes / 1048576).toFixed(1) + ' MB';
+}
 
 // Add styles for sections
 const style = document.createElement('style');
