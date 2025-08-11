@@ -69,9 +69,9 @@ const FIELD_CONFIG = {
             { id: 'sup_I29_panelBFlange4Pressure', label: 'I29 - Панель Б фланец №4 давление', type: 'number', default: 2029 },
             { id: 'sup_I38_eyeboltKitMaterialCost', label: 'I38 - Проушины металл', type: 'number', default: 2038 },
             { id: 'sup_I39_eyeboltKitProcessingCost', label: 'I39 - Проушины обработка', type: 'number', default: 2039 },
-            { id: 'sup_I44_otherMaterialsDesc1', label: 'I44 - Другие материалы 1', type: 'number', default: 2044 },
-            { id: 'sup_I45_otherMaterialsDesc2', label: 'I45 - Другие материалы 2', type: 'number', default: 2045 },
-            { id: 'sup_I46_otherMaterialsDesc3', label: 'I46 - Другие материалы 3', type: 'number', default: 2046 },
+            { id: 'sup_I44_otherMaterialsDesc1', label: 'I44 - Другие материалы 1', type: 'textarea', default: '' },
+            { id: 'sup_I45_otherMaterialsDesc2', label: 'I45 - Другие материалы 2', type: 'textarea', default: '' },
+            { id: 'sup_I46_otherMaterialsDesc3', label: 'I46 - Другие материалы 3', type: 'textarea', default: '' },
             { id: 'sup_I50_sparePanelStudQuantity', label: 'I50 - ЗИП шпилька кол-во', type: 'number', default: 2050 },
             { id: 'sup_I51_sparePanelNutQuantity', label: 'I51 - ЗИП гайка кол-во', type: 'number', default: 2051 },
             { id: 'sup_I52_sparePanelWasherQuantity', label: 'I52 - ЗИП шайба кол-во', type: 'number', default: 2052 },
@@ -248,6 +248,14 @@ function renderField(field) {
             </div>
         `;
     }
+    if (field.type === 'textarea') {
+        return `
+            <div class="form-group">
+                <label title="${field.id}">${field.label}</label>
+                <textarea id="${field.id}" rows="3" style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 14px; font-family: inherit; resize: vertical;">${field.default || ''}</textarea>
+            </div>
+        `;
+    }
     return `
         <div class="form-group">
             <label title="${field.id}">${field.label}</label>
@@ -414,7 +422,7 @@ function fillRealisticValues() {
 }
 
 function clearForm() {
-    document.querySelectorAll('input, select').forEach(el => {
+    document.querySelectorAll('input, select, textarea').forEach(el => {
         if (el.tagName === 'SELECT') el.selectedIndex = 0;
         else el.value = '';
     });
