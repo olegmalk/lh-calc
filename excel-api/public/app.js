@@ -1,5 +1,6 @@
-// Enum values will be fetched dynamically from API
+// Enum values and field metadata will be fetched dynamically from API
 let ENUM_VALUES = {};
+let FIELD_METADATA = {};
 
 // Field configuration - single source of truth
 const FIELD_CONFIG = {
@@ -168,12 +169,42 @@ const DASHBOARD_CARDS = [
 // Initialize the application
 document.addEventListener('DOMContentLoaded', async () => {
     renderDashboard();
-    await fetchEnumValues();  // Fetch enum values from API
+    await fetchFieldMetadata();  // Fetch field metadata from API
     renderForm();
     startMetricsUpdate();
 });
 
-// Fetch enum values from API
+// Fetch field metadata including types and validation
+async function fetchFieldMetadata() {
+    try {
+        const response = await fetch('/api/fields/metadata');
+        if (response.ok) {
+            const data = await response.json();
+            if (data.success && data.fields) {
+                // Process metadata
+                data.fields.forEach(field => {
+                    FIELD_METADATA[field.id] = field;
+                    if (field.enumValues) {
+                        ENUM_VALUES[field.id] = field.enumValues;
+                    }
+                });
+                console.log(`Loaded metadata for ${data.count} fields from API`);
+                
+                // Update field configurations with metadata
+                updateFieldsWithMetadata();
+            }
+        } else {
+            // Fallback to enum-only endpoint
+            fetchEnumValues();
+        }
+    } catch (error) {
+        console.error('Error fetching field metadata:', error);
+        // Fallback to enum-only endpoint
+        fetchEnumValues();
+    }
+}
+
+// Fallback: Fetch enum values from API
 async function fetchEnumValues() {
     try {
         const response = await fetch('/api/fields/enum');
@@ -181,7 +212,7 @@ async function fetchEnumValues() {
             const data = await response.json();
             if (data.success && data.fields) {
                 ENUM_VALUES = data.fields;
-                console.log(`Loaded ${data.count} enum fields from API`);
+                console.log(`Loaded ${data.count} enum fields from API (fallback)`);
                 
                 // Update field configurations with fetched enum values
                 updateFieldsWithEnumValues();
@@ -194,7 +225,48 @@ async function fetchEnumValues() {
     }
 }
 
-// Update field configurations with fetched enum values
+// Update field configurations with metadata
+function updateFieldsWithMetadata() {
+    Object.values(FIELD_CONFIG).forEach(section => {
+        section.fields.forEach(field => {
+            const metadata = FIELD_METADATA[field.id];
+            if (metadata) {
+                // Update field type based on metadata
+                if (metadata.type === 'enum' && metadata.enumValues) {
+                    field.type = 'select';
+                    field.options = metadata.enumValues;
+                    field.enumField = true;
+                } else if (metadata.type === 'currency') {
+                    field.type = 'number';
+                    field.step = '0.01';
+                    field.min = '0';
+                    field.currency = true;
+                } else if (metadata.type === 'percentage') {
+                    field.type = 'number';
+                    field.min = '0';
+                    field.max = '100';
+                    field.percentage = true;
+                } else if (metadata.type === 'email') {
+                    field.type = 'email';
+                } else if (metadata.type === 'url') {
+                    field.type = 'url';
+                } else if (metadata.type === 'date') {
+                    field.type = 'date';
+                }
+                
+                // Apply validation rules if present
+                if (metadata.validation) {
+                    if (metadata.validation.min !== undefined) field.min = metadata.validation.min;
+                    if (metadata.validation.max !== undefined) field.max = metadata.validation.max;
+                    if (metadata.validation.maxLength !== undefined) field.maxLength = metadata.validation.maxLength;
+                    if (metadata.validation.pattern !== undefined) field.pattern = metadata.validation.pattern;
+                }
+            }
+        });
+    });
+}
+
+// Fallback: Update field configurations with fetched enum values
 function updateFieldsWithEnumValues() {
     Object.values(FIELD_CONFIG).forEach(section => {
         section.fields.forEach(field => {
@@ -256,10 +328,31 @@ function renderField(field) {
             </div>
         `;
     }
+    
+    // Build input attributes based on field metadata
+    let attributes = [];
+    if (field.min !== undefined) attributes.push(`min="${field.min}"`);
+    if (field.max !== undefined) attributes.push(`max="${field.max}"`);
+    if (field.step !== undefined) attributes.push(`step="${field.step}"`);
+    if (field.maxLength !== undefined) attributes.push(`maxlength="${field.maxLength}"`);
+    if (field.pattern !== undefined) attributes.push(`pattern="${field.pattern}"`);
+    if (field.required) attributes.push('required');
+    
+    // Add visual hints for special types
+    let placeholder = '';
+    if (field.currency) placeholder = 'placeholder="0.00"';
+    if (field.percentage) placeholder = 'placeholder="0-100"';
+    if (field.type === 'email') placeholder = 'placeholder="example@email.com"';
+    if (field.type === 'url') placeholder = 'placeholder="https://example.com"';
+    
     return `
         <div class="form-group">
-            <label title="${field.id}">${field.label}</label>
-            <input type="${field.type}" id="${field.id}" value="${field.default || ''}">
+            <label title="${field.id}">
+                ${field.label}
+                ${field.currency ? ' <span style="color: #48bb78;">₽</span>' : ''}
+                ${field.percentage ? ' <span style="color: #667eea;">%</span>' : ''}
+            </label>
+            <input type="${field.type}" id="${field.id}" value="${field.default || ''}" ${attributes.join(' ')} ${placeholder}>
         </div>
     `;
 }

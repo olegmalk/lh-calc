@@ -1,0 +1,12 @@
+[2025-08-11] FIELD_TYPE_VALIDATION: Implemented comprehensive field type detection and validation
+- Created FieldTypeDetector service with pattern-based type inference
+- Supports: text, number, enum, date, email, url, percentage, currency, textarea, boolean
+- Type detection from field ID patterns and value analysis
+- Enhanced FieldValidator with type-based validation rules
+- Added /api/fields/metadata endpoint returning type info + validation rules
+- Frontend auto-applies validation attributes (min, max, pattern, etc)
+- Visual hints for currency (₽) and percentage (%) fields
+- Tests: 19/21 passing, validates currency/email/percentage/enum correctly
+- Currency fields: D8, E8, D10, D11, P13, E20, E21, E26, E27 (auto-detected)
+- Percentage fields: coefficient fields (D17)
+- Textarea fields: I44, I45, I46 (descriptions)

@@ -310,6 +310,25 @@ app.get('/api/fields/enum', async (_req: Request, res: Response) => {
   }
 });
 
+// Get field metadata including types and validation rules
+app.get('/api/fields/metadata', async (_req: Request, res: Response) => {
+  try {
+    const metadata = await validator.getFieldsMetadata();
+    
+    res.json({
+      success: true,
+      count: metadata.length,
+      fields: metadata,
+      message: 'Field metadata with type detection and validation rules'
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: `Failed to get field metadata: ${error instanceof Error ? error.message : String(error)}`
+    });
+  }
+});
+
 // Excel processor diagnostics
 app.get('/api/diagnostics', async (_req: Request, res: Response) => {
   try {
