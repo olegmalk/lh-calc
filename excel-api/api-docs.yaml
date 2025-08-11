@@ -77,63 +77,63 @@ components:
     CalculationRequest:
       type: object
       required:
-        - tech_D27_type
-        - tech_E27_weightType
-        - tech_H27_quantityType
-        - tech_I27_quantityType
-        - tech_J27_quantityType
-        - tech_K27_quantity
-        - tech_L27_quantity
-        - tech_M27_material
-        - tech_T27_materialThicknessType
-        - sup_F2_parameter
-        - sup_D8_priceMaterial
-        - sup_E8_priceMaterial
-        - sup_K13_costQuantityNormTotal
-        - sup_P13_costQuantityMaterialNorm
-        - sup_D78_massThickness
+        - tech_D27_sequenceNumber
+        - tech_E27_customerOrderPosition
+        - tech_H27_passes
+        - tech_I27_plateQuantity
+        - tech_J27_calcPressureHotSide
+        - tech_K27_calcPressureColdSide
+        - tech_L27_calcTempHotSide
+        - tech_M27_calcTempColdSide
+        - tech_T27_drawDepth
+        - sup_F2_projectNumber
+        - sup_D8_flowPartMaterialPricePerKg
+        - sup_E8_flowPartMaterialPrice
+        - sup_K13_normHoursPerUnit
+        - sup_P13_internalLogistics
+        - sup_D78_stainlessSteelThickness
       properties:
-        tech_D27_type:
+        tech_D27_sequenceNumber:
           type: number
           minimum: 0
-        tech_E27_weightType:
+        tech_E27_customerOrderPosition:
           type: string
-        tech_H27_quantityType:
+        tech_H27_passes:
           type: string
-        tech_I27_quantityType:
+        tech_I27_plateQuantity:
           type: number
           minimum: 0
-        tech_J27_quantityType:
+        tech_J27_calcPressureHotSide:
           type: number
           minimum: 0
-        tech_K27_quantity:
+        tech_K27_calcPressureColdSide:
           type: number
           minimum: 0
-        tech_L27_quantity:
+        tech_L27_calcTempHotSide:
           type: number
           minimum: 0
-        tech_M27_material:
+        tech_M27_calcTempColdSide:
           type: number
           minimum: 0
-        tech_T27_materialThicknessType:
+        tech_T27_drawDepth:
           type: number
           minimum: 0
-        sup_F2_parameter:
+        sup_F2_projectNumber:
           type: string
           enum: ['0000', '06ХН28МДТ', '09Г2С', '12Х18Н10Т', '20ХН3А', '30ХМА', '40Х']
-        sup_D8_priceMaterial:
+        sup_D8_flowPartMaterialPricePerKg:
           type: number
           minimum: 0
-        sup_E8_priceMaterial:
+        sup_E8_flowPartMaterialPrice:
           type: number
           minimum: 0
-        sup_K13_costQuantityNormTotal:
+        sup_K13_normHoursPerUnit:
           type: number
           minimum: 0
-        sup_P13_costQuantityMaterialNorm:
+        sup_P13_internalLogistics:
           type: number
           minimum: 0
-        sup_D78_massThickness:
+        sup_D78_stainlessSteelThickness:
           type: number
           minimum: 0
       additionalProperties: true

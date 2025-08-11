@@ -312,8 +312,8 @@ async function validateTemplate(buffer: Buffer): Promise<{
       if (errors.length === 0) {
         // Check key cells exist
         const keyCells = [
-          { sheet: 'технолог', cell: 'D27', name: 'tech_D27_type' },
-          { sheet: 'снабжение', cell: 'D8', name: 'sup_D8_priceMaterial' },
+          { sheet: 'технолог', cell: 'D27', name: 'tech_D27_sequenceNumber' },
+          { sheet: 'снабжение', cell: 'D8', name: 'sup_D8_flowPartMaterialPricePerKg' },
           { sheet: 'результат', cell: 'B3', name: 'total_cost' },
         ];
         
@@ -439,10 +439,10 @@ async function testNewTemplate(): Promise<{
 
     // Test basic calculation
     const testData = {
-      tech_D27_type: 1,
-      tech_E27_weightType: 'TEST',
-      sup_D8_priceMaterial: 100,
-      sup_E8_priceMaterial: 100,
+      tech_D27_sequenceNumber: 1,
+      tech_E27_customerOrderPosition: 'TEST',
+      sup_D8_flowPartMaterialPricePerKg: 100,
+      sup_E8_flowPartMaterialPrice: 100,
     };
 
     // Write test values

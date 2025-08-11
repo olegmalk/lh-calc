@@ -540,23 +540,23 @@ if __name__ == "__main__":
       // Extract calculated values
       const techSheet = workbook.getWorksheet('технолог');
       const calculatedValues: CalculatedValues = {
-        tech_F27_quantityType: '',
-        tech_G27_quantityType: '',
-        tech_P27_materialType: '',
+        tech_F27_deliveryType: '',
+        tech_G27_sizeTypeK4: '',
+        tech_P27_plateMaterial: '',
         tech_Q27_materialType: '',
-        tech_R27_materialThicknessType: '',
-        tech_S27_materialThicknessType: '',
-        tech_U27_materialThicknessType: 0
+        tech_R27_bodyMaterial: '',
+        tech_S27_plateSurfaceType: '',
+        tech_U27_plateThickness: 0
       };
 
       if (techSheet) {
-        calculatedValues.tech_F27_quantityType = this.getCellStringValue(techSheet.getCell('F27'));
-        calculatedValues.tech_G27_quantityType = this.getCellStringValue(techSheet.getCell('G27'));
-        calculatedValues.tech_P27_materialType = this.getCellStringValue(techSheet.getCell('P27'));
+        calculatedValues.tech_F27_deliveryType = this.getCellStringValue(techSheet.getCell('F27'));
+        calculatedValues.tech_G27_sizeTypeK4 = this.getCellStringValue(techSheet.getCell('G27'));
+        calculatedValues.tech_P27_plateMaterial = this.getCellStringValue(techSheet.getCell('P27'));
         calculatedValues.tech_Q27_materialType = this.getCellStringValue(techSheet.getCell('Q27'));
-        calculatedValues.tech_R27_materialThicknessType = this.getCellStringValue(techSheet.getCell('R27'));
-        calculatedValues.tech_S27_materialThicknessType = this.getCellStringValue(techSheet.getCell('S27'));
-        calculatedValues.tech_U27_materialThicknessType = this.getCellNumericValue(techSheet.getCell('U27'));
+        calculatedValues.tech_R27_bodyMaterial = this.getCellStringValue(techSheet.getCell('R27'));
+        calculatedValues.tech_S27_plateSurfaceType = this.getCellStringValue(techSheet.getCell('S27'));
+        calculatedValues.tech_U27_plateThickness = this.getCellNumericValue(techSheet.getCell('U27'));
       }
 
       console.log(`[LibreOffice] Extracted results: Total cost = ${totalCost}`);
@@ -579,9 +579,9 @@ if __name__ == "__main__":
     warnings.push('Using fallback calculation');
     
     // Simple calculation based on inputs
-    const baseQuantity = inputData.tech_I27_quantityType || 400;
-    const materialPrice = inputData.sup_D8_priceMaterial || 700;
-    const processingPrice = inputData.sup_E8_priceMaterial || 700;
+    const baseQuantity = inputData.tech_I27_plateQuantity || 400;
+    const materialPrice = inputData.sup_D8_flowPartMaterialPricePerKg || 700;
+    const processingPrice = inputData.sup_E8_flowPartMaterialPrice || 700;
     
     const materials = baseQuantity * materialPrice * 0.5;
     const processing = baseQuantity * processingPrice * 0.3;
@@ -592,13 +592,13 @@ if __name__ == "__main__":
     
     return {
       calculated_values: {
-        tech_F27_quantityType: 'Целый ТА',
-        tech_G27_quantityType: 'К4-750',
-        tech_P27_materialType: 'AISI 316L',
+        tech_F27_deliveryType: 'Целый ТА',
+        tech_G27_sizeTypeK4: 'К4-750',
+        tech_P27_plateMaterial: 'AISI 316L',
         tech_Q27_materialType: 'AISI 316L',
-        tech_R27_materialThicknessType: '09Г2С',
-        tech_S27_materialThicknessType: 'гофра',
-        tech_U27_materialThicknessType: 1
+        tech_R27_bodyMaterial: '09Г2С',
+        tech_S27_plateSurfaceType: 'гофра',
+        tech_U27_plateThickness: 1
       },
       total_cost: total,
       component_costs: {

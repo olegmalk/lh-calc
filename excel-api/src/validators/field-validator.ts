@@ -38,130 +38,130 @@ export class FieldValidator {
     const schemaObj: any = {};
 
     // Engineering fields (технолог) - GREEN cells (user inputs)
-    schemaObj.tech_D27_type = Joi.number().min(0).required();
-    schemaObj.tech_E27_weightType = Joi.string().required(); // Equipment code like "Е-113", "К4-750"
-    schemaObj.tech_F27_quantityType = Joi.string().valid('Целый ТА', 'ШОТ-БЛОК', 'РЕИНЖ').required(); // DeliveryType enum
-    schemaObj.tech_G27_quantityType = Joi.string().required(); // Equipment size like "К4-750"
-    schemaObj.tech_H27_quantityType = Joi.string().pattern(/^\d+\/\d+$/).required(); // Fraction like "1/6"
-    schemaObj.tech_I27_quantityType = Joi.number().min(0).required();
-    schemaObj.tech_J27_quantityType = Joi.number().min(0).required();
-    schemaObj.tech_K27_quantity = Joi.number().min(0).required();
-    schemaObj.tech_L27_quantity = Joi.number().min(0).required();
-    schemaObj.tech_M27_material = Joi.number().min(0).required();
+    schemaObj.tech_D27_sequenceNumber = Joi.number().min(0).required();
+    schemaObj.tech_E27_customerOrderPosition = Joi.string().required(); // Equipment code like "Е-113", "К4-750"
+    schemaObj.tech_F27_deliveryType = Joi.string().valid('Целый ТА', 'ШОТ-БЛОК', 'РЕИНЖ').required(); // DeliveryType enum
+    schemaObj.tech_G27_sizeTypeK4 = Joi.string().required(); // Equipment size like "К4-750"
+    schemaObj.tech_H27_passes = Joi.string().pattern(/^\d+\/\d+$/).required(); // Fraction like "1/6"
+    schemaObj.tech_I27_plateQuantity = Joi.number().min(0).required();
+    schemaObj.tech_J27_calcPressureHotSide = Joi.number().min(0).required();
+    schemaObj.tech_K27_calcPressureColdSide = Joi.number().min(0).required();
+    schemaObj.tech_L27_calcTempHotSide = Joi.number().min(0).required();
+    schemaObj.tech_M27_calcTempColdSide = Joi.number().min(0).required();
     // Computed fields - should accept but not validate strictly (they're calculated by Excel)
     schemaObj.tech_N27_pressureTestHot = Joi.number().optional();
     schemaObj.tech_O27_pressureTestCold = Joi.number().optional();
-    schemaObj.tech_P27_materialType = Joi.string().valid('AISI 316L', 'SMO 254', 'Hast-C276', 'Titanium', 'AISI 304', 'AISI316Ti', '904L').required();
+    schemaObj.tech_P27_plateMaterial = Joi.string().valid('AISI 316L', 'SMO 254', 'Hast-C276', 'Titanium', 'AISI 304', 'AISI316Ti', '904L').required();
     schemaObj.tech_Q27_materialType = Joi.string().optional(); // Computed from P27
-    schemaObj.tech_R27_materialThicknessType = Joi.string().valid('ст3', 'ст20', '09Г2С', '12Х18Н10Т', 'AISI 304', 'AISI 316L', 'AISI 321', 'AISI 316Ti').required();
-    schemaObj.tech_S27_materialThicknessType = Joi.string().valid('гофра', 'дв. лунка', 'од. лунка', 'шпилька', 'шпилька-лунка').required();
-    schemaObj.tech_T27_materialThicknessType = Joi.number().min(0).required();
-    schemaObj.tech_U27_materialThicknessType = Joi.number().valid(0.8, 1, 1.2, 1.5, 2, 3, 5).required();
-    schemaObj.tech_V27_thicknessType = Joi.number().valid(0.8, 1, 1.2, 1.5, 2, 3, 5).required();
+    schemaObj.tech_R27_bodyMaterial = Joi.string().valid('ст3', 'ст20', '09Г2С', '12Х18Н10Т', 'AISI 304', 'AISI 316L', 'AISI 321', 'AISI 316Ti').required();
+    schemaObj.tech_S27_plateSurfaceType = Joi.string().valid('гофра', 'дв. лунка', 'од. лунка', 'шпилька', 'шпилька-лунка').required();
+    schemaObj.tech_T27_drawDepth = Joi.number().min(0).required();
+    schemaObj.tech_U27_plateThickness = Joi.number().valid(0.8, 1, 1.2, 1.5, 2, 3, 5).required();
+    schemaObj.tech_V27_claddingThickness = Joi.number().valid(0.8, 1, 1.2, 1.5, 2, 3, 5).required();
 
     // Supply fields (снабжение) - Material specifications
-    schemaObj.sup_D9_priceMaterial = Joi.string()
+    schemaObj.sup_D9_bodyMaterial = Joi.string()
       .valid('ст3', 'ст20', '09Г2С', '12Х18Н10Т', 'AISI 304', 'AISI 316L', 'AISI 321', 'AISI 316Ti')
       .optional();
 
     // Supply fields - Prices (required numbers)
-    schemaObj.sup_D8_priceMaterial = Joi.number().min(0).max(1000000).required();
-    schemaObj.sup_E8_priceMaterial = Joi.number().min(0).max(1000000).required();
-    schemaObj.sup_K13_costQuantityNormTotal = Joi.number().min(0).max(10000).required();
-    schemaObj.sup_P13_costQuantityMaterialNorm = Joi.number().min(0).max(10000000).required();
-    schemaObj.sup_D78_massThickness = Joi.number().min(0).max(100).required();
+    schemaObj.sup_D8_flowPartMaterialPricePerKg = Joi.number().min(0).max(1000000).required();
+    schemaObj.sup_E8_flowPartMaterialPrice = Joi.number().min(0).max(1000000).required();
+    schemaObj.sup_K13_normHoursPerUnit = Joi.number().min(0).max(10000).required();
+    schemaObj.sup_P13_internalLogistics = Joi.number().min(0).max(10000000).required();
+    schemaObj.sup_D78_stainlessSteelThickness = Joi.number().min(0).max(100).required();
 
     // Supply fields - Component costs
-    schemaObj.sup_D43_priceTotal = Joi.number().min(0).required();
-    schemaObj.sup_D44_price = Joi.number().min(0).required();
-    schemaObj.sup_D45_price = Joi.number().min(0).required();
-    schemaObj.sup_D46_price = Joi.number().min(0).required();
+    schemaObj.sup_D43_studM24x2000Price = Joi.number().min(0).required();
+    schemaObj.sup_D44_studM24x1000Price = Joi.number().min(0).required();
+    schemaObj.sup_D45_studM20x2000Price = Joi.number().min(0).required();
+    schemaObj.sup_D46_studM20M16x1000Price = Joi.number().min(0).required();
 
     // Project number
     schemaObj.sup_F2_projectNumber = Joi.string().required(); // Project number - no validation
 
     // Pressure ratings (optional)
-    schemaObj.sup_C28_priceWeightThickness = Joi.string()
+    schemaObj.sup_C28_panelAFlange1Pressure = Joi.string()
       .valid('Ру6', 'Ру10', 'Ру16', 'Ру25', 'Ру40', 'Ру63', 'Ру100', 'Ру160')
       .optional();
-    schemaObj.sup_C29_priceWeightPipeThickness = Joi.string()
+    schemaObj.sup_C29_panelAFlange2Pressure = Joi.string()
       .valid('Ру6', 'Ру10', 'Ру16', 'Ру25', 'Ру40', 'Ру63', 'Ру100', 'Ру160')
       .optional();
 
     // Diameter codes (optional)
-    schemaObj.sup_D28_priceWeightThickness = Joi.string()
+    schemaObj.sup_D28_panelAFlange1Diameter = Joi.string()
       .valid('Ду25', 'Ду32', 'Ду40', 'Ду50', 'Ду65', 'Ду80', 'Ду100', 'Ду125', 'Ду150', 'Ду200', 'Ду250', 'Ду300', 'Ду350', 'Ду400', 'Ду450', 'Ду600', 'Ду800', 'Ду1000')
       .optional();
-    schemaObj.sup_D29_priceWeightPipe = Joi.string()
+    schemaObj.sup_D29_panelAFlange2Diameter = Joi.string()
       .valid('Ду25', 'Ду32', 'Ду40', 'Ду50', 'Ду65', 'Ду80', 'Ду100', 'Ду125', 'Ду150', 'Ду200', 'Ду250', 'Ду300', 'Ду350', 'Ду400', 'Ду450', 'Ду600', 'Ду800', 'Ду1000')
       .optional();
 
     // These are actually numeric fields that can be null/empty
-    schemaObj.sup_P22_priceQuantityMaterialTotal = Joi.number().allow(null).optional();
-    schemaObj.sup_P29_priceMaterialTotal = Joi.number().allow(null).optional();
-    schemaObj.sup_P21_priceQuantityMaterial = Joi.number().allow(null).optional();
+    schemaObj.sup_P22_panelFastenersStudSize = Joi.number().allow(null).optional();
+    schemaObj.sup_P29_cofFastenersFlange1Size = Joi.number().allow(null).optional();
+    schemaObj.sup_P21_panelFastenersCoating = Joi.number().allow(null).optional();
 
     // These fields are actually numbers that can be null/empty - from contract analysis
     const optionalNumberFields = [
-      'sup_D10_priceCostMaterial',
-      'sup_D11_priceCostMaterial',
-      'sup_D17_priceWeightThickness',
-      'sup_D38_priceQuantityTotal',
-      'sup_E20_priceWeightThicknessTotal',
-      'sup_E21_priceWeightThicknessTotal',
-      'sup_E26_priceWeightThickness',
-      'sup_E27_priceWeightThickness',
-      'sup_F28_priceWeightThicknessTotal',
-      'sup_F29_priceWeightPipeTotal',
-      'sup_F30_priceWeightPipeTotal',
-      'sup_F31_priceWeightPipeTotal',
-      'sup_F32_priceWeightPipeTotal',
-      'sup_F33_priceWeightPipeTotal',
-      'sup_K20_priceWeightThicknessTotal',
-      'sup_K21_priceWeightThicknessTotal',
-      'sup_K26_priceWeightThickness',
-      'sup_K27_priceWeightThickness',
-      'sup_L28_priceWeightThicknessTotalType',
-      'sup_L29_priceWeightPipeTotalType',
-      'sup_L30_priceWeightPipeTotalType',
-      'sup_L31_priceWeightPipeTotalType',
-      'sup_L32_priceWeightPipeTotalType',
-      'sup_L33_priceWeightPipeTotalType',
-      'sup_E19_priceWeightThicknessTotal',
-      'sup_E25_priceWeightThicknessTotal',
-      'sup_K19_priceWeightThicknessTotal',
-      'sup_K25_priceWeightThicknessTotal',
-      'sup_P19_priceQuantityMaterialThickness',
-      'sup_P20_priceQuantityWeightMaterial',
-      'sup_P33_priceMaterialPipeTotal',
-      'sup_P37_priceMaterialTotal',
-      'sup_P41_priceMaterialTotal',
-      'sup_Q29_priceThickness',
-      'sup_Q33_pricePipeThickness',
-      'sup_Q37_priceThickness',
-      'sup_Q41_priceThicknessTotal',
-      'sup_R29_price',
-      'sup_R33_pricePipe',
-      'sup_R37_price',
-      'sup_R41_priceTotal',
-      'sup_I44_priceMaterialThicknessInsulationTotalType',
-      'sup_I45_priceMaterialThicknessInsulationTotalType',
-      'sup_I46_priceQuantityMaterialThicknessInsulationTotalSumType',
-      'sup_Q22_priceQuantityMaterialThicknessTotal',
-      'sup_Q23_priceMaterialThicknessTotal',
-      'sup_Q24_priceThicknessTotal',
-      'sup_T29_priceMaterial',
-      'sup_T30_priceMaterial',
-      'sup_T31_priceMaterial',
-      'sup_T33_priceMaterialPipe',
-      'sup_T34_priceMaterialTotal',
-      'sup_T35_priceMaterialTotal',
-      'sup_T37_price',
-      'sup_T38_price',
-      'sup_T39_priceQuantity',
-      'sup_T41_priceTotal',
-      'sup_T42_priceMaterialInsulationTotal',
-      'sup_T43_priceTotal'
+      'sup_D10_columnCoverMaterialPrice',
+      'sup_D11_panelMaterialPrice',
+      'sup_D17_panelCuttingCoefficient',
+      'sup_D38_panelGasketsPrice',
+      'sup_E20_coverCuttingPrice',
+      'sup_E21_coverProcessingCost',
+      'sup_E26_panelCuttingPrice',
+      'sup_E27_panelProcessingCost',
+      'sup_F28_flange1PanelAPrice',
+      'sup_F29_flange2PanelAPrice',
+      'sup_F30_pipeBilletFlange1Price',
+      'sup_F31_pipeBilletFlange2Price',
+      'sup_F32_drainageNozzlePrice',
+      'sup_F33_ventilationNozzlePrice',
+      'sup_K20_columnCuttingPrice',
+      'sup_K21_columnProcessingCost',
+      'sup_K26_panelBCuttingPrice',
+      'sup_K27_panelBProcessingCost',
+      'sup_L28_panelBFlange3Price',
+      'sup_L29_panelBFlange4Price',
+      'sup_L30_panelBPipeBilletFlange3Price',
+      'sup_L31_panelBPipeBilletFlange4Price',
+      'sup_L32_panelBDrainageNozzlePrice',
+      'sup_L33_panelBVentilationNozzlePrice',
+      'sup_E19_coverRolledThickness',
+      'sup_E25_panelRolledThickness',
+      'sup_K19_columnRolledThickness',
+      'sup_K25_panelBRolledThickness',
+      'sup_P19_panelFastenersQuantity',
+      'sup_P20_panelFastenersMaterial',
+      'sup_P33_cofFastenersFlange2Size',
+      'sup_P37_cofFastenersFlange3Size',
+      'sup_P41_cofFastenersFlange4Size',
+      'sup_Q29_cofFastenersFlange1Material',
+      'sup_Q33_cofFastenersFlange2Material',
+      'sup_Q37_cofFastenersFlange3Material',
+      'sup_Q41_cofFastenersFlange4Material',
+      'sup_R29_cofFastenersFlange1Coating',
+      'sup_R33_cofFastenersFlange2Coating',
+      'sup_R37_cofFastenersFlange3Coating',
+      'sup_R41_cofFastenersFlange4Coating',
+      'sup_I44_otherMaterialsDesc1',
+      'sup_I45_otherMaterialsDesc2',
+      'sup_I46_otherMaterialsDesc3',
+      'sup_Q22_panelFastenersStudCost',
+      'sup_Q23_panelFastenersNutCost',
+      'sup_Q24_panelFastenersWasherCost',
+      'sup_T29_cofFastenersFlange1KitPrice',
+      'sup_T30_cofGasketFlange1Price',
+      'sup_T31_cofObturatorFlange1Price',
+      'sup_T33_cofFastenersFlange2KitPrice',
+      'sup_T34_cofGasketFlange2Price',
+      'sup_T35_cofObturatorFlange2Price',
+      'sup_T37_cofFastenersFlange3KitPrice',
+      'sup_T38_cofGasketFlange3Price',
+      'sup_T39_cofObturatorFlange3Price',
+      'sup_T41_cofFastenersFlange4KitPrice',
+      'sup_T42_cofGasketFlange4Price',
+      'sup_T43_cofObturatorFlange4Price'
     ];
 
     optionalNumberFields.forEach(field => {
@@ -169,59 +169,59 @@ export class FieldValidator {
     });
 
     // Orange cells - Engineering parameters (some are strings for flange/pressure ratings)
-    schemaObj.sup_C28_priceWeightThickness = Joi.string()
+    schemaObj.sup_C28_panelAFlange1Pressure = Joi.string()
       .valid('Ру6', 'Ру10', 'Ру16', 'Ру25', 'Ру40', 'Ру63', 'Ру100', 'Ру160')
       .optional();
-    schemaObj.sup_C29_priceWeightPipeThickness = Joi.string()
+    schemaObj.sup_C29_panelAFlange2Pressure = Joi.string()
       .valid('Ру6', 'Ру10', 'Ру16', 'Ру25', 'Ру40', 'Ру63', 'Ру100', 'Ру160')
       .optional();
-    schemaObj.sup_D28_priceWeightThickness = Joi.string()
+    schemaObj.sup_D28_panelAFlange1Diameter = Joi.string()
       .pattern(/^Ду\d+$/)
       .optional();
-    schemaObj.sup_D29_priceWeightPipe = Joi.string()
+    schemaObj.sup_D29_panelAFlange2Diameter = Joi.string()
       .pattern(/^Ду\d+$/)
       .optional();
-    schemaObj.sup_I28_priceWeightThicknessType = Joi.number().allow(null).optional();
-    schemaObj.sup_I29_priceWeightPipeThicknessType = Joi.number().allow(null).optional();
-    schemaObj.sup_J28_priceQuantityWeightThicknessNormTotal = Joi.number().allow(null).optional();
-    schemaObj.sup_J29_priceQuantityWeightPipeNormTotal = Joi.number().allow(null).optional();
+    schemaObj.sup_I28_panelBFlange3Pressure = Joi.number().allow(null).optional();
+    schemaObj.sup_I29_panelBFlange4Pressure = Joi.number().allow(null).optional();
+    schemaObj.sup_J28_panelBFlange3Diameter = Joi.number().allow(null).optional();
+    schemaObj.sup_J29_panelBFlange4Diameter = Joi.number().allow(null).optional();
 
     // Additional required numeric fields
     const additionalRequiredNumbers = [
-      'sup_G43_priceMaterialInsulationTotal',
-      'sup_G44_priceMaterialInsulation',
-      'sup_G45_priceMaterialInsulation',
-      'sup_H54_priceTotal',
-      'sup_H55_priceTotal',
-      'sup_H56_priceTotal',
-      'sup_H57_priceTotal',
-      'sup_I38_priceThicknessTotalType',
-      'sup_I39_priceQuantityMaterialThicknessInsulationTotalType',
-      'sup_I50_priceQuantityMaterialThicknessInsulationTotalSumType',
-      'sup_I51_priceQuantityMaterialThicknessInsulationTotalSumType',
-      'sup_I52_priceQuantityMaterialThicknessInsulationTotalSumType',
-      'sup_I54_priceQuantityMaterialThicknessInsulationTotalType',
-      'sup_I55_priceQuantityMaterialThicknessInsulationTotalType',
-      'sup_I56_priceQuantityMaterialThicknessInsulationTotalType',
-      'sup_I57_priceQuantityMaterialThicknessInsulationTotalType',
-      'sup_K38_pricePipeTotal',
-      'sup_K39_priceQuantityMaterialPipeInsulationTotal',
-      'sup_M38_priceMaterialTotal',
-      'sup_M39_quantityMaterialTotal',
-      'sup_M44_priceMaterial',
-      'sup_M45_priceMaterial',
-      'sup_M46_priceQuantityMaterialSum',
-      'sup_M51_priceQuantityMaterialTotalSum',
-      'sup_M52_priceQuantityMaterialTotalSum',
-      'sup_N50_priceQuantityWeightThicknessTotalSum',
-      'sup_N51_priceQuantityWeightThicknessTotalSum',
-      'sup_N52_priceQuantityWeightThicknessTotalSum',
-      'sup_N54_quantityWeightThicknessTotal',
-      'sup_N55_quantityWeightThicknessTotal',
-      'sup_N56_quantityWeightThicknessTotal',
-      'sup_N57_quantityWeightThicknessTotal',
-      'sup_P45_priceMaterialTotal',
-      'sup_F39_priceQuantityWeightMaterialInsulationTotal'
+      'sup_G43_nutM24DIN6330Price',
+      'sup_G44_nutM24DIN933Price',
+      'sup_G45_nutM20M16DIN933Price',
+      'sup_H54_spareFlangeFlange1Price',
+      'sup_H55_spareFlangeFlange2Price',
+      'sup_H56_spareFlangeFlange3Price',
+      'sup_H57_spareFlangeFlange4Price',
+      'sup_I38_eyeboltKitMaterialCost',
+      'sup_I39_eyeboltKitProcessingCost',
+      'sup_I50_sparePanelStudQuantity',
+      'sup_I51_sparePanelNutQuantity',
+      'sup_I52_sparePanelWasherQuantity',
+      'sup_I54_flangeFastenersFlange1Quantity',
+      'sup_I55_flangeFastenersFlange2Quantity',
+      'sup_I56_flangeFastenersFlange3Quantity',
+      'sup_I57_flangeFastenersFlange4Quantity',
+      'sup_K38_supportsKitMaterialCost',
+      'sup_K39_supportsKitProcessingCost',
+      'sup_M38_bracesKitMaterialCost',
+      'sup_M39_bracesKitProcessingCost',
+      'sup_M44_otherMaterialsCost1',
+      'sup_M45_otherMaterialsCost2',
+      'sup_M46_otherMaterialsCost3',
+      'sup_M51_spareAnchorBoltsCost',
+      'sup_M52_spareOtherCost',
+      'sup_N50_sparePanelGasketsQuantity',
+      'sup_N51_spareAnchorBoltsQuantity',
+      'sup_N52_spareOtherQuantity',
+      'sup_N54_spareFlangeGasketsFlange1Quantity',
+      'sup_N55_spareFlangeGasketsFlange2Quantity',
+      'sup_N56_spareFlangeGasketsFlange3Quantity',
+      'sup_N57_spareFlangeGasketsFlange4Quantity',
+      'sup_P45_unaccountedCost',
+      'sup_F39_spareKitsPressureReserve'
     ];
 
     additionalRequiredNumbers.forEach(field => {
@@ -324,9 +324,9 @@ export class FieldValidator {
     warnings: ValidationWarning[]
   ): void {
     // Rule: Material price consistency
-    if (data.sup_D8_priceMaterial && data.sup_E8_priceMaterial) {
-      const priceDiff = Math.abs(data.sup_D8_priceMaterial - data.sup_E8_priceMaterial);
-      if (priceDiff > data.sup_D8_priceMaterial * 0.5) {
+    if (data.sup_D8_flowPartMaterialPricePerKg && data.sup_E8_flowPartMaterialPrice) {
+      const priceDiff = Math.abs(data.sup_D8_flowPartMaterialPricePerKg - data.sup_E8_flowPartMaterialPrice);
+      if (priceDiff > data.sup_D8_flowPartMaterialPricePerKg * 0.5) {
         warnings.push({
           field: 'sup_D8_priceMaterial,sup_E8_priceMaterial',
           message: 'Material prices differ by more than 50%'
@@ -335,32 +335,32 @@ export class FieldValidator {
     }
 
     // Rule: Pressure-Diameter compatibility
-    if (data.sup_C28_priceWeightThickness && data.sup_D28_priceWeightThickness) {
-      const pressure = parseInt(data.sup_C28_priceWeightThickness.replace('Ру', ''));
-      const diameter = parseInt(data.sup_D28_priceWeightThickness.replace('Ду', ''));
+    if (data.sup_C28_panelAFlange1Pressure && data.sup_D28_panelAFlange1Diameter) {
+      const pressure = parseInt(data.sup_C28_panelAFlange1Pressure.replace('Ру', ''));
+      const diameter = parseInt(data.sup_D28_panelAFlange1Diameter.replace('Ду', ''));
       
       if (pressure > 100 && diameter > 600) {
         warnings.push({
-          field: 'sup_C28_priceWeightThickness',
+          field: 'sup_C28_panelAFlange1Pressure',
           message: 'High pressure with large diameter may require special materials'
         });
       }
     }
 
     // Rule: Material-Temperature compatibility
-    if (data.sup_D9_priceMaterial === '09Г2С' && data.tech_M27_material > 350) {
+    if (data.sup_D9_bodyMaterial === '09Г2С' && data.tech_M27_calcTempColdSide > 350) {
       errors.push({
-        field: 'sup_D9_priceMaterial',
-        value: data.sup_D9_priceMaterial,
+        field: 'sup_D9_bodyMaterial',
+        value: data.sup_D9_bodyMaterial,
         message: 'Material 09Г2С not suitable for temperatures above 350°C',
         code: 'BUSINESS_RULE_VIOLATION'
       });
     }
 
     // Rule: Quantity validation
-    if (data.sup_K13_costQuantityNormTotal && data.sup_K13_costQuantityNormTotal > 100) {
+    if (data.sup_K13_normHoursPerUnit && data.sup_K13_normHoursPerUnit > 100) {
       warnings.push({
-        field: 'sup_K13_costQuantityNormTotal',
+        field: 'sup_K13_normHoursPerUnit',
         message: 'Large quantity may require special pricing'
       });
     }
@@ -371,15 +371,15 @@ export class FieldValidator {
    */
   private checkEdgeCases(data: any, warnings: ValidationWarning[]): void {
     // Check for potential division by zero
-    if (data.sup_K13_costQuantityNormTotal === 0) {
+    if (data.sup_K13_normHoursPerUnit === 0) {
       warnings.push({
-        field: 'sup_K13_costQuantityNormTotal',
+        field: 'sup_K13_normHoursPerUnit',
         message: 'Zero quantity may cause division by zero in calculations'
       });
     }
 
     // Check for very small numbers that might cause underflow
-    const smallNumberFields = ['sup_D8_priceMaterial', 'sup_E8_priceMaterial'];
+    const smallNumberFields = ['sup_D8_flowPartMaterialPricePerKg', 'sup_E8_flowPartMaterialPrice'];
     smallNumberFields.forEach(field => {
       if (data[field] && data[field] < 0.01) {
         warnings.push({
@@ -390,15 +390,15 @@ export class FieldValidator {
     });
 
     // Check for missing critical combinations
-    if (data.sup_D9_priceMaterial && !data.sup_D8_priceMaterial) {
+    if (data.sup_D9_bodyMaterial && !data.sup_D8_flowPartMaterialPricePerKg) {
       warnings.push({
-        field: 'sup_D8_priceMaterial',
+        field: 'sup_D8_flowPartMaterialPricePerKg',
         message: 'Material specified but price is missing'
       });
     }
 
     // Check for unicode in critical fields
-    const criticalTextFields = ['tech_E27_weightType', 'sup_D9_priceMaterial'];
+    const criticalTextFields = ['tech_E27_customerOrderPosition', 'sup_D9_bodyMaterial'];
     criticalTextFields.forEach(field => {
       if (data[field] && /[^\u0000-\u007F\u0400-\u04FF]/.test(data[field])) {
         warnings.push({
@@ -414,32 +414,32 @@ export class FieldValidator {
    */
   public getRequiredFields(): string[] {
     return [
-      'tech_D27_type',
-      'tech_E27_weightType',
-      'tech_F27_quantityType',
-      'tech_G27_quantityType',
-      'tech_H27_quantityType',
-      'tech_I27_quantityType',
-      'tech_J27_quantityType',
-      'tech_K27_quantity',
-      'tech_L27_quantity',
-      'tech_M27_material',
-      'tech_P27_materialType',
-      'tech_R27_materialThicknessType',
-      'tech_S27_materialThicknessType',
-      'tech_T27_materialThicknessType',
-      'tech_U27_materialThicknessType',
-      'tech_V27_thicknessType',
+      'tech_D27_sequenceNumber',
+      'tech_E27_customerOrderPosition',
+      'tech_F27_deliveryType',
+      'tech_G27_sizeTypeK4',
+      'tech_H27_passes',
+      'tech_I27_plateQuantity',
+      'tech_J27_calcPressureHotSide',
+      'tech_K27_calcPressureColdSide',
+      'tech_L27_calcTempHotSide',
+      'tech_M27_calcTempColdSide',
+      'tech_P27_plateMaterial',
+      'tech_R27_bodyMaterial',
+      'tech_S27_plateSurfaceType',
+      'tech_T27_drawDepth',
+      'tech_U27_plateThickness',
+      'tech_V27_claddingThickness',
       'sup_F2_projectNumber',
-      'sup_D8_priceMaterial',
-      'sup_E8_priceMaterial',
-      'sup_K13_costQuantityNormTotal',
-      'sup_P13_costQuantityMaterialNorm',
-      'sup_D78_massThickness',
-      'sup_D43_priceTotal',
-      'sup_D44_price',
-      'sup_D45_price',
-      'sup_D46_price'
+      'sup_D8_flowPartMaterialPricePerKg',
+      'sup_E8_flowPartMaterialPrice',
+      'sup_K13_normHoursPerUnit',
+      'sup_P13_internalLogistics',
+      'sup_D78_stainlessSteelThickness',
+      'sup_D43_studM24x2000Price',
+      'sup_D44_studM24x1000Price',
+      'sup_D45_studM20x2000Price',
+      'sup_D46_studM20M16x1000Price'
     ];
   }
 

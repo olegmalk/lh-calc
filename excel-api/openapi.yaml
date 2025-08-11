@@ -26,32 +26,32 @@ paths:
               minimal:
                 summary: Minimal valid request
                 value:
-                  tech_D27_type: 100
-                  tech_E27_weightType: "E-113"
-                  tech_F27_quantityType: "Целый ТА"
-                  tech_G27_quantityType: "К4-750"
-                  tech_H27_quantityType: "1/6"
-                  tech_I27_quantityType: 5
-                  tech_J27_quantityType: 10
-                  tech_K27_quantity: 1
-                  tech_L27_quantity: 2
-                  tech_M27_material: 250
-                  tech_P27_materialType: "AISI 316L"
-                  tech_R27_materialThicknessType: "12Х18Н10Т"
-                  tech_S27_materialThicknessType: "гофра"
-                  tech_T27_materialThicknessType: 20
-                  tech_U27_materialThicknessType: 1.2
-                  tech_V27_thicknessType: 1.5
+                  tech_D27_sequenceNumber: 100
+                  tech_E27_customerOrderPosition: "E-113"
+                  tech_F27_deliveryType: "Целый ТА"
+                  tech_G27_sizeTypeK4: "К4-750"
+                  tech_H27_passes: "1/6"
+                  tech_I27_plateQuantity: 5
+                  tech_J27_calcPressureHotSide: 10
+                  tech_K27_calcPressureColdSide: 1
+                  tech_L27_calcTempHotSide: 2
+                  tech_M27_calcTempColdSide: 250
+                  tech_P27_plateMaterial: "AISI 316L"
+                  tech_R27_bodyMaterial: "12Х18Н10Т"
+                  tech_S27_plateSurfaceType: "гофра"
+                  tech_T27_drawDepth: 20
+                  tech_U27_plateThickness: 1.2
+                  tech_V27_claddingThickness: 1.5
                   sup_F2_projectNumber: "PROJ-2024-001"
-                  sup_D8_priceMaterial: 50000
-                  sup_E8_priceMaterial: 55000
-                  sup_K13_costQuantityNormTotal: 10
-                  sup_P13_costQuantityMaterialNorm: 100000
-                  sup_D78_massThickness: 25
-                  sup_D43_priceTotal: 1000
-                  sup_D44_price: 2000
-                  sup_D45_price: 3000
-                  sup_D46_price: 4000
+                  sup_D8_flowPartMaterialPricePerKg: 50000
+                  sup_E8_flowPartMaterialPrice: 55000
+                  sup_K13_normHoursPerUnit: 10
+                  sup_P13_internalLogistics: 100000
+                  sup_D78_stainlessSteelThickness: 25
+                  sup_D43_studM24x2000Price: 1000
+                  sup_D44_studM24x1000Price: 2000
+                  sup_D45_studM20x2000Price: 3000
+                  sup_D46_studM20M16x1000Price: 4000
       responses:
         '200':
           description: Successful calculation
@@ -168,67 +168,67 @@ components:
       type: object
       required:
         # Engineering fields (технолог sheet) - Required
-        - tech_D27_type
-        - tech_E27_weightType
-        - tech_F27_quantityType
-        - tech_G27_quantityType
-        - tech_H27_quantityType
-        - tech_I27_quantityType
-        - tech_J27_quantityType
-        - tech_K27_quantity
-        - tech_L27_quantity
-        - tech_M27_material
-        - tech_P27_materialType
-        - tech_R27_materialThicknessType
-        - tech_S27_materialThicknessType
-        - tech_T27_materialThicknessType
-        - tech_U27_materialThicknessType
-        - tech_V27_thicknessType
+        - tech_D27_sequenceNumber
+        - tech_E27_customerOrderPosition
+        - tech_F27_deliveryType
+        - tech_G27_sizeTypeK4
+        - tech_H27_passes
+        - tech_I27_plateQuantity
+        - tech_J27_calcPressureHotSide
+        - tech_K27_calcPressureColdSide
+        - tech_L27_calcTempHotSide
+        - tech_M27_calcTempColdSide
+        - tech_P27_plateMaterial
+        - tech_R27_bodyMaterial
+        - tech_S27_plateSurfaceType
+        - tech_T27_drawDepth
+        - tech_U27_plateThickness
+        - tech_V27_claddingThickness
         # Supply fields (снабжение sheet) - Required
         - sup_F2_projectNumber
-        - sup_D8_priceMaterial
-        - sup_E8_priceMaterial
-        - sup_K13_costQuantityNormTotal
-        - sup_P13_costQuantityMaterialNorm
-        - sup_D78_massThickness
-        - sup_D43_priceTotal
-        - sup_D44_price
-        - sup_D45_price
-        - sup_D46_price
+        - sup_D8_flowPartMaterialPricePerKg
+        - sup_E8_flowPartMaterialPrice
+        - sup_K13_normHoursPerUnit
+        - sup_P13_internalLogistics
+        - sup_D78_stainlessSteelThickness
+        - sup_D43_studM24x2000Price
+        - sup_D44_studM24x1000Price
+        - sup_D45_studM20x2000Price
+        - sup_D46_studM20M16x1000Price
       properties:
         # Engineering fields (технолог sheet)
-        tech_D27_type:
+        tech_D27_sequenceNumber:
           type: number
           minimum: 0
           description: Equipment type identifier
-        tech_E27_weightType:
+        tech_E27_customerOrderPosition:
           type: string
           pattern: '^[ЕК][-0-9А-Я*]*$'
           description: Equipment code (e.g., "Е-113", "К4-750")
-        tech_F27_quantityType:
+        tech_F27_deliveryType:
           type: string
           enum: ['Целый ТА', 'ШОТ-БЛОК', 'РЕИНЖ']
           description: Delivery type
-        tech_G27_quantityType:
+        tech_G27_sizeTypeK4:
           type: string
           description: Equipment size specification
-        tech_H27_quantityType:
+        tech_H27_passes:
           type: string
           pattern: '^\d+\/\d+$'
           description: Fraction specification (e.g., "1/6")
-        tech_I27_quantityType:
+        tech_I27_plateQuantity:
           type: number
           minimum: 0
-        tech_J27_quantityType:
+        tech_J27_calcPressureHotSide:
           type: number
           minimum: 0
-        tech_K27_quantity:
+        tech_K27_calcPressureColdSide:
           type: number
           minimum: 0
-        tech_L27_quantity:
+        tech_L27_calcTempHotSide:
           type: number
           minimum: 0
-        tech_M27_material:
+        tech_M27_calcTempColdSide:
           type: number
           minimum: 0
           description: Material temperature rating
@@ -238,29 +238,29 @@ components:
         tech_O27_pressureTestCold:
           type: number
           description: Cold pressure test value (computed)
-        tech_P27_materialType:
+        tech_P27_plateMaterial:
           type: string
           enum: ['AISI 316L', 'SMO 254', 'Hast-C276', 'Titanium', 'AISI 304', 'AISI316Ti', '904L']
           description: Primary material type
         tech_Q27_materialType:
           type: string
           description: Secondary material type (computed from P27)
-        tech_R27_materialThicknessType:
+        tech_R27_bodyMaterial:
           type: string
           enum: ['ст3', 'ст20', '09Г2С', '12Х18Н10Т', 'AISI 304', 'AISI 316L', 'AISI 321', 'AISI 316Ti']
           description: Material thickness type
-        tech_S27_materialThicknessType:
+        tech_S27_plateSurfaceType:
           type: string
           enum: ['гофра', 'дв. лунка', 'од. лунка', 'шпилька', 'шпилька-лунка']
           description: Surface pattern type
-        tech_T27_materialThicknessType:
+        tech_T27_drawDepth:
           type: number
           minimum: 0
-        tech_U27_materialThicknessType:
+        tech_U27_plateThickness:
           type: number
           enum: [0.8, 1, 1.2, 1.5, 2, 3, 5]
           description: Material thickness in mm
-        tech_V27_thicknessType:
+        tech_V27_claddingThickness:
           type: number
           enum: [0.8, 1, 1.2, 1.5, 2, 3, 5]
           description: Additional thickness specification
@@ -270,172 +270,172 @@ components:
           type: string
           description: Project number/identifier
           example: "PROJ-2024-001"
-        sup_D9_priceMaterial:
+        sup_D9_bodyMaterial:
           type: string
           enum: ['ст3', 'ст20', '09Г2С', '12Х18Н10Т', 'AISI 304', 'AISI 316L', 'AISI 321', 'AISI 316Ti']
           description: Price material specification
 
         # Supply fields - Required prices
-        sup_D8_priceMaterial:
+        sup_D8_flowPartMaterialPricePerKg:
           type: number
           minimum: 0
           maximum: 1000000
           description: Material price per unit
-        sup_E8_priceMaterial:
+        sup_E8_flowPartMaterialPrice:
           type: number
           minimum: 0
           maximum: 1000000
           description: Alternative material price
-        sup_K13_costQuantityNormTotal:
+        sup_K13_normHoursPerUnit:
           type: number
           minimum: 0
           maximum: 10000
           description: Total normalized quantity cost
-        sup_P13_costQuantityMaterialNorm:
+        sup_P13_internalLogistics:
           type: number
           minimum: 0
           maximum: 10000000
           description: Normalized material quantity cost
-        sup_D78_massThickness:
+        sup_D78_stainlessSteelThickness:
           type: number
           minimum: 0
           maximum: 100
           description: Mass thickness parameter
 
         # Supply fields - Component costs
-        sup_D43_priceTotal:
+        sup_D43_studM24x2000Price:
           type: number
           minimum: 0
-        sup_D44_price:
+        sup_D44_studM24x1000Price:
           type: number
           minimum: 0
-        sup_D45_price:
+        sup_D45_studM20x2000Price:
           type: number
           minimum: 0
-        sup_D46_price:
+        sup_D46_studM20M16x1000Price:
           type: number
           minimum: 0
 
         # Additional required numeric fields
-        sup_G43_priceMaterialInsulationTotal:
+        sup_G43_nutM24DIN6330Price:
           type: number
           minimum: 0
-        sup_G44_priceMaterialInsulation:
+        sup_G44_nutM24DIN933Price:
           type: number
           minimum: 0
-        sup_G45_priceMaterialInsulation:
+        sup_G45_nutM20M16DIN933Price:
           type: number
           minimum: 0
-        sup_H54_priceTotal:
+        sup_H54_spareFlangeFlange1Price:
           type: number
           minimum: 0
-        sup_H55_priceTotal:
+        sup_H55_spareFlangeFlange2Price:
           type: number
           minimum: 0
-        sup_H56_priceTotal:
+        sup_H56_spareFlangeFlange3Price:
           type: number
           minimum: 0
-        sup_H57_priceTotal:
+        sup_H57_spareFlangeFlange4Price:
           type: number
           minimum: 0
-        sup_I38_priceThicknessTotalType:
+        sup_I38_eyeboltKitMaterialCost:
           type: number
           minimum: 0
-        sup_I39_priceQuantityMaterialThicknessInsulationTotalType:
+        sup_I39_eyeboltKitProcessingCost:
           type: number
           minimum: 0
-        sup_I50_priceQuantityMaterialThicknessInsulationTotalSumType:
+        sup_I50_sparePanelStudQuantity:
           type: number
           minimum: 0
-        sup_I51_priceQuantityMaterialThicknessInsulationTotalSumType:
+        sup_I51_sparePanelNutQuantity:
           type: number
           minimum: 0
-        sup_I52_priceQuantityMaterialThicknessInsulationTotalSumType:
+        sup_I52_sparePanelWasherQuantity:
           type: number
           minimum: 0
-        sup_I54_priceQuantityMaterialThicknessInsulationTotalType:
+        sup_I54_flangeFastenersFlange1Quantity:
           type: number
           minimum: 0
-        sup_I55_priceQuantityMaterialThicknessInsulationTotalType:
+        sup_I55_flangeFastenersFlange2Quantity:
           type: number
           minimum: 0
-        sup_I56_priceQuantityMaterialThicknessInsulationTotalType:
+        sup_I56_flangeFastenersFlange3Quantity:
           type: number
           minimum: 0
-        sup_I57_priceQuantityMaterialThicknessInsulationTotalType:
+        sup_I57_flangeFastenersFlange4Quantity:
           type: number
           minimum: 0
-        sup_K38_pricePipeTotal:
+        sup_K38_supportsKitMaterialCost:
           type: number
           minimum: 0
-        sup_K39_priceQuantityMaterialPipeInsulationTotal:
+        sup_K39_supportsKitProcessingCost:
           type: number
           minimum: 0
-        sup_M38_priceMaterialTotal:
+        sup_M38_bracesKitMaterialCost:
           type: number
           minimum: 0
-        sup_M39_quantityMaterialTotal:
+        sup_M39_bracesKitProcessingCost:
           type: number
           minimum: 0
-        sup_M44_priceMaterial:
+        sup_M44_otherMaterialsCost1:
           type: number
           minimum: 0
-        sup_M45_priceMaterial:
+        sup_M45_otherMaterialsCost2:
           type: number
           minimum: 0
-        sup_M46_priceQuantityMaterialSum:
+        sup_M46_otherMaterialsCost3:
           type: number
           minimum: 0
-        sup_M51_priceQuantityMaterialTotalSum:
+        sup_M51_spareAnchorBoltsCost:
           type: number
           minimum: 0
-        sup_M52_priceQuantityMaterialTotalSum:
+        sup_M52_spareOtherCost:
           type: number
           minimum: 0
-        sup_N50_priceQuantityWeightThicknessTotalSum:
+        sup_N50_sparePanelGasketsQuantity:
           type: number
           minimum: 0
-        sup_N51_priceQuantityWeightThicknessTotalSum:
+        sup_N51_spareAnchorBoltsQuantity:
           type: number
           minimum: 0
-        sup_N52_priceQuantityWeightThicknessTotalSum:
+        sup_N52_spareOtherQuantity:
           type: number
           minimum: 0
-        sup_N54_quantityWeightThicknessTotal:
+        sup_N54_spareFlangeGasketsFlange1Quantity:
           type: number
           minimum: 0
-        sup_N55_quantityWeightThicknessTotal:
+        sup_N55_spareFlangeGasketsFlange2Quantity:
           type: number
           minimum: 0
-        sup_N56_quantityWeightThicknessTotal:
+        sup_N56_spareFlangeGasketsFlange3Quantity:
           type: number
           minimum: 0
-        sup_N57_quantityWeightThicknessTotal:
+        sup_N57_spareFlangeGasketsFlange4Quantity:
           type: number
           minimum: 0
-        sup_P45_priceMaterialTotal:
+        sup_P45_unaccountedCost:
           type: number
           minimum: 0
-        sup_F39_priceQuantityWeightMaterialInsulationTotal:
+        sup_F39_spareKitsPressureReserve:
           type: number
           minimum: 0
 
         # Optional fields - Pressure ratings
-        sup_C28_priceWeightThickness:
+        sup_C28_panelAFlange1Pressure:
           type: string
           enum: ['Ру6', 'Ру10', 'Ру16', 'Ру25', 'Ру40', 'Ру63', 'Ру100', 'Ру160']
           description: Pressure rating
-        sup_C29_priceWeightPipeThickness:
+        sup_C29_panelAFlange2Pressure:
           type: string
           enum: ['Ру6', 'Ру10', 'Ру16', 'Ру25', 'Ру40', 'Ру63', 'Ру100', 'Ру160']
           description: Pipe pressure rating
 
         # Optional fields - Diameter codes
-        sup_D28_priceWeightThickness:
+        sup_D28_panelAFlange1Diameter:
           type: string
           enum: ['Ду25', 'Ду32', 'Ду40', 'Ду50', 'Ду65', 'Ду80', 'Ду100', 'Ду125', 'Ду150', 'Ду200', 'Ду250', 'Ду300', 'Ду350', 'Ду400', 'Ду450', 'Ду600', 'Ду800', 'Ду1000']
           description: Diameter code
-        sup_D29_priceWeightPipe:
+        sup_D29_panelAFlange2Diameter:
           type: string
           enum: ['Ду25', 'Ду32', 'Ду40', 'Ду50', 'Ду65', 'Ду80', 'Ду100', 'Ду125', 'Ду150', 'Ду200', 'Ду250', 'Ду300', 'Ду350', 'Ду400', 'Ду450', 'Ду600', 'Ду800', 'Ду1000']
           description: Pipe diameter code
@@ -463,19 +463,19 @@ components:
             calculated_values:
               type: object
               properties:
-                tech_F27_quantityType:
+                tech_F27_deliveryType:
                   type: string
-                tech_G27_quantityType:
+                tech_G27_sizeTypeK4:
                   type: string
-                tech_P27_materialType:
+                tech_P27_plateMaterial:
                   type: string
                 tech_Q27_materialType:
                   type: string
-                tech_R27_materialThicknessType:
+                tech_R27_bodyMaterial:
                   type: string
-                tech_S27_materialThicknessType:
+                tech_S27_plateSurfaceType:
                   type: string
-                tech_U27_materialThicknessType:
+                tech_U27_plateThickness:
                   type: number
             total_cost:
               type: number

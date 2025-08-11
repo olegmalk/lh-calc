@@ -297,7 +297,7 @@ export class ExcelProcessor {
   private async validateInputData(inputData: CalculationRequest, warnings: string[]): Promise<void> {
     try {
       // Check for null/undefined required fields
-      const requiredNumericFields = ['tech_D27_type', 'tech_I27_quantityType', 'tech_J27_quantityType'];
+      const requiredNumericFields = ['tech_D27_sequenceNumber', 'tech_I27_plateQuantity', 'tech_J27_calcPressureHotSide'];
       for (const field of requiredNumericFields) {
         const value = (inputData as any)[field];
         if (value === null || value === undefined) {
@@ -330,17 +330,17 @@ export class ExcelProcessor {
 
   private async validateNumericFields(inputData: CalculationRequest, warnings: string[]): Promise<void> {
     const numericFields = [
-      { field: 'tech_D27_type', min: 0, max: 1000000 },
-      { field: 'tech_I27_quantityType', min: 0, max: 1000000 },
-      { field: 'tech_J27_quantityType', min: 0, max: 1000000 },
-      { field: 'sup_D8_priceMaterial', min: 0, max: 1000000000 }
+      { field: 'tech_D27_sequenceNumber', min: 0, max: 1000000 },
+      { field: 'tech_I27_plateQuantity', min: 0, max: 1000000 },
+      { field: 'tech_J27_calcPressureHotSide', min: 0, max: 1000000 },
+      { field: 'sup_D8_flowPartMaterialPricePerKg', min: 0, max: 1000000000 }
     ];
 
     for (const { field, min, max } of numericFields) {
       const value = (inputData as any)[field];
       if (value !== undefined && value !== null) {
         // Check for division by zero scenarios
-        if (field === 'tech_I27_quantityType' && value === 0) {
+        if (field === 'tech_I27_plateQuantity' && value === 0) {
           throw new DivisionByZeroError(field, value, {
             affectedCells: ['снабжение!E7', 'снабжение!F7']
           });
@@ -372,7 +372,7 @@ export class ExcelProcessor {
   }
 
   private async validateStringFields(inputData: CalculationRequest, warnings: string[]): Promise<void> {
-    const stringFields = ['tech_E27_weightType', 'tech_H27_quantityType'];
+    const stringFields = ['tech_E27_customerOrderPosition', 'tech_H27_passes'];
 
     for (const field of stringFields) {
       const value = (inputData as any)[field];
@@ -394,12 +394,12 @@ export class ExcelProcessor {
         }
 
         // Validate equipment code pattern
-        if (field === 'tech_E27_weightType' && !/^[ЕК][-0-9А-Я*]*$/.test(value)) {
+        if (field === 'tech_E27_customerOrderPosition' && !/^[ЕК][-0-9А-Я*]*$/.test(value)) {
           warnings.push(`Equipment code pattern may be invalid: ${value}`);
         }
 
         // Validate fraction pattern
-        if (field === 'tech_H27_quantityType' && value.includes('/')) {
+        if (field === 'tech_H27_passes' && value.includes('/')) {
           if (!/^\d+\/\d+$/.test(value)) {
             throw ErrorFactory.create(ErrorType.INVALID_PATTERN,
               `Invalid fraction pattern in field ${field}`,
@@ -419,9 +419,9 @@ export class ExcelProcessor {
 
   private async validateBusinessLogic(inputData: CalculationRequest, _warnings: string[]): Promise<void> {
     // Validate pressure and diameter combinations
-    if (inputData.sup_C28_priceWeightThickness && inputData.sup_D28_priceWeightThickness) {
-      const pressure = inputData.sup_C28_priceWeightThickness;
-      const diameter = inputData.sup_D28_priceWeightThickness;
+    if (inputData.sup_C28_panelAFlange1Pressure && inputData.sup_D28_panelAFlange1Diameter) {
+      const pressure = inputData.sup_C28_panelAFlange1Pressure;
+      const diameter = inputData.sup_D28_panelAFlange1Diameter;
 
       // Engineering constraints validation
       const incompatibleCombinations = [
@@ -588,7 +588,7 @@ export class ExcelProcessor {
           // Pre-validate problematic values
           if (typeof value === 'number' && value === 0) {
             // Check if this field could cause division by zero
-            if (fieldName === 'tech_I27_quantityType') {
+            if (fieldName === 'tech_I27_plateQuantity') {
               divisionByZeroRisks.push(cellAddress);
               warnings.push(`Zero value in ${fieldName} may cause division by zero in Excel formulas`);
             }
@@ -1049,13 +1049,13 @@ export class ExcelProcessor {
 
       // Extract yellow cells (computed values) from row 27 with validation
       const calculatedValues: CalculatedValues = {
-        tech_F27_quantityType: this.getCellStringValueSafely(techSheet.getCell('F27'), 'F27'),
-        tech_G27_quantityType: this.getCellStringValueSafely(techSheet.getCell('G27'), 'G27'),
-        tech_P27_materialType: this.getCellStringValueSafely(techSheet.getCell('P27'), 'P27'),
+        tech_F27_deliveryType: this.getCellStringValueSafely(techSheet.getCell('F27'), 'F27'),
+        tech_G27_sizeTypeK4: this.getCellStringValueSafely(techSheet.getCell('G27'), 'G27'),
+        tech_P27_plateMaterial: this.getCellStringValueSafely(techSheet.getCell('P27'), 'P27'),
         tech_Q27_materialType: this.getCellStringValueSafely(techSheet.getCell('Q27'), 'Q27'),
-        tech_R27_materialThicknessType: this.getCellStringValueSafely(techSheet.getCell('R27'), 'R27'),
-        tech_S27_materialThicknessType: this.getCellStringValueSafely(techSheet.getCell('S27'), 'S27'),
-        tech_U27_materialThicknessType: this.getCellNumericValueSafely(techSheet.getCell('U27'), 'U27')
+        tech_R27_bodyMaterial: this.getCellStringValueSafely(techSheet.getCell('R27'), 'R27'),
+        tech_S27_plateSurfaceType: this.getCellStringValueSafely(techSheet.getCell('S27'), 'S27'),
+        tech_U27_plateThickness: this.getCellNumericValueSafely(techSheet.getCell('U27'), 'U27')
       };
 
       // Validate calculated values
@@ -1400,13 +1400,13 @@ export class ExcelProcessor {
 
       // Extract yellow cells (computed values) from row 27
       return {
-        tech_F27_quantityType: this.getCellStringValue(techSheet.getCell('F27')),
-        tech_G27_quantityType: this.getCellStringValue(techSheet.getCell('G27')),
-        tech_P27_materialType: this.getCellStringValue(techSheet.getCell('P27')),
+        tech_F27_deliveryType: this.getCellStringValue(techSheet.getCell('F27')),
+        tech_G27_sizeTypeK4: this.getCellStringValue(techSheet.getCell('G27')),
+        tech_P27_plateMaterial: this.getCellStringValue(techSheet.getCell('P27')),
         tech_Q27_materialType: this.getCellStringValue(techSheet.getCell('Q27')),
-        tech_R27_materialThicknessType: this.getCellStringValue(techSheet.getCell('R27')),
-        tech_S27_materialThicknessType: this.getCellStringValue(techSheet.getCell('S27')),
-        tech_U27_materialThicknessType: this.getCellNumericValue(techSheet.getCell('U27'))
+        tech_R27_bodyMaterial: this.getCellStringValue(techSheet.getCell('R27')),
+        tech_S27_plateSurfaceType: this.getCellStringValue(techSheet.getCell('S27')),
+        tech_U27_plateThickness: this.getCellNumericValue(techSheet.getCell('U27'))
       };
 
     } catch (error) {
@@ -1566,10 +1566,10 @@ export class ExcelProcessor {
    */
   private calculateFallbackCost(inputData: CalculationRequest, warnings: string[]): number {
     try {
-      const baseQuantity = inputData.tech_I27_quantityType || 1;
-      const materialPrice = inputData.sup_D8_priceMaterial || 1000;
-      const processingPrice = inputData.sup_E8_priceMaterial || 800;
-      const totalQuantity = inputData.tech_J27_quantityType || 1;
+      const baseQuantity = inputData.tech_I27_plateQuantity || 1;
+      const materialPrice = inputData.sup_D8_flowPartMaterialPricePerKg || 1000;
+      const processingPrice = inputData.sup_E8_flowPartMaterialPrice || 800;
+      const totalQuantity = inputData.tech_J27_calcPressureHotSide || 1;
       
       // Simple cost calculation
       const materialCost = baseQuantity * materialPrice * 0.1;

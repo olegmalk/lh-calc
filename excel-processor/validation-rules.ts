@@ -28,7 +28,7 @@ export interface ValidationRules {
 }
 
 export const VALIDATION_RULES: ValidationRules = {
-  "технолог_D27": {
+  "tech_D27_sequenceNumber":
     validation: {
       type: "number",
       required: true,
@@ -45,7 +45,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "технолог_E27": {
+  "tech_E27_customerOrderPosition":
     validation: {
       type: "string",
       required: true,
@@ -62,7 +62,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "технолог_H27": {
+  "tech_H27_passes":
     validation: {
       type: "string",
       required: true,
@@ -79,7 +79,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "технолог_I27": {
+  "tech_I27_plateQuantity":
     validation: {
       type: "number",
       required: true,
@@ -96,7 +96,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "технолог_J27": {
+  "tech_J27_calcPressureHotSide":
     validation: {
       type: "number",
       required: true,
@@ -113,7 +113,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "технолог_K27": {
+  "tech_K27_calcPressureColdSide":
     validation: {
       type: "number",
       required: true,
@@ -130,7 +130,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "технолог_L27": {
+  "tech_L27_calcTempHotSide":
     validation: {
       type: "number",
       required: true,
@@ -147,7 +147,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "технолог_M27": {
+  "tech_M27_calcTempColdSide":
     validation: {
       type: "number",
       required: true,
@@ -164,7 +164,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "технолог_T27": {
+  "tech_T27_drawDepth":
     validation: {
       type: "number",
       required: true,
@@ -181,7 +181,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "технолог_V27": {
+  "tech_V27_claddingThickness":
     validation: {
       type: "number",
       required: false,
@@ -198,7 +198,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_F2": {
+  "sup_F2_projectNumber":
     validation: {
       type: "enum",
       required: true,
@@ -215,7 +215,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_D8": {
+  "sup_D8_flowPartMaterialPricePerKg":
     validation: {
       type: "number",
       required: true,
@@ -232,7 +232,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_E8": {
+  "sup_E8_flowPartMaterialPrice":
     validation: {
       type: "number",
       required: true,
@@ -249,7 +249,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_D9": {
+  "sup_D9_bodyMaterial":
     validation: {
       type: "enum",
       required: false,
@@ -266,7 +266,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_D10": {
+  "sup_D10_columnCoverMaterialPrice":
     validation: {
       type: "any",
       required: true,
@@ -282,7 +282,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_D11": {
+  "sup_D11_panelMaterialPrice":
     validation: {
       type: "any",
       required: true,
@@ -298,7 +298,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_K13": {
+  "sup_K13_normHoursPerUnit":
     validation: {
       type: "number",
       required: true,
@@ -315,7 +315,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_P13": {
+  "sup_P13_internalLogistics":
     validation: {
       type: "number",
       required: true,
@@ -332,7 +332,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_D17": {
+  "sup_D17_panelCuttingCoefficient":
     validation: {
       type: "any",
       required: true,
@@ -348,7 +348,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_E19": {
+  "sup_E19_coverRolledThickness":
     validation: {
       type: "any",
       required: false,
@@ -364,7 +364,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_K19": {
+  "sup_K19_columnRolledThickness":
     validation: {
       type: "any",
       required: false,
@@ -380,7 +380,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_P19": {
+  "sup_P19_panelFastenersQuantity":
     validation: {
       type: "number",
       required: false,
@@ -397,7 +397,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_E20": {
+  "sup_E20_coverCuttingPrice":
     validation: {
       type: "any",
       required: true,
@@ -413,7 +413,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_K20": {
+  "sup_K20_columnCuttingPrice":
     validation: {
       type: "any",
       required: true,
@@ -429,7 +429,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_P20": {
+  "sup_P20_panelFastenersMaterial":
     validation: {
       type: "enum",
       required: false,
@@ -446,7 +446,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_E21": {
+  "sup_E21_coverProcessingCost":
     validation: {
       type: "any",
       required: true,
@@ -462,7 +462,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_K21": {
+  "sup_K21_columnProcessingCost":
     validation: {
       type: "any",
       required: true,
@@ -478,7 +478,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_P21": {
+  "sup_P21_panelFastenersCoating":
     validation: {
       type: "enum",
       required: false,
@@ -495,7 +495,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_P22": {
+  "sup_P22_panelFastenersStudSize":
     validation: {
       type: "enum",
       required: false,
@@ -512,7 +512,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_Q22": {
+  "sup_Q22_panelFastenersStudCost":
     validation: {
       type: "any",
       required: true,
@@ -528,7 +528,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_Q23": {
+  "sup_Q23_panelFastenersNutCost":
     validation: {
       type: "any",
       required: true,
@@ -544,7 +544,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_Q24": {
+  "sup_Q24_panelFastenersWasherCost":
     validation: {
       type: "any",
       required: true,
@@ -560,7 +560,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_E25": {
+  "sup_E25_panelRolledThickness":
     validation: {
       type: "any",
       required: false,
@@ -576,7 +576,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_K25": {
+  "sup_K25_panelBRolledThickness":
     validation: {
       type: "any",
       required: false,
@@ -592,7 +592,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_E26": {
+  "sup_E26_panelCuttingPrice":
     validation: {
       type: "any",
       required: true,
@@ -608,7 +608,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_K26": {
+  "sup_K26_panelBCuttingPrice":
     validation: {
       type: "any",
       required: true,
@@ -624,7 +624,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_E27": {
+  "sup_E27_panelProcessingCost":
     validation: {
       type: "any",
       required: true,
@@ -640,7 +640,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_K27": {
+  "sup_K27_panelBProcessingCost":
     validation: {
       type: "any",
       required: true,
@@ -656,7 +656,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_C28": {
+  "sup_C28_panelAFlange1Pressure":
     validation: {
       type: "enum",
       required: false,
@@ -673,7 +673,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_D28": {
+  "sup_D28_panelAFlange1Diameter":
     validation: {
       type: "enum",
       required: false,
@@ -690,7 +690,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_F28": {
+  "sup_F28_flange1PanelAPrice":
     validation: {
       type: "any",
       required: true,
@@ -706,7 +706,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_I28": {
+  "sup_I28_panelBFlange3Pressure":
     validation: {
       type: "enum",
       required: false,
@@ -723,7 +723,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_J28": {
+  "sup_J28_panelBFlange3Diameter":
     validation: {
       type: "enum",
       required: false,
@@ -740,7 +740,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_L28": {
+  "sup_L28_panelBFlange3Price":
     validation: {
       type: "any",
       required: true,
@@ -756,7 +756,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_C29": {
+  "sup_C29_panelAFlange2Pressure":
     validation: {
       type: "enum",
       required: false,
@@ -773,7 +773,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_D29": {
+  "sup_D29_panelAFlange2Diameter":
     validation: {
       type: "enum",
       required: false,
@@ -790,7 +790,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_F29": {
+  "sup_F29_flange2PanelAPrice":
     validation: {
       type: "any",
       required: true,
@@ -806,7 +806,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_I29": {
+  "sup_I29_panelBFlange4Pressure":
     validation: {
       type: "enum",
       required: false,
@@ -823,7 +823,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_J29": {
+  "sup_J29_panelBFlange4Diameter":
     validation: {
       type: "enum",
       required: false,
@@ -840,7 +840,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_L29": {
+  "sup_L29_panelBFlange4Price":
     validation: {
       type: "any",
       required: true,
@@ -856,7 +856,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_P29": {
+  "sup_P29_cofFastenersFlange1Size":
     validation: {
       type: "enum",
       required: false,
@@ -873,7 +873,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_Q29": {
+  "sup_Q29_cofFastenersFlange1Material":
     validation: {
       type: "enum",
       required: false,
@@ -890,7 +890,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_R29": {
+  "sup_R29_cofFastenersFlange1Coating":
     validation: {
       type: "enum",
       required: false,
@@ -907,7 +907,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_T29": {
+  "sup_T29_cofFastenersFlange1KitPrice":
     validation: {
       type: "any",
       required: true,
@@ -923,7 +923,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_F30": {
+  "sup_F30_pipeBilletFlange1Price":
     validation: {
       type: "any",
       required: true,
@@ -939,7 +939,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_L30": {
+  "sup_L30_panelBPipeBilletFlange3Price":
     validation: {
       type: "any",
       required: true,
@@ -955,7 +955,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_T30": {
+  "sup_T30_cofGasketFlange1Price":
     validation: {
       type: "any",
       required: true,
@@ -971,7 +971,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_F31": {
+  "sup_F31_pipeBilletFlange2Price":
     validation: {
       type: "any",
       required: true,
@@ -987,7 +987,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_L31": {
+  "sup_L31_panelBPipeBilletFlange4Price":
     validation: {
       type: "any",
       required: true,
@@ -1003,7 +1003,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_T31": {
+  "sup_T31_cofObturatorFlange1Price":
     validation: {
       type: "any",
       required: true,
@@ -1019,7 +1019,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_F32": {
+  "sup_F32_drainageNozzlePrice":
     validation: {
       type: "any",
       required: true,
@@ -1035,7 +1035,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_L32": {
+  "sup_L32_panelBDrainageNozzlePrice":
     validation: {
       type: "any",
       required: true,
@@ -1051,7 +1051,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_F33": {
+  "sup_F33_ventilationNozzlePrice":
     validation: {
       type: "any",
       required: true,
@@ -1067,7 +1067,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_L33": {
+  "sup_L33_panelBVentilationNozzlePrice":
     validation: {
       type: "any",
       required: true,
@@ -1083,7 +1083,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_P33": {
+  "sup_P33_cofFastenersFlange2Size":
     validation: {
       type: "enum",
       required: false,
@@ -1100,7 +1100,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_Q33": {
+  "sup_Q33_cofFastenersFlange2Material":
     validation: {
       type: "enum",
       required: false,
@@ -1117,7 +1117,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_R33": {
+  "sup_R33_cofFastenersFlange2Coating":
     validation: {
       type: "enum",
       required: false,
@@ -1134,7 +1134,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_T33": {
+  "sup_T33_cofFastenersFlange2KitPrice":
     validation: {
       type: "any",
       required: true,
@@ -1150,7 +1150,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_T34": {
+  "sup_T34_cofGasketFlange2Price":
     validation: {
       type: "any",
       required: true,
@@ -1166,7 +1166,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_T35": {
+  "sup_T35_cofObturatorFlange2Price":
     validation: {
       type: "any",
       required: true,
@@ -1182,7 +1182,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_P37": {
+  "sup_P37_cofFastenersFlange3Size":
     validation: {
       type: "enum",
       required: false,
@@ -1199,7 +1199,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_Q37": {
+  "sup_Q37_cofFastenersFlange3Material":
     validation: {
       type: "enum",
       required: false,
@@ -1216,7 +1216,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_R37": {
+  "sup_R37_cofFastenersFlange3Coating":
     validation: {
       type: "enum",
       required: false,
@@ -1233,7 +1233,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_T37": {
+  "sup_T37_cofFastenersFlange3KitPrice":
     validation: {
       type: "any",
       required: true,
@@ -1249,7 +1249,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_D38": {
+  "sup_D38_panelGasketsPrice":
     validation: {
       type: "any",
       required: true,
@@ -1265,7 +1265,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_I38": {
+  "sup_I38_eyeboltKitMaterialCost":
     validation: {
       type: "number",
       required: true,
@@ -1282,7 +1282,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_K38": {
+  "sup_K38_supportsKitMaterialCost":
     validation: {
       type: "number",
       required: true,
@@ -1299,7 +1299,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_M38": {
+  "sup_M38_bracesKitMaterialCost":
     validation: {
       type: "number",
       required: true,
@@ -1316,7 +1316,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_T38": {
+  "sup_T38_cofGasketFlange3Price":
     validation: {
       type: "any",
       required: true,
@@ -1332,7 +1332,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_F39": {
+  "sup_F39_spareKitsPressureReserve":
     validation: {
       type: "number",
       required: false,
@@ -1349,7 +1349,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_I39": {
+  "sup_I39_eyeboltKitProcessingCost":
     validation: {
       type: "number",
       required: true,
@@ -1366,7 +1366,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_K39": {
+  "sup_K39_supportsKitProcessingCost":
     validation: {
       type: "number",
       required: true,
@@ -1383,7 +1383,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_M39": {
+  "sup_M39_bracesKitProcessingCost":
     validation: {
       type: "number",
       required: true,
@@ -1400,7 +1400,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_T39": {
+  "sup_T39_cofObturatorFlange3Price":
     validation: {
       type: "any",
       required: true,
@@ -1416,7 +1416,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_P41": {
+  "sup_P41_cofFastenersFlange4Size":
     validation: {
       type: "enum",
       required: false,
@@ -1433,7 +1433,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_Q41": {
+  "sup_Q41_cofFastenersFlange4Material":
     validation: {
       type: "enum",
       required: false,
@@ -1450,7 +1450,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_R41": {
+  "sup_R41_cofFastenersFlange4Coating":
     validation: {
       type: "enum",
       required: false,
@@ -1467,7 +1467,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_T41": {
+  "sup_T41_cofFastenersFlange4KitPrice":
     validation: {
       type: "any",
       required: true,
@@ -1483,7 +1483,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_T42": {
+  "sup_T42_cofGasketFlange4Price":
     validation: {
       type: "any",
       required: true,
@@ -1499,7 +1499,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_D43": {
+  "sup_D43_studM24x2000Price":
     validation: {
       type: "number",
       required: true,
@@ -1516,7 +1516,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_G43": {
+  "sup_G43_nutM24DIN6330Price":
     validation: {
       type: "number",
       required: true,
@@ -1533,7 +1533,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_T43": {
+  "sup_T43_cofObturatorFlange4Price":
     validation: {
       type: "any",
       required: true,
@@ -1549,7 +1549,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_D44": {
+  "sup_D44_studM24x1000Price":
     validation: {
       type: "number",
       required: true,
@@ -1566,7 +1566,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_G44": {
+  "sup_G44_nutM24DIN933Price":
     validation: {
       type: "number",
       required: true,
@@ -1583,7 +1583,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_I44": {
+  "sup_I44_otherMaterialsDesc1":
     validation: {
       type: "string",
       required: true,
@@ -1599,7 +1599,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_M44": {
+  "sup_M44_otherMaterialsCost1":
     validation: {
       type: "number",
       required: true,
@@ -1616,7 +1616,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_D45": {
+  "sup_D45_studM20x2000Price":
     validation: {
       type: "number",
       required: true,
@@ -1633,7 +1633,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_G45": {
+  "sup_G45_nutM20M16DIN933Price":
     validation: {
       type: "number",
       required: true,
@@ -1650,7 +1650,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_I45": {
+  "sup_I45_otherMaterialsDesc2":
     validation: {
       type: "string",
       required: true,
@@ -1666,7 +1666,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_M45": {
+  "sup_M45_otherMaterialsCost2":
     validation: {
       type: "number",
       required: true,
@@ -1683,7 +1683,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_P45": {
+  "sup_P45_unaccountedCost":
     validation: {
       type: "number",
       required: true,
@@ -1700,7 +1700,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_D46": {
+  "sup_D46_studM20M16x1000Price":
     validation: {
       type: "number",
       required: true,
@@ -1733,7 +1733,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_I46": {
+  "sup_I46_otherMaterialsDesc3":
     validation: {
       type: "string",
       required: true,
@@ -1749,7 +1749,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_M46": {
+  "sup_M46_otherMaterialsCost3":
     validation: {
       type: "number",
       required: true,
@@ -1766,7 +1766,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_I50": {
+  "sup_I50_sparePanelStudQuantity":
     validation: {
       type: "number",
       required: true,
@@ -1783,7 +1783,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_N50": {
+  "sup_N50_sparePanelGasketsQuantity":
     validation: {
       type: "number",
       required: true,
@@ -1800,7 +1800,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_I51": {
+  "sup_I51_sparePanelNutQuantity":
     validation: {
       type: "number",
       required: true,
@@ -1817,7 +1817,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_M51": {
+  "sup_M51_spareAnchorBoltsCost":
     validation: {
       type: "number",
       required: true,
@@ -1834,7 +1834,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_N51": {
+  "sup_N51_spareAnchorBoltsQuantity":
     validation: {
       type: "number",
       required: true,
@@ -1851,7 +1851,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_I52": {
+  "sup_I52_sparePanelWasherQuantity":
     validation: {
       type: "number",
       required: true,
@@ -1868,7 +1868,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_M52": {
+  "sup_M52_spareOtherCost":
     validation: {
       type: "number",
       required: true,
@@ -1885,7 +1885,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_N52": {
+  "sup_N52_spareOtherQuantity":
     validation: {
       type: "number",
       required: true,
@@ -1902,7 +1902,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_H54": {
+  "sup_H54_spareFlangeFlange1Price":
     validation: {
       type: "number",
       required: true,
@@ -1919,7 +1919,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_I54": {
+  "sup_I54_flangeFastenersFlange1Quantity":
     validation: {
       type: "number",
       required: true,
@@ -1936,7 +1936,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_N54": {
+  "sup_N54_spareFlangeGasketsFlange1Quantity":
     validation: {
       type: "number",
       required: true,
@@ -1953,7 +1953,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_H55": {
+  "sup_H55_spareFlangeFlange2Price":
     validation: {
       type: "number",
       required: true,
@@ -1970,7 +1970,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_I55": {
+  "sup_I55_flangeFastenersFlange2Quantity":
     validation: {
       type: "number",
       required: true,
@@ -1987,7 +1987,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_N55": {
+  "sup_N55_spareFlangeGasketsFlange2Quantity":
     validation: {
       type: "number",
       required: true,
@@ -2004,7 +2004,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_H56": {
+  "sup_H56_spareFlangeFlange3Price":
     validation: {
       type: "number",
       required: true,
@@ -2021,7 +2021,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_I56": {
+  "sup_I56_flangeFastenersFlange3Quantity":
     validation: {
       type: "number",
       required: true,
@@ -2038,7 +2038,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_N56": {
+  "sup_N56_spareFlangeGasketsFlange3Quantity":
     validation: {
       type: "number",
       required: true,
@@ -2055,7 +2055,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_H57": {
+  "sup_H57_spareFlangeFlange4Price":
     validation: {
       type: "number",
       required: true,
@@ -2072,7 +2072,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_I57": {
+  "sup_I57_flangeFastenersFlange4Quantity":
     validation: {
       type: "number",
       required: true,
@@ -2089,7 +2089,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_N57": {
+  "sup_N57_spareFlangeGasketsFlange4Quantity":
     validation: {
       type: "number",
       required: true,
@@ -2106,7 +2106,7 @@ export const VALIDATION_RULES: ValidationRules = {
     }
   },
 
-  "снабжение_D78": {
+  "sup_D78_stainlessSteelThickness":
     validation: {
       type: "number",
       required: true,
