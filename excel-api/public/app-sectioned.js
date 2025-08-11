@@ -78,10 +78,10 @@ const FIELD_SECTIONS = {
     cover_column: {
         title: '🔩 Крышка и Колонна',
         fields: [
-            { id: 'sup_E19_coverRolledThickness', label: 'E19 - Толщина проката крышки, м', type: 'number', default: 10 },
+            { id: 'sup_E19_coverRolledThickness', label: 'E19 - Толщина проката крышки, м', type: 'number', default: 0.01 },
             { id: 'sup_E20_coverCuttingPrice', label: 'E20 - Цена раскроя крышки, руб', type: 'currency', default: 10 },
             { id: 'sup_E21_coverProcessingCost', label: 'E21 - Стоимость обработки крышки, руб', type: 'currency', default: 10 },
-            { id: 'sup_K19_columnRolledThickness', label: 'K19 - Толщина проката колонны, м', type: 'number', default: 30 },
+            { id: 'sup_K19_columnRolledThickness', label: 'K19 - Толщина проката колонны, м', type: 'number', default: 0.02 },
             { id: 'sup_K20_columnCuttingPrice', label: 'K20 - Цена раскроя колонны, руб', type: 'currency', default: 30 },
             { id: 'sup_K21_columnProcessingCost', label: 'K21 - Стоимость обработки колонны, руб', type: 'currency', default: 30 }
         ]
@@ -89,7 +89,7 @@ const FIELD_SECTIONS = {
     panel_a: {
         title: '📐 Панель А',
         fields: [
-            { id: 'sup_E25_panelRolledThickness', label: 'E25 - Толщина проката панели, м', type: 'number', default: 10 },
+            { id: 'sup_E25_panelRolledThickness', label: 'E25 - Толщина проката панели, м', type: 'number', default: 0.008 },
             { id: 'sup_E26_panelCuttingPrice', label: 'E26 - Цена раскроя панели, руб', type: 'currency', default: 10 },
             { id: 'sup_E27_panelProcessingCost', label: 'E27 - Стоимость обработки панели, руб', type: 'currency', default: 10 },
             { id: 'sup_F28_flange1PanelAPrice', label: 'F28 - Цена фланца №1, руб', type: 'currency', default: 10 },
@@ -107,7 +107,7 @@ const FIELD_SECTIONS = {
     panel_b: {
         title: '📐 Панель Б',
         fields: [
-            { id: 'sup_K25_panelBRolledThickness', label: 'K25 - Толщина проката панели Б, м', type: 'number', default: 30 },
+            { id: 'sup_K25_panelBRolledThickness', label: 'K25 - Толщина проката панели Б, м', type: 'number', default: 0.012 },
             { id: 'sup_K26_panelBCuttingPrice', label: 'K26 - Цена раскроя панели Б, руб', type: 'currency', default: 30 },
             { id: 'sup_K27_panelBProcessingCost', label: 'K27 - Стоимость обработки панели Б, руб', type: 'currency', default: 30 },
             { id: 'sup_L28_panelBFlange3Price', label: 'L28 - Цена фланца №3, руб', type: 'currency', default: 40 },
@@ -143,22 +143,22 @@ const FIELD_SECTIONS = {
             { id: 'sup_H55_spareFlangeFlange2Price', label: 'H55 - ЗИП крепеж фланец №2', type: 'currency', default: 20 },
             { id: 'sup_H56_spareFlangeFlange3Price', label: 'H56 - ЗИП крепеж фланец №3', type: 'currency', default: 20 },
             { id: 'sup_H57_spareFlangeFlange4Price', label: 'H57 - ЗИП крепеж фланец №4', type: 'currency', default: 20 },
-            { id: 'sup_I50_sparePanelStudQuantity', label: 'I50 - ЗИП шпилька кол-во', type: 'number', default: 20 },
-            { id: 'sup_I51_sparePanelNutQuantity', label: 'I51 - ЗИП гайка кол-во', type: 'number', default: 20 },
-            { id: 'sup_I52_sparePanelWasherQuantity', label: 'I52 - ЗИП шайба кол-во', type: 'number', default: 20 },
-            { id: 'sup_I54_flangeFastenersFlange1Quantity', label: 'I54 - Крепеж фланец №1 кол-во', type: 'number', default: 20 },
-            { id: 'sup_I55_flangeFastenersFlange2Quantity', label: 'I55 - Крепеж фланец №2 кол-во', type: 'number', default: 20 },
-            { id: 'sup_I56_flangeFastenersFlange3Quantity', label: 'I56 - Крепеж фланец №3 кол-во', type: 'number', default: 20 },
-            { id: 'sup_I57_flangeFastenersFlange4Quantity', label: 'I57 - Крепеж фланец №4 кол-во', type: 'number', default: 20 },
+            { id: 'sup_I50_sparePanelStudQuantity', label: 'I50 - ЗИП шпилька кол-во', type: 'number', default: 10 },
+            { id: 'sup_I51_sparePanelNutQuantity', label: 'I51 - ЗИП гайка кол-во', type: 'number', default: 10 },
+            { id: 'sup_I52_sparePanelWasherQuantity', label: 'I52 - ЗИП шайба кол-во', type: 'number', default: 10 },
+            { id: 'sup_I54_flangeFastenersFlange1Quantity', label: 'I54 - Крепеж фланец №1 кол-во', type: 'number', default: 8 },
+            { id: 'sup_I55_flangeFastenersFlange2Quantity', label: 'I55 - Крепеж фланец №2 кол-во', type: 'number', default: 8 },
+            { id: 'sup_I56_flangeFastenersFlange3Quantity', label: 'I56 - Крепеж фланец №3 кол-во', type: 'number', default: 8 },
+            { id: 'sup_I57_flangeFastenersFlange4Quantity', label: 'I57 - Крепеж фланец №4 кол-во', type: 'number', default: 8 },
             { id: 'sup_M51_spareAnchorBoltsCost', label: 'M51 - ЗИП анкерные болты стоимость', type: 'currency', default: 50 },
             { id: 'sup_M52_spareOtherCost', label: 'M52 - ЗИП другое стоимость', type: 'currency', default: 50 },
-            { id: 'sup_N50_sparePanelGasketsQuantity', label: 'N50 - ЗИП прокладки панелей кол-во', type: 'number', default: 60 },
-            { id: 'sup_N51_spareAnchorBoltsQuantity', label: 'N51 - ЗИП анкерные болты кол-во', type: 'number', default: 60 },
-            { id: 'sup_N52_spareOtherQuantity', label: 'N52 - ЗИП другое кол-во', type: 'number', default: 60 },
-            { id: 'sup_N54_spareFlangeGasketsFlange1Quantity', label: 'N54 - ЗИП прокладки фланец №1', type: 'number', default: 60 },
-            { id: 'sup_N55_spareFlangeGasketsFlange2Quantity', label: 'N55 - ЗИП прокладки фланец №2', type: 'number', default: 60 },
-            { id: 'sup_N56_spareFlangeGasketsFlange3Quantity', label: 'N56 - ЗИП прокладки фланец №3', type: 'number', default: 60 },
-            { id: 'sup_N57_spareFlangeGasketsFlange4Quantity', label: 'N57 - ЗИП прокладки фланец №4', type: 'number', default: 60 }
+            { id: 'sup_N50_sparePanelGasketsQuantity', label: 'N50 - ЗИП прокладки панелей кол-во', type: 'number', default: 5 },
+            { id: 'sup_N51_spareAnchorBoltsQuantity', label: 'N51 - ЗИП анкерные болты кол-во', type: 'number', default: 4 },
+            { id: 'sup_N52_spareOtherQuantity', label: 'N52 - ЗИП другое кол-во', type: 'number', default: 2 },
+            { id: 'sup_N54_spareFlangeGasketsFlange1Quantity', label: 'N54 - ЗИП прокладки фланец №1', type: 'number', default: 2 },
+            { id: 'sup_N55_spareFlangeGasketsFlange2Quantity', label: 'N55 - ЗИП прокладки фланец №2', type: 'number', default: 2 },
+            { id: 'sup_N56_spareFlangeGasketsFlange3Quantity', label: 'N56 - ЗИП прокладки фланец №3', type: 'number', default: 2 },
+            { id: 'sup_N57_spareFlangeGasketsFlange4Quantity', label: 'N57 - ЗИП прокладки фланец №4', type: 'number', default: 2 }
         ]
     },
     supports_braces: {
