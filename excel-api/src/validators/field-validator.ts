@@ -1,7 +1,9 @@
 /**
- * Simplified Field Validation - No validation rules
- * All fields are optional
+ * Field Validation with Dynamic Enum Rules
+ * Validates fields against rules extracted from Excel template
  */
+
+import { ExcelValidationExtractor, ExtractedValidationRules } from '../services/excel-validation-extractor';
 
 export interface ValidationResult {
   isValid: boolean;
@@ -23,22 +25,91 @@ export interface ValidationWarning {
 }
 
 export class FieldValidator {
+  private validationExtractor: ExcelValidationExtractor;
+  private validationRules: ExtractedValidationRules | null = null;
+  private lastRulesFetch: number = 0;
+  private readonly CACHE_TTL = 300000; // 5 minutes
+
   constructor() {
-    // No schema needed - accepting all fields
+    this.validationExtractor = new ExcelValidationExtractor();
   }
 
   /**
-   * Validate request data - always returns valid
+   * Get validation rules with caching
    */
-  public validate(data: any): ValidationResult {
+  private async getValidationRules(): Promise<ExtractedValidationRules> {
+    const now = Date.now();
+    
+    // Use cached rules if available and not expired
+    if (this.validationRules && (now - this.lastRulesFetch) < this.CACHE_TTL) {
+      return this.validationRules;
+    }
+
+    // Fetch new rules
+    try {
+      this.validationRules = await this.validationExtractor.getValidationRules();
+      this.lastRulesFetch = now;
+      return this.validationRules;
+    } catch (error) {
+      console.error('[FieldValidator] Failed to get validation rules:', error);
+      // Return empty rules as fallback
+      return {
+        extractedAt: new Date().toISOString(),
+        templatePath: ''
+      };
+    }
+  }
+
+  /**
+   * Validate request data with dynamic enum validation
+   */
+  public async validate(data: any): Promise<ValidationResult> {
     const errors: ValidationError[] = [];
     const warnings: ValidationWarning[] = [];
-
+    
+    // Get current validation rules
+    const rules = await this.getValidationRules();
+    
     // Sanitize input
     const sanitized = this.sanitizeInput(data);
-
+    
+    // Validate enum fields
+    for (const [field, value] of Object.entries(sanitized)) {
+      if (rules[field] && Array.isArray(rules[field])) {
+        // This field has enum validation
+        const allowedValues = rules[field] as string[];
+        
+        if (value && !allowedValues.includes(String(value))) {
+          errors.push({
+            field,
+            value,
+            message: `Value must be one of: ${allowedValues.join(', ')}`,
+            code: 'enum.invalid'
+          });
+        }
+      }
+      
+      // Add warnings for deprecated patterns
+      if (typeof value === 'string') {
+        // Warn about potential issues
+        if (value.includes('SELECT') || value.includes('DROP')) {
+          warnings.push({
+            field,
+            message: 'Value contains SQL-like keywords'
+          });
+        }
+        
+        if (value.length > 500) {
+          warnings.push({
+            field,
+            message: `Value is very long (${value.length} characters)`
+          });
+        }
+      }
+    }
+    
     return {
-      isValid: true,
+      isValid: errors.length === 0,
       errors,
       warnings,
       sanitizedData: sanitized
@@ -89,16 +160,50 @@ export class FieldValidator {
   }
 
   /**
-   * Get required fields list - empty since no validation
+   * Get required fields list - empty since validation is optional
    */
   public getRequiredFields(): string[] {
     return [];
   }
 
   /**
-   * Get field metadata
+   * Get field metadata including enum values
    */
-  public getFieldMetadata(_fieldName: string): any {
+  public async getFieldMetadata(fieldName: string): Promise<any> {
+    const rules = await this.getValidationRules();
+    
+    if (rules[fieldName]) {
+      return {
+        field: fieldName,
+        type: 'enum',
+        values: rules[fieldName]
+      };
+    }
+    
     return null;
+  }
+
+  /**
+   * Get all fields with enum validation
+   */
+  public async getEnumFields(): Promise<{ [field: string]: string[] }> {
+    const rules = await this.getValidationRules();
+    const enumFields: { [field: string]: string[] } = {};
+    
+    for (const [field, values] of Object.entries(rules)) {
+      if (field !== 'extractedAt' && field !== 'templatePath' && Array.isArray(values)) {
+        enumFields[field] = values as string[];
+      }
+    }
+    
+    return enumFields;
+  }
+
+  /**
+   * Clear validation cache
+   */
+  public clearCache(): void {
+    this.validationRules = null;
+    this.lastRulesFetch = 0;
   }
 }

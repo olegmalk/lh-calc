@@ -2,6 +2,37 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Dynamic Validation Rules from Excel Template
+
+### Overview
+The system now dynamically extracts dropdown validation rules from the Excel template at runtime, eliminating the need to hardcode enum values in the code. This ensures the API validation always matches the Excel template's dropdown lists.
+
+### How It Works
+1. **Extraction**: The `ExcelValidationExtractor` service reads the Excel file's XML structure to extract all dropdown validation rules
+2. **Caching**: Rules are cached in `validation-rules.json` and in memory for performance
+3. **Auto-refresh**: When a new template is uploaded via `/api/admin/template/upload`, validation rules are automatically re-extracted
+4. **Validation**: The `FieldValidator` uses these dynamic rules to validate enum fields in API requests
+
+### Extracted Enum Fields (31 total)
+- **технолог sheet**: Material types, surface types, thickness values, delivery types
+- **снабжение sheet**: Pressure ratings (Ру), diameters (Ду), fastener materials, coatings, sizes
+
+### API Endpoints
+- `GET /api/admin/validation-rules` - View current validation rules (requires auth)
+- `POST /api/admin/validation-rules/refresh` - Force refresh rules from template
+- `GET /api/fields/enum` - Get enum fields for API documentation
+
+### Files
+- `/src/services/excel-validation-extractor.ts` - Extraction logic
+- `/validation-rules.json` - Cached validation rules (auto-generated)
+- `/src/validators/field-validator.ts` - Uses dynamic rules for validation
+
+### Important Notes
+- Validation rules are extracted on server startup
+- Rules are refreshed automatically when template is uploaded
+- Validation errors are reported but don't block requests (warnings only)
+- Cache TTL is 5 minutes for the validator, indefinite for extractor
+
 ## Critical Rules
 - **ALWAYS READ FILES IN FULL BEFORE MODIFYING** - Read the entire file content before making any edits
 - **NEVER LEAVE FALLBACKS** - Always fix the root cause, don't settle for workarounds

@@ -28,12 +28,22 @@ import {
 import { Bitrix24Integration } from './integrations/bitrix24';
 import { BitrixAuthMiddleware } from './middleware/bitrix-auth';
 import adminRouter from './routes/admin';
+import { ExcelValidationExtractor } from './services/excel-validation-extractor';
 
 // Load environment variables
 dotenv.config();
 
 // Initialize comprehensive error handling system
 GlobalErrorHandler.setup();
+
+// Initialize validation extractor and preload rules
+const validationExtractor = new ExcelValidationExtractor();
+validationExtractor.getValidationRules().then(rules => {
+  const ruleCount = Object.keys(rules).filter(k => k !== 'extractedAt' && k !== 'templatePath').length;
+  console.log(`[Startup] Loaded ${ruleCount} validation rules from template`);
+}).catch(err => {
+  console.error('[Startup] Failed to load validation rules:', err);
+});
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -278,6 +288,26 @@ app.get('/api/fields/required', (_req: Request, res: Response) => {
     fields: requiredFields,
     count: requiredFields.length
   });
+});
+
+// Get enum fields with their allowed values
+app.get('/api/fields/enum', async (_req: Request, res: Response) => {
+  try {
+    const enumFields = await validator.getEnumFields();
+    const fieldCount = Object.keys(enumFields).length;
+    
+    res.json({
+      success: true,
+      count: fieldCount,
+      fields: enumFields,
+      message: 'Enum validation rules extracted from Excel template'
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: `Failed to get enum fields: ${error instanceof Error ? error.message : String(error)}`
+    });
+  }
 });
 
 // Excel processor diagnostics

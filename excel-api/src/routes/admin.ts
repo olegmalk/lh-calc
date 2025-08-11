@@ -6,11 +6,15 @@ import fs from 'fs/promises';
 // import { QueueManager } from '../services/queue-manager';
 import { logger } from '../utils/logger';
 import crypto from 'crypto';
+import { ExcelValidationExtractor } from '../services/excel-validation-extractor';
 
 const router = Router();
 
 // Template path constant
 const TEMPLATE_PATH = '/home/vmuser/dev/lh_calc/calc.xlsx';
+
+// Initialize validation extractor
+const validationExtractor = new ExcelValidationExtractor(TEMPLATE_PATH);
 
 // Configure multer for file uploads
 const storage = multer.memoryStorage();
@@ -123,7 +127,18 @@ router.post('/template/upload', upload.single('template'), async (req: Request, 
     // Note: In production, you may want to restart the service
     logger.info('Template updated - workers will use new template on next request');
 
-    // Step 5: Skip test for now - validation already passed
+    // Step 5: Extract and update validation rules from new template
+    try {
+      logger.info('Extracting validation rules from new template...');
+      const extractedRules = await validationExtractor.extractAndCache();
+      const ruleCount = Object.keys(extractedRules).filter(k => k !== 'extractedAt' && k !== 'templatePath').length;
+      logger.info(`Extracted ${ruleCount} validation rules from template`);
+    } catch (extractError) {
+      logger.error('Failed to extract validation rules:', extractError);
+      // Continue anyway - validation extraction is not critical
+    }
+
+    // Step 6: Skip test for now - validation already passed
     // TODO: Fix test to handle sheet names with trailing spaces
 
     return res.json({
@@ -186,6 +201,16 @@ router.post('/template/restore', async (req: Request, res: Response): Promise<Re
 
     // Workers will pick up restored template on next request
     logger.info('Template restored - workers will use restored template on next request');
+
+    // Extract validation rules from restored template
+    try {
+      logger.info('Extracting validation rules from restored template...');
+      const extractedRules = await validationExtractor.extractAndCache();
+      const ruleCount = Object.keys(extractedRules).filter(k => k !== 'extractedAt' && k !== 'templatePath').length;
+      logger.info(`Extracted ${ruleCount} validation rules from restored template`);
+    } catch (extractError) {
+      logger.error('Failed to extract validation rules:', extractError);
+    }
 
     return res.json({
       success: true,
@@ -428,6 +453,81 @@ async function testNewTemplate(): Promise<{
   }
 }
 */
+
+/**
+ * GET /api/admin/validation-rules
+ * Get current validation rules extracted from template
+ */
+router.get('/validation-rules', async (_req: Request, res: Response) => {
+  try {
+    const rules = await validationExtractor.getValidationRules();
+    
+    // Count total rules
+    const ruleCount = Object.keys(rules).filter(k => k !== 'extractedAt' && k !== 'templatePath').length;
+    
+    // Organize rules by category
+    const categorized = {
+      технолог: {} as any,
+      снабжение: {} as any,
+      metadata: {
+        extractedAt: rules.extractedAt,
+        templatePath: rules.templatePath,
+        totalRules: ruleCount
+      }
+    };
+    
+    for (const [field, values] of Object.entries(rules)) {
+      if (field === 'extractedAt' || field === 'templatePath') continue;
+      
+      if (field.startsWith('tech_')) {
+        categorized.технолог[field] = values;
+      } else if (field.startsWith('sup_')) {
+        categorized.снабжение[field] = values;
+      }
+    }
+    
+    res.json({
+      success: true,
+      rules: categorized
+    });
+  } catch (error: any) {
+    logger.error('Failed to get validation rules:', error);
+    res.status(500).json({
+      success: false,
+      error: {
+        message: 'Failed to get validation rules',
+        details: error.message
+      }
+    });
+  }
+});
+
+/**
+ * POST /api/admin/validation-rules/refresh
+ * Force refresh validation rules from current template
+ */
+router.post('/validation-rules/refresh', async (_req: Request, res: Response) => {
+  try {
+    logger.info('Force refreshing validation rules...');
+    const rules = await validationExtractor.extractAndCache();
+    const ruleCount = Object.keys(rules).filter(k => k !== 'extractedAt' && k !== 'templatePath').length;
+    
+    res.json({
+      success: true,
+      message: `Successfully refreshed ${ruleCount} validation rules`,
+      extractedAt: rules.extractedAt
+    });
+  } catch (error: any) {
+    logger.error('Failed to refresh validation rules:', error);
+    res.status(500).json({
+      success: false,
+      error: {
+        message: 'Failed to refresh validation rules',
+        details: error.message
+      }
+    });
+  }
+});
 
 function formatBytes(bytes: number): string {
   if (bytes === 0) return '0 Bytes';
