@@ -137,6 +137,8 @@ export const FIELD_MAPPING = {
   tech_F27_deliveryType: 'технолог!F27',
   tech_G27_sizeTypeK4: 'технолог!G27',
   tech_P27_plateMaterial: 'технолог!P27',
+  tech_Q27_materialType: 'технолог!Q27',
   tech_R27_bodyMaterial: 'технолог!R27',
-  tech_S27_plateSurfaceType: 'технолог!S27'
+  tech_S27_plateSurfaceType: 'технолог!S27',
+  tech_U27_plateThickness: 'технолог!U27'
 } as const;

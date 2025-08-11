@@ -17,6 +17,7 @@ const FIELD_CONFIG = {
             { id: 'tech_P27_plateMaterial', label: 'P27 - Материал пластин', type: 'select',
               options: ['AISI 316L', 'SMO 254', 'Hast-C276', 'Titanium', 'AISI 304', 'AISI316Ti', '904L'], 
               default: 'AISI 316L' },
+            { id: 'tech_Q27_materialType', label: 'Q27 - Тип материала', type: 'text', default: 'AISI 316L' },
             { id: 'tech_R27_bodyMaterial', label: 'R27 - Материал корпуса', type: 'select',
               options: ['ст3', 'ст20', '09Г2С', '12Х18Н10Т', 'AISI 304', 'AISI 316L', 'AISI 321', 'AISI 316Ti'],
               default: '09Г2С' },
