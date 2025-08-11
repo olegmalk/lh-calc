@@ -517,6 +517,25 @@ function setupEventHandlers() {
 // Calculate cost
 async function calculateCost() {
     const requestData = {};
+    const resultsDiv = document.getElementById('results');
+    const calculateBtn = document.getElementById('calculateBtn');
+    
+    // Show loading state
+    if (resultsDiv) {
+        resultsDiv.innerHTML = `
+            <div class="loading-state">
+                <div class="spinner"></div>
+                <h3>Выполняется расчет...</h3>
+                <p>Пожалуйста, подождите</p>
+            </div>
+        `;
+    }
+    
+    // Disable button during calculation
+    if (calculateBtn) {
+        calculateBtn.disabled = true;
+        calculateBtn.textContent = 'Расчет...';
+    }
     
     // Collect all field values
     Object.values(FIELD_SECTIONS).forEach(section => {
@@ -553,7 +572,22 @@ async function calculateCost() {
         }
     } catch (error) {
         console.error('Error:', error);
-        alert('Ошибка при отправке запроса: ' + error.message);
+        if (resultsDiv) {
+            resultsDiv.innerHTML = `
+                <div class="error-state">
+                    <div class="error-icon">⚠️</div>
+                    <h3>Ошибка соединения</h3>
+                    <p>${error.message}</p>
+                    <button onclick="calculateCost()" class="retry-btn">Повторить попытку</button>
+                </div>
+            `;
+        }
+    } finally {
+        // Re-enable button
+        if (calculateBtn) {
+            calculateBtn.disabled = false;
+            calculateBtn.textContent = 'Рассчитать стоимость';
+        }
     }
 }
 
@@ -562,25 +596,66 @@ function displayResults(result) {
     const resultsDiv = document.getElementById('results');
     if (!resultsDiv) return;
     
+    // Translate component names
+    const componentNames = {
+        'materials': 'Материалы',
+        'processing': 'Обработка',
+        'hardware': 'Крепеж и фурнитура',
+        'other': 'Прочие расходы',
+        'spare_parts': 'Запасные части',
+        'logistics': 'Логистика',
+        'labor': 'Работа'
+    };
+    
+    // Animate the result
+    resultsDiv.style.opacity = '0';
     resultsDiv.innerHTML = `
-        <div class="success">
-            <h3>✅ Расчет выполнен успешно!</h3>
-            <div class="result-item">
-                <strong>Общая стоимость:</strong> 
-                <span class="total-cost">${formatCurrency(result.results.total_cost)}</span>
+        <div class="success-result">
+            <div class="success-header">
+                <div class="success-icon">✅</div>
+                <h3>Расчет выполнен успешно!</h3>
             </div>
-            <h4>Компоненты стоимости:</h4>
-            <ul>
-                ${Object.entries(result.results.component_costs || {}).map(([key, value]) => 
-                    `<li>${key}: ${formatCurrency(value)}</li>`
-                ).join('')}
-            </ul>
-            <div class="meta-info">
-                <small>Request ID: ${result.request_id}</small><br>
-                <small>Время обработки: ${result.processing_time_ms}ms</small>
+            
+            <div class="total-cost-card">
+                <div class="total-label">Общая стоимость</div>
+                <div class="total-amount">${formatCurrency(result.results.total_cost)}</div>
+            </div>
+            
+            <div class="components-breakdown">
+                <h4>Разбивка по компонентам</h4>
+                <div class="component-list">
+                    ${Object.entries(result.results.component_costs || {}).map(([key, value]) => `
+                        <div class="component-item">
+                            <span class="component-name">${componentNames[key] || key}</span>
+                            <span class="component-value">${formatCurrency(value)}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            
+            ${result.downloadUrl ? `
+                <div class="download-section">
+                    <a href="${result.downloadUrl}" class="download-btn" download>
+                        📥 Скачать Excel файл
+                    </a>
+                </div>
+            ` : ''}
+            
+            <div class="result-footer">
+                <div class="meta-info">
+                    <div>ID запроса: <code>${result.request_id}</code></div>
+                    <div>Время обработки: <strong>${result.processing_time_ms}мс</strong></div>
+                    ${result.metadata ? `<div>Версия: ${result.metadata.excelVersion}</div>` : ''}
+                </div>
             </div>
         </div>
     `;
+    
+    // Fade in animation
+    setTimeout(() => {
+        resultsDiv.style.opacity = '1';
+        resultsDiv.style.transition = 'opacity 0.3s ease-in';
+    }, 100);
 }
 
 // Display error
@@ -594,34 +669,75 @@ function displayError(error) {
         const details = error.error.details;
         
         if (details.field_errors) {
-            errorDetails += '<h4>Ошибки полей:</h4><ul>';
+            errorDetails += '<div class="error-section"><h4>🔍 Ошибки в полях:</h4><div class="error-list">';
             for (const [field, message] of Object.entries(details.field_errors)) {
-                errorDetails += `<li><strong>${field}:</strong> ${message}</li>`;
+                // Find field label
+                let fieldLabel = field;
+                Object.values(FIELD_SECTIONS).forEach(section => {
+                    const fieldDef = section.fields.find(f => f.id === field);
+                    if (fieldDef) {
+                        fieldLabel = fieldDef.label;
+                    }
+                });
+                
+                errorDetails += `
+                    <div class="error-item">
+                        <span class="error-field">${fieldLabel}</span>
+                        <span class="error-message">${message}</span>
+                    </div>
+                `;
+                
                 // Highlight error field
                 const input = document.getElementById(field);
                 if (input) {
                     input.classList.add('error');
+                    input.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
             }
-            errorDetails += '</ul>';
+            errorDetails += '</div></div>';
         }
         
         if (details.missing_required_fields) {
-            errorDetails += '<h4>Отсутствуют обязательные поля:</h4><ul>';
+            errorDetails += '<div class="error-section"><h4>📋 Обязательные поля не заполнены:</h4><div class="missing-fields">';
             details.missing_required_fields.forEach(field => {
-                errorDetails += `<li>${field}</li>`;
+                // Find field label
+                let fieldLabel = field;
+                Object.values(FIELD_SECTIONS).forEach(section => {
+                    const fieldDef = section.fields.find(f => f.id === field);
+                    if (fieldDef) {
+                        fieldLabel = fieldDef.label;
+                    }
+                });
+                errorDetails += `<div class="missing-field">• ${fieldLabel}</div>`;
             });
-            errorDetails += '</ul>';
+            errorDetails += '</div></div>';
         }
     }
     
     resultsDiv.innerHTML = `
-        <div class="error">
-            <h3>❌ Ошибка расчета</h3>
-            <p>${error.error?.message || error.message || 'Неизвестная ошибка'}</p>
+        <div class="error-result">
+            <div class="error-header">
+                <div class="error-icon">❌</div>
+                <h3>Ошибка при расчете</h3>
+            </div>
+            <div class="error-message-main">
+                ${error.error?.message || error.message || 'Произошла неизвестная ошибка'}
+            </div>
             ${errorDetails}
+            <div class="error-actions">
+                <button onclick="calculateCost()" class="retry-btn">🔄 Повторить расчет</button>
+                <button onclick="clearErrors()" class="clear-errors-btn">Очистить ошибки</button>
+            </div>
         </div>
     `;
+}
+
+// Clear error highlighting
+function clearErrors() {
+    document.querySelectorAll('input.error, select.error, textarea.error').forEach(input => {
+        input.classList.remove('error');
+    });
+    document.getElementById('results').innerHTML = '';
 }
 
 // Format currency
@@ -826,6 +942,286 @@ style.textContent = `
         font-size: 24px;
         color: #4CAF50;
         font-weight: bold;
+    }
+    
+    /* Loading state styles */
+    .loading-state {
+        text-align: center;
+        padding: 40px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .spinner {
+        width: 50px;
+        height: 50px;
+        margin: 0 auto 20px;
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #667eea;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    /* Success result styles */
+    .success-result {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+    
+    .success-header {
+        background: linear-gradient(135deg, #00c853 0%, #43a047 100%);
+        color: white;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .success-icon {
+        font-size: 32px;
+    }
+    
+    .success-header h3 {
+        margin: 0;
+        font-size: 24px;
+    }
+    
+    .total-cost-card {
+        background: linear-gradient(135deg, #f0f4ff 0%, #e8efff 100%);
+        margin: 20px;
+        padding: 25px;
+        border-radius: 10px;
+        text-align: center;
+    }
+    
+    .total-label {
+        font-size: 14px;
+        color: #666;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+    }
+    
+    .total-amount {
+        font-size: 36px;
+        font-weight: bold;
+        color: #2c3e50;
+    }
+    
+    .components-breakdown {
+        padding: 20px;
+    }
+    
+    .components-breakdown h4 {
+        margin: 0 0 15px 0;
+        color: #2c3e50;
+        font-size: 16px;
+    }
+    
+    .component-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .component-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px;
+        background: #f8f9fa;
+        border-radius: 6px;
+        transition: background 0.2s;
+    }
+    
+    .component-item:hover {
+        background: #e9ecef;
+    }
+    
+    .component-name {
+        color: #495057;
+        font-weight: 500;
+    }
+    
+    .component-value {
+        color: #28a745;
+        font-weight: bold;
+    }
+    
+    .download-section {
+        padding: 0 20px 20px;
+        text-align: center;
+    }
+    
+    .download-btn {
+        display: inline-block;
+        padding: 12px 24px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: bold;
+        transition: transform 0.2s;
+    }
+    
+    .download-btn:hover {
+        transform: translateY(-2px);
+    }
+    
+    .result-footer {
+        background: #f8f9fa;
+        padding: 15px 20px;
+        border-top: 1px solid #dee2e6;
+    }
+    
+    .meta-info {
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+        color: #6c757d;
+    }
+    
+    .meta-info code {
+        background: #e9ecef;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-family: monospace;
+    }
+    
+    /* Error state styles */
+    .error-result {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+    
+    .error-header {
+        background: linear-gradient(135deg, #f44336 0%, #e91e63 100%);
+        color: white;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .error-icon {
+        font-size: 32px;
+    }
+    
+    .error-header h3 {
+        margin: 0;
+        font-size: 24px;
+    }
+    
+    .error-message-main {
+        padding: 20px;
+        font-size: 16px;
+        color: #721c24;
+        background: #f8d7da;
+        border-left: 4px solid #f44336;
+        margin: 20px;
+        border-radius: 4px;
+    }
+    
+    .error-section {
+        padding: 0 20px 20px;
+    }
+    
+    .error-section h4 {
+        color: #721c24;
+        margin: 15px 0;
+        font-size: 16px;
+    }
+    
+    .error-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .error-item {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        background: #fff5f5;
+        border-left: 3px solid #f44336;
+        border-radius: 4px;
+    }
+    
+    .error-field {
+        font-weight: bold;
+        color: #721c24;
+        margin-bottom: 4px;
+    }
+    
+    .error-message {
+        color: #666;
+        font-size: 14px;
+    }
+    
+    .missing-fields {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .missing-field {
+        padding: 8px 12px;
+        background: #fff5f5;
+        border-radius: 4px;
+        color: #721c24;
+    }
+    
+    .error-actions {
+        padding: 20px;
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+    }
+    
+    .retry-btn, .clear-errors-btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+    
+    .retry-btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+    
+    .clear-errors-btn {
+        background: #6c757d;
+        color: white;
+    }
+    
+    .retry-btn:hover, .clear-errors-btn:hover {
+        transform: translateY(-2px);
+    }
+    
+    /* Error state for connection */
+    .error-state {
+        text-align: center;
+        padding: 40px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .error-state .error-icon {
+        font-size: 48px;
+        margin-bottom: 15px;
     }
 `;
 document.head.appendChild(style);
