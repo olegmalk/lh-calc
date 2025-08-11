@@ -1,3 +1,6 @@
+// Enum values will be fetched dynamically from API
+let ENUM_VALUES = {};
+
 // Field configuration - single source of truth
 const FIELD_CONFIG = {
     technolog: {
@@ -6,7 +9,7 @@ const FIELD_CONFIG = {
             { id: 'tech_D27_sequenceNumber', label: 'D27 - Порядковый номер', type: 'number', default: 1001 },
             { id: 'tech_E27_customerOrderPosition', label: 'E27 - Позиция в ОЛ Заказчика', type: 'text', default: 'Е-113' },
             { id: 'tech_F27_deliveryType', label: 'F27 - Тип поставки', type: 'select', 
-              options: ['Целый ТА', 'ШОТ-БЛОК', 'РЕИНЖ'], default: 'Целый ТА' },
+              enumField: true, default: 'Целый ТА' },
             { id: 'tech_G27_sizeTypeK4', label: 'G27 - Типоразмер К4', type: 'text', default: 'К4-750' },
             { id: 'tech_H27_passes', label: 'H27 - Ходы', type: 'text', default: '1/6' },
             { id: 'tech_I27_plateQuantity', label: 'I27 - Количество пластин', type: 'number', default: 401 },
@@ -15,19 +18,17 @@ const FIELD_CONFIG = {
             { id: 'tech_L27_calcTempHotSide', label: 'L27 - Температура гор. сторона', type: 'number', default: 101 },
             { id: 'tech_M27_calcTempColdSide', label: 'M27 - Температура хол. сторона', type: 'number', default: 102 },
             { id: 'tech_P27_plateMaterial', label: 'P27 - Материал пластин', type: 'select',
-              options: ['AISI 316L', 'SMO 254', 'Hast-C276', 'Titanium', 'AISI 304', 'AISI316Ti', '904L'], 
-              default: 'AISI 316L' },
+              enumField: true, default: 'AISI 316L' },
             { id: 'tech_Q27_materialType', label: 'Q27 - Тип материала', type: 'text', default: 'AISI 316L' },
             { id: 'tech_R27_bodyMaterial', label: 'R27 - Материал корпуса', type: 'select',
-              options: ['ст3', 'ст20', '09Г2С', '12Х18Н10Т', 'AISI 304', 'AISI 316L', 'AISI 321', 'AISI 316Ti'],
-              default: '09Г2С' },
+              enumField: true, default: '09Г2С' },
             { id: 'tech_S27_plateSurfaceType', label: 'S27 - Тип поверхности пластин', type: 'select',
-              options: ['гофра', 'дв. лунка', 'од. лунка', 'шпилька', 'шпилька-лунка'], default: 'гофра' },
+              enumField: true, default: 'гофра' },
             { id: 'tech_T27_drawDepth', label: 'T27 - Глубина вытяжки, мм', type: 'number', default: 5 },
             { id: 'tech_U27_plateThickness', label: 'U27 - Толщина пластины, мм', type: 'select',
-              options: ['0.8', '1', '1.2', '1.5', '2', '3', '5'], default: '1' },
+              enumField: true, default: '1' },
             { id: 'tech_V27_claddingThickness', label: 'V27 - Толщина плакировки, мм', type: 'select',
-              options: ['0.8', '1', '1.2', '1.5', '2', '3', '5'], default: '3' }
+              enumField: true, default: '3' }
         ]
     },
     snabzhenie: {
@@ -37,8 +38,7 @@ const FIELD_CONFIG = {
             { id: 'sup_D8_flowPartMaterialPricePerKg', label: 'D8 - Цена материала проточной части', type: 'number', default: 701 },
             { id: 'sup_E8_flowPartMaterialPrice', label: 'E8 - Цена материала проточной части', type: 'number', default: 702 },
             { id: 'sup_D9_bodyMaterial', label: 'D9 - Материал корпуса', type: 'select',
-              options: ['ст3', 'ст20', '09Г2С', '12Х18Н10Т', 'AISI 304', 'AISI 316L', 'AISI 321', 'AISI 316Ti'],
-              default: '09Г2С' },
+              enumField: true, default: '09Г2С' },
             { id: 'sup_D10_columnCoverMaterialPrice', label: 'D10 - Цена материала колонн/крышек', type: 'number', default: 1010 },
             { id: 'sup_D11_panelMaterialPrice', label: 'D11 - Цена материала панелей', type: 'number', default: 1011 },
             { id: 'sup_K13_normHoursPerUnit', label: 'K13 - Количество нормочасов', type: 'number', default: 1 },
@@ -57,7 +57,8 @@ const FIELD_CONFIG = {
             { id: 'sup_F31_pipeBilletFlange2Price', label: 'F31 - Цена трубы под фланец №2', type: 'number', default: 1031 },
             { id: 'sup_F32_drainageNozzlePrice', label: 'F32 - Цена патрубка дренажа', type: 'number', default: 1032 },
             { id: 'sup_F33_ventilationNozzlePrice', label: 'F33 - Цена патрубка вентиляции', type: 'number', default: 1033 },
-            { id: 'sup_F39_spareKitsPressureReserve', label: 'F39 - Запасные комплекты резерв', type: 'number', default: 2 },
+            { id: 'sup_F39_spareKitsPressureReserve', label: 'F39 - Запасные комплекты резерв', type: 'select', 
+              enumField: true, default: '2' },
             { id: 'sup_D38_panelGasketsPrice', label: 'D38 - Цена прокладки панелей', type: 'number', default: 1038 },
             { id: 'sup_D43_studM24x2000Price', label: 'D43 - Цена шпильки М24х2000', type: 'number', default: 3301 },
             { id: 'sup_D44_studM24x1000Price', label: 'D44 - Цена шпильки М24х1000', type: 'number', default: 1751 },
@@ -70,8 +71,10 @@ const FIELD_CONFIG = {
             { id: 'sup_H55_spareFlangeFlange2Price', label: 'H55 - ЗИП крепеж фланец №2', type: 'number', default: 2055 },
             { id: 'sup_H56_spareFlangeFlange3Price', label: 'H56 - ЗИП крепеж фланец №3', type: 'number', default: 2056 },
             { id: 'sup_H57_spareFlangeFlange4Price', label: 'H57 - ЗИП крепеж фланец №4', type: 'number', default: 2057 },
-            { id: 'sup_I28_panelBFlange3Pressure', label: 'I28 - Панель Б фланец №3 давление', type: 'number', default: 2028 },
-            { id: 'sup_I29_panelBFlange4Pressure', label: 'I29 - Панель Б фланец №4 давление', type: 'number', default: 2029 },
+            { id: 'sup_I28_panelBFlange3Pressure', label: 'I28 - Панель Б фланец №3 давление', type: 'select', 
+              enumField: true, default: 'Р25' },
+            { id: 'sup_I29_panelBFlange4Pressure', label: 'I29 - Панель Б фланец №4 давление', type: 'select', 
+              enumField: true, default: 'Р63' },
             { id: 'sup_I38_eyeboltKitMaterialCost', label: 'I38 - Проушины металл', type: 'number', default: 2038 },
             { id: 'sup_I39_eyeboltKitProcessingCost', label: 'I39 - Проушины обработка', type: 'number', default: 2039 },
             { id: 'sup_I44_otherMaterialsDesc1', label: 'I44 - Другие материалы 1', type: 'number', default: 2044 },
@@ -84,8 +87,10 @@ const FIELD_CONFIG = {
             { id: 'sup_I55_flangeFastenersFlange2Quantity', label: 'I55 - Крепеж фланец №2 кол-во', type: 'number', default: 2055 },
             { id: 'sup_I56_flangeFastenersFlange3Quantity', label: 'I56 - Крепеж фланец №3 кол-во', type: 'number', default: 2056 },
             { id: 'sup_I57_flangeFastenersFlange4Quantity', label: 'I57 - Крепеж фланец №4 кол-во', type: 'number', default: 2057 },
-            { id: 'sup_J28_panelBFlange3Diameter', label: 'J28 - Панель Б фланец №3 диаметр', type: 'number', default: 3028 },
-            { id: 'sup_J29_panelBFlange4Diameter', label: 'J29 - Панель Б фланец №4 диаметр', type: 'number', default: 3029 },
+            { id: 'sup_J28_panelBFlange3Diameter', label: 'J28 - Панель Б фланец №3 диаметр', type: 'select', 
+              enumField: true, default: 'Ду450' },
+            { id: 'sup_J29_panelBFlange4Diameter', label: 'J29 - Панель Б фланец №4 диаметр', type: 'select', 
+              enumField: true, default: 'Ду300' },
             { id: 'sup_K19_columnRolledThickness', label: 'K19 - Толщина проката колонны', type: 'number', default: 3019 },
             { id: 'sup_K20_columnCuttingPrice', label: 'K20 - Цена раскроя колонны', type: 'number', default: 3020 },
             { id: 'sup_K21_columnProcessingCost', label: 'K21 - Обработка колонны', type: 'number', default: 3021 },
@@ -115,25 +120,40 @@ const FIELD_CONFIG = {
             { id: 'sup_N56_spareFlangeGasketsFlange3Quantity', label: 'N56 - ЗИП прокладки фланец №3', type: 'number', default: 6056 },
             { id: 'sup_N57_spareFlangeGasketsFlange4Quantity', label: 'N57 - ЗИП прокладки фланец №4', type: 'number', default: 6057 },
             { id: 'sup_P19_panelFastenersQuantity', label: 'P19 - Крепеж панелей кол-во', type: 'number', default: 7019 },
-            { id: 'sup_P20_panelFastenersMaterial', label: 'P20 - Крепеж панелей материал', type: 'number', default: 7020 },
-            { id: 'sup_P21_panelFastenersCoating', label: 'P21 - Крепеж панелей покрытие', type: 'number', default: 7021 },
-            { id: 'sup_P22_panelFastenersStudSize', label: 'P22 - Крепеж панелей размер', type: 'number', default: 7022 },
-            { id: 'sup_P29_cofFastenersFlange1Size', label: 'P29 - КОФ фланец №1 размер', type: 'number', default: 7029 },
-            { id: 'sup_P33_cofFastenersFlange2Size', label: 'P33 - КОФ фланец №2 размер', type: 'number', default: 7033 },
-            { id: 'sup_P37_cofFastenersFlange3Size', label: 'P37 - КОФ фланец №3 размер', type: 'number', default: 7037 },
-            { id: 'sup_P41_cofFastenersFlange4Size', label: 'P41 - КОФ фланец №4 размер', type: 'number', default: 7041 },
+            { id: 'sup_P20_panelFastenersMaterial', label: 'P20 - Крепеж панелей материал', type: 'select', 
+              enumField: true, default: '40Х' },
+            { id: 'sup_P21_panelFastenersCoating', label: 'P21 - Крепеж панелей покрытие', type: 'select', 
+              enumField: true, default: 'Zn-Cr 9мкм' },
+            { id: 'sup_P22_panelFastenersStudSize', label: 'P22 - Крепеж панелей размер', type: 'select', 
+              enumField: true, default: 'М33' },
+            { id: 'sup_P29_cofFastenersFlange1Size', label: 'P29 - КОФ фланец №1 размер', type: 'select', 
+              enumField: true, default: 'М18' },
+            { id: 'sup_P33_cofFastenersFlange2Size', label: 'P33 - КОФ фланец №2 размер', type: 'select', 
+              enumField: true, default: 'М18' },
+            { id: 'sup_P37_cofFastenersFlange3Size', label: 'P37 - КОФ фланец №3 размер', type: 'select', 
+              enumField: true, default: 'М18' },
+            { id: 'sup_P41_cofFastenersFlange4Size', label: 'P41 - КОФ фланец №4 размер', type: 'select', 
+              enumField: true, default: 'М18' },
             { id: 'sup_P45_unaccountedCost', label: 'P45 - Неучтенка', type: 'number', default: 7045 },
             { id: 'sup_Q22_panelFastenersStudCost', label: 'Q22 - Крепеж панелей шпилька цена', type: 'number', default: 8022 },
             { id: 'sup_Q23_panelFastenersNutCost', label: 'Q23 - Крепеж панелей гайка цена', type: 'number', default: 8023 },
             { id: 'sup_Q24_panelFastenersWasherCost', label: 'Q24 - Крепеж панелей шайба цена', type: 'number', default: 8024 },
-            { id: 'sup_Q29_cofFastenersFlange1Material', label: 'Q29 - КОФ фланец №1 материал', type: 'number', default: 8029 },
-            { id: 'sup_Q33_cofFastenersFlange2Material', label: 'Q33 - КОФ фланец №2 материал', type: 'number', default: 8033 },
-            { id: 'sup_Q37_cofFastenersFlange3Material', label: 'Q37 - КОФ фланец №3 материал', type: 'number', default: 8037 },
-            { id: 'sup_Q41_cofFastenersFlange4Material', label: 'Q41 - КОФ фланец №4 материал', type: 'number', default: 8041 },
-            { id: 'sup_R29_cofFastenersFlange1Coating', label: 'R29 - КОФ фланец №1 покрытие', type: 'number', default: 9029 },
-            { id: 'sup_R33_cofFastenersFlange2Coating', label: 'R33 - КОФ фланец №2 покрытие', type: 'number', default: 9033 },
-            { id: 'sup_R37_cofFastenersFlange3Coating', label: 'R37 - КОФ фланец №3 покрытие', type: 'number', default: 9037 },
-            { id: 'sup_R41_cofFastenersFlange4Coating', label: 'R41 - КОФ фланец №4 покрытие', type: 'number', default: 9041 },
+            { id: 'sup_Q29_cofFastenersFlange1Material', label: 'Q29 - КОФ фланец №1 материал', type: 'select', 
+              enumField: true, default: 'ст40Х' },
+            { id: 'sup_Q33_cofFastenersFlange2Material', label: 'Q33 - КОФ фланец №2 материал', type: 'select', 
+              enumField: true, default: 'ст40Х' },
+            { id: 'sup_Q37_cofFastenersFlange3Material', label: 'Q37 - КОФ фланец №3 материал', type: 'select', 
+              enumField: true, default: 'ст40Х' },
+            { id: 'sup_Q41_cofFastenersFlange4Material', label: 'Q41 - КОФ фланец №4 материал', type: 'select', 
+              enumField: true, default: 'ст40Х' },
+            { id: 'sup_R29_cofFastenersFlange1Coating', label: 'R29 - КОФ фланец №1 покрытие', type: 'select', 
+              enumField: true, default: 'Zn-Cr 9мкм' },
+            { id: 'sup_R33_cofFastenersFlange2Coating', label: 'R33 - КОФ фланец №2 покрытие', type: 'select', 
+              enumField: true, default: 'Zn-Cr 9мкм' },
+            { id: 'sup_R37_cofFastenersFlange3Coating', label: 'R37 - КОФ фланец №3 покрытие', type: 'select', 
+              enumField: true, default: 'Zn-Cr 9мкм' },
+            { id: 'sup_R41_cofFastenersFlange4Coating', label: 'R41 - КОФ фланец №4 покрытие', type: 'select', 
+              enumField: true, default: 'Zn-Cr 9мкм' },
             { id: 'sup_T29_cofFastenersFlange1KitPrice', label: 'T29 - КОФ фланец №1 комплект', type: 'number', default: 10029 },
             { id: 'sup_T30_cofGasketFlange1Price', label: 'T30 - КОФ прокладка фланец №1', type: 'number', default: 10030 },
             { id: 'sup_T31_cofObturatorFlange1Price', label: 'T31 - КОФ обтюратор фланец №1', type: 'number', default: 10031 },
@@ -147,15 +167,13 @@ const FIELD_CONFIG = {
             { id: 'sup_T42_cofGasketFlange4Price', label: 'T42 - КОФ прокладка фланец №4', type: 'number', default: 10042 },
             { id: 'sup_T43_cofObturatorFlange4Price', label: 'T43 - КОФ обтюратор фланец №4', type: 'number', default: 10043 },
             { id: 'sup_C28_panelAFlange1Pressure', label: 'C28 - Панель А фланец №1 давление', type: 'select',
-              options: ['Ру6', 'Ру10', 'Ру16', 'Ру25', 'Ру40', 'Ру63', 'Ру100', 'Ру160'], default: 'Ру10' },
+              enumField: true, default: 'Ру10' },
             { id: 'sup_C29_panelAFlange2Pressure', label: 'C29 - Панель А фланец №2 давление', type: 'select',
-              options: ['Ру6', 'Ру10', 'Ру16', 'Ру25', 'Ру40', 'Ру63', 'Ру100', 'Ру160'], default: 'Ру40' },
+              enumField: true, default: 'Ру40' },
             { id: 'sup_D28_panelAFlange1Diameter', label: 'D28 - Панель А фланец №1 диаметр', type: 'select',
-              options: ['Ду25','Ду32','Ду40','Ду50','Ду65','Ду80','Ду100','Ду125','Ду150','Ду200','Ду250','Ду300','Ду350','Ду400','Ду450','Ду500','Ду600','Ду800','Ду1000'],
-              default: 'Ду600' },
+              enumField: true, default: 'Ду600' },
             { id: 'sup_D29_panelAFlange2Diameter', label: 'D29 - Панель А фланец №2 диаметр', type: 'select',
-              options: ['Ду25','Ду32','Ду40','Ду50','Ду65','Ду80','Ду100','Ду125','Ду150','Ду200','Ду250','Ду300','Ду350','Ду400','Ду450','Ду500','Ду600','Ду800','Ду1000'],
-              default: 'Ду600' }
+              enumField: true, default: 'Ду600' }
         ]
     }
 };
@@ -177,11 +195,44 @@ const DASHBOARD_CARDS = [
 ];
 
 // Initialize the application
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     renderDashboard();
+    await fetchEnumValues();  // Fetch enum values from API
     renderForm();
     startMetricsUpdate();
 });
+
+// Fetch enum values from API
+async function fetchEnumValues() {
+    try {
+        const response = await fetch('/api/fields/enum');
+        if (response.ok) {
+            const data = await response.json();
+            if (data.success && data.fields) {
+                ENUM_VALUES = data.fields;
+                console.log(`Loaded ${data.count} enum fields from API`);
+                
+                // Update field configurations with fetched enum values
+                updateFieldsWithEnumValues();
+            }
+        } else {
+            console.warn('Failed to fetch enum values, using defaults');
+        }
+    } catch (error) {
+        console.error('Error fetching enum values:', error);
+    }
+}
+
+// Update field configurations with fetched enum values
+function updateFieldsWithEnumValues() {
+    Object.values(FIELD_CONFIG).forEach(section => {
+        section.fields.forEach(field => {
+            if (field.enumField && ENUM_VALUES[field.id]) {
+                field.options = ENUM_VALUES[field.id];
+            }
+        });
+    });
+}
 
 function renderDashboard() {
     const container = document.getElementById('dashboardCards');
@@ -207,13 +258,18 @@ function renderForm() {
 
 function renderField(field) {
     if (field.type === 'select') {
+        // Use options if available (either from enum or hardcoded fallback)
+        const options = field.options || [];
         return `
             <div class="form-group">
                 <label title="${field.id}">${field.label}</label>
                 <select id="${field.id}">
-                    ${field.options.map(opt => 
-                        `<option value="${opt}" ${opt === field.default ? 'selected' : ''}>${opt}</option>`
-                    ).join('')}
+                    ${options.length > 0 ? 
+                        options.map(opt => 
+                            `<option value="${opt}" ${opt === field.default ? 'selected' : ''}>${opt}</option>`
+                        ).join('') :
+                        `<option value="${field.default || ''}">${field.default || 'No options available'}</option>`
+                    }
                 </select>
             </div>
         `;
