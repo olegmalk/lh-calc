@@ -1,8 +1,25 @@
 openapi: 3.0.3
 info:
   title: LH Calculator Excel API
-  version: 2.0.0
-  description: Excel-based calculation service with 141 fields for engineering and supply chain calculations
+  version: 2.1.0
+  description: |
+    Excel-based calculation service with 141 fields for engineering and supply chain calculations.
+    
+    ## Field Type Validation
+    The API automatically detects and validates field types:
+    - **Currency**: Price fields (e.g., sup_D8_flowPartMaterialPricePerKg) - min: 0, max 2 decimal places
+    - **Number**: Quantity/measurement fields - must be valid numbers, min: 0
+    - **Percentage**: Coefficient fields (e.g., sup_D17_panelCuttingCoefficient) - range: 0-100
+    - **Text**: String fields with max length validation
+    - **Textarea**: Long text fields for descriptions
+    - **Enum**: Dropdown fields with values from Excel template (31 fields total)
+    
+    ## Validation Rules
+    - Non-numeric values in number fields are rejected (e.g., "abc", "1,000", "$100")
+    - Negative values rejected for fields with min: 0
+    - Currency fields allow maximum 2 decimal places
+    - Enum fields must match exact values from Excel template
+    - Empty/null values are allowed for optional fields
 
 servers:
   - url: http://localhost:3000
@@ -144,9 +161,113 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: string
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  fields:
+                    type: array
+                    items:
+                      type: string
+                  count:
+                    type: integer
+
+  /api/fields/enum:
+    get:
+      summary: Get enum fields with allowed values
+      description: Returns all fields that have enum validation with their allowed values from Excel template
+      tags:
+        - Metadata
+      responses:
+        '200':
+          description: Enum fields with their allowed values
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  count:
+                    type: integer
+                    description: Number of enum fields
+                  fields:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+                    example:
+                      tech_P27_plateMaterial: ["AISI 316L", "SMO 254", "Hast-C276", "Titanium"]
+                      tech_R27_bodyMaterial: ["ст3", "ст20", "09Г2С", "12Х18Н10Т"]
+                  message:
+                    type: string
+
+  /api/fields/metadata:
+    get:
+      summary: Get field metadata with types and validation rules
+      description: Returns comprehensive metadata for all fields including detected types, validation rules, and enum values
+      tags:
+        - Metadata
+      responses:
+        '200':
+          description: Field metadata with type information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  count:
+                    type: integer
+                    description: Total number of fields
+                  fields:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: Field identifier
+                        type:
+                          type: string
+                          enum: [text, number, enum, date, email, url, percentage, currency, textarea, boolean]
+                          description: Detected field type
+                        confidence:
+                          type: number
+                          format: float
+                          minimum: 0
+                          maximum: 1
+                          description: Confidence score for type detection
+                        validation:
+                          type: object
+                          properties:
+                            min:
+                              type: number
+                              description: Minimum value for numeric types
+                            max:
+                              type: number
+                              description: Maximum value for numeric types
+                            pattern:
+                              type: string
+                              description: Regex pattern for validation
+                            maxLength:
+                              type: integer
+                              description: Maximum length for text fields
+                            required:
+                              type: boolean
+                              description: Whether field is required
+                            decimalPlaces:
+                              type: integer
+                              description: Maximum decimal places for currency
+                        enumValues:
+                          type: array
+                          items:
+                            type: string
+                          description: Allowed values for enum type fields
+                  message:
+                    type: string
 
   /api/openapi.yaml:
     get:
@@ -275,12 +396,13 @@ components:
           enum: ['ст3', 'ст20', '09Г2С', '12Х18Н10Т', 'AISI 304', 'AISI 316L', 'AISI 321', 'AISI 316Ti']
           description: Price material specification
 
-        # Supply fields - Required prices
+        # Supply fields - Required prices (Currency type - max 2 decimal places)
         sup_D8_flowPartMaterialPricePerKg:
           type: number
+          format: float
           minimum: 0
           maximum: 1000000
-          description: Material price per unit
+          description: Price per kg - Currency field with max 2 decimal places
         sup_E8_flowPartMaterialPrice:
           type: number
           minimum: 0

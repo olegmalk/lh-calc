@@ -160,10 +160,10 @@ export class ExcelValidationExtractor {
         } else if (namedRanges.has(formula1)) {
           // Named range reference
           const rangeRef = namedRanges.get(formula1)!;
-          values = await this.extractRangeValues(zip, rangeRef);
-        } else if (formula1.includes('!')) {
-          // Direct range reference like $AU$47:$AU$54
-          values = await this.extractRangeValues(zip, formula1);
+          values = await this.extractRangeValues(zip, rangeRef, sheetName);
+        } else if (formula1.includes('!') || formula1.includes(':')) {
+          // Direct range reference like "снабжение!$AU$47:$AU$54" or just "$AU$47:$AU$54"
+          values = await this.extractRangeValues(zip, formula1, sheetName);
         }
 
         // Map cells to field names and store rules
@@ -220,14 +220,34 @@ export class ExcelValidationExtractor {
   /**
    * Extract values from a range reference
    */
-  private async extractRangeValues(zip: AdmZip, rangeRef: string): Promise<string[]> {
+  private async extractRangeValues(zip: AdmZip, rangeRef: string, currentSheetName?: string): Promise<string[]> {
     const values: string[] = [];
     
-    // Parse range reference like "снабжение!$AU$47:$AU$54"
-    const match = rangeRef.match(/(.+)!\$?([A-Z]+)\$?(\d+):\$?([A-Z]+)\$?(\d+)/);
-    if (!match) return values;
+    // Parse range reference like "снабжение!$AU$47:$AU$54" or just "$AU$47:$AU$54"
+    let match = rangeRef.match(/(.+)!\$?([A-Z]+)\$?(\d+):\$?([A-Z]+)\$?(\d+)/);
+    let sheetName: string;
+    let startCol: string;
+    let startRowStr: string;
+    let endRowStr: string;
     
-    const [_, sheetName, startCol, startRowStr, _endCol, endRowStr] = match;
+    if (match) {
+      // Has sheet name
+      const [, sheetNameMatch, startColMatch, startRowStrMatch, , endRowStrMatch] = match;
+      sheetName = sheetNameMatch;
+      startCol = startColMatch;
+      startRowStr = startRowStrMatch;
+      endRowStr = endRowStrMatch;
+    } else {
+      // No sheet name, try without it (use current sheet)
+      match = rangeRef.match(/\$?([A-Z]+)\$?(\d+):\$?([A-Z]+)\$?(\d+)/);
+      if (!match) return values;
+      const [, startColMatch, startRowStrMatch, , endRowStrMatch] = match;
+      startCol = startColMatch;
+      startRowStr = startRowStrMatch;
+      endRowStr = endRowStrMatch;
+      sheetName = currentSheetName || 'снабжение'; // Default to снабжение for D9
+    }
+    
     const startRow = parseInt(startRowStr) - 1;
     const endRow = parseInt(endRowStr) - 1;
     const col = this.columnToNumber(startCol) - 1;

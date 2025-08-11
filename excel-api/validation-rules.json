@@ -1,5 +1,5 @@
 {
-  "extractedAt": "2025-08-11T08:47:52.494Z",
+  "extractedAt": "2025-08-11T11:24:01.830Z",
   "templatePath": "/home/vmuser/dev/lh_calc/calc.xlsx",
   "tech_P27_plateMaterial": [
     "AISI 316L",
@@ -296,5 +296,15 @@
     "2",
     "3",
     "4"
+  ],
+  "sup_D9_bodyMaterial": [
+    "ст3",
+    "ст20",
+    "09Г2С",
+    "12Х18Н10Т",
+    "AISI 304",
+    "AISI 316L",
+    "AISI 321",
+    "AISI 316Ti"
   ]
 }

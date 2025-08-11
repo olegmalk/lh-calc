@@ -178,12 +178,12 @@
         
         <div class="demo-section">
             <h2>🚀 Расчет стоимости теплообменника</h2>
-            <div id="formSections"></div>
+            <div id="fieldsContainer"></div>
             
             <div class="button-group">
-                <button class="btn-primary" onclick="calculateCost()">🧮 Рассчитать стоимость</button>
-                <button class="btn-secondary" onclick="fillRealisticValues()">📝 Загрузить примерные значения</button>
-                <button class="btn-secondary" onclick="clearForm()">🗑️ Очистить форму</button>
+                <button class="btn-primary" id="calculateBtn">🧮 Рассчитать стоимость</button>
+                <button class="btn-secondary" id="loadDefaultsBtn">📝 Загрузить значения по умолчанию</button>
+                <button class="btn-secondary" id="clearFormBtn">🗑️ Очистить форму</button>
             </div>
             
             <div class="loading" id="loading">
@@ -194,7 +194,7 @@
             </div>
             
             <div class="error-message" id="errorMessage"></div>
-            <div id="responseArea" class="response-area">Нажмите "Рассчитать стоимость" для просмотра результатов...</div>
+            <div id="results"></div>
             
             <div class="download-section" id="downloadSection">
                 <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
@@ -215,6 +215,6 @@
         </div>
     </div>
     
-    <script src="app.js"></script>
+    <script src="app-sectioned.js"></script>
 </body>
 </html>
