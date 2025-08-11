@@ -2,6 +2,26 @@
 let ENUM_VALUES = {};
 let FIELD_METADATA = {};
 
+// Hardcoded values for fields that don't have validation in Excel
+const HARDCODED_ENUMS = {
+    'tech_G27_sizeTypeK4': [
+        'К4-750',
+        'К4-1000',
+        'К4-1250',
+        'К4-1500',
+        'К4-1750',
+        'К4-2000'
+    ],
+    'tech_H27_passes': [
+        '1/6',
+        '2/5',
+        '3/4',
+        '4/3',
+        '5/2',
+        '6/1'
+    ]
+};
+
 // Field sections based on Fields2.xlsx structure
 const FIELD_SECTIONS = {
     technolog: {
@@ -322,8 +342,8 @@ function renderField(field) {
     
     let input;
     
-    // Check if field has enum values
-    const hasEnumValues = field.enumField && ENUM_VALUES[field.id];
+    // Check if field has enum values (from API or hardcoded)
+    const hasEnumValues = field.enumField && (ENUM_VALUES[field.id] || HARDCODED_ENUMS[field.id]);
     
     if (field.type === 'select' || hasEnumValues) {
         input = document.createElement('select');
@@ -336,9 +356,10 @@ function renderField(field) {
         emptyOption.textContent = '-- Выберите --';
         input.appendChild(emptyOption);
         
-        // Add enum values if available
-        if (ENUM_VALUES[field.id]) {
-            ENUM_VALUES[field.id].forEach(value => {
+        // Add enum values if available (from API or hardcoded)
+        const enumValues = ENUM_VALUES[field.id] || HARDCODED_ENUMS[field.id];
+        if (enumValues) {
+            enumValues.forEach(value => {
                 const option = document.createElement('option');
                 option.value = value;
                 option.textContent = value;
@@ -346,8 +367,8 @@ function renderField(field) {
             });
             
             // Select first enum value if available
-            if (ENUM_VALUES[field.id].length > 0) {
-                input.value = ENUM_VALUES[field.id][0];
+            if (enumValues.length > 0) {
+                input.value = enumValues[0];
             }
         }
         
