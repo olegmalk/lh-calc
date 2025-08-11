@@ -187,13 +187,13 @@ const FIELD_SECTIONS = {
     panel_fasteners: {
         title: '⚙️ Крепеж панелей и КОФ',
         fields: [
-            { id: 'sup_P19_panelFastenersQuantity', label: 'P19 - Крепеж панелей кол-во', type: 'number', default: 70 },
+            { id: 'sup_P19_panelFastenersQuantity', label: 'P19 - Крепеж панелей кол-во', type: 'number', default: 10 },
             { id: 'sup_P20_panelFastenersMaterial', label: 'P20 - Крепеж панелей материал', type: 'select', enumField: true, default: '09Г2С' },
             { id: 'sup_P21_panelFastenersCoating', label: 'P21 - Крепеж панелей покрытие', type: 'select', enumField: true, default: '' },
             { id: 'sup_P22_panelFastenersStudSize', label: 'P22 - Крепеж панелей размер шпильки', type: 'select', enumField: true, default: '' },
-            { id: 'sup_Q22_panelFastenersStudCost', label: 'Q22 - Крепеж панелей цена шпильки', type: 'currency', default: 80 },
-            { id: 'sup_Q23_panelFastenersNutCost', label: 'Q23 - Крепеж панелей цена гайки', type: 'currency', default: 80 },
-            { id: 'sup_Q24_panelFastenersWasherCost', label: 'Q24 - Крепеж панелей цена шайбы', type: 'currency', default: 80 },
+            { id: 'sup_Q22_panelFastenersStudCost', label: 'Q22 - Крепеж панелей цена шпильки', type: 'currency', default: 10 },
+            { id: 'sup_Q23_panelFastenersNutCost', label: 'Q23 - Крепеж панелей цена гайки', type: 'currency', default: 5 },
+            { id: 'sup_Q24_panelFastenersWasherCost', label: 'Q24 - Крепеж панелей цена шайбы', type: 'currency', default: 2 },
             // КОФ fields
             { id: 'sup_Q29_cofFastenersFlange1Material', label: 'Q29 - КОФ материал крепежа фланец №1', type: 'select', enumField: true, default: '' },
             { id: 'sup_Q33_cofFastenersFlange2Material', label: 'Q33 - КОФ материал крепежа фланец №2', type: 'select', enumField: true, default: '' },
