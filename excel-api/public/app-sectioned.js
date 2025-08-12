@@ -567,6 +567,8 @@ async function calculateCost() {
         if (response.ok) {
             displayResults(result);
             saveValues(); // Save successful values
+            // Refresh file list after a short delay to ensure file is saved
+            setTimeout(() => loadGeneratedFiles(), 500);
         } else {
             displayError(result);
         }
