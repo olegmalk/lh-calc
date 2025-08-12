@@ -138,6 +138,11 @@ export class LibreOfficeProcessor {
       for (const [fieldName, cellAddress] of Object.entries(FIELD_MAPPING)) {
         const value = (inputData as any)[fieldName];
         
+        // Special logging for J27 and K27
+        if (fieldName === 'tech_J27_calcPressureHotSide' || fieldName === 'tech_K27_calcPressureColdSide') {
+          console.log(`[LibreOffice] DEBUG ${fieldName}: value="${value}", type="${typeof value}", undefined=${value === undefined}, null=${value === null}`);
+        }
+        
         if (value === undefined || value === null) {
           continue;
         }
@@ -152,6 +157,12 @@ export class LibreOfficeProcessor {
           }
 
           const cell = worksheet.getCell(cellRef);
+          
+          // Special logging for J27 and K27
+          if (cellRef === 'J27' || cellRef === 'K27') {
+            console.log(`[LibreOffice] Writing ${cellRef}: old="${cell.value}", new="${value}"`);
+          }
+          
           cell.value = value;
         } catch (error: any) {
           warnings.push(`Failed to set ${fieldName}: ${error.message}`);

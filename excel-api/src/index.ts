@@ -617,6 +617,12 @@ app.post('/api/calculate', async (req: Request, res: Response): Promise<Response
   return circuitBreaker.execute(async () => {
     try {
       console.log(`[${requestId}] Processing calculation request with enhanced error handling`);
+      
+      // Debug J27 and K27 values
+      if (req.body.tech_J27_calcPressureHotSide !== undefined || req.body.tech_K27_calcPressureColdSide !== undefined) {
+        console.log(`[${requestId}] DEBUG J27: value="${req.body.tech_J27_calcPressureHotSide}", type="${typeof req.body.tech_J27_calcPressureHotSide}"`);
+        console.log(`[${requestId}] DEBUG K27: value="${req.body.tech_K27_calcPressureColdSide}", type="${typeof req.body.tech_K27_calcPressureColdSide}"`);
+      }
 
       // Basic validation
       const validationResult = await validator.validate(req.body);
