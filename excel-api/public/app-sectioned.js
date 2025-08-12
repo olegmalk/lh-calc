@@ -544,8 +544,17 @@ async function calculateCost() {
             if (input) {
                 const value = input.value.trim();
                 if (value !== '') {
-                    // Send raw value to server for validation
-                    requestData[field.id] = value;
+                    // Convert to appropriate type based on field definition
+                    if (field.type === 'number' || field.type === 'currency' || field.type === 'percentage') {
+                        // Convert to number for numeric fields
+                        const numValue = parseFloat(value);
+                        if (!isNaN(numValue)) {
+                            requestData[field.id] = numValue;
+                        }
+                    } else {
+                        // Keep as string for text fields
+                        requestData[field.id] = value;
+                    }
                 }
             }
         });
