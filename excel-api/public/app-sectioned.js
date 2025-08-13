@@ -180,12 +180,11 @@ const FIELD_SECTIONS = {
             { id: 'sup_I46_otherMaterialsDesc3', label: 'I46 - Другие материалы 3', type: 'textarea', default: '' },
             { id: 'sup_M44_otherMaterialsCost1', label: 'M44 - Стоимость материалов 1', type: 'currency', default: 50 },
             { id: 'sup_M45_otherMaterialsCost2', label: 'M45 - Стоимость материалов 2', type: 'currency', default: 50 },
-            { id: 'sup_M46_otherMaterialsCost3', label: 'M46 - Стоимость материалов 3', type: 'currency', default: 50 },
-            { id: 'sup_P45_unaccountedCost', label: 'P45 - Неучтенка стоимость', type: 'currency', default: 70 }
+            { id: 'sup_M46_otherMaterialsCost3', label: 'M46 - Стоимость материалов 3', type: 'currency', default: 50 }
         ]
     },
     panel_fasteners: {
-        title: '⚙️ Крепеж панелей и КОФ',
+        title: '⚙️ Крепеж панелей',
         fields: [
             { id: 'sup_P19_panelFastenersQuantity', label: 'P19 - Крепеж панелей кол-во', type: 'number', default: 10 },
             { id: 'sup_P20_panelFastenersMaterial', label: 'P20 - Крепеж панелей материал', type: 'select', enumField: true, default: '09Г2С' },
@@ -194,7 +193,16 @@ const FIELD_SECTIONS = {
             { id: 'sup_Q22_panelFastenersStudCost', label: 'Q22 - Крепеж панелей цена шпильки', type: 'currency', default: 10 },
             { id: 'sup_Q23_panelFastenersNutCost', label: 'Q23 - Крепеж панелей цена гайки', type: 'currency', default: 5 },
             { id: 'sup_Q24_panelFastenersWasherCost', label: 'Q24 - Крепеж панелей цена шайбы', type: 'currency', default: 2 },
-            // КОФ fields
+            { id: 'sup_P45_unaccountedCost', label: 'P45 - Неучтенка стоимость', type: 'currency', default: 70 }
+        ]
+    },
+    cof_fasteners: {
+        title: '🔗 КОФ (Комплект Ответных Фланцев)',
+        fields: [
+            { id: 'sup_P29_cofFastenersFlange1Size', label: 'P29 - КОФ размер крепежа фланец №1', type: 'select', enumField: true, default: '' },
+            { id: 'sup_P33_cofFastenersFlange2Size', label: 'P33 - КОФ размер крепежа фланец №2', type: 'select', enumField: true, default: '' },
+            { id: 'sup_P37_cofFastenersFlange3Size', label: 'P37 - КОФ размер крепежа фланец №3', type: 'select', enumField: true, default: '' },
+            { id: 'sup_P41_cofFastenersFlange4Size', label: 'P41 - КОФ размер крепежа фланец №4', type: 'select', enumField: true, default: '' },
             { id: 'sup_Q29_cofFastenersFlange1Material', label: 'Q29 - КОФ материал крепежа фланец №1', type: 'select', enumField: true, default: '' },
             { id: 'sup_Q33_cofFastenersFlange2Material', label: 'Q33 - КОФ материал крепежа фланец №2', type: 'select', enumField: true, default: '' },
             { id: 'sup_Q37_cofFastenersFlange3Material', label: 'Q37 - КОФ материал крепежа фланец №3', type: 'select', enumField: true, default: '' },
@@ -203,10 +211,6 @@ const FIELD_SECTIONS = {
             { id: 'sup_R33_cofFastenersFlange2Coating', label: 'R33 - КОФ покрытие крепежа фланец №2', type: 'select', enumField: true, default: '' },
             { id: 'sup_R37_cofFastenersFlange3Coating', label: 'R37 - КОФ покрытие крепежа фланец №3', type: 'select', enumField: true, default: '' },
             { id: 'sup_R41_cofFastenersFlange4Coating', label: 'R41 - КОФ покрытие крепежа фланец №4', type: 'select', enumField: true, default: '' },
-            { id: 'sup_P29_cofFastenersFlange1Size', label: 'P29 - КОФ размер крепежа фланец №1', type: 'select', enumField: true, default: '' },
-            { id: 'sup_P33_cofFastenersFlange2Size', label: 'P33 - КОФ размер крепежа фланец №2', type: 'select', enumField: true, default: '' },
-            { id: 'sup_P37_cofFastenersFlange3Size', label: 'P37 - КОФ размер крепежа фланец №3', type: 'select', enumField: true, default: '' },
-            { id: 'sup_P41_cofFastenersFlange4Size', label: 'P41 - КОФ размер крепежа фланец №4', type: 'select', enumField: true, default: '' },
             { id: 'sup_T29_cofFastenersFlange1KitPrice', label: 'T29 - КОФ цена комплекта фланец №1', type: 'currency', default: 29 },
             { id: 'sup_T30_cofGasketFlange1Price', label: 'T30 - КОФ прокладка фланец №1', type: 'currency', default: 30 },
             { id: 'sup_T31_cofObturatorFlange1Price', label: 'T31 - КОФ обтюратор фланец №1', type: 'currency', default: 31 },
