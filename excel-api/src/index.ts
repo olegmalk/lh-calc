@@ -28,6 +28,7 @@ import {
 import { Bitrix24Integration } from './integrations/bitrix24';
 import { BitrixAuthMiddleware } from './middleware/bitrix-auth';
 import adminRouter from './routes/admin';
+import uploadPrefillRouter from './routes/upload-prefill';
 import { ExcelValidationExtractor } from './services/excel-validation-extractor';
 
 // Load environment variables
@@ -398,6 +399,9 @@ app.get('/api/metrics', (_req: Request, res: Response) => {
     });
   }
 });
+
+// Upload prefill routes
+app.use('/api/upload-prefill', uploadPrefillRouter);
 
 // Admin endpoints (for monitoring and management)
 // Template management routes

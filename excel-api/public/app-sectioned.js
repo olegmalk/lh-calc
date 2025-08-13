@@ -464,6 +464,26 @@ function toggleSection(sectionKey) {
 
 // Add section navigation
 function addSectionNavigation() {
+    // Create upload section first (prominent at top)
+    const uploadSection = document.createElement('div');
+    uploadSection.className = 'upload-section';
+    uploadSection.innerHTML = `
+        <div class="upload-container">
+            <h2>📤 Быстрое заполнение формы</h2>
+            <p>Загрузите Excel файл с предыдущими расчетами для автоматического заполнения всех полей</p>
+            <div class="upload-controls">
+                <button id="uploadExcelBtn" class="upload-excel-btn" onclick="showUploadDialog()">
+                    <span class="upload-icon">📁</span>
+                    <span>Выбрать Excel файл для загрузки</span>
+                </button>
+                <input type="file" id="excelFileInput" accept=".xlsx" style="display:none" onchange="handleFileSelect(event)">
+                <a href="/api/upload-prefill/sample" class="sample-link">💡 Скачать пример шаблона</a>
+            </div>
+            <div id="uploadStatus" class="upload-status" style="display:none"></div>
+        </div>
+    `;
+    
+    // Then add regular navigation
     const nav = document.createElement('div');
     nav.className = 'section-navigation';
     nav.innerHTML = `
@@ -472,6 +492,7 @@ function addSectionNavigation() {
     `;
     
     const container = document.getElementById('fieldsContainer');
+    container.parentNode.insertBefore(uploadSection, container);
     container.parentNode.insertBefore(nav, container);
 }
 
@@ -878,26 +899,659 @@ function formatFileSize(bytes) {
     return (bytes / 1048576).toFixed(1) + ' MB';
 }
 
+// Upload functionality
+function showUploadDialog() {
+    document.getElementById('excelFileInput').click();
+}
+
+async function handleFileSelect(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    // Validate file type
+    if (!file.name.toLowerCase().endsWith('.xlsx')) {
+        showErrorModal('Неверный формат файла', 'Пожалуйста, выберите файл Excel (.xlsx)');
+        event.target.value = '';
+        return;
+    }
+    
+    // Validate file size
+    if (file.size > 10 * 1024 * 1024) {
+        showErrorModal('Файл слишком большой', 'Максимальный размер файла: 10 МБ');
+        event.target.value = '';
+        return;
+    }
+    
+    // Show upload status
+    const statusDiv = document.getElementById('uploadStatus');
+    statusDiv.style.display = 'block';
+    statusDiv.innerHTML = `
+        <div class="upload-progress">
+            <div class="spinner"></div>
+            <span>Загрузка и обработка файла: ${file.name}...</span>
+        </div>
+    `;
+    
+    // Upload file
+    const formData = new FormData();
+    formData.append('excel', file);
+    
+    try {
+        const response = await fetch('/api/upload-prefill', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const result = await response.json();
+        
+        if (response.ok && result.success) {
+            // Populate fields
+            const populationResult = populateFields(result.extracted_fields);
+            
+            // Show success modal
+            showSuccessModal(populationResult, result);
+            
+            // Clear file input
+            event.target.value = '';
+            
+            // Hide status
+            statusDiv.style.display = 'none';
+        } else {
+            showErrorModal('Ошибка загрузки', result.error || 'Не удалось обработать файл');
+            statusDiv.style.display = 'none';
+        }
+    } catch (error) {
+        console.error('Upload error:', error);
+        showErrorModal('Ошибка соединения', 'Не удалось загрузить файл. Попробуйте еще раз.');
+        statusDiv.style.display = 'none';
+    }
+}
+
+function populateFields(extractedFields) {
+    let populatedCount = 0;
+    let skippedCount = 0;
+    const skippedDetails = [];
+    
+    for (const [fieldId, value] of Object.entries(extractedFields)) {
+        const element = document.getElementById(fieldId);
+        if (element) {
+            // Set value based on element type
+            if (element.tagName === 'SELECT') {
+                let processedValue = String(value);
+                
+                // Special handling for pressure fields (add Ру prefix if missing)
+                if (fieldId.includes('Pressure') && !processedValue.startsWith('Ру')) {
+                    processedValue = 'Ру' + processedValue;
+                }
+                
+                // Special handling for diameter fields (add Ду prefix if missing)
+                if (fieldId.includes('Diameter') && !processedValue.startsWith('Ду')) {
+                    processedValue = 'Ду' + processedValue;
+                }
+                
+                // Check if processed value exists first
+                let optionExists = Array.from(element.options).some(opt => opt.value === processedValue);
+                
+                if (optionExists) {
+                    element.value = processedValue;
+                    populatedCount++;
+                } else {
+                    // Try original value if processed doesn't work
+                    optionExists = Array.from(element.options).some(opt => opt.value === String(value));
+                    if (optionExists) {
+                        element.value = value;
+                        populatedCount++;
+                    } else {
+                        // Get available options for better error message
+                        const availableOptions = Array.from(element.options)
+                            .filter(opt => opt.value)
+                            .map(opt => opt.value)
+                            .slice(0, 5) // Show first 5 options
+                            .join(', ');
+                        
+                        skippedDetails.push({
+                            field: fieldId,
+                            value: value,
+                            reason: `Значение не найдено в списке. Доступные опции: ${availableOptions}...`
+                        });
+                        skippedCount++;
+                    }
+                }
+            } else {
+                element.value = value;
+                populatedCount++;
+            }
+            
+            // Remove any error styling
+            element.classList.remove('error');
+        } else {
+            // Try to find field label for better error message
+            let fieldLabel = fieldId;
+            Object.values(FIELD_SECTIONS).forEach(section => {
+                const fieldDef = section.fields.find(f => f.id === fieldId);
+                if (fieldDef) {
+                    fieldLabel = fieldDef.label;
+                }
+            });
+            
+            skippedDetails.push({
+                field: fieldId,
+                value: value,
+                reason: 'Поле не найдено в текущей версии формы'
+            });
+            skippedCount++;
+        }
+    }
+    
+    // Save values to localStorage
+    saveValues();
+    
+    return {
+        populatedCount,
+        skippedCount,
+        totalFields: Object.keys(extractedFields).length,
+        skippedDetails
+    };
+}
+
+function showSuccessModal(populationResult, uploadResult) {
+    // Create modal overlay
+    const modalOverlay = document.createElement('div');
+    modalOverlay.className = 'modal-overlay';
+    modalOverlay.id = 'uploadSuccessModal';
+    
+    const modalContent = document.createElement('div');
+    modalContent.className = 'modal-content upload-success-modal';
+    
+    modalContent.innerHTML = `
+        <div class="modal-header success">
+            <h2>✅ Excel файл успешно загружен!</h2>
+        </div>
+        <div class="modal-body">
+            <div class="upload-stats">
+                <div class="stat-item success">
+                    <span class="stat-value">${populationResult.populatedCount}</span>
+                    <span class="stat-label">полей заполнено</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">${populationResult.totalFields}</span>
+                    <span class="stat-label">всего полей в файле</span>
+                </div>
+                ${populationResult.skippedCount > 0 ? `
+                    <div class="stat-item warning">
+                        <span class="stat-value">${populationResult.skippedCount}</span>
+                        <span class="stat-label">полей пропущено</span>
+                    </div>
+                ` : ''}
+            </div>
+            
+            ${populationResult.skippedDetails && populationResult.skippedDetails.length > 0 ? `
+                <div class="upload-warnings">
+                    <h4>⚠️ Пропущенные поля (${populationResult.skippedDetails.length}):</h4>
+                    <div class="skipped-fields-list">
+                        ${populationResult.skippedDetails.map(item => {
+                            // Try to find a better label for the field
+                            let fieldLabel = item.field;
+                            let fieldLocation = '';
+                            
+                            // Extract cell location from field ID if possible
+                            const match = item.field.match(/([A-Z]\d+)/);
+                            if (match) {
+                                fieldLocation = ` (ячейка ${match[1]})`;
+                            }
+                            
+                            return `
+                            <div class="skipped-field-item">
+                                <div class="skip-field-header">
+                                    <strong>${item.field}</strong>${fieldLocation}
+                                </div>
+                                <div class="skip-field-details">
+                                    <span class="skip-value">📝 Значение из Excel: <code>${item.value}</code></span>
+                                    <span class="skip-reason">❌ Причина: ${item.reason}</span>
+                                </div>
+                            </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+            ` : ''}
+            
+            ${uploadResult.warnings && uploadResult.warnings.length > 0 ? `
+                <div class="upload-warnings">
+                    <h4>⚠️ Системные предупреждения:</h4>
+                    <ul>
+                        ${uploadResult.warnings.map(w => `<li>${w}</li>`).join('')}
+                    </ul>
+                </div>
+            ` : ''}
+            
+            <p class="modal-message">
+                Форма успешно заполнена данными из Excel файла.
+                Нажмите "Перейти к расчету" для прокрутки к кнопке расчета.
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button onclick="closeModalAndScroll()" class="modal-btn primary">
+                Перейти к расчету
+            </button>
+            <button onclick="closeModal('uploadSuccessModal')" class="modal-btn secondary">
+                Остаться на месте
+            </button>
+        </div>
+    `;
+    
+    modalOverlay.appendChild(modalContent);
+    document.body.appendChild(modalOverlay);
+}
+
+function showErrorModal(title, message) {
+    const modalOverlay = document.createElement('div');
+    modalOverlay.className = 'modal-overlay';
+    modalOverlay.id = 'uploadErrorModal';
+    
+    const modalContent = document.createElement('div');
+    modalContent.className = 'modal-content upload-error-modal';
+    
+    modalContent.innerHTML = `
+        <div class="modal-header error">
+            <h2>❌ ${title}</h2>
+        </div>
+        <div class="modal-body">
+            <p>${message}</p>
+        </div>
+        <div class="modal-footer">
+            <button onclick="closeModal('uploadErrorModal')" class="modal-btn primary">
+                Закрыть
+            </button>
+        </div>
+    `;
+    
+    modalOverlay.appendChild(modalContent);
+    document.body.appendChild(modalOverlay);
+}
+
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.remove();
+    }
+}
+
+function closeModalAndScroll() {
+    closeModal('uploadSuccessModal');
+    
+    // Scroll to calculate button
+    const calculateBtn = document.getElementById('calculateBtn');
+    if (calculateBtn) {
+        calculateBtn.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'center' 
+        });
+        
+        // Add highlight animation
+        calculateBtn.classList.add('highlight-animation');
+        setTimeout(() => {
+            calculateBtn.classList.remove('highlight-animation');
+        }, 2000);
+    }
+}
+
 // Add styles for sections
 const style = document.createElement('style');
 style.textContent = `
-    .section {
-        margin-bottom: 20px;
-        border: 1px solid #ddd;
+    /* Upload Section Styles - Reduced spacing */
+    .upload-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+    
+    .upload-container {
+        background: white;
+        border-radius: 6px;
+        padding: 15px;
+        text-align: center;
+    }
+    
+    .upload-container h2 {
+        margin: 0 0 5px 0;
+        color: #2c3e50;
+        font-size: 20px;
+    }
+    
+    .upload-container p {
+        color: #666;
+        margin: 0 0 10px 0;
+        font-size: 13px;
+    }
+    
+    .upload-controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+    
+    .upload-excel-btn {
+        background: linear-gradient(135deg, #00c853 0%, #43a047 100%);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0,200,83,0.3);
+    }
+    
+    .upload-excel-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0,200,83,0.4);
+    }
+    
+    .upload-icon {
+        font-size: 20px;
+    }
+    
+    .sample-link {
+        color: #667eea;
+        text-decoration: none;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        transition: color 0.3s;
+    }
+    
+    .sample-link:hover {
+        color: #764ba2;
+        text-decoration: underline;
+    }
+    
+    .upload-status {
+        margin-top: 20px;
+    }
+    
+    .upload-progress {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        padding: 15px;
+        background: #f0f4ff;
+        border-radius: 8px;
+        color: #667eea;
+        font-weight: 500;
+    }
+    
+    /* Modal Styles */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        animation: fadeIn 0.3s ease;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    .modal-content {
+        background: white;
+        border-radius: 12px;
+        max-width: 500px;
+        width: 90%;
+        max-height: 80vh;
+        overflow: auto;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        animation: slideIn 0.3s ease;
+    }
+    
+    @keyframes slideIn {
+        from {
+            transform: translateY(-50px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+    
+    .modal-header {
+        padding: 15px;
+        border-radius: 12px 12px 0 0;
+        color: white;
+    }
+    
+    .modal-header.success {
+        background: linear-gradient(135deg, #00c853 0%, #43a047 100%);
+    }
+    
+    .modal-header.error {
+        background: linear-gradient(135deg, #f44336 0%, #e91e63 100%);
+    }
+    
+    .modal-header h2 {
+        margin: 0;
+        font-size: 18px;
+    }
+    
+    .modal-body {
+        padding: 15px;
+    }
+    
+    .upload-stats {
+        display: flex;
+        justify-content: space-around;
+        margin: 10px 0;
+        padding: 10px;
+        background: #f8f9fa;
+        border-radius: 6px;
+    }
+    
+    .stat-item {
+        text-align: center;
+    }
+    
+    .stat-value {
+        display: block;
+        font-size: 28px;
+        font-weight: bold;
+        color: #2c3e50;
+    }
+    
+    .stat-item.success .stat-value {
+        color: #00c853;
+    }
+    
+    .stat-item.warning .stat-value {
+        color: #ff9800;
+    }
+    
+    .stat-label {
+        display: block;
+        font-size: 12px;
+        color: #666;
+        margin-top: 5px;
+    }
+    
+    .upload-warnings {
+        background: #fff5f5;
+        border-left: 3px solid #ff9800;
+        padding: 10px;
+        border-radius: 4px;
+        margin: 8px 0;
+    }
+    
+    .upload-warnings h4 {
+        margin: 0 0 8px 0;
+        color: #e65100;
+        font-size: 13px;
+    }
+    
+    .upload-warnings ul {
+        margin: 0;
+        padding-left: 15px;
+        font-size: 12px;
+        color: #666;
+    }
+    
+    .skipped-fields-list {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        max-height: 200px;
+        overflow-y: auto;
+    }
+    
+    .skipped-field-item {
+        background: white;
+        padding: 10px;
+        border-radius: 4px;
+        font-size: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        border: 1px solid #ffecb3;
+    }
+    
+    .skip-field-header {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-bottom: 4px;
+    }
+    
+    .skip-field-header strong {
+        color: #e65100;
+        font-size: 13px;
+        font-family: monospace;
+    }
+    
+    .skip-field-details {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        padding-left: 10px;
+    }
+    
+    .skip-value {
+        color: #333;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    .skip-value code {
+        background: #f5f5f5;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-family: monospace;
+        color: #d73a49;
+    }
+    
+    .skip-reason {
+        color: #666;
+        font-size: 11px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    .modal-message {
+        text-align: center;
+        color: #666;
+        margin: 20px 0;
+        font-size: 14px;
+    }
+    
+    .modal-footer {
+        padding: 15px 20px;
+        background: #f8f9fa;
+        border-radius: 0 0 12px 12px;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    .modal-btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 14px;
+    }
+    
+    .modal-btn.primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+    
+    .modal-btn.primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(102,126,234,0.4);
+    }
+    
+    .modal-btn.secondary {
+        background: #e9ecef;
+        color: #495057;
+    }
+    
+    .modal-btn.secondary:hover {
+        background: #dee2e6;
+    }
+    
+    /* Highlight animation for calculate button */
+    .highlight-animation {
+        animation: highlight 2s ease;
+    }
+    
+    @keyframes highlight {
+        0%, 100% {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        50% {
+            box-shadow: 0 0 30px rgba(102,126,234,0.8);
+            transform: scale(1.05);
+        }
+    }
+    
+    .section {
+        margin-bottom: 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
         overflow: hidden;
     }
     
     .section-header {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
-        padding: 15px;
+        padding: 10px;
         margin: 0;
         cursor: pointer;
         user-select: none;
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
+        font-size: 14px;
     }
     
     .section-header:hover {
@@ -916,29 +1570,30 @@ style.textContent = `
     }
     
     .section-content {
-        padding: 20px;
+        padding: 12px;
         background: white;
     }
     
     .fields-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-        gap: 15px;
-    }
-    
-    .section-navigation {
-        margin-bottom: 20px;
-        display: flex;
         gap: 10px;
     }
     
+    .section-navigation {
+        margin-bottom: 12px;
+        display: flex;
+        gap: 8px;
+    }
+    
     .section-navigation button {
-        padding: 8px 16px;
+        padding: 6px 12px;
         background: #4CAF50;
         color: white;
         border: none;
         border-radius: 4px;
         cursor: pointer;
+        font-size: 13px;
     }
     
     .section-navigation button:hover {

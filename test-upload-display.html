@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Upload Display</title>
+    <script src="http://localhost:3000/app-sectioned.js"></script>
+</head>
+<body>
+    <h1>Test Skipped Fields Display</h1>
+    <button onclick="testDisplay()">Show Sample Modal</button>
+    
+    <script>
+        // Mock FIELD_SECTIONS for the test
+        window.FIELD_SECTIONS = { test: { fields: [] } };
+        
+        function testDisplay() {
+            // Simulate population result with skipped fields
+            const populationResult = {
+                populatedCount: 128,
+                skippedCount: 4,
+                totalFields: 132,
+                skippedDetails: [
+                    {
+                        field: 'tech_N27_someField',
+                        value: '31.46',
+                        reason: 'Поле не найдено в текущей версии формы'
+                    },
+                    {
+                        field: 'tech_O27_anotherField', 
+                        value: '31.46',
+                        reason: 'Поле не найдено в текущей версии формы'
+                    },
+                    {
+                        field: 'sup_X99_unknownField',
+                        value: 'test value',
+                        reason: 'Поле не найдено в текущей версии формы'
+                    },
+                    {
+                        field: 'sup_G27_wrongValue',
+                        value: 'InvalidOption',
+                        reason: 'Значение не найдено в списке доступных опций'
+                    }
+                ]
+            };
+            
+            const uploadResult = {
+                warnings: [],
+                metadata: {
+                    fieldsExtracted: 132,
+                    sheetsFound: ['технолог', 'снабжение']
+                }
+            };
+            
+            // Call the showSuccessModal function
+            showSuccessModal(populationResult, uploadResult);
+        }
+    </script>
+</body>
+</html>
