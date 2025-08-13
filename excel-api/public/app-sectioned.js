@@ -45,7 +45,7 @@ const FIELD_SECTIONS = {
             { id: 'tech_E27_customerOrderPosition', label: 'E27 - Позиция в ОЛ Заказчика', type: 'text', default: 'Е-113' },
             { id: 'tech_F27_deliveryType', label: 'F27 - Тип поставки', type: 'select', enumField: true, default: 'Целый ТА' },
             { id: 'tech_G27_sizeTypeK4', label: 'G27 - Типоразмер К4', type: 'select', enumField: true, default: 'К4-750' },
-            { id: 'tech_H27_passes', label: 'H27 - Ходы', type: 'select', enumField: true, default: '1/6' },
+            { id: 'tech_H27_passes', label: 'H27 - Ходы', type: 'text', placeholder: '10/10', default: '1/6' },
             { id: 'tech_I27_plateQuantity', label: 'I27 - Количество пластин, шт', type: 'number', default: 50 },
             { id: 'tech_J27_calcPressureHotSide', label: 'J27 - Расч давл по гор стороне, бар', type: 'number', default: 22 },
             { id: 'tech_K27_calcPressureColdSide', label: 'K27 - Расч давл по хол стороне, бар', type: 'number', default: 23 },
@@ -431,6 +431,8 @@ function renderField(field) {
             input.placeholder = '0.00';
         } else if (field.type === 'percentage') {
             input.placeholder = '1.0';
+        } else if (field.placeholder) {
+            input.placeholder = field.placeholder;
         }
     }
     
