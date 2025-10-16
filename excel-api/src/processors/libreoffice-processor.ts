@@ -30,7 +30,7 @@ export class LibreOfficeProcessor {
   private readonly RESULTS_SHEET = 'результат ';
   private readonly RESULTS_RANGE = ['J30', 'J31', 'J32', 'J33', 'J34', 'J35', 'J36'];
 
-  constructor(templatePath: string = '/home/vmuser/dev/lh_calc/calc.xlsx') {
+  constructor(templatePath: string = path.resolve(__dirname, '../../../calc.xlsx')) {
     this.templatePath = templatePath;
   }
 
@@ -686,7 +686,7 @@ if __name__ == "__main__":
     try {
       const timestamp = new Date().toISOString().replace(/:/g, '-').replace(/\./g, '-');
       const fileName = `calculation_${requestId}_${timestamp}.xlsx`;
-      const publicPath = path.join('/home/vmuser/dev/lh_calc/excel-api/public/excel-files', fileName);
+      const publicPath = path.join(path.resolve(__dirname, '../../public/excel-files'), fileName);
       
       await fs.copyFile(tempFilePath, publicPath);
       

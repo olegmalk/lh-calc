@@ -269,7 +269,7 @@ app.get('/api/openapi.yaml', async (_req: Request, res: Response) => {
   try {
     const fs = await import('fs/promises');
     const path = await import('path');
-    const specPath = path.join('/home/vmuser/dev/lh_calc/excel-api', 'openapi.yaml');
+    const specPath = path.resolve(__dirname, '../openapi.yaml');
     const spec = await fs.readFile(specPath, 'utf-8');
     res.type('text/yaml').send(spec);
   } catch (error) {
@@ -530,7 +530,7 @@ app.get('/api/excel-files', async (_req: Request, res: Response) => {
   try {
     const fs = await import('fs/promises');
     const path = await import('path');
-    const excelDir = path.join('/home/vmuser/dev/lh_calc/excel-api/public/excel-files');
+    const excelDir = path.resolve(__dirname, '../public/excel-files');
     
     try {
       const files = await fs.readdir(excelDir);
@@ -580,7 +580,7 @@ app.delete('/api/admin/excel-files/cleanup', async (_req: Request, res: Response
   try {
     const fs = await import('fs/promises');
     const path = await import('path');
-    const excelDir = path.join('/home/vmuser/dev/lh_calc/excel-api/public/excel-files');
+    const excelDir = path.resolve(__dirname, '../public/excel-files');
     
     const files = await fs.readdir(excelDir);
     const now = Date.now();

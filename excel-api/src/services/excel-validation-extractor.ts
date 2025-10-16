@@ -4,6 +4,7 @@
  */
 
 import * as fs from 'fs/promises';
+import * as path from 'path';
 import AdmZip from 'adm-zip';
 import { parseStringPromise } from 'xml2js';
 
@@ -25,8 +26,8 @@ export class ExcelValidationExtractor {
   private readonly templatePath: string;
 
   constructor(
-    templatePath: string = '/home/vmuser/dev/lh_calc/calc.xlsx',
-    cacheFilePath: string = '/home/vmuser/dev/lh_calc/excel-api/validation-rules.json'
+    templatePath: string = path.resolve(__dirname, '../../../calc.xlsx'),
+    cacheFilePath: string = path.resolve(__dirname, '../../validation-rules.json')
   ) {
     this.templatePath = templatePath;
     this.cacheFilePath = cacheFilePath;

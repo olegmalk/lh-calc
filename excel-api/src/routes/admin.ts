@@ -10,8 +10,8 @@ import { ExcelValidationExtractor } from '../services/excel-validation-extractor
 
 const router = Router();
 
-// Template path constant
-const TEMPLATE_PATH = '/home/vmuser/dev/lh_calc/calc.xlsx';
+// Template path constant - relative to compiled dist/routes/ directory
+const TEMPLATE_PATH = path.resolve(__dirname, '../../../calc.xlsx');
 
 // Initialize validation extractor
 const validationExtractor = new ExcelValidationExtractor(TEMPLATE_PATH);
