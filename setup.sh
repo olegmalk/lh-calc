@@ -60,7 +60,21 @@ echo "--------------------------------------"
 npm install -g pm2
 
 echo ""
-echo "Step 4: Cloning repository"
+echo "Step 4: Installing LibreOffice (required for Excel processing)"
+echo "--------------------------------------"
+if command_exists soffice; then
+    echo "LibreOffice already installed"
+    soffice --version
+else
+    echo "Installing LibreOffice..."
+    sudo apt-get update -qq
+    sudo apt-get install -y libreoffice-calc libreoffice-core --no-install-recommends
+    echo "LibreOffice installed successfully"
+    soffice --version
+fi
+
+echo ""
+echo "Step 5: Cloning repository"
 echo "--------------------------------------"
 if [ -d "$APP_DIR" ]; then
     echo "Repository directory already exists at $APP_DIR"
@@ -74,14 +88,14 @@ else
 fi
 
 echo ""
-echo "Step 5: Installing root dependencies"
+echo "Step 6: Installing root dependencies"
 echo "--------------------------------------"
 if [ -f "package.json" ]; then
     npm install
 fi
 
 echo ""
-echo "Step 6: Installing excel-api dependencies"
+echo "Step 7: Installing excel-api dependencies"
 echo "--------------------------------------"
 if [ ! -d "$EXCEL_API_DIR" ]; then
     echo "ERROR: excel-api directory not found at $EXCEL_API_DIR"
@@ -91,12 +105,12 @@ cd "$EXCEL_API_DIR"
 npm install
 
 echo ""
-echo "Step 7: Building TypeScript application"
+echo "Step 8: Building TypeScript application"
 echo "--------------------------------------"
 npm run build
 
 echo ""
-echo "Step 8: Setting up PM2 ecosystem"
+echo "Step 9: Setting up PM2 ecosystem"
 echo "--------------------------------------"
 cd "$APP_DIR"
 
