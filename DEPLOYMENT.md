@@ -37,10 +37,10 @@ This will:
 The setup creates two PM2 processes:
 
 1. **lh-calc-app**: The main Excel API application
-   - Runs on port 3000
+   - Runs on port 5555
    - Serves API endpoints and web UI
    - Auto-restarts on crashes
-   - Memory limit: 1GB
+   - Memory limit: 3GB (for 4GB server)
 
 2. **lh-calc-watcher**: Git update monitor
    - Checks for updates every 60 seconds
@@ -128,9 +128,9 @@ Logs are written to `./logs/`:
 
 Once deployed, the application is available at:
 
-- **API Health Check**: http://localhost:3000/health
-- **Web Dashboard**: http://localhost:3000/
-- **Template Upload**: http://localhost:3000/template-upload.html
+- **API Health Check**: http://localhost:5555/health
+- **Web Dashboard**: http://localhost:5555/
+- **Template Upload**: http://localhost:5555/template-upload.html
 
 Default credentials:
 - Username: `admin`
@@ -180,8 +180,8 @@ npm run lint
 ### Port Already in Use
 
 ```bash
-# Find what's using port 3000
-lsof -i :3000
+# Find what's using port 5555
+lsof -i :5555
 
 # Kill the process (replace PID with actual process ID)
 kill -9 <PID>
@@ -266,6 +266,6 @@ nvm uninstall 22
 
 For issues or questions:
 1. Check PM2 logs: `pm2 logs`
-2. Check application health: http://localhost:3000/health
+2. Check application health: http://localhost:5555/health
 3. Review this documentation
 4. Check the main `excel-api/CLAUDE.md` for API-specific details

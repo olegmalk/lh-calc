@@ -16,10 +16,10 @@ module.exports = {
       exec_mode: 'fork',
       autorestart: true,
       watch: false,
-      max_memory_restart: '1G',
+      max_memory_restart: '3G',
       env: {
         NODE_ENV: 'production',
-        PORT: 3000
+        PORT: 5555
       },
       error_file: './logs/app-error.log',
       out_file: './logs/app-out.log',
