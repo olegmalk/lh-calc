@@ -1,0 +1,26 @@
+# Logs
+logs/
+*.log
+
+# PM2
+.pm2/
+pids/
+*.pid
+
+# Node modules
+node_modules/
+
+# Environment
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
