@@ -29,17 +29,17 @@ echo "[$(date)] Git watcher started. Checking for updates every 60 seconds..."
 
 while true; do
     # Fetch latest changes from remote
-    git fetch origin main 2>&1 | grep -v "^$"
+    git fetch origin master 2>&1 | grep -v "^$"
 
     # Check if there are any differences between local and remote
     LOCAL=$(git rev-parse HEAD)
-    REMOTE=$(git rev-parse origin/main)
+    REMOTE=$(git rev-parse origin/master)
 
     if [ "$LOCAL" != "$REMOTE" ]; then
         echo "[$(date)] Changes detected! Pulling updates..."
 
         # Pull the latest changes
-        git pull origin main
+        git pull origin master
 
         if [ $? -eq 0 ]; then
             echo "[$(date)] Successfully pulled changes. Updating dependencies..."

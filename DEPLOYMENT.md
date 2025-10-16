@@ -85,7 +85,7 @@ pm2 monit                   # Real-time monitoring
 ## How Auto-Deploy Works
 
 1. **Git Watcher** runs continuously in the background
-2. Every 60 seconds, it fetches the latest changes from `origin/main`
+2. Every 60 seconds, it fetches the latest changes from `origin/master`
 3. If changes are detected:
    - Pulls the latest code
    - Installs/updates npm dependencies
@@ -159,7 +159,7 @@ pm2 logs lh-calc-watcher
 
 # Verify git can fetch
 cd ~/lh-calc
-git fetch origin main
+git fetch origin master
 
 # Restart watcher
 pm2 restart lh-calc-watcher
@@ -196,7 +196,7 @@ If you need to deploy manually without waiting for the auto-watcher:
 
 ```bash
 cd ~/lh-calc
-git pull origin main
+git pull origin master
 cd excel-api
 npm install
 npm run build

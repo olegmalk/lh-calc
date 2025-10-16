@@ -80,7 +80,7 @@ if [ -d "$APP_DIR" ]; then
     echo "Repository directory already exists at $APP_DIR"
     echo "Pulling latest changes..."
     cd "$APP_DIR"
-    git pull origin main
+    git pull origin master
 else
     echo "Cloning repository..."
     git clone "$REPO_URL" "$APP_DIR"
