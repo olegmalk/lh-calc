@@ -208,6 +208,31 @@ pm2 restart lh-calc-app
 - **Disk**: 1GB free space
 - **Network**: Internet access for git pulls and npm installs
 
+## Migration from systemd
+
+This project previously used systemd for process management. We've migrated to PM2 for better features:
+
+**Benefits of PM2 over systemd:**
+- Automatic git watching and deployment
+- Built-in log management and rotation
+- Real-time monitoring (`pm2 monit`)
+- Zero-downtime restarts
+- Cross-platform support
+
+**If you have the old systemd service installed:**
+```bash
+# Stop and disable the old service
+sudo systemctl stop lh-calculator
+sudo systemctl disable lh-calculator
+sudo rm /etc/systemd/system/lh-calculator.service
+sudo systemctl daemon-reload
+
+# Then run the new setup
+./setup.sh
+```
+
+The old `lh-calculator.service` file has been removed from the repository.
+
 ## Security Notes
 
 - The GitHub token has read access only
