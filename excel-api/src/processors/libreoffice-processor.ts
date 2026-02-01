@@ -10,7 +10,8 @@ import {
   CalculationRequest, 
   CalculationResults, 
   CalculatedValues, 
-  ComponentCosts 
+  ComponentCosts,
+  DetailedCosts 
 } from '../types/api-contract';
 
 const execAsync = promisify(exec);
@@ -29,6 +30,31 @@ export class LibreOfficeProcessor {
   private readonly templatePath: string;
   private readonly RESULTS_SHEET = 'результат ';
   private readonly RESULTS_RANGE = ['J30', 'J31', 'J32', 'J33', 'J34', 'J35', 'J36'];
+
+  // Detailed cost breakdown cells from результат sheet
+  private readonly DETAILED_CELLS: Record<keyof DetailedCosts, string> = {
+    flowPartMaterialPricePerKg: 'E26',
+    work: 'F26',
+    panels: 'G26',
+    panelCladding: 'H26',
+    covers: 'I26',
+    columns: 'J26',
+    panelFasteners: 'K26',
+    panelGasketsPerSet: 'L26',
+    spareGasketSetsQuantity: 'M25',
+    spareGasketSetsTotal: 'M26',
+    platePack: 'N26',
+    mirrorsCombs: 'O26',
+    internalSpacers: 'P26',
+    cof: 'Q26',
+    eyebolts: 'R26',
+    supports: 'S26',
+    otherMaterials: 'T26',
+    braces: 'U26',
+    unaccounted: 'V26',
+    spareParts: 'W26',
+    internalLogistics: 'X26',
+  };
 
   constructor(templatePath: string = path.resolve(__dirname, '../../../calc.xlsx')) {
     this.templatePath = templatePath;
@@ -570,12 +596,20 @@ if __name__ == "__main__":
         calculatedValues.tech_U27_plateThickness = this.getCellNumericValue(techSheet.getCell('U27'));
       }
 
+      // Extract detailed cost breakdown
+      const detailedCosts = {} as DetailedCosts;
+      for (const [field, cellRef] of Object.entries(this.DETAILED_CELLS)) {
+        const cell = resultsSheet.getCell(cellRef);
+        detailedCosts[field as keyof DetailedCosts] = this.getCellNumericValue(cell);
+      }
+
       console.log(`[LibreOffice] Extracted results: Total cost = ${totalCost}`);
 
       return {
         calculated_values: calculatedValues,
         total_cost: totalCost,
-        component_costs: componentCosts
+        component_costs: componentCosts,
+        detailed_costs: detailedCosts,
       };
 
     } catch (error: any) {
@@ -617,7 +651,30 @@ if __name__ == "__main__":
         processing,
         hardware,
         other
-      }
+      },
+      detailed_costs: {
+        flowPartMaterialPricePerKg: 0,
+        work: 0,
+        panels: 0,
+        panelCladding: 0,
+        covers: 0,
+        columns: 0,
+        panelFasteners: 0,
+        panelGasketsPerSet: 0,
+        spareGasketSetsQuantity: 0,
+        spareGasketSetsTotal: 0,
+        platePack: 0,
+        mirrorsCombs: 0,
+        internalSpacers: 0,
+        cof: 0,
+        eyebolts: 0,
+        supports: 0,
+        otherMaterials: 0,
+        braces: 0,
+        unaccounted: 0,
+        spareParts: 0,
+        internalLogistics: 0,
+      },
     };
   }
 

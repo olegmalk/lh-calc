@@ -186,12 +186,40 @@ export interface ComponentCosts {
 }
 
 /**
+ * Detailed cost breakdown from результат sheet row 26
+ */
+export interface DetailedCosts {
+  flowPartMaterialPricePerKg: number;  // E26
+  work: number;                        // F26 - РАБОТЫ
+  panels: number;                      // G26 - панели (материал+обработка, патрубки, фланцы)
+  panelCladding: number;               // H26 - плакировка панелей (материал + раскрой)
+  covers: number;                      // I26 - крышки (материал + обработка)
+  columns: number;                     // J26 - стойки (материал + обработка)
+  panelFasteners: number;              // K26 - КРЕПЁЖ ПАНЕЛЕЙ шпильки и гайки
+  panelGasketsPerSet: number;          // L26 - прокладки панелей (1 комплект)
+  spareGasketSetsQuantity: number;     // M25 - резервных комплектов (кол-во)
+  spareGasketSetsTotal: number;        // M26 - резервных комплектов (цена)
+  platePack: number;                   // N26 - пакет пластин (материал + раскрой)
+  mirrorsCombs: number;                // O26 - зеркала, гребёнки, плакировка крышек, перегородки
+  internalSpacers: number;             // P26 - внутренние распорки (шпильки+гайки)
+  cof: number;                         // Q26 - КОФ
+  eyebolts: number;                    // R26 - проушины
+  supports: number;                    // S26 - лапы
+  otherMaterials: number;              // T26 - другие материалы
+  braces: number;                      // U26 - раскосы
+  unaccounted: number;                 // V26 - НЕУЧТЁНКА
+  spareParts: number;                  // W26 - ЗИП
+  internalLogistics: number;           // X26 - Внутренняя логистика
+}
+
+/**
  * Calculation results container
  */
 export interface CalculationResults {
   calculated_values: CalculatedValues;
   total_cost: number;
   component_costs: ComponentCosts;
+  detailed_costs: DetailedCosts;
 }
 
 /**
