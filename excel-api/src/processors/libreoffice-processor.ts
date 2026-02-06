@@ -225,8 +225,8 @@ export class LibreOfficeProcessor {
       const tempOdsPath = inputPath.replace('.xlsx', '.ods');
       console.log(`[LibreOffice] Recalculation: ODS path will be ${tempOdsPath}`);
       
-      // Convert XLSX to ODS with recalculation flags
-      const convertToOdsCmd = `timeout 15 soffice --headless --infilter="MS Excel 2007 XML:CalcRecalcAlways" --convert-to ods --outdir "${path.dirname(inputPath)}" "${inputPath}"`;
+      // Convert XLSX to ODS (note: --convert-to does NOT recalculate formulas, this is a fallback only)
+      const convertToOdsCmd = `timeout 15 soffice --headless --convert-to ods --outdir "${path.dirname(inputPath)}" "${inputPath}"`;
       console.log(`[LibreOffice] Recalculation: Executing ODS conversion command...`);
       console.log(`[LibreOffice] Command: ${convertToOdsCmd}`);
       
@@ -401,8 +401,10 @@ if __name__ == "__main__":
       await fs.writeFile(scriptPath, scriptContent, 'utf8');
       await fs.chmod(scriptPath, 0o755);
       
-      // Execute the Python script
-      const pythonCmd = `timeout 20 python3 "${scriptPath}" 2>&1`;
+      // Execute the Python script with UNO library paths
+      const unoLibPath = '/home/lhe/python3-uno/extracted/usr/lib/python3/dist-packages:/home/lhe/python3-uno/extracted/usr/lib/libreoffice/program';
+      const ldLibPath = '/usr/lib/libreoffice/program:/home/lhe/python3-uno/extracted/usr/lib/libreoffice/program';
+      const pythonCmd = `PYTHONPATH="${unoLibPath}" LD_LIBRARY_PATH="${ldLibPath}" timeout 20 python3 "${scriptPath}" 2>&1`;
       console.log('[LibreOffice] UNO API: Executing Python script...');
       
       const unoStartTime = Date.now();
